@@ -195,10 +195,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PERSON-03 | Phase 6 | Pending |
 
 **Coverage:**
-- v1 requirements: 56 total
-- Mapped to phases: 56
+- v1 requirements: 57 total
+- Mapped to phases: 57
 - Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-04-29*
-*Last updated: 2026-04-29 after initial definition*
+*Last updated: 2026-04-29 — coverage count corrected to 57 after roadmap creation*
