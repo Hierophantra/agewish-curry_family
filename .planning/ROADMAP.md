@@ -80,7 +80,7 @@ Plans:
 **Plans**: 3 plans
 Plans:
 - [x] 04-01-PLAN.md — Schema migration (gender field), bidirectional validator extension, lib/tree.ts adapter + flattenMultiSpouses mitigation, family.json multi-spouse stub data
-- [ ] 04-02-PLAN.md — FamilyTreeCanvas, PersonNode, ConnectorLine — client rendering components
+- [x] 04-02-PLAN.md — FamilyTreeCanvas, PersonNode, ConnectorLine — client rendering components
 - [ ] 04-03-PLAN.md — PersonPanel slide-in, PhotoCarousel crossfade, tree page wiring + human verify
 **UI hint**: yes
 
@@ -116,6 +116,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 1. Scaffold + Auth Gate + Design System | 5/6 | In Progress|  |
 | 2. Photo Gallery | 1/1 | Complete | 2026-04-29 |
 | 3. Video Gallery | 1/1 | Complete | 2026-04-30 |
-| 4. Family Tree | 1/3 | In Progress | - |
+| 4. Family Tree | 2/3 | In Progress | - |
 | 5. Visual Polish | 0/TBD | Not started | - |
 | 6. Person Detail Pages | 0/TBD | Not started | - |

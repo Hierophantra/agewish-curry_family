@@ -76,11 +76,11 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Family Tree
 
-- [ ] **TREE-01**: `/tree` route renders an interactive family tree using `relatives-tree` + `react-family-tree`
-- [ ] **TREE-02**: Tree starts with the grandfather as root and descends through generations
-- [ ] **TREE-03**: Each node renders person name and relation label
-- [ ] **TREE-04**: Active node shows navy stroke (1.5px), ivory fill, and a small gold dot at top-right
-- [ ] **TREE-05**: Connector lines use stone color (#C9C4B0)
+- [x] **TREE-01**: `/tree` route renders an interactive family tree using `relatives-tree` + `react-family-tree`
+- [x] **TREE-02**: Tree starts with the grandfather as root and descends through generations
+- [x] **TREE-03**: Each node renders person name and relation label
+- [x] **TREE-04**: Active node shows navy stroke (1.5px), ivory fill, and a small gold dot at top-right
+- [x] **TREE-05**: Connector lines use stone color (#C9C4B0)
 - [ ] **TREE-06**: Tree data preparation runs server-side via `lib/tree.ts` wrapping `calcTree`; rendered in `'use client'` canvas component
 - [ ] **TREE-07**: Multi-spouse / blended-family cases are validated against relatives-tree GitHub #24 bug — flatten or annotate before render
 - [ ] **TREE-08**: Clicking a node opens `<PersonPanel />` slide-in within the tree section (not over whole page)
@@ -179,11 +179,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | VIDEO-03 | Phase 3 | Pending |
 | VIDEO-04 | Phase 3 | Pending |
 | VIDEO-05 | Phase 3 | Pending |
-| TREE-01 | Phase 4 | Pending |
-| TREE-02 | Phase 4 | Pending |
-| TREE-03 | Phase 4 | Pending |
-| TREE-04 | Phase 4 | Pending |
-| TREE-05 | Phase 4 | Pending |
+| TREE-01 | Phase 4 | Complete (04-02) |
+| TREE-02 | Phase 4 | Complete (04-02) |
+| TREE-03 | Phase 4 | Complete (04-02) |
+| TREE-04 | Phase 4 | Complete (04-02) |
+| TREE-05 | Phase 4 | Complete (04-02) |
 | TREE-06 | Phase 4 | Pending |
 | TREE-07 | Phase 4 | Pending |
 | TREE-08 | Phase 4 | Pending |
