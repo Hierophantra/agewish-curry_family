@@ -1,20 +1,22 @@
 // app/(protected)/person/[id]/page.tsx
-// Server Component — individual person detail page.
+// Server Component — individual person detail page (v2 schema, Phase 11).
 // Fetches person by id slug; calls notFound() if person not in family.json.
-// All 6 person pages are pre-rendered at build time (static site generation).
+// All 8 person pages are pre-rendered at build time (static site generation).
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { getPeople, getPersonById, getPhotos } from '@/lib/content'
-import PhotoGrid from '@/components/gallery/PhotoGrid'
+import { getPeople, getPersonById, getPhotosByPersonId, getVideosByPersonId } from '@/lib/content'
+import CollectionPhotoGrid from '@/components/gallery/CollectionPhotoGrid'
+import PlaylistVideoGrid from '@/components/video/PlaylistVideoGrid'
+import type { Person } from '@/lib/types'
 
 // Pre-render every person page at build time (per D-04).
-// Returns [{ id: "william-curry" }, { id: "mary-curry" }, ...] — one entry per person.
+// Returns [{ id: "william-curry" }, { id: "robert-curry" }, ...] — one entry per person.
 export function generateStaticParams() {
   return getPeople().map((p) => ({ id: p.id }))
 }
 
 // dynamicParams = true is the Next.js default — if a new person is added without rebuild,
-// the page generates on first request. Explicit declaration kept for clarity (per D-05).
+// the page generates on first request. Explicit declaration kept for clarity.
 export const dynamicParams = true
 
 interface PersonPageProps {
@@ -24,168 +26,177 @@ interface PersonPageProps {
 export default async function PersonPage({ params }: PersonPageProps) {
   const person = getPersonById(params.id)
 
-  // If person id doesn't exist in family.json, return proper 404 (per D-01, D-15).
+  // If person id doesn't exist in family.json, return proper 404.
   if (!person) {
     notFound()
   }
 
-  // Resolve relation names for display and linking (per D-09).
+  const photos = getPhotosByPersonId(person.id)
+  const videos = getVideosByPersonId(person.id)
   const allPeople = getPeople()
-  const peopleById = new Map(allPeople.map((p) => [p.id, p]))
 
-  // Filter photos to only this person's photos (per D-03).
-  // Use peopleIds[] on Photo (not person.photoIds) — photos tag people, not the reverse.
-  const personPhotos = getPhotos().filter((photo) =>
-    photo.peopleIds.includes(person.id)
-  )
+  // Format Born from birthDate ISO if present, else fall back to birthYear.
+  // Uses noon UTC to avoid timezone-off-by-one on YYYY-MM-DD strings.
+  const bornStr = person.birthDate
+    ? new Date(person.birthDate + 'T12:00:00Z').toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        timeZone: 'UTC',
+      })
+    : person.birthYear
+    ? String(person.birthYear)
+    : null
 
-  // Format year range for the date eyebrow (per D-03 layout step 3).
-  // "1920–1998" | "b. 1920" | null if no birthYear at all.
-  function formatYears(birthYear?: number, deathYear?: number): string | null {
-    if (!birthYear) return null
-    if (deathYear) return `${birthYear}–${deathYear}`
-    return `b. ${birthYear}`
+  // Resolve children — v2 canonical childrenIds with v1 childIds fallback.
+  const childIdList =
+    person.childrenIds && person.childrenIds.length > 0
+      ? person.childrenIds
+      : person.childIds ?? []
+  const children = childIdList
+    .map((cid) => allPeople.find((p) => p.id === cid))
+    .filter((c): c is Person => c !== undefined)
+
+  // Resolve parents.
+  const parents = (person.parentIds ?? [])
+    .map((pid) => allPeople.find((p) => p.id === pid))
+    .filter((p): p is Person => p !== undefined)
+
+  // Build metadata rows — each row only shown when value is present.
+  type MetaEntry = { k: string; v: React.ReactNode }
+  const meta: MetaEntry[] = []
+
+  if (bornStr) meta.push({ k: 'Born', v: bornStr })
+
+  // Birthplace — v2 canonical with v1 birthPlace back-compat.
+  const birthplaceValue = person.birthplace ?? person.birthPlace
+  if (birthplaceValue) meta.push({ k: 'Birthplace', v: birthplaceValue })
+
+  // Spouse — v2 spouseLabel is a plain display string (no separate Person record).
+  if (person.spouseLabel) meta.push({ k: 'Spouse', v: person.spouseLabel })
+
+  if (parents.length > 0) {
+    meta.push({
+      k: 'Parents',
+      v: (
+        <>
+          {parents.map((p, i) => (
+            <span key={p.id}>
+              <Link
+                href={`/person/${p.id}`}
+                className="hover:text-gold transition-colors"
+              >
+                {p.name}
+              </Link>
+              {i < parents.length - 1 ? ', ' : ''}
+            </span>
+          ))}
+        </>
+      ),
+    })
   }
 
-  const years = formatYears(person.birthYear, person.deathYear)
-
-  const spouses = person.spouseIds.flatMap((sid) => {
-    const s = peopleById.get(sid)
-    return s ? [s] : []
-  })
-  const children = person.childIds.flatMap((cid) => {
-    const c = peopleById.get(cid)
-    return c ? [c] : []
-  })
-  const parents = person.parentIds.flatMap((pid) => {
-    const p = peopleById.get(pid)
-    return p ? [p] : []
-  })
+  if (children.length > 0) {
+    meta.push({
+      k: 'Children',
+      v: (
+        <>
+          {children.map((c, i) => (
+            <span key={c.id}>
+              <Link
+                href={`/person/${c.id}`}
+                className="hover:text-gold transition-colors"
+              >
+                {c.name}
+              </Link>
+              {i < children.length - 1 ? ', ' : ''}
+            </span>
+          ))}
+        </>
+      ),
+    })
+  }
 
   return (
-    <main className="py-11 px-7 md:px-11 lg:px-15 max-w-3xl">
-      {/* Back link — easy navigation to tree */}
+    <main className="py-11 px-7 md:px-11 lg:px-15 max-w-5xl mx-auto">
+      {/* Back link */}
       <Link
         href="/tree"
-        className="eyebrow text-quiet hover:text-navy transition-colors inline-flex items-center gap-1 mb-8"
+        className="text-quiet text-xs uppercase tracking-[0.22em] hover:text-navy transition-colors mb-6 inline-block"
       >
-        ← Family tree
+        ← Back to family tree
       </Link>
 
-      {/* FAMILY ARCHIVE eyebrow (per D-02 step 1) */}
-      <p className="eyebrow text-quiet mb-3">FAMILY ARCHIVE</p>
-
-      {/* Person name — serif h1 (per D-02 step 2) */}
-      <h1 className="font-serif text-navy text-3xl md:text-4xl mb-2">{person.name}</h1>
-
-      {/* Date eyebrow — hidden if no birthYear (per D-02 step 3, D-12) */}
-      {years && (
-        <p className="eyebrow text-quiet mb-4">{years}</p>
-      )}
-
-      {/* Birthplace — hidden if absent (per D-02 step 4, D-13) */}
-      {person.birthPlace && (
-        <p className="font-serif italic text-muted text-sm mb-6">
-          Born in {person.birthPlace}
+      {/* Header: eyebrow + name + dates */}
+      <header className="mb-10 pb-9 border-b hairline">
+        {/* v2 eyebrow: "Patriarch of the family", "Son of William" etc. */}
+        <p className="eyebrow text-gold-deep mb-3">
+          {person.eyebrow ?? person.relationLabel ?? 'FAMILY ARCHIVE'}
         </p>
+        <h1 className="font-serif text-navy text-5xl mb-2 leading-tight">
+          {person.name}
+        </h1>
+        {/* v2 datesLabel: "1920 — 2008", "1952 — present" */}
+        {person.datesLabel && (
+          <p className="font-serif italic text-muted text-lg">
+            {person.datesLabel}
+          </p>
+        )}
+      </header>
+
+      {/* Metadata rows: Born, Birthplace, Spouse, Parents, Children */}
+      {meta.length > 0 && (
+        <section className="mb-10">
+          <dl className="flex flex-col gap-3.5 max-w-md">
+            {meta.map(({ k, v }) => (
+              <div key={k} className="flex justify-between gap-4 text-sm">
+                <dt className="text-quiet flex-shrink-0">{k}</dt>
+                <dd className="text-navy text-right">{v}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
       )}
 
-      {/* Bio — hidden if absent or blank (per D-02 step 5, D-11) */}
-      {person.bio && person.bio.trim().length > 0 && (
-        <p className="font-serif text-navy leading-relaxed max-w-prose mb-8">
-          {person.bio}
-        </p>
+      {/* Bio — hidden if absent */}
+      {person.bio && (
+        <section className="mb-12 pt-9 border-t hairline max-w-prose">
+          <p className="font-serif italic text-muted text-base leading-[1.75]">
+            {person.bio}
+          </p>
+        </section>
       )}
 
-      {/* Relations section — only shown when at least one block is non-empty (per D-14) */}
-      {(spouses.length > 0 || children.length > 0 || parents.length > 0) && (
-        <div className="border-t hairline pt-6 mb-8 flex flex-col gap-5">
-
-          {/* Spouses block (per D-02 step 6, D-09) */}
-          {spouses.length > 0 && (
-            <div>
-              <p className="eyebrow text-quiet mb-2">
-                {spouses.length === 1 ? 'Married to' : 'Marriages'}
-              </p>
-              <ul className="flex flex-col gap-1">
-                {spouses.map((s) => (
-                  <li key={s.id}>
-                    <Link
-                      href={`/person/${s.id}`}
-                      className="font-serif text-navy hover:text-gold transition-colors"
-                    >
-                      {s.name}
-                    </Link>
-                    {s.birthYear && (
-                      <span className="text-quiet text-xs ml-2">
-                        ({formatYears(s.birthYear, s.deathYear)})
-                      </span>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {/* Children block (per D-02 step 7, D-09) */}
-          {children.length > 0 && (
-            <div>
-              <p className="eyebrow text-quiet mb-2">Children</p>
-              <ul className="flex flex-col gap-1">
-                {children.map((c) => (
-                  <li key={c.id}>
-                    <Link
-                      href={`/person/${c.id}`}
-                      className="font-serif text-navy hover:text-gold transition-colors"
-                    >
-                      {c.name}
-                    </Link>
-                    {c.birthYear && (
-                      <span className="text-quiet text-xs ml-2">
-                        ({formatYears(c.birthYear, c.deathYear)})
-                      </span>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {/* Parents block (per D-02 step 8, D-09) */}
-          {parents.length > 0 && (
-            <div>
-              <p className="eyebrow text-quiet mb-2">Parents</p>
-              <ul className="flex flex-col gap-1">
-                {parents.map((p) => (
-                  <li key={p.id}>
-                    <Link
-                      href={`/person/${p.id}`}
-                      className="font-serif text-navy hover:text-gold transition-colors"
-                    >
-                      {p.name}
-                    </Link>
-                    {p.birthYear && (
-                      <span className="text-quiet text-xs ml-2">
-                        ({formatYears(p.birthYear, p.deathYear)})
-                      </span>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-        </div>
+      {/* Photo grid — CollectionPhotoGrid is the Phase 8 Client wrapper;
+          clicking a photo opens the shared Lightbox filtered to this person's photos */}
+      {photos.length > 0 && (
+        <section className="mb-14">
+          <h2 className="eyebrow text-quiet mb-6 text-xs">
+            PHOTOGRAPHS OF {person.name.toUpperCase()}
+          </h2>
+          <CollectionPhotoGrid photos={photos} />
+        </section>
       )}
 
-      {/* Photos section (per D-02 steps 9–10) */}
-      <section>
-        <p className="eyebrow text-quiet mb-5">
-          Photographs of {person.name}
-        </p>
-        {/* PhotoGrid with filtered photos prop — empty state handled inside PhotoGrid (per D-10) */}
-        <PhotoGrid photos={personPhotos} />
-      </section>
+      {/* Video grid — PlaylistVideoGrid is the Phase 9 Client wrapper;
+          clicking a video opens VideoLightbox filtered to this person's videos */}
+      {videos.length > 0 && (
+        <section className="mb-14">
+          <h2 className="eyebrow text-quiet mb-6 text-xs">
+            VIDEOS FEATURING {person.name.toUpperCase()}
+          </h2>
+          <PlaylistVideoGrid videos={videos} />
+        </section>
+      )}
+
+      {/* Combined empty state — only shown when BOTH photos AND videos are absent */}
+      {photos.length === 0 && videos.length === 0 && (
+        <section className="py-12 border-t hairline">
+          <p className="text-muted text-sm">
+            No photographs or videos of this person yet.
+          </p>
+        </section>
+      )}
     </main>
   )
 }
