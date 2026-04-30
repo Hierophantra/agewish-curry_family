@@ -1,6 +1,7 @@
 // components/gallery/PhotoCard.tsx
 // Server Component — renders one photo card with image, date eyebrow, caption.
-// No 'use client' — this runs entirely on the server.
+// Stays server-side — no client JS needed for Tailwind hover utilities.
+// D-07: Hover lift (shadow-md + -translate-y-0.5) applied to outermost element per render path.
 import Image from 'next/image'
 import Link from 'next/link'
 import type { Photo } from '@/lib/types'
@@ -24,8 +25,8 @@ export default function PhotoCard({ photo }: PhotoCardProps) {
   const dateLabel = formatDate(photo.dateTaken)
   const hasPersonLink = photo.peopleIds.length > 0
 
-  const cardContent = (
-    <article className="flex flex-col">
+  const innerContent = (
+    <>
       {/* Image container — 4:3 aspect ratio, ivory placeholder while loading */}
       <div className="relative aspect-[4/3] bg-ivory overflow-hidden">
         <Image
@@ -46,18 +47,26 @@ export default function PhotoCard({ photo }: PhotoCardProps) {
           <p className="font-serif text-navy text-sm leading-snug">{photo.caption}</p>
         )}
       </div>
-    </article>
+    </>
   )
 
   // Wrap in Link only when photo has a person reference (per D-20).
   // Links to the primary person on this photo (peopleIds[0]).
+  // Hover lift on outermost element in each render path.
   if (hasPersonLink) {
     return (
-      <Link href={`/person/${photo.peopleIds[0]}`} className="block">
-        {cardContent}
+      <Link
+        href={`/person/${photo.peopleIds[0]}`}
+        className="block transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
+      >
+        <article className="flex flex-col">{innerContent}</article>
       </Link>
     )
   }
 
-  return cardContent
+  return (
+    <article className="flex flex-col transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md">
+      {innerContent}
+    </article>
+  )
 }

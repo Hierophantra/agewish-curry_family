@@ -1,7 +1,8 @@
 // components/video/VideoCard.tsx
 // Server Component — renders one video card: player + date eyebrow + title + optional description.
 // Card structure per D-11: VideoPlayer → date eyebrow → title → description.
-// No 'use client' — VideoPlayer and its children are all Server Components.
+// Stays server-side — VideoPlayer and its children render on the server.
+// D-07: Hover lift (shadow-md + -translate-y-0.5) on the article wrapper.
 import type { Video } from '@/lib/types'
 import VideoPlayer from '@/components/video/VideoPlayer'
 
@@ -23,7 +24,7 @@ export default function VideoCard({ video }: VideoCardProps) {
   const dateLabel = formatDate(video.dateTaken)
 
   return (
-    <article className="flex flex-col">
+    <article className="flex flex-col transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md">
       {/* 16:9 player — YouTubeEmbed facade handles thumbnail + deferred iframe internally */}
       <VideoPlayer video={video} />
 

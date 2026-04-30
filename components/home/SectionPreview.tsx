@@ -4,6 +4,7 @@
 // D-33: NO preview images in v1 — text-forward archival aesthetic.
 // D-34: bg-ivory background (alternating with white hero).
 // D-15: Section padding py-11 px-7.
+// D-09: Hover lift on card group + arrow translate-x on hover.
 import Link from 'next/link'
 
 const SECTIONS = [
@@ -29,7 +30,10 @@ export default function SectionPreview() {
     <section className="bg-ivory py-11 px-7">
       <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
         {SECTIONS.map((section) => (
-          <div key={section.href} className="flex flex-col gap-2">
+          <div
+            key={section.href}
+            className="flex flex-col gap-2 group rounded p-3 -mx-3 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-sm"
+          >
             {/* Section name — serif heading, sentence case */}
             <h2 className="font-serif text-navy text-xl font-normal">
               {section.title}
@@ -40,12 +44,12 @@ export default function SectionPreview() {
               {section.description}
             </p>
 
-            {/* Arrow link — sentence case */}
+            {/* Arrow link — sentence case; arrow span translates right on card hover */}
             <Link
               href={section.href}
-              className="text-sm text-navy font-medium mt-1 hover:text-gold transition-colors"
+              className="text-sm text-navy font-medium mt-1 hover:text-gold transition-colors group-hover:[&_span]:translate-x-1"
             >
-              Explore →
+              Explore <span className="inline-block transition-transform duration-200">→</span>
             </Link>
           </div>
         ))}

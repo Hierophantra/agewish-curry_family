@@ -32,7 +32,7 @@ export default function PersonNode({ node: _node, name, isActive, relationLabel,
         'transition-colors duration-150',
         isActive
           ? 'bg-ivory hairline-emphasis border-navy'
-          : 'bg-white hairline border-stone hover:bg-ivory',
+          : 'bg-white hairline border-stone hover:bg-ivory hover:ring-2 hover:ring-gold-deep',
       ].join(' ')}
       style={style}
     >
