@@ -34,7 +34,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **DESIGN-05**: All metadata eyebrows use uppercase + 0.22em letter-spacing
 - [x] **DESIGN-06**: All copy is sentence case — no Title Case, no ALL CAPS (except eyebrows)
 - [x] **DESIGN-07**: Hairlines render at `0.5px solid #E2DFD5`; emphasis at `1.25px`
-- [ ] **DESIGN-08**: Site is responsive — works on phones, tablets, desktop
+- [x] **DESIGN-08**: Site is responsive — works on phones, tablets, desktop
 
 ### Navigation
 
@@ -155,7 +155,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DESIGN-05 | Phase 1 | Complete |
 | DESIGN-06 | Phase 1 | Complete |
 | DESIGN-07 | Phase 1 | Complete |
-| DESIGN-08 | Phase 5 | Pending |
+| DESIGN-08 | Phase 5 | Complete (05-03) |
 | NAV-01 | Phase 1 | Complete (01-05) |
 | NAV-02 | Phase 1 | Complete (01-05) |
 | NAV-03 | Phase 1 | Complete (01-05) |

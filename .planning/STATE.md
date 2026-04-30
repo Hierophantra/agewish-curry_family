@@ -3,9 +3,9 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 5 Plan 02 complete — hover lifts on cards + Hero stagger animation
-last_updated: "2026-04-30T07:07:24Z"
-last_activity: 2026-04-30 — Phase 5 Plan 02 complete; Hero converted to Client Component with motion staggerChildren; hover lifts on PhotoCard/VideoCard/SectionPreview (Tailwind only); PersonNode gold ring on hover; npm run build exits 0
+stopped_at: Phase 5 Plan 03 complete — mobile responsive polish (tree scroll gradient, PersonPanel bottom-sheet, NavTabs overflow, react-family-tree removed)
+last_updated: "2026-04-30T07:12:06Z"
+last_activity: 2026-04-30 — Phase 5 Plan 03 complete; FamilyTreeCanvas right-edge gradient indicator (lg:hidden); PersonPanel mobile bottom-sheet (fixed inset-x-0 max-h-[60vh]) + md+ absolute right panel; NavTabs overflow-x-auto scrollbar-none; react-family-tree removed from package.json; npm run build exits 0
 progress:
   total_phases: 6
   completed_phases: 1
@@ -26,9 +26,9 @@ See: .planning/PROJECT.md (updated 2026-04-29)
 ## Current Position
 
 Phase: 5 of 6 (Visual Polish) — in progress
-Plan: 2 of 4 in current phase (05-01 done; 05-02 done; 05-03, 05-04 pending)
+Plan: 3 of 4 in current phase (05-01 done; 05-02 done; 05-03 done; 05-04 pending)
 Status: Executing Phase 5
-Last activity: 2026-04-30 — Phase 5 Plan 02 complete; Hero staggerChildren entry animation (star → heading → subtitle); hover lifts on PhotoCard, VideoCard, SectionPreview cards (Tailwind only, Server Components preserved); PersonNode hover:ring-2 ring-gold-deep; npm run build exits 0
+Last activity: 2026-04-30 — Phase 5 Plan 03 complete; FamilyTreeCanvas right-edge gradient indicator (pointer-events-none, lg:hidden); PersonPanel responsive bottom-sheet (fixed, inset-x-0, max-h-[60vh], rounded-t-xl on mobile; md:absolute right panel on tablet/desktop); NavTabs overflow-x-auto scrollbar-none; react-family-tree 3.2.0 removed from package.json; npm run build exits 0
 
 Progress: [█████░░░░░] 50% (3/6 phases complete)
 
@@ -67,6 +67,7 @@ Progress: [█████░░░░░] 50% (3/6 phases complete)
 | Phase 04 P02 | 2m 43s | 2 tasks | 3 files |
 | Phase 05 P01 | ~4m 0s | 2 tasks | 3 files |
 | Phase 05 P02 | 2m 43s | 2 tasks | 5 files |
+| Phase 05 P03 | 2m 0s | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -104,6 +105,9 @@ Recent decisions affecting current work:
 - 05-01: Cormorant Garamond weights ['400','500'] only — two-weight rule preserved; style ['normal','italic'] added for future blockquote variants without extra weight load
 - 05-02: motion itemVariants ease requires 'as const' assertion to satisfy TypeScript Easing literal type — string inferred from object literal breaks strict mode
 - 05-02: PhotoCard refactored to extract innerContent fragment to avoid duplicating image/metadata JSX across two render paths (Link-wrapped vs plain article)
+- 05-03: PersonPanel mobile uses fixed (not absolute) bottom-sheet so panel anchors to viewport, not tree canvas container — prevents clipping on small-height canvas div
+- 05-03: FamilyTreeCanvas gradient indicator uses lg:hidden (not md:hidden) — tree may still overflow on tablet; gradient stays visible until laptop breakpoint
+- 05-03: react-family-tree removed; relatives-tree retained — FamilyTreeCanvas imports ExtNode/Connector types from relatives-tree/lib/types
 
 ### Pending Todos
 
@@ -123,6 +127,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-30T07:07:24Z
-Stopped at: Completed 05-02-PLAN.md — hover lifts + Hero stagger animation; npm run build exits 0
+Last session: 2026-04-30T07:12:06Z
+Stopped at: Completed 05-03-PLAN.md — mobile responsive polish (tree scroll gradient, PersonPanel bottom-sheet, NavTabs overflow, react-family-tree removed); npm run build exits 0
 Resume file: None
