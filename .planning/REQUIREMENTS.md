@@ -45,13 +45,13 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Content Architecture
 
-- [ ] **CONT-01**: All family data lives in JSON files under `/content/` (family.json, photos.json, videos.json)
-- [ ] **CONT-02**: TypeScript types in `/lib/types.ts` mirror the JSON schemas exactly
-- [ ] **CONT-03**: Typed loaders in `/lib/content.ts` are the SOLE access point for content data — no JSX hardcoded data, no direct fs reads from components
-- [ ] **CONT-04**: Loaders validate JSON at load time using Zod schemas
-- [ ] **CONT-05**: Person `id` is kebab-case slug (e.g., `william-curry`) and is stable across all content types
-- [ ] **CONT-06**: Bidirectional references (photo `peopleIds[]` ↔ person `photoIds[]`) are validated by the loader
-- [ ] **CONT-07**: Stub data — at least 2-3 example entries per content type for v1 scaffold
+- [x] **CONT-01**: All family data lives in JSON files under `/content/` (family.json, photos.json, videos.json)
+- [x] **CONT-02**: TypeScript types in `/lib/types.ts` mirror the JSON schemas exactly
+- [x] **CONT-03**: Typed loaders in `/lib/content.ts` are the SOLE access point for content data — no JSX hardcoded data, no direct fs reads from components
+- [x] **CONT-04**: Loaders validate JSON at load time using Zod schemas
+- [x] **CONT-05**: Person `id` is kebab-case slug (e.g., `william-curry`) and is stable across all content types
+- [x] **CONT-06**: Bidirectional references (photo `peopleIds[]` ↔ person `photoIds[]`) are validated by the loader
+- [x] **CONT-07**: Stub data — at least 2-3 example entries per content type for v1 scaffold
 
 ### Home Page
 
@@ -160,13 +160,13 @@ Which phases cover which requirements. Updated during roadmap creation.
 | NAV-02 | Phase 1 | Pending |
 | NAV-03 | Phase 1 | Pending |
 | NAV-04 | Phase 1 | Pending |
-| CONT-01 | Phase 1 | Pending |
-| CONT-02 | Phase 1 | Pending |
-| CONT-03 | Phase 1 | Pending |
-| CONT-04 | Phase 1 | Pending |
-| CONT-05 | Phase 1 | Pending |
-| CONT-06 | Phase 1 | Pending |
-| CONT-07 | Phase 1 | Pending |
+| CONT-01 | Phase 1 | Complete (01-03) |
+| CONT-02 | Phase 1 | Complete (01-03) |
+| CONT-03 | Phase 1 | Complete (01-03) |
+| CONT-04 | Phase 1 | Complete (01-03) |
+| CONT-05 | Phase 1 | Complete (01-03) |
+| CONT-06 | Phase 1 | Complete (01-03) |
+| CONT-07 | Phase 1 | Complete (01-03) |
 | HOME-01 | Phase 1 | Pending |
 | HOME-02 | Phase 1 | Pending |
 | HOME-03 | Phase 1 | Pending |
