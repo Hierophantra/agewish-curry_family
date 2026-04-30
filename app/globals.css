@@ -1,0 +1,67 @@
+/* app/globals.css */
+/* Tailwind v4 CSS-first config — no tailwind.config.ts exists */
+/* @import replaces v3's three @tailwind directives (@tailwind base/components/utilities) */
+@import "tailwindcss";
+
+@theme {
+  /* ── AgeWish Brand Palette ── */
+  /* Complete class names generated: bg-navy, text-navy, border-navy, fill-navy, etc. */
+  /* Note: --color-muted (NOT --color-text-muted) → generates text-muted (no double-prefix) */
+  --color-navy:      #1F2D5C;
+  --color-gold:      #E8A91F;
+  --color-gold-deep: #B8851A;
+  --color-ivory:     #FBF9F2;
+  --color-border:    #E2DFD5;
+  --color-stone:     #C9C4B0;
+  --color-muted:     #6B6960;
+  --color-quiet:     #8B8778;
+
+  /* ── Typography — body (Inter via CSS variable from next/font) ── */
+  /* var(--font-inter) is injected on <html> by next/font/google in layout.tsx */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  /* ── Typography — serif headings (Georgia fallback for v1; Cormorant in Phase 5) ── */
+  --font-serif: Georgia, 'Times New Roman', serif;
+
+  /* ── Font weights — two-weight rule: ONLY 400 and 500 ── */
+  /* By defining only these two, Tailwind only generates font-normal and font-medium. */
+  /* font-semibold (600) and font-bold (700) are intentionally absent. */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+}
+
+/* ── Custom utilities (Tailwind v4 @utility directive) ── */
+
+/* Eyebrow text style: uppercase + wide tracking for metadata labels */
+@utility eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: var(--text-xs, 0.75rem);
+  font-weight: 500;
+}
+
+/* Default hairline border: 0.5px, AgeWish border color */
+@utility hairline {
+  border-width: 0.5px;
+  border-color: #E2DFD5;
+}
+
+/* Emphasis hairline: 1.25px for active tab underlines, brand circles */
+@utility hairline-emphasis {
+  border-width: 1.25px;
+  border-color: #E2DFD5;
+}
+
+/* ── Base styles ── */
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    color: #1a1a1a;
+    background-color: white;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+  }
+}
