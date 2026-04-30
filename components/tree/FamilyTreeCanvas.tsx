@@ -7,6 +7,7 @@ import type { ExtNode, Connector } from 'relatives-tree/lib/types'
 import type { Person, Photo } from '@/lib/types'
 import PersonNode from './PersonNode'
 import ConnectorLine from './ConnectorLine'
+import PersonPanel from './PersonPanel'
 
 // Layout constants — keep in sync with lib/tree.ts (cannot import lib/tree.ts here:
 // it has `import 'server-only'` which would fail in the client bundle).
@@ -15,8 +16,6 @@ const NODE_WIDTH = 160   // px
 const NODE_HEIGHT = 60   // px
 const H_UNIT = 200       // px per horizontal grid unit (160px node + 40px gap)
 const V_UNIT = 100       // px per vertical grid unit  (60px node  + 40px gap)
-// PersonPanel imported in Plan 04-03 — leave a TODO comment here for now:
-// import PersonPanel from './PersonPanel'
 
 export interface FamilyTreeCanvasProps {
   nodes: readonly ExtNode[]
@@ -71,8 +70,7 @@ export default function FamilyTreeCanvas({
   connectors,
   canvas,
   people,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  photos: _photos,  // _photos unused until PersonPanel wired in Plan 04-03
+  photos,
 }: FamilyTreeCanvasProps) {
   const [selectedId, setSelectedId] = useState<string | null>(null)
 
@@ -86,7 +84,8 @@ export default function FamilyTreeCanvas({
   return (
     // D-10: overflow-x-auto enables horizontal scroll on narrow viewports
     <div className="overflow-x-auto">
-      {/* Relative-positioned canvas — all nodes + connectors are absolutely positioned children */}
+      {/* Relative-positioned canvas — all nodes + connectors are absolutely positioned children.
+          PersonPanel's `absolute top-0 right-0` positions relative to this div (D-14). */}
       <div
         className="relative"
         style={{ width: canvasWidth, height: canvasHeight, minHeight: 120 }}
@@ -118,14 +117,27 @@ export default function FamilyTreeCanvas({
             />
           )
         })}
-      </div>
 
-      {/* PersonPanel slot — wired in Plan 04-03 */}
-      {/* AnimatePresence is placed here so it wraps PersonPanel correctly */}
-      <AnimatePresence mode="wait">
-        {/* TODO(04-03): render PersonPanel when selectedId is set */}
-        {null}
-      </AnimatePresence>
+        {/* PersonPanel — D-14: absolutely positioned within tree container (relative parent above).
+            AnimatePresence fires exit animation when selectedId becomes null or changes.
+            key={selectedId} is CRITICAL: forces remount on person change so exit fires between selections. */}
+        <AnimatePresence mode="wait">
+          {selectedId && (() => {
+            const person = people.find((p) => p.id === selectedId)
+            if (!person) return null
+            const personPhotos = photos.filter((ph) => person.photoIds.includes(ph.id))
+            return (
+              <PersonPanel
+                key={selectedId}          // CRITICAL: key forces remount on person change
+                person={person}           // so exit animation fires between selections
+                photos={personPhotos}
+                people={people}
+                onClose={() => setSelectedId(null)}
+              />
+            )
+          })()}
+        </AnimatePresence>
+      </div>
     </div>
   )
 }
