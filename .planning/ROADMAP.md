@@ -2,7 +2,9 @@
 
 ## Overview
 
-Six phases build the archive incrementally from secure scaffold to fully navigable family history. Phase 1 is the most load-bearing — it establishes the auth two-file split, Tailwind token set, and content loader contract that every subsequent phase depends on. Phases 2 and 3 add the media galleries as independent vertical slices. Phase 4 adds the family tree (highest-risk phase due to relatives-tree multi-spouse bug). Phase 5 applies visual polish across the whole site. Phase 6 completes person detail pages, closing the bidirectional navigation loop opened in Phase 1.
+**v1 milestone (Phases 1-6) — COMPLETE.** The functional foundation: scaffolded, auth-gated, branded, with photo/video galleries, family tree (multi-spouse mitigated), and person detail pages.
+
+**v2 milestone (Phases 7-13) — IN PROGRESS.** Substantial refactor introducing collections-and-playlists-as-tags architecture, per-section focus views, shared lightbox component, prototype-fidelity tree panel, and the real AgeWish brand mark via PNG logos. Driven by `CURRY_FAMILY_HUB_BRIEF_v2.md` and `curry-family-hub-prototype.html`.
 
 ## Phases
 
@@ -12,12 +14,24 @@ Six phases build the archive incrementally from secure scaffold to fully navigab
 
 Decimal phases appear between their surrounding integers in numeric order.
 
+### v1 (complete)
+
 - [x] **Phase 1: Scaffold + Auth Gate + Design System** - Secure foundation, design tokens, content loader contract, and home page (Vercel deploy deferred — code on GitHub, prerequisites complete)
 - [x] **Phase 2: Photo Gallery** - Grid of family photographs with metadata, loaded from JSON
 - [x] **Phase 3: Video Gallery** - Grid of family films with source-abstracted video player
 - [x] **Phase 4: Family Tree** - Interactive tree with clickable nodes and person side panel (multi-spouse GitHub #24 mitigation verified)
 - [x] **Phase 5: Visual Polish** - Responsive QA, motion polish, typography refinement across all pages (visual judgment deferred to user real-browser check)
 - [x] **Phase 6: Person Detail Pages** - Individual person pages linked from tree nodes and photo metadata
+
+### v2 (in progress)
+
+- [ ] **Phase 7: v2 Foundation Migration** - Schema migrations (collections/playlists, richer Person), rename films→videos, brand mark via real PNG logos, prototype's hero/footer copy, prototype's 8-person family data, fresh photo placeholders
+- [ ] **Phase 8: Photo Collections + Lightbox** - `/photographs` becomes collection grid; `/photographs/[collectionId]` shows photos in collection; new shared `<Lightbox />` component (full-screen viewer with prev/next/Esc)
+- [ ] **Phase 9: Video Playlists + Video Lightbox + Featured** - `/videos` (renamed) shows featured videos + playlist grid; `/videos/[playlistId]` shows playlist videos; `<VideoLightbox />` component
+- [ ] **Phase 10: Tree Refresh** - Adopt prototype's panel UX exactly (4:5 aspect carousel, key-value meta rows, gold-deep eyebrow, italic dates), richer relation labels (GRANDFATHER/SON/DAUGHTER not just CHILD)
+- [ ] **Phase 11: Person Pages Refresh** - Consume new richer schema (eyebrow, datesLabel, relationLabel), photo grid uses collections-aware filter, link from collection back to person
+- [ ] **Phase 12: Home Polish + Curated Previews** - Home page shows tree preview (one generation), 3-6 highlighted photos, 1-2 featured videos; each preview links to its focus view
+- [ ] **Phase 13: Final v2 Polish + Real Content Prep** - Edge cases, motion refinements, ensure all content is editable via JSON without code changes; documentation for adding real Curry content
 
 ## Phase Details
 

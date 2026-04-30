@@ -1,9 +1,9 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.0
-milestone_name: milestone
+milestone: v2.0
+milestone_name: v2 — Collections, Playlists, Lightbox, Brand
 status: executing
-stopped_at: Phase 6 Plan 01 complete — person detail pages, PhotoGrid prop refactor, PersonPanel View full page link
+stopped_at: v1 complete (6 phases). v2 starting — Phase 7 foundation migration
 last_updated: "2026-04-30T07:28:02Z"
 last_activity: 2026-04-30 — Phase 6 Plan 01 complete; app/(protected)/person/[id]/page.tsx full async Server Component with generateStaticParams (6 pre-rendered routes) + notFound(); PhotoGrid refactored to accept optional photos prop; PersonPanel View full page Link added; npm run build exits 0
 progress:
