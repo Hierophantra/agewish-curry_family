@@ -82,14 +82,24 @@ export default function FamilyTreeCanvas({
   const rootId = nodes[0]?.id ?? ''
 
   return (
-    // D-10: overflow-x-auto enables horizontal scroll on narrow viewports
-    <div className="overflow-x-auto">
-      {/* Relative-positioned canvas — all nodes + connectors are absolutely positioned children.
-          PersonPanel's `absolute top-0 right-0` positions relative to this div (D-14). */}
+    // D-12: relative wrapper hosts the right-edge gradient indicator
+    <div className="relative">
+      {/* Right-edge gradient fade — signals there is more content to scroll to on mobile.
+          pointer-events-none so it does not block horizontal scroll touch events.
+          lg:hidden hides it on laptop+ where the tree typically fits the viewport. */}
       <div
-        className="relative"
-        style={{ width: canvasWidth, height: canvasHeight, minHeight: 120 }}
-      >
+        className="pointer-events-none absolute right-0 top-0 h-full w-12 z-20 lg:hidden"
+        style={{ background: 'linear-gradient(to right, transparent, white)' }}
+        aria-hidden="true"
+      />
+      {/* D-10: overflow-x-auto enables horizontal scroll on narrow viewports */}
+      <div className="overflow-x-auto">
+        {/* Relative-positioned canvas — all nodes + connectors are absolutely positioned children.
+            PersonPanel's `absolute top-0 right-0` positions relative to this div (D-14). */}
+        <div
+          className="relative"
+          style={{ width: canvasWidth, height: canvasHeight, minHeight: 120 }}
+        >
         {/* Connector lines rendered BEFORE nodes so nodes appear on top */}
         {connectors.map(([x1, y1, x2, y2], i) => (
           <ConnectorLine key={i} x1={x1} y1={y1} x2={x2} y2={y2} />
@@ -137,6 +147,7 @@ export default function FamilyTreeCanvas({
             )
           })()}
         </AnimatePresence>
+        </div>
       </div>
     </div>
   )

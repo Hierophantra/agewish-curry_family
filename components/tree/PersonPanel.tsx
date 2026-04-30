@@ -26,11 +26,12 @@ export default function PersonPanel({ person, photos, people, onClose }: PersonP
   const years = formatYears(person.birthYear, person.deathYear)
 
   return (
-    // D-14: slides in from right, absolute positioned, contained within tree container
-    // w-80 = 320px on desktop; full-width on mobile via responsive override
-    // z-10: appears above canvas nodes without covering the full page
+    // D-16: mobile bottom-sheet (full-width, slides from bottom) + md+ right panel (original behavior).
+    // Mobile: fixed bottom-sheet, full width, max 60% viewport height, rounded top corners.
+    // md+: absolute right panel, full height, 320px wide.
+    // z-10: appears above canvas nodes without covering the full page.
     <motion.aside
-      className="absolute top-0 right-0 h-full w-80 bg-ivory border-l hairline z-10 flex flex-col overflow-y-auto"
+      className="fixed bottom-0 inset-x-0 max-h-[60vh] rounded-t-xl md:absolute md:top-0 md:right-0 md:bottom-auto md:inset-x-auto md:h-full md:w-80 md:rounded-none bg-ivory border-t hairline md:border-t-0 md:border-l z-10 flex flex-col overflow-y-auto"
       initial={{ x: '100%', opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       exit={{ x: '100%', opacity: 0 }}
