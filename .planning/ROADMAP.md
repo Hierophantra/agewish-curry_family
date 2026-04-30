@@ -17,7 +17,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 3: Video Gallery** - Grid of family films with source-abstracted video player
 - [x] **Phase 4: Family Tree** - Interactive tree with clickable nodes and person side panel (multi-spouse GitHub #24 mitigation verified)
 - [x] **Phase 5: Visual Polish** - Responsive QA, motion polish, typography refinement across all pages (visual judgment deferred to user real-browser check)
-- [ ] **Phase 6: Person Detail Pages** - Individual person pages linked from tree nodes and photo metadata
+- [x] **Phase 6: Person Detail Pages** - Individual person pages linked from tree nodes and photo metadata
 
 ## Phase Details
 
@@ -108,7 +108,9 @@ Plans:
   1. Visiting `/person/william-curry` (or any person slug from `family.json`) renders a full person page with name, dates, birthplace, bio, and photo grid
   2. Clicking a tree node navigates to that person's detail page (link is active in tree)
   3. Person slugs used in photo `peopleIds[]` arrays resolve to working person page URLs
-**Plans**: TBD
+**Plans**: 1 plan
+Plans:
+- [x] 06-01-PLAN.md — Person detail page (full impl + generateStaticParams), PhotoGrid prop refactor, PersonPanel "View full page" link
 **UI hint**: yes
 
 ## Progress
@@ -123,4 +125,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 3. Video Gallery | 1/1 | Complete | 2026-04-30 |
 | 4. Family Tree | 2/3 | In Progress | - |
 | 5. Visual Polish | 3/4 | In Progress | - |
-| 6. Person Detail Pages | 0/TBD | Not started | - |
+| 6. Person Detail Pages | 1/1 | Complete | 2026-04-30 |

@@ -3,9 +3,9 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 5 Plan 03 complete — mobile responsive polish (tree scroll gradient, PersonPanel bottom-sheet, NavTabs overflow, react-family-tree removed)
-last_updated: "2026-04-30T07:12:06Z"
-last_activity: 2026-04-30 — Phase 5 Plan 03 complete; FamilyTreeCanvas right-edge gradient indicator (lg:hidden); PersonPanel mobile bottom-sheet (fixed inset-x-0 max-h-[60vh]) + md+ absolute right panel; NavTabs overflow-x-auto scrollbar-none; react-family-tree removed from package.json; npm run build exits 0
+stopped_at: Phase 6 Plan 01 complete — person detail pages, PhotoGrid prop refactor, PersonPanel View full page link
+last_updated: "2026-04-30T07:28:02Z"
+last_activity: 2026-04-30 — Phase 6 Plan 01 complete; app/(protected)/person/[id]/page.tsx full async Server Component with generateStaticParams (6 pre-rendered routes) + notFound(); PhotoGrid refactored to accept optional photos prop; PersonPanel View full page Link added; npm run build exits 0
 progress:
   total_phases: 6
   completed_phases: 1
@@ -25,12 +25,12 @@ See: .planning/PROJECT.md (updated 2026-04-29)
 
 ## Current Position
 
-Phase: 5 of 6 (Visual Polish) — in progress
-Plan: 3 of 4 in current phase (05-01 done; 05-02 done; 05-03 done; 05-04 pending)
-Status: Executing Phase 5
-Last activity: 2026-04-30 — Phase 5 Plan 03 complete; FamilyTreeCanvas right-edge gradient indicator (pointer-events-none, lg:hidden); PersonPanel responsive bottom-sheet (fixed, inset-x-0, max-h-[60vh], rounded-t-xl on mobile; md:absolute right panel on tablet/desktop); NavTabs overflow-x-auto scrollbar-none; react-family-tree 3.2.0 removed from package.json; npm run build exits 0
+Phase: 6 of 6 (Person Detail Pages) — complete
+Plan: 1 of 1 in current phase (06-01 done)
+Status: All phases complete — v1.0 archive done
+Last activity: 2026-04-30 — Phase 6 Plan 01 complete; full person detail pages with generateStaticParams (6 pre-rendered routes), notFound() guard, relation links, photo grid; PhotoGrid optional photos prop; PersonPanel View full page Link; npm run build exits 0
 
-Progress: [█████░░░░░] 50% (3/6 phases complete)
+Progress: [██████████] 100% (6/6 phases complete)
 
 ## Phase 1 outcome
 
@@ -68,6 +68,7 @@ Progress: [█████░░░░░] 50% (3/6 phases complete)
 | Phase 05 P01 | ~4m 0s | 2 tasks | 3 files |
 | Phase 05 P02 | 2m 43s | 2 tasks | 5 files |
 | Phase 05 P03 | 2m 0s | 2 tasks | 4 files |
+| Phase 06 P01 | 2m 15s | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -108,6 +109,9 @@ Recent decisions affecting current work:
 - 05-03: PersonPanel mobile uses fixed (not absolute) bottom-sheet so panel anchors to viewport, not tree canvas container — prevents clipping on small-height canvas div
 - 05-03: FamilyTreeCanvas gradient indicator uses lg:hidden (not md:hidden) — tree may still overflow on tablet; gradient stays visible until laptop breakpoint
 - 05-03: react-family-tree removed; relatives-tree retained — FamilyTreeCanvas imports ExtNode/Connector types from relatives-tree/lib/types
+- 06-01: Photo filter uses photo.peopleIds.includes(person.id) not person.photoIds — photos tag people, not the reverse
+- 06-01: PhotoGrid accepts optional photos prop with = {} default; absent prop falls back to getPhotos() preserving /photographs page
+- 06-01: PersonPanel "View full page" link styled as eyebrow + hover:text-gold — subtle accent consistent with two-weight design system
 
 ### Pending Todos
 
@@ -127,6 +131,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-30T07:12:06Z
-Stopped at: Completed 05-03-PLAN.md — mobile responsive polish (tree scroll gradient, PersonPanel bottom-sheet, NavTabs overflow, react-family-tree removed); npm run build exits 0
+Last session: 2026-04-30T07:28:02Z
+Stopped at: Completed 06-01-PLAN.md — person detail pages, PhotoGrid prop refactor, PersonPanel View full page link; npm run build exits 0; all 6 phases complete
 Resume file: None
