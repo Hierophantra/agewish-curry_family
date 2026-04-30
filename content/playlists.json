@@ -1,0 +1,16 @@
+[
+  {
+    "id": "birthdays",
+    "title": "Birthdays",
+    "subtitle": "Candles, cake, and the songs we always sing",
+    "coverVideoId": "grandfather-80th",
+    "description": "Birthday recordings from across the years."
+  },
+  {
+    "id": "reunions",
+    "title": "Reunions",
+    "subtitle": "When the whole family was together",
+    "coverVideoId": "summer-reunion-2019",
+    "description": "Every reunion the family captured on video."
+  }
+]

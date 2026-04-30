@@ -1,0 +1,26 @@
+[
+  {
+    "id": "christmas-mornings",
+    "title": "Christmas mornings",
+    "subtitle": "Decades of December gatherings",
+    "coverPhotoId": "1974-christmas-01",
+    "dateLabel": "1974 — 2005",
+    "description": "Every Christmas the family could capture, from the old house through the years."
+  },
+  {
+    "id": "lake-house-summers",
+    "title": "Lake house summers",
+    "subtitle": "Where the family gathered",
+    "coverPhotoId": "1981-lake-house-01",
+    "dateLabel": "1981 — 1995",
+    "description": "Summers at the lake house William built in 1958."
+  },
+  {
+    "id": "wedding-days",
+    "title": "Wedding days",
+    "subtitle": "The unions that grew the family",
+    "coverPhotoId": "1953-wedding-01",
+    "dateLabel": "1953 — 2003",
+    "description": "Weddings across three generations."
+  }
+]
