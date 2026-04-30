@@ -1,20 +1,38 @@
 [
   {
-    "id": "video-001",
-    "title": "Placeholder film",
-    "description": "Replace with a real family film. This entry validates the schema.",
+    "id": "grandfather-80th",
+    "title": "Grandfather's 80th birthday",
+    "description": "William turns 80. The whole family gathered at the lake house for cake, stories, and a very off-key rendition of Happy Birthday.",
     "source": "youtube",
     "sourceId": "dQw4w9WgXcQ",
-    "dateTaken": "1970-01-01",
-    "peopleIds": []
+    "date": "2000-04-12",
+    "dateLabel": "April 2000",
+    "peopleIds": ["william-curry"],
+    "playlistIds": ["birthdays"],
+    "featured": true
   },
   {
-    "id": "video-002",
-    "title": "Me at the zoo",
-    "description": "Second placeholder for grid layout testing.",
+    "id": "margarets-65th",
+    "title": "Margaret's 65th birthday",
+    "description": "A surprise party for Margaret's 65th, organized by Emily and Sarah. Her reaction made the whole family cry.",
     "source": "youtube",
     "sourceId": "jNQXAC9IVRw",
-    "dateTaken": "2005-04-23",
-    "peopleIds": []
+    "date": "2017-03-14",
+    "dateLabel": "March 2017",
+    "peopleIds": ["margaret-curry"],
+    "playlistIds": ["birthdays"],
+    "featured": false
+  },
+  {
+    "id": "summer-reunion-2019",
+    "title": "Summer reunion at the lake",
+    "description": "The first full-family reunion in seven years. Shot on James's old camera, in the spirit of every summer before.",
+    "source": "youtube",
+    "sourceId": "9bZkp7q19f0",
+    "date": "2019-07-04",
+    "dateLabel": "July 2019",
+    "peopleIds": ["robert-curry", "margaret-curry", "james-curry"],
+    "playlistIds": ["reunions"],
+    "featured": true
   }
 ]
