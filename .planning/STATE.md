@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: "Completed 01-01-PLAN.md — scaffold + design tokens done"
-last_updated: "2026-04-30T04:27:00.160Z"
-last_activity: "2026-04-30 — Phase 1 Plan 01 executed: Next.js scaffold + Tailwind v4 design tokens"
+stopped_at: "Completed 01-02-PLAN.md — Auth.js v5 two-file split done; ready for 01-03 (content schema + loader)"
+last_updated: "2026-04-30T04:31:54Z"
+last_activity: "2026-04-30 — Phase 1 Plan 02 executed: Auth.js v5 two-file split, middleware gate, JWT session"
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 6
-  completed_plans: 1
-  percent: 17
+  completed_plans: 2
+  percent: 33
 ---
 
 # Project State
@@ -26,30 +26,30 @@ See: .planning/PROJECT.md (updated 2026-04-29)
 ## Current Position
 
 Phase: 1 of 6 (Scaffold + Auth Gate + Design System)
-Plan: 1 of 6 in current phase (01-01-PLAN.md COMPLETE)
+Plan: 2 of 6 in current phase (01-02-PLAN.md COMPLETE)
 Status: Executing Phase 1
-Last activity: 2026-04-30 — Plan 01-01 complete: Next.js 14.2.35 scaffold + Tailwind v4 design tokens
+Last activity: 2026-04-30 — Plan 01-02 complete: Auth.js v5 two-file split + middleware gate + JWT session
 
-Progress: [█░░░░░░░░░] 17% (1/6 plans in Phase 1)
+Progress: [██░░░░░░░░] 33% (2/6 plans in Phase 1)
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 1
-- Average duration: 8m 13s
-- Total execution time: ~0.14 hours
+- Total plans completed: 2
+- Average duration: 5m 16s
+- Total execution time: ~0.18 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 1 — Scaffold + Auth | 1/6 | 8m 13s | 8m 13s |
+| 1 — Scaffold + Auth | 2/6 | 10m 32s | 5m 16s |
 
 **Recent Trend:**
 
-- Last 5 plans: 01-01 (8m 13s)
-- Trend: Baseline established
+- Last 5 plans: 01-01 (8m 13s), 01-02 (2m 19s)
+- Trend: Accelerating — auth plan faster due to well-researched patterns
 
 *Updated after each plan completion*
 
@@ -60,7 +60,7 @@ Progress: [█░░░░░░░░░] 17% (1/6 plans in Phase 1)
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
 
-- Phase 1: Auth two-file split is mandatory — `auth.config.ts` (edge-safe) and `auth.ts` (full); middleware imports config-only only. Violation causes build failure.
+- Phase 1: Auth two-file split is mandatory — `auth.config.ts` (edge-safe) and `auth.ts` (full); middleware imports config-only only. Violation causes build failure. IMPLEMENTED in 01-02.
 - Phase 1: Tailwind v4 `@theme {}` palette tokens must be committed before any component work or production builds strip brand colours.
 - Phase 1: Person slug format is kebab-case (e.g., `william-curry`) — stable across all content types from Day 1.
 - Phase 4: relatives-tree multi-spouse bug (GitHub #24) must be prototyped with real Curry data before Phase 4 begins, not during it.
@@ -88,5 +88,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-04-30
-Stopped at: Completed 01-01-PLAN.md — scaffold + design tokens done; ready for 01-02 (auth two-file split)
+Stopped at: Completed 01-02-PLAN.md — auth two-file split done; ready for 01-03 (content schema + loader)
 Resume file: None

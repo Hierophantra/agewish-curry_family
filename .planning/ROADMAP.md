@@ -34,7 +34,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 6 plans
 Plans:
 - [x] 01-01-PLAN.md — Scaffold: Next.js 14.2.35, Tailwind v4, Inter font, globals.css @theme tokens
-- [ ] 01-02-PLAN.md — Auth two-file split: auth.config.ts (edge), auth.ts (Node), middleware.ts, API route
+- [x] 01-02-PLAN.md — Auth two-file split: auth.config.ts (edge), auth.ts (Node), middleware.ts, API route
 - [ ] 01-03-PLAN.md — Content schema + loader: lib/types.ts, lib/content.ts, stub JSON, lib/utils.ts
 - [ ] 01-04-PLAN.md — StarMark SVG, route group layouts, placeholder pages, protected auth() gate
 - [ ] 01-05-PLAN.md — TopNav + NavTabs + Footer + login page UI
@@ -105,7 +105,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Scaffold + Auth Gate + Design System | 1/6 | In progress | - |
+| 1. Scaffold + Auth Gate + Design System | 2/6 | In progress | - |
 | 2. Photo Gallery | 0/TBD | Not started | - |
 | 3. Video Gallery | 0/TBD | Not started | - |
 | 4. Family Tree | 0/TBD | Not started | - |
