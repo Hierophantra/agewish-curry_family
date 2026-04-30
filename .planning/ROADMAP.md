@@ -4,7 +4,7 @@
 
 **v1 milestone (Phases 1-6) — COMPLETE.** The functional foundation: scaffolded, auth-gated, branded, with photo/video galleries, family tree (multi-spouse mitigated), and person detail pages.
 
-**v2 milestone (Phases 7-13) — IN PROGRESS.** Substantial refactor introducing collections-and-playlists-as-tags architecture, per-section focus views, shared lightbox component, prototype-fidelity tree panel, and the real AgeWish brand mark via PNG logos. Driven by `CURRY_FAMILY_HUB_BRIEF_v2.md` and `curry-family-hub-prototype.html`.
+**v2 milestone (Phases 7-13) — COMPLETE.** Substantial refactor introducing collections-and-playlists-as-tags architecture, per-section focus views, shared lightbox component, prototype-fidelity tree panel, and the real AgeWish brand mark via PNG logos. Driven by `CURRY_FAMILY_HUB_BRIEF_v2.md` and `curry-family-hub-prototype.html`. See `.planning/V2-MILESTONE-COMPLETE.md` for full close-out summary.
 
 ## Phases
 
@@ -31,7 +31,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 10: Tree Refresh** - Adopt prototype's panel UX exactly (4:5 aspect carousel, key-value meta rows, gold-deep eyebrow, italic dates), richer relation labels (GRANDFATHER/SON/DAUGHTER not just CHILD)
 - [x] **Phase 11: Person Pages Refresh** - Consume new richer schema (eyebrow, datesLabel, spouseLabel), CollectionPhotoGrid with Lightbox, new PlaylistVideoGrid video section, linked parents/children
 - [x] **Phase 12: Home Polish + Curated Previews** - Home page shows tree preview (one generation), 3-6 highlighted photos, 1-2 featured videos; each preview links to its focus view
-- [ ] **Phase 13: Final v2 Polish + Real Content Prep** - Edge cases, motion refinements, ensure all content is editable via JSON without code changes; documentation for adding real Curry content
+- [x] **Phase 13: Final v2 Polish + Real Content Prep** - Edge cases audited clean; star motif confirmed; CONTENT_AUTHORING.md written; README updated; v2 milestone closed
 
 ## Phase Details
 
@@ -146,4 +146,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 10. Tree Refresh | 0/1 | Pending | - |
 | 11. Person Pages Refresh | 1/1 | Complete | 2026-04-30 |
 | 12. Home Polish + Curated Previews | 1/1 | Complete | 2026-04-30 |
-| 13. Final v2 Polish + Real Content Prep | 0/1 | Pending | - |
+| 13. Final v2 Polish + Real Content Prep | 1/1 | Complete | 2026-04-29 |

@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: v2 — Collections, Playlists, Lightbox, Brand
-status: executing
-stopped_at: Phase 12 complete — Home Polish + Curated Previews done. Next: Phase 13 Final v2 Polish + Real Content Prep.
-last_updated: "2026-04-30T08:49:32Z"
-last_activity: 2026-04-30 — Phase 12 complete; home page rebuilt with three curated preview sections (tree, photos, videos); SectionPreview deleted; npm run build exits 0 (22 pages)
+status: complete (v2 milestone)
+stopped_at: Phase 13 complete — v2 milestone closed. Ready for real content authoring.
+last_updated: "2026-04-29T00:00:00Z"
+last_activity: 2026-04-29 — Phase 13 complete; edge cases audited; CONTENT_AUTHORING.md written; README updated; npm run build exits 0 (22 pages); v2 milestone closed
 progress:
   total_phases: 13
-  completed_phases: 12
-  total_plans: 12
-  completed_plans: 12
-  percent: 92
+  completed_phases: 13
+  total_plans: 13
+  completed_plans: 13
+  percent: 100
 ---
 
 # Project State
@@ -25,14 +25,13 @@ See: .planning/PROJECT.md (updated 2026-04-29)
 
 ## Current Position
 
-Phase: 12 of 13 (Home Polish + Curated Previews) — complete
-Plan: 1 of 1 in current phase (12 done)
-Status: Phase 12 complete — advancing to Phase 13
-Last activity: 2026-04-30 — Phase 12 complete; home page rebuilt with tree/photos/videos curated preview sections; SectionPreview deleted; ivory alternation + eyebrow arrow links; Server Component preserved; npm run build exits 0 (22 pages)
+Phase: 13 of 13 (Final v2 Polish + Real Content Prep) — complete
+Plan: 1 of 1 in current phase (13 done)
+Status: v2 milestone complete — ready for real content authoring
+Current focus: v2 complete — ready for real content
+Last activity: 2026-04-29 — Phase 13 complete; edge cases audited clean; CONTENT_AUTHORING.md written (444 lines); README updated with v2 status; npm run build exits 0 (22 pages)
 
-Progress: [████████████░] 92% (12/13 phases complete)
-
-Progress: [████████████░] 92% (12/13 phases complete)
+Progress: [█████████████] 100% (13/13 phases complete)
 
 ## Phase 1 outcome
 
