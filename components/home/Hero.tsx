@@ -1,10 +1,11 @@
 'use client'
 // components/home/Hero.tsx
-// Client Component — upgraded from Server to support motion staggerChildren (D-06).
-// D-32: Centered StarMark (36px), serif "The Curry Family" heading, serif subtitle in muted color.
+// Client Component — upgraded from Server to support motion staggerChildren.
+// D-09: New v2 hero copy: h1 "A gathering of generations", italic serif subtitle.
+// D-10: Subtitle rendered in italic serif (font-serif italic), max-w-prose centered.
 // D-34: Hero has bg-white (not bg-ivory).
-// No CTA buttons — the site IS the experience (D-32: "No CTA buttons").
-// Star motif rule (D-17): TopNav = star 1, Hero = star 2, Footer = star 3.
+// No CTA buttons — the site IS the experience.
+// Star motif rule: TopNav = star 1, Hero = star 2, Footer = star 3.
 import { motion } from 'motion/react'
 import StarMark from '@/components/ui/StarMark'
 
@@ -26,9 +27,9 @@ export default function Hero() {
       initial="hidden"
       animate="visible"
     >
-      {/* Star motif — hero position, 36px per D-16/D-32 */}
+      {/* Star motif — hero position, 56px (PNG includes navy circle border + star) */}
       <motion.div variants={itemVariants} className="mb-6">
-        <StarMark size={36} />
+        <StarMark size={56} />
       </motion.div>
 
       {/* Primary heading — serif, sentence case, navy */}
@@ -36,15 +37,15 @@ export default function Hero() {
         variants={itemVariants}
         className="font-serif text-navy text-5xl md:text-6xl font-normal mb-4"
       >
-        The Curry Family
+        A gathering of generations
       </motion.h1>
 
-      {/* Subtitle — serif, muted, sentence case */}
+      {/* Subtitle — italic serif, muted, max-w-prose centered */}
       <motion.p
         variants={itemVariants}
-        className="font-serif text-muted text-lg font-normal max-w-md"
+        className="font-serif italic text-muted text-lg font-normal max-w-prose"
       >
-        A private family archive
+        The stories, faces, and moments that make us who we are — kept in one place, for those here now and those to come.
       </motion.p>
     </motion.section>
   )
