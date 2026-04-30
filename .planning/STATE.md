@@ -3,9 +3,9 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 4 Plan 02 complete — FamilyTreeCanvas, PersonNode, ConnectorLine client components
-last_updated: "2026-04-30T06:41:23.000Z"
-last_activity: 2026-04-30 — Phase 4 Plan 02 complete; FamilyTreeCanvas client island with selectedId state, PersonNode active/inactive visual states, ConnectorLine 1px stone divs; npm run build exits 0
+stopped_at: Phase 5 Plan 01 complete — Cormorant Garamond typography migration + app/template.tsx entry animation
+last_updated: "2026-04-29T00:00:00.000Z"
+last_activity: 2026-04-29 — Phase 5 Plan 01 complete; Cormorant Garamond loaded via next/font/google, --font-serif CSS token updated, app/template.tsx fade-up entry animation; npm run build exits 0
 progress:
   total_phases: 6
   completed_phases: 1
@@ -25,10 +25,10 @@ See: .planning/PROJECT.md (updated 2026-04-29)
 
 ## Current Position
 
-Phase: 4 of 6 (Family Tree) — in progress
-Plan: 2 of 3 in current phase (04-01 done; 04-02 done; 04-03 pending)
-Status: Executing Phase 4
-Last activity: 2026-04-30 — Phase 4 Plan 02 complete; FamilyTreeCanvas ('use client'), PersonNode (active/inactive states), ConnectorLine (1px stone divs); npm run build exits 0
+Phase: 5 of 6 (Visual Polish) — in progress
+Plan: 1 of 4 in current phase (05-01 done; 05-02, 05-03, 05-04 pending)
+Status: Executing Phase 5
+Last activity: 2026-04-29 — Phase 5 Plan 01 complete; Cormorant Garamond via next/font/google, --font-serif CSS token updated to var(--font-cormorant), app/template.tsx 400ms fade-up on every navigation; npm run build exits 0
 
 Progress: [█████░░░░░] 50% (3/6 phases complete)
 
@@ -65,6 +65,7 @@ Progress: [█████░░░░░] 50% (3/6 phases complete)
 | Phase 03 P01 | 3m 0s | 2 tasks | 7 files |
 | Phase 04 P01 | 3m 26s | 3 tasks | 5 files |
 | Phase 04 P02 | 2m 43s | 2 tasks | 3 files |
+| Phase 05 P01 | ~4m 0s | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -98,6 +99,8 @@ Recent decisions affecting current work:
 - 04-01: flattenMultiSpouses() runs unconditionally (single-spouse cases pass through) per D-04 — avoids special-casing paths
 - 04-02: ConnectorLine and FamilyTreeCanvas duplicate H_UNIT/V_UNIT/NODE_WIDTH/NODE_HEIGHT as local constants — lib/tree.ts has import 'server-only' so cannot be imported in client components
 - 04-02: ESLint next/typescript does not enable argsIgnorePattern for _ prefix — eslint-disable-next-line used for _node and _photos (intentionally unused stubs)
+- 05-01: template.tsx entry-only animation (no exit, no AnimatePresence) — cross-page AnimatePresence is broken in App Router; template.tsx re-mounts on navigation making it the idiomatic entry animation location
+- 05-01: Cormorant Garamond weights ['400','500'] only — two-weight rule preserved; style ['normal','italic'] added for future blockquote variants without extra weight load
 
 ### Pending Todos
 
@@ -117,6 +120,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-30T06:41:23.000Z
-Stopped at: Completed 04-02-PLAN.md — FamilyTreeCanvas client island, PersonNode, ConnectorLine; npm run build exits 0
+Last session: 2026-04-29T00:00:00.000Z
+Stopped at: Completed 05-01-PLAN.md — Cormorant Garamond typography migration + app/template.tsx entry animation; npm run build exits 0
 Resume file: None

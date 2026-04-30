@@ -94,7 +94,7 @@ Plans:
   3. The family tree renders usably on narrow screens (scroll/zoom, no node overlap)
 **Plans**: 4 plans
 Plans:
-- [ ] 05-01-PLAN.md  -  Typography migration (Cormorant Garamond) + app/template.tsx entry animation
+- [x] 05-01-PLAN.md  -  Typography migration (Cormorant Garamond) + app/template.tsx entry animation
 - [ ] 05-02-PLAN.md  -  Hover states + Hero stagger animation across home/gallery/video/tree
 - [ ] 05-03-PLAN.md  -  Mobile responsive polish (tree scroll, PersonPanel bottom-sheet, NavTabs) + cleanup
 - [ ] 05-04-PLAN.md  -  Visual QA checkpoint: human verification at three breakpoints
@@ -122,5 +122,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 2. Photo Gallery | 1/1 | Complete | 2026-04-29 |
 | 3. Video Gallery | 1/1 | Complete | 2026-04-30 |
 | 4. Family Tree | 2/3 | In Progress | - |
-| 5. Visual Polish | 0/TBD | Not started | - |
+| 5. Visual Polish | 1/4 | In Progress | - |
 | 6. Person Detail Pages | 0/TBD | Not started | - |
