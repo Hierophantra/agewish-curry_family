@@ -11,7 +11,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 - [x] **FOUND-01**: Project initializes with Next.js 14.2.35, TypeScript strict mode, Tailwind v4 — completed in 01-01
 - [x] **FOUND-02**: All required libraries installed at correct versions (next-auth@beta, motion, relatives-tree, react-family-tree, bcryptjs, zod) — completed in 01-01
-- [ ] **FOUND-03**: Folder structure matches the brief — route groups `(auth)` and `(protected)`, `/components/`, `/content/`, `/lib/`, `/public/`
+- [x] **FOUND-03**: Folder structure matches the brief — route groups `(auth)` and `(protected)`, `/components/`, `/content/`, `/lib/`, `/public/`
 - [ ] **FOUND-04**: Project deploys cleanly to Vercel from the `main` branch
 - [ ] **FOUND-05**: README.md documents local setup, env vars, and content authoring
 
@@ -20,7 +20,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [ ] **AUTH-01**: User can authenticate with the shared family password on the login page
 - [ ] **AUTH-02**: Auth uses Auth.js v5 Credentials provider with bcryptjs password hash comparison
 - [ ] **AUTH-03**: Auth uses two-file split — `auth.config.ts` (edge-safe) and `auth.ts` (full config); middleware imports config-only
-- [ ] **AUTH-04**: All `(protected)` routes are gated by middleware AND `auth()` call in protected layout (defence in depth)
+- [x] **AUTH-04**: All `(protected)` routes are gated by middleware AND `auth()` call in protected layout (defence in depth)
 - [ ] **AUTH-05**: Unauthenticated requests redirect to `/login`; authenticated session persists via JWT cookie
 - [ ] **AUTH-06**: User can log out from any protected page
 - [ ] **AUTH-07**: `AUTH_SECRET` and `AUTH_PASSWORD_HASH` env vars are configured for local dev and Vercel (Production, Preview, Development)
@@ -30,10 +30,10 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **DESIGN-01**: Tailwind v4 `@theme {}` block defines navy/gold/ivory palette as complete class-name tokens (no dynamic interpolation) — completed in 01-01
 - [x] **DESIGN-02**: Typography uses serif for headings (Georgia fallback initially) and Inter for body — completed in 01-01
 - [x] **DESIGN-03**: Only two font weights (400, 500) are available in the design system — completed in 01-01
-- [ ] **DESIGN-04**: `<StarMark />` component renders the AgeWish 7-pointed gold star as inline SVG
-- [ ] **DESIGN-05**: All metadata eyebrows use uppercase + 0.22em letter-spacing
-- [ ] **DESIGN-06**: All copy is sentence case — no Title Case, no ALL CAPS (except eyebrows)
-- [ ] **DESIGN-07**: Hairlines render at `0.5px solid #E2DFD5`; emphasis at `1.25px`
+- [x] **DESIGN-04**: `<StarMark />` component renders the AgeWish 7-pointed gold star as inline SVG
+- [x] **DESIGN-05**: All metadata eyebrows use uppercase + 0.22em letter-spacing
+- [x] **DESIGN-06**: All copy is sentence case — no Title Case, no ALL CAPS (except eyebrows)
+- [x] **DESIGN-07**: Hairlines render at `0.5px solid #E2DFD5`; emphasis at `1.25px`
 - [ ] **DESIGN-08**: Site is responsive — works on phones, tablets, desktop
 
 ### Navigation
@@ -138,23 +138,23 @@ Which phases cover which requirements. Updated during roadmap creation.
 |-------------|-------|--------|
 | FOUND-01 | Phase 1 | Pending |
 | FOUND-02 | Phase 1 | Pending |
-| FOUND-03 | Phase 1 | Pending |
+| FOUND-03 | Phase 1 | Complete |
 | FOUND-04 | Phase 1 | Pending |
 | FOUND-05 | Phase 1 | Pending |
 | AUTH-01 | Phase 1 | Pending |
 | AUTH-02 | Phase 1 | Pending |
 | AUTH-03 | Phase 1 | Pending |
-| AUTH-04 | Phase 1 | Pending |
+| AUTH-04 | Phase 1 | Complete |
 | AUTH-05 | Phase 1 | Pending |
 | AUTH-06 | Phase 1 | Pending |
 | AUTH-07 | Phase 1 | Pending |
 | DESIGN-01 | Phase 1 | Pending |
 | DESIGN-02 | Phase 1 | Pending |
 | DESIGN-03 | Phase 1 | Pending |
-| DESIGN-04 | Phase 1 | Pending |
-| DESIGN-05 | Phase 1 | Pending |
-| DESIGN-06 | Phase 1 | Pending |
-| DESIGN-07 | Phase 1 | Pending |
+| DESIGN-04 | Phase 1 | Complete |
+| DESIGN-05 | Phase 1 | Complete |
+| DESIGN-06 | Phase 1 | Complete |
+| DESIGN-07 | Phase 1 | Complete |
 | DESIGN-08 | Phase 5 | Pending |
 | NAV-01 | Phase 1 | Pending |
 | NAV-02 | Phase 1 | Pending |
