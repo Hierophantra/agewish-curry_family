@@ -18,7 +18,7 @@ export default function NavTabs() {
   const pathname = usePathname()
 
   return (
-    <div className="flex items-center gap-6">
+    <div className="overflow-x-auto scrollbar-none flex items-center gap-6 -mx-2 px-2">
       {TABS.map((tab) => {
         // Home tab active only on exact match; others match prefix
         const isActive =
