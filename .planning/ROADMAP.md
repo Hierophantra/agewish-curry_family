@@ -12,7 +12,7 @@ Six phases build the archive incrementally from secure scaffold to fully navigab
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Scaffold + Auth Gate + Design System** - Secure foundation, design tokens, content loader contract, and home page
+- [x] **Phase 1: Scaffold + Auth Gate + Design System** - Secure foundation, design tokens, content loader contract, and home page (Vercel deploy deferred — code on GitHub, prerequisites complete)
 - [ ] **Phase 2: Photo Gallery** - Grid of family photographs with metadata, loaded from JSON
 - [ ] **Phase 3: Video Gallery** - Grid of family films with source-abstracted video player
 - [ ] **Phase 4: Family Tree** - Interactive tree with clickable nodes and person side panel

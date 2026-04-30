@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-05-PLAN.md — TopNav + NavTabs + Footer + Login page; ready for 01-06 (Home page hero)
+stopped_at: Phase 1 complete (Vercel deploy deferred); advancing to Phase 2 — Photo Gallery
 last_updated: "2026-04-29T00:00:00.000Z"
-last_activity: 2026-04-29
+last_activity: 2026-04-29 — Phase 1 functionally complete locally; code pushed to github.com/Hierophantra/agewish-curry_family; user deferred Vercel deploy
 progress:
   total_phases: 6
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 6
-  completed_plans: 5
-  percent: 83
+  completed_plans: 6
+  percent: 100
 ---
 
 # Project State
@@ -21,16 +21,23 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-29)
 
 **Core value:** Family members can securely access and explore their shared family history — photos, films, and an interactive family tree — through a private, beautifully designed archive.
-**Current focus:** Phase 1 — Scaffold + Auth Gate + Design System
+**Current focus:** Phase 2 — Photo Gallery
 
 ## Current Position
 
-Phase: 1 of 6 (Scaffold + Auth Gate + Design System)
-Plan: 5 of 6 in current phase (01-05-PLAN.md COMPLETE)
-Status: Ready to execute
-Last activity: 2026-04-29
+Phase: 2 of 6 (Photo Gallery) — Phase 1 complete (Vercel deploy deferred)
+Plan: 0 of TBD in current phase
+Status: Ready to plan Phase 2
+Last activity: 2026-04-29 — Phase 1 wrapped; advancing to Phase 2
 
-Progress: [████░░░░░░] 83% (5/6 plans in Phase 1)
+Progress: [██░░░░░░░░] 17% (1/6 phases complete)
+
+## Phase 1 outcome
+
+- All 6 plans executed; 5/5 ROADMAP success criteria verified locally
+- Code on GitHub: github.com/Hierophantra/agewish-curry_family (branch `main`, 27 commits)
+- Vercel deploy deferred by user — all prerequisites complete (env values generated, README documents steps)
+- Two latent bugs caught and fixed during local verification (dead app/page.tsx, dotenv-expand mangling bcrypt hashes)
 
 ## Performance Metrics
 
