@@ -11,8 +11,8 @@ See: .planning/PROJECT.md (updated 2026-04-29)
 
 Phase: 1 of 6 (Scaffold + Auth Gate + Design System)
 Plan: 0 of TBD in current phase
-Status: Ready to plan
-Last activity: 2026-04-29 — Roadmap and state initialized
+Status: Context captured, ready to plan
+Last activity: 2026-04-29 — Phase 1 context gathered (.planning/phases/01-scaffold-auth-design/01-CONTEXT.md)
 
 Progress: [░░░░░░░░░░] 0%
 
