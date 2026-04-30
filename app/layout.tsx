@@ -1,6 +1,6 @@
 // app/layout.tsx
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, Cormorant_Garamond } from 'next/font/google'
 import './globals.css'
 
 // Load Inter with exactly weights 400 and 500 — no more
@@ -15,6 +15,19 @@ const inter = Inter({
   variable: '--font-inter',
 })
 
+// Load Cormorant Garamond with exactly weights 400 and 500 — two-weight rule (D-01)
+// style: ['normal', 'italic'] ensures italic variants are available for blockquotes
+// display: 'swap' prevents invisible text during font load (matches Inter pattern)
+// variable: '--font-cormorant' injects a CSS custom property on <html>
+// so @theme { --font-serif: var(--font-cormorant), ... } in globals.css can reference it
+const cormorant = Cormorant_Garamond({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  style: ['normal', 'italic'],
+  display: 'swap',
+  variable: '--font-cormorant',
+})
+
 export const metadata: Metadata = {
   title: 'The Curry Family',
   description: 'A private family archive.',
@@ -27,10 +40,10 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    // className={inter.variable} injects --font-inter as CSS variable on <html>
-    // This makes it available for @theme { --font-sans: var(--font-inter), ... }
-    // Use inter.variable (NOT inter.className) to expose the CSS variable
-    <html lang="en" className={inter.variable}>
+    // className injects --font-inter and --font-cormorant as CSS variables on <html>
+    // This makes them available for @theme in globals.css
+    // Use .variable (NOT .className) to expose the CSS variable
+    <html lang="en" className={`${inter.variable} ${cormorant.variable}`}>
       <body>{children}</body>
     </html>
   )
