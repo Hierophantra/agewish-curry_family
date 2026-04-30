@@ -8,108 +8,150 @@ import PhotoCarousel from './PhotoCarousel'
 
 interface PersonPanelProps {
   person: Person
-  photos: Photo[]       // pre-filtered by FamilyTreeCanvas to person.photoIds
-  people: Person[]      // full people array — for resolving spouse names
+  photos: Photo[]      // pre-filtered to this person's photos (passed from FamilyTreeCanvas)
+  people: Person[]     // full list — needed to resolve childrenIds → child names
   onClose: () => void
 }
 
 export default function PersonPanel({ person, photos, people, onClose }: PersonPanelProps) {
-  // Build spouse lookup for display names
   const peopleById = new Map(people.map((p) => [p.id, p]))
 
-  // Format year range: "1920–1998" or "b. 1920" if no death year
-  function formatYears(birthYear?: number, deathYear?: number): string | null {
-    if (!birthYear) return null
-    if (deathYear) return `${birthYear}–${deathYear}`
-    return `b. ${birthYear}`
+  // Resolve children names — v2 canonical childrenIds with v1 childIds fallback
+  const resolvedChildrenIds = person.childrenIds.length > 0 ? person.childrenIds : person.childIds
+  const childNames = resolvedChildrenIds
+    .map((cid) => peopleById.get(cid)?.name ?? cid)
+
+  // Format a full ISO date like "1920-04-12" as "April 12, 1920"
+  function formatDateISO(iso: string): string {
+    const [year, month, day] = iso.split('-').map(Number)
+    if (!year || !month || !day) return iso
+    const months = [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December',
+    ]
+    const monthName = months[month - 1]!
+    return `${monthName} ${day}, ${year}`
   }
 
-  const years = formatYears(person.birthYear, person.deathYear)
+  // Build "Born" label — prefer birthDate (full formatted), fall back to birthYear
+  const bornLabel = person.birthDate
+    ? formatDateISO(person.birthDate)
+    : person.birthYear
+      ? String(person.birthYear)
+      : null
+
+  // Birthplace — v2 canonical birthplace with v1 birthPlace fallback
+  const birthplaceLabel = person.birthplace ?? person.birthPlace ?? null
+
+  // Spouse — v2 spouseLabel (plain display string from JSON)
+  const spouseLabel = person.spouseLabel ?? null
+
+  // Children — comma-separated resolved names; show "(none)" if array is empty
+  const childrenLabel =
+    childNames.length > 0 ? childNames.join(', ') : '(none)'
+
+  // Build meta rows — skip rows with no data
+  type MetaRow = [string, string]
+  const metaRows: MetaRow[] = []
+  if (bornLabel) metaRows.push(['Born', bornLabel])
+  if (birthplaceLabel) metaRows.push(['Birthplace', birthplaceLabel])
+  if (spouseLabel) metaRows.push(['Spouse', spouseLabel])
+  // Always show Children row (shows "(none)" when empty) if person could have children
+  // (show only if childrenIds/childIds were defined, even if empty, to match prototype)
+  metaRows.push(['Children', childrenLabel])
 
   return (
-    // D-16: mobile bottom-sheet (full-width, slides from bottom) + md+ right panel (original behavior).
-    // Mobile: fixed bottom-sheet, full width, max 60% viewport height, rounded top corners.
-    // md+: absolute right panel, full height, 320px wide.
-    // z-10: appears above canvas nodes without covering the full page.
+    // D-16: mobile bottom-sheet (fixed, full-width, slides from bottom, rounded top corners)
+    // md+: absolute right panel, full height, 320px wide
+    // z-10: appears above canvas nodes without covering the full page
     <motion.aside
-      className="fixed bottom-0 inset-x-0 max-h-[60vh] rounded-t-xl md:absolute md:top-0 md:right-0 md:bottom-auto md:inset-x-auto md:h-full md:w-80 md:rounded-none bg-ivory border-t hairline md:border-t-0 md:border-l z-10 flex flex-col overflow-y-auto"
+      className="fixed bottom-0 inset-x-0 max-h-[80vh] rounded-t-xl md:absolute md:top-0 md:right-0 md:bottom-auto md:inset-x-auto md:h-full md:w-80 md:rounded-none bg-ivory border-t hairline md:border-t-0 md:border-l z-10 flex flex-col overflow-y-auto"
       initial={{ x: '100%', opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       exit={{ x: '100%', opacity: 0 }}
       transition={{ duration: 0.25, ease: 'easeInOut' }}
     >
-      {/* Panel header: close button + person name */}
-      <div className="flex items-start justify-between px-5 pt-5 pb-3">
-        <div className="flex-1 min-w-0">
-          <h2 className="font-serif text-navy text-lg leading-tight">{person.name}</h2>
-          {years && <p className="eyebrow text-quiet mt-0.5">{years}</p>}
-        </div>
+      {/* Panel top: eyebrow + close button — matches .panel-top */}
+      <div className="flex items-center justify-between px-[22px] pt-[22px] pb-0 mb-0">
+        {/* panel-eyebrow: 10px, 0.22em tracking, uppercase, gold-deep */}
+        <span
+          className="text-gold-deep uppercase tracking-[0.22em] leading-none"
+          style={{ fontSize: '10px' }}
+        >
+          {person.eyebrow ?? person.relationLabel ?? ''}
+        </span>
+
+        {/* panel-close: quiet color, 24px × character, 28px hit target */}
         <button
           type="button"
           onClick={onClose}
-          className="ml-3 mt-0.5 text-quiet hover:text-navy transition-colors text-lg leading-none"
+          className="text-quiet hover:text-navy transition-colors flex items-center justify-center w-7 h-7 text-2xl leading-none"
           aria-label="Close panel"
         >
           ×
         </button>
       </div>
 
-      {/* Photo carousel — D-15 */}
-      <div className="px-5 pb-4">
+      {/* panel-name: serif 30px, navy, weight 400 */}
+      <h2
+        className="font-serif text-navy px-[22px] mt-[22px]"
+        style={{ fontSize: '30px', fontWeight: 400, lineHeight: 1.1 }}
+      >
+        {person.name}
+      </h2>
+
+      {/* panel-dates: v2 datesLabel preferred; italic serif 14px, text-muted */}
+      {person.datesLabel && (
+        <p
+          className="font-serif italic text-muted px-[22px] mt-1 mb-[26px]"
+          style={{ fontSize: '14px' }}
+        >
+          {person.datesLabel}
+        </p>
+      )}
+
+      {/* Photo carousel — 4:5 aspect, Lightbox integration (Task 2) */}
+      <div className="px-[22px]">
         <PhotoCarousel photos={photos} />
       </div>
 
-      {/* Person details */}
-      <div className="px-5 pb-5 flex flex-col gap-3 flex-1">
-        {/* Birthplace */}
-        {person.birthPlace && (
-          <div>
-            <p className="eyebrow text-quiet mb-1">Birthplace</p>
-            <p className="text-navy text-sm">{person.birthPlace}</p>
-          </div>
-        )}
-
-        {/* Bio */}
-        {person.bio && person.bio.trim().length > 0 && (
-          <div>
-            <p className="eyebrow text-quiet mb-1">About</p>
-            <p className="text-muted text-sm leading-relaxed">{person.bio}</p>
-          </div>
-        )}
-
-        {/* Spouses — D-03: render ALL spouses from Person.spouseIds[] (the unflattened list) */}
-        {person.spouseIds.length > 0 && (
-          <div>
-            <p className="eyebrow text-quiet mb-1">
-              {person.spouseIds.length === 1 ? 'Spouse' : 'Spouses'}
-            </p>
-            <ul className="flex flex-col gap-1">
-              {person.spouseIds.map((sid) => {
-                const spouse = peopleById.get(sid)
-                return (
-                  <li key={sid} className="text-navy text-sm">
-                    {spouse?.name ?? sid}
-                    {spouse?.birthYear && (
-                      <span className="text-quiet ml-1 text-xs">
-                        ({formatYears(spouse.birthYear, spouse.deathYear)})
-                      </span>
-                    )}
-                  </li>
-                )
-              })}
-            </ul>
-          </div>
-        )}
-
-        {/* View full page link (per D-08) — subtle text link navigating to person detail page */}
-        <div className="mt-auto pt-3">
-          <Link
-            href={`/person/${person.id}`}
-            className="eyebrow text-quiet hover:text-gold transition-colors"
-          >
-            View full page →
-          </Link>
+      {/* panel-meta: key-value rows with hairline top border, 22px padding-top, 14px row gap */}
+      {metaRows.length > 0 && (
+        <div
+          className="flex flex-col border-t hairline mt-0 px-[22px]"
+          style={{ paddingTop: '22px', gap: '14px' }}
+        >
+          {metaRows.map(([k, v]) => (
+            <div
+              key={k}
+              className="flex justify-between"
+              style={{ fontSize: '13px', gap: '16px' }}
+            >
+              <span className="text-quiet flex-shrink-0">{k}</span>
+              <span className="text-navy text-right">{v}</span>
+            </div>
+          ))}
         </div>
+      )}
+
+      {/* panel-bio: italic serif 14px, hairline top border, 22px padding-top + margin-top */}
+      {person.bio && person.bio.trim().length > 0 && (
+        <p
+          className="font-serif italic text-muted px-[22px] border-t hairline"
+          style={{ fontSize: '14px', lineHeight: 1.75, marginTop: '22px', paddingTop: '22px' }}
+        >
+          {person.bio}
+        </p>
+      )}
+
+      {/* View full page link — eyebrow style, subtle gold on hover (Phase 6 / D-08) */}
+      <div className="px-[22px] pb-[22px] mt-auto pt-4">
+        <Link
+          href={`/person/${person.id}`}
+          className="eyebrow text-quiet hover:text-gold transition-colors"
+        >
+          View full page →
+        </Link>
       </div>
     </motion.aside>
   )
