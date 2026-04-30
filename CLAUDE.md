@@ -2,11 +2,25 @@
 
 This file gives Claude Code context for working in this repository.
 
+## v2 changes (current — Phase 7+)
+
+**Primary spec:** `CURRY_FAMILY_HUB_BRIEF_v2.md` (project root). Phases 7–13 build the v2 feature set.
+
+Key v2 architectural changes:
+- **Collections/playlists as tags:** Photos have `collectionIds[]`, videos have `playlistIds[]`. Collections and playlists are JSON stubs in `content/collections.json` and `content/playlists.json`. A photo can belong to multiple collections (tag-based, not folder-based).
+- **Section rename:** `app/(protected)/films/` renamed to `app/(protected)/videos/`. Tab label and hrefs updated throughout. No redirect needed (no external traffic).
+- **Real PNG brand mark:** `components/ui/StarMark.tsx` now wraps `next/image` pointing to `/images/aw-symbol-2x.png`. The PNG contains the full mark (navy circle border + gold 8-pointed star). No inline SVG.
+- **Prototype-fidelity panel UX:** TopNav brand = PNG at 36px + eyebrow "AgeWish · Private archive" + serif "The Curry Family". Hero = "A gathering of generations" h1 + italic serif subtitle. Footer = "Held in trust for those who come after." tagline + eyebrow meta.
+- **Lightbox shared component** — Phase 8 dependency, not yet built. Prepare for it in photo components.
+- **Dynamic routes stubbed:** `/photographs/[collectionId]` and `/videos/[playlistId]` are Phase 7 stubs; Phase 8/9 implement them.
+
+For full v2 phase roadmap see `.planning/ROADMAP.md`.
+
 ## Project
 
 **Curry Family Hub** — a private, password-gated family archive site for the Curry family at curry.agewish.com. Personal project under the AgeWish brand umbrella, built on the same stack as AgeWish client work.
 
-**Core value:** Family members can securely access and explore their shared family history — photos, films, and an interactive family tree.
+**Core value:** Family members can securely access and explore their shared family history — photos, videos, and an interactive family tree.
 
 ## Stack (non-negotiable)
 
@@ -69,7 +83,9 @@ This project uses GSD (Get Stuff Done) for phase-driven execution.
 
 **Auto mode active.** Workflow auto-advances through phases.
 
-## Build order (6 phases)
+## Build order
+
+### v1 phases (complete)
 
 1. **Scaffold + Auth Gate + Design System** — foundation, load-bearing
 2. **Photo Gallery** — `/photographs` route
@@ -77,6 +93,16 @@ This project uses GSD (Get Stuff Done) for phase-driven execution.
 4. **Family Tree** — `/tree` with side panel (highest risk: relatives-tree multi-spouse bug)
 5. **Visual Polish** — responsive, motion, typography refinement
 6. **Person Detail Pages** — `/person/[id]` with bidirectional links
+
+### v2 phases (current — see `.planning/ROADMAP.md` for full details)
+
+7. **v2 Foundation** — schema migration, brand PNG, hero/footer copy, films→videos rename
+8. **Collection detail** — `/photographs/[collectionId]` photo grid
+9. **Playlist detail** — `/videos/[playlistId]` video list + featured video home section
+10. **Tree panel refresh** — match prototype panel UX exactly
+11. **Person pages v2** — new schema fields rendered
+12. **Home curated previews** — featured video, recent photos on home page
+13. **Real content** — replace stubs with actual family media
 
 ## Working principles
 
