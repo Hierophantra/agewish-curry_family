@@ -1,7 +1,7 @@
 // app/(protected)/person/[id]/page.tsx
 // Server Component — individual person detail page.
 // Fetches person by id slug; calls notFound() if person not in family.json.
-// generateStaticParams pre-renders all person pages at build time.
+// All 6 person pages are pre-rendered at build time (static site generation).
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { getPeople, getPersonById, getPhotos } from '@/lib/content'
