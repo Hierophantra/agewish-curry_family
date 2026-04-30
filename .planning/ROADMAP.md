@@ -92,7 +92,12 @@ Plans:
   1. All pages — home, photographs, films, and tree — are usable on a phone screen (no horizontal overflow, no overlapping elements, no unreadable text)
   2. Page entry animations play on navigation without layout shift or jank
   3. The family tree renders usably on narrow screens (scroll/zoom, no node overlap)
-**Plans**: TBD
+**Plans**: 4 plans
+Plans:
+- [ ] 05-01-PLAN.md  -  Typography migration (Cormorant Garamond) + app/template.tsx entry animation
+- [ ] 05-02-PLAN.md  -  Hover states + Hero stagger animation across home/gallery/video/tree
+- [ ] 05-03-PLAN.md  -  Mobile responsive polish (tree scroll, PersonPanel bottom-sheet, NavTabs) + cleanup
+- [ ] 05-04-PLAN.md  -  Visual QA checkpoint: human verification at three breakpoints
 **UI hint**: yes
 
 ### Phase 6: Person Detail Pages
