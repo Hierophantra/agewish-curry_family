@@ -1,16 +1,20 @@
 // components/gallery/PhotoCard.tsx
-// Server Component — renders one photo card with image, date eyebrow, caption.
-// Stays server-side — no client JS needed for Tailwind hover utilities.
+// 'use client' — supports optional onClick prop for lightbox integration (Phase 8, D-20..D-22).
+// When onClick is absent: renders with Link to /person/[id] (original Server-compat behavior).
+// When onClick is present: renders as a <button> — no Link — click opens lightbox.
 // D-07: Hover lift (shadow-md + -translate-y-0.5) applied to outermost element per render path.
+'use client'
 import Image from 'next/image'
 import Link from 'next/link'
 import type { Photo } from '@/lib/types'
 
 interface PhotoCardProps {
   photo: Photo
+  /** When provided, suppresses Link wrapping and fires this handler instead. */
+  onClick?: () => void
 }
 
-export default function PhotoCard({ photo }: PhotoCardProps) {
+export default function PhotoCard({ photo, onClick }: PhotoCardProps) {
   // Format dateTaken "YYYY-MM-DD" → "MONTH YYYY" eyebrow string.
   // Use noon UTC to avoid timezone-off-by-one (a "1950-01-01" at midnight UTC
   // can flip to Dec 31 1949 in negative-offset zones if parsed as local time).
@@ -49,6 +53,20 @@ export default function PhotoCard({ photo }: PhotoCardProps) {
       </div>
     </>
   )
+
+  // D-21/D-22: When onClick is provided (e.g. CollectionPhotoGrid lightbox integration),
+  // render as a button — no Link navigation. Hover lift preserved.
+  if (onClick) {
+    return (
+      <button
+        type="button"
+        onClick={onClick}
+        className="block w-full text-left transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
+      >
+        <article className="flex flex-col">{innerContent}</article>
+      </button>
+    )
+  }
 
   // Wrap in Link only when photo has a person reference (per D-20).
   // Links to the primary person on this photo (peopleIds[0]).
