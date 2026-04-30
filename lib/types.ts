@@ -22,6 +22,7 @@ export const PersonSchema = z.object({
   parentIds: z.array(z.string()).default([]),
   childIds: z.array(z.string()).default([]),
   spouseIds: z.array(z.string()).default([]),
+  gender: z.enum(['male', 'female', 'other']).optional(),
 })
 
 // ── Photo schema ──

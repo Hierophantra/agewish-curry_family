@@ -83,4 +83,56 @@ export function validateBidirectionalRefs(): void {
       }
     }
   }
+
+  // --- Family tree cross-reference validation (Phase 4) ---
+  // Validates spouseIds, parentIds, childIds within family.json
+  // Catches dangling refs and reciprocity violations before calcTree sees them.
+  const treePersons = getPeople()
+  const treePersonIds = new Set(treePersons.map((p) => p.id))
+
+  for (const person of treePersons) {
+    // spouseIds: must exist AND be reciprocal (spouse relationships must be bidirectional)
+    for (const sid of person.spouseIds) {
+      if (!treePersonIds.has(sid)) {
+        throw new Error(
+          `Content error: Person "${person.id}" has unknown spouseId "${sid}". ` +
+          `Check content/family.json.`
+        )
+      }
+      const spouse = treePersons.find((p) => p.id === sid)!
+      if (!spouse.spouseIds.includes(person.id)) {
+        throw new Error(
+          `Content error: "${person.id}" lists "${sid}" as a spouse, but "${sid}" ` +
+          `does not list "${person.id}" in return. Spouse relationships must be bidirectional.`
+        )
+      }
+    }
+
+    // parentIds: must exist AND parent must claim this person as a child
+    for (const pid of person.parentIds) {
+      if (!treePersonIds.has(pid)) {
+        throw new Error(
+          `Content error: Person "${person.id}" has unknown parentId "${pid}". ` +
+          `Check content/family.json.`
+        )
+      }
+      const parent = treePersons.find((p) => p.id === pid)!
+      if (!parent.childIds.includes(person.id)) {
+        throw new Error(
+          `Content error: "${person.id}" lists "${pid}" as a parent, but "${pid}" ` +
+          `does not list "${person.id}" in childIds. Parent↔child refs must be bidirectional.`
+        )
+      }
+    }
+
+    // childIds: existence only (reciprocity covered by parentIds check above)
+    for (const cid of person.childIds) {
+      if (!treePersonIds.has(cid)) {
+        throw new Error(
+          `Content error: Person "${person.id}" has unknown childId "${cid}". ` +
+          `Check content/family.json.`
+        )
+      }
+    }
+  }
 }
