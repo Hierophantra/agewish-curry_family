@@ -7,5 +7,14 @@
     "sourceId": "dQw4w9WgXcQ",
     "dateTaken": "1970-01-01",
     "peopleIds": []
+  },
+  {
+    "id": "video-002",
+    "title": "Me at the zoo",
+    "description": "Second placeholder for grid layout testing.",
+    "source": "youtube",
+    "sourceId": "jNQXAC9IVRw",
+    "dateTaken": "2005-04-23",
+    "peopleIds": []
   }
 ]
