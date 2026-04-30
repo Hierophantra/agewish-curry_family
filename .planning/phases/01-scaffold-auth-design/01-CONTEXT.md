@@ -47,15 +47,16 @@ Phase 1 delivers a deployable foundation: a Next.js 14 site that requires the fa
 ### Design System
 
 - **D-09:** Tailwind v4 CSS-first config — Palette and typography defined in `app/globals.css` under `@theme {}` block. NO `tailwind.config.ts` file. Required `@tailwindcss/postcss` package as the PostCSS shim.
-- **D-10:** Palette as named tokens (no string interpolation):
-  - `--color-navy: #1F2D5C`
-  - `--color-gold: #E8A91F`
-  - `--color-gold-deep: #B8851A`
-  - `--color-ivory: #FBF9F2`
-  - `--color-border: #E2DFD5`
-  - `--color-stone: #C9C4B0`
-  - `--color-text-muted: #6B6960`
-  - `--color-text-quiet: #8B8778`
+- **D-10:** Palette as named tokens (no string interpolation). Token names drop the `text-` prefix
+  to avoid Tailwind utility doubling (`text-text-muted`); see RESEARCH.md Open Questions §1:
+  - `--color-navy: #1F2D5C` → class `text-navy` / `bg-navy`
+  - `--color-gold: #E8A91F` → class `text-gold` / `bg-gold`
+  - `--color-gold-deep: #B8851A` → class `text-gold-deep`
+  - `--color-ivory: #FBF9F2` → class `bg-ivory`
+  - `--color-border: #E2DFD5` → class `border-border` / hairline default
+  - `--color-stone: #C9C4B0` → class `border-stone`
+  - `--color-muted: #6B6960` → class `text-muted` (body copy, descriptive text)
+  - `--color-quiet: #8B8778` → class `text-quiet` (eyebrows, metadata, dates)
 - **D-11:** Typography — Serif headings use Georgia/Times fallback for v1 (`font-family: Georgia, 'Times New Roman', serif`). Body uses Inter via `next/font/google` with weights 400 and 500 only (no other weights loaded). Cormorant Garamond migration deferred to Phase 5.
 - **D-12:** Two-weight rule enforced in CSS — only `font-weight: 400` and `font-weight: 500` available as utility classes. Building a `font-medium` (500) class is fine; `font-semibold` (600) and `font-bold` (700) must not appear in JSX.
 - **D-13:** Sentence case everywhere — no Title Case in headings, no ALL CAPS in body. Exception: metadata eyebrows use uppercase + 0.22em letter-spacing (define as `.eyebrow` utility class).

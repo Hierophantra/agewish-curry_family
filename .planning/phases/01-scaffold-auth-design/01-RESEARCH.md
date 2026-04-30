@@ -1325,28 +1325,28 @@ Vercel's DNS panel rather than your registrar. Check which method is in use.
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **Token naming — double-prefix issue**
-   - What we know: `--color-text-muted` generates `text-text-muted`; `--color-muted` generates `text-muted`
-   - What's unclear: Which naming convention is already used in the project brief / design mockups?
-   - Recommendation: Lock the naming before writing any components. Proposed: rename `text-muted` →
-     `--color-muted` and `text-quiet` → `--color-quiet` in `@theme {}`.
+1. **Token naming — double-prefix issue** — **RESOLVED**
+   - Resolution: Use `--color-muted: #6B6960` and `--color-quiet: #8B8778` (drop the `text-` prefix
+     in CSS variable names). Tailwind generates `text-muted` and `text-quiet` utility classes —
+     clean DX and avoids the `text-text-muted` doubling. This supersedes the literal D-10 names
+     in CONTEXT.md (`--color-text-muted`, `--color-text-quiet`); CONTEXT.md is updated to match.
+   - Plan binding: Plan 01-01 Task 2 implements these names in `app/globals.css`. All component
+     plans (01-04, 01-05, 01-06) consistently reference the `text-muted` and `text-quiet` classes.
 
-2. **star.svg availability**
-   - What we know: `/public/brand/star.svg` may or may not exist; D-16 says prefer reading it
-   - What's unclear: Whether the AgeWish brand star has custom proportions that differ from
-     the generated heptagram
-   - Recommendation: Check `public/brand/star.svg` at implementation start. If not present, use the
-     `generateStarPath` function in Pattern 9.
+2. **star.svg availability** — **RESOLVED**
+   - Resolution: No `/public/brand/star.svg` ships with this scaffold. Generate the 7-pointed
+     heptagram inline in `<StarMark />` via the `generateStarPath` function (Pattern 9 below).
+     If a custom star.svg is added later, swap to `<image href={...} />` in StarMark.
+   - Plan binding: Plan 01-04 Task 1 generates the inline star path within the component.
 
-3. **Inter as variable font — weight enforcement**
-   - What we know: Inter on Google Fonts is available as a variable font that includes all weights
-   - What's unclear: Whether specifying `weight: ['400', '500']` actually prevents other weights
-     from loading when it's a variable font
-   - Recommendation: Enforce the two-weight rule via CSS utilities in `@theme {}` (only define
-     `--font-weight-normal` and `--font-weight-medium`). The font file may load all weights but the
-     CSS utilities only expose 400 and 500.
+3. **Inter as variable font — weight enforcement** — **RESOLVED**
+   - Resolution: Use `next/font/google` Inter with `weight: ['400', '500']` AND only define
+     `--font-weight-normal: 400` and `--font-weight-medium: 500` in `@theme {}`. Tailwind utility
+     class generation will only produce `font-normal` and `font-medium` — `font-semibold` and
+     `font-bold` won't exist as classes, so they can't accidentally be used in JSX.
+   - Plan binding: Plan 01-01 Task 1 (next/font/google import) + Task 2 (@theme weight tokens).
 
 ---
 
