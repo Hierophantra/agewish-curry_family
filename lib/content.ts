@@ -7,8 +7,8 @@ import 'server-only'
 import { readFileSync } from 'fs'
 import { join } from 'path'
 import { z } from 'zod'
-import { PersonSchema, PhotoSchema, VideoSchema } from './types'
-import type { Person, Photo, Video } from './types'
+import { PersonSchema, PhotoSchema, VideoSchema, CollectionSchema, PlaylistSchema } from './types'
+import type { Person, Photo, Video, Collection, Playlist } from './types'
 
 // ── Internal file reader ──
 // Uses .parse() (throws ZodError) not .safeParse() — fail loud on bad content.
@@ -44,6 +44,48 @@ export function getPersonById(id: string): Person | null {
   return getPeople().find((p) => p.id === id) ?? null
 }
 
+// ── Collection loaders (v2) ──
+
+export function getCollections(): Collection[] {
+  return readJSON('collections.json', z.array(CollectionSchema))
+}
+
+export function getCollectionById(id: string): Collection | null {
+  return getCollections().find((c) => c.id === id) ?? null
+}
+
+export function getPhotosInCollection(collectionId: string): Photo[] {
+  return getPhotos().filter((p) => p.collectionIds?.includes(collectionId))
+}
+
+// ── Playlist loaders (v2) ──
+
+export function getPlaylists(): Playlist[] {
+  return readJSON('playlists.json', z.array(PlaylistSchema))
+}
+
+export function getPlaylistById(id: string): Playlist | null {
+  return getPlaylists().find((p) => p.id === id) ?? null
+}
+
+export function getVideosInPlaylist(playlistId: string): Video[] {
+  return getVideos().filter((v) => v.playlistIds?.includes(playlistId))
+}
+
+// ── Filtered loaders (v2) ──
+
+export function getFeaturedVideos(): Video[] {
+  return getVideos().filter((v) => v.featured === true)
+}
+
+export function getPhotosByPersonId(personId: string): Photo[] {
+  return getPhotos().filter((p) => p.peopleIds?.includes(personId))
+}
+
+export function getVideosByPersonId(personId: string): Video[] {
+  return getVideos().filter((v) => v.peopleIds?.includes(personId))
+}
+
 // ── Bidirectional reference validator ──
 // Validates that all cross-references between content types resolve.
 // Throws descriptively if a reference is dangling — surfaces data entry errors.
@@ -51,14 +93,25 @@ export function getPersonById(id: string): Person | null {
 // Checks:
 // 1. Photo.peopleIds[] → every ID must exist in family.json
 // 2. Person.photoIds[] → every ID must exist in photos.json
+// 3. Photo.collectionIds[] → every ID must exist in collections.json (empty array is valid)
+// 4. Video.playlistIds[] → every ID must exist in playlists.json (empty array is valid)
+// 5. Collection.coverPhotoId → must exist in photos.json
+// 6. Playlist.coverVideoId → must exist in videos.json
+// 7. Family tree: spouseIds, parentIds, childIds reciprocity
 //
 // Call from protected layout in development, or from a build-time script.
 export function validateBidirectionalRefs(): void {
   const people = getPeople()
   const photos = getPhotos()
+  const videos = getVideos()
+  const collections = getCollections()
+  const playlists = getPlaylists()
 
   const personIds = new Set(people.map((p) => p.id))
   const photoIds = new Set(photos.map((p) => p.id))
+  const videoIds = new Set(videos.map((v) => v.id))
+  const collectionIds = new Set(collections.map((c) => c.id))
+  const playlistIds = new Set(playlists.map((p) => p.id))
 
   // Check photo → person references
   for (const photo of photos) {
@@ -81,6 +134,50 @@ export function validateBidirectionalRefs(): void {
           `Check content/family.json — "${phid}" must be an id in content/photos.json.`
         )
       }
+    }
+  }
+
+  // Check photo → collection references (empty collectionIds[] is valid)
+  for (const photo of photos) {
+    for (const cid of photo.collectionIds) {
+      if (!collectionIds.has(cid)) {
+        throw new Error(
+          `Content error: Photo "${photo.id}" references unknown collection ID "${cid}". ` +
+          `Check content/photos.json — "${cid}" must be an id in content/collections.json.`
+        )
+      }
+    }
+  }
+
+  // Check video → playlist references (empty playlistIds[] is valid)
+  for (const video of videos) {
+    for (const pid of video.playlistIds) {
+      if (!playlistIds.has(pid)) {
+        throw new Error(
+          `Content error: Video "${video.id}" references unknown playlist ID "${pid}". ` +
+          `Check content/videos.json — "${pid}" must be an id in content/playlists.json.`
+        )
+      }
+    }
+  }
+
+  // Check collection → cover photo references
+  for (const collection of collections) {
+    if (!photoIds.has(collection.coverPhotoId)) {
+      throw new Error(
+        `Content error: Collection "${collection.id}" has unknown coverPhotoId "${collection.coverPhotoId}". ` +
+        `Check content/collections.json — "${collection.coverPhotoId}" must be an id in content/photos.json.`
+      )
+    }
+  }
+
+  // Check playlist → cover video references
+  for (const playlist of playlists) {
+    if (!videoIds.has(playlist.coverVideoId)) {
+      throw new Error(
+        `Content error: Playlist "${playlist.id}" has unknown coverVideoId "${playlist.coverVideoId}". ` +
+        `Check content/playlists.json — "${playlist.coverVideoId}" must be an id in content/videos.json.`
+      )
     }
   }
 
@@ -117,10 +214,12 @@ export function validateBidirectionalRefs(): void {
         )
       }
       const parent = treePersons.find((p) => p.id === pid)!
-      if (!parent.childIds.includes(person.id)) {
+      // Support both childIds (v1) and childrenIds (v2) — check either
+      const parentChildren = parent.childIds.length > 0 ? parent.childIds : parent.childrenIds
+      if (!parentChildren.includes(person.id)) {
         throw new Error(
           `Content error: "${person.id}" lists "${pid}" as a parent, but "${pid}" ` +
-          `does not list "${person.id}" in childIds. Parent↔child refs must be bidirectional.`
+          `does not list "${person.id}" in childIds/childrenIds. Parent↔child refs must be bidirectional.`
         )
       }
     }
@@ -130,6 +229,16 @@ export function validateBidirectionalRefs(): void {
       if (!treePersonIds.has(cid)) {
         throw new Error(
           `Content error: Person "${person.id}" has unknown childId "${cid}". ` +
+          `Check content/family.json.`
+        )
+      }
+    }
+
+    // childrenIds (v2): existence only
+    for (const cid of person.childrenIds) {
+      if (!treePersonIds.has(cid)) {
+        throw new Error(
+          `Content error: Person "${person.id}" has unknown childrenId "${cid}". ` +
           `Check content/family.json.`
         )
       }
