@@ -45,9 +45,19 @@ npx auth secret
 ```bash
 node -e "require('bcryptjs').hash('<your-family-password>', 10).then(console.log)"
 # Replace <your-family-password> with the actual family password
-# Copy the $2a$10$... output to AUTH_PASSWORD_HASH in .env.local
+# Output looks like: $2b$10$F2x7R9sz4eKL3h99/G5mYu...
 # NEVER store the plaintext password — only the hash
 ```
+
+**Critical: escape each `$` with a backslash when writing to `.env.local`.**
+
+`@next/env` runs `dotenv-expand`, which mangles bcrypt hashes by treating `$2b`, `$10`, etc. as variable references. Single quotes do NOT prevent this — only backslash escapes do. Example for a hash like `$2b$10$F2x7R9...`:
+
+```
+AUTH_PASSWORD_HASH=\$2b\$10\$F2x7R9...
+```
+
+On **Vercel**, paste the raw hash WITHOUT backslashes — Vercel's environment variable UI does not run dotenv-expand, so it stores the value literally.
 
 ## Content authoring
 
