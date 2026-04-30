@@ -3,9 +3,9 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 3 Plan 01 complete — VideoPlayer stack + VideoGrid + /films page wired; advancing to Phase 4
-last_updated: "2026-04-30T06:06:32.000Z"
-last_activity: 2026-04-30 — Phase 3 Plan 01 complete; /films renders video grid with deferred YouTube iframe; npm run build exits 0
+stopped_at: Phase 4 Plan 01 complete — schema migration, bidirectional validator extension, lib/tree.ts with multi-spouse mitigation, family.json 6-person stub
+last_updated: "2026-04-30T06:35:36.000Z"
+last_activity: 2026-04-30 — Phase 4 Plan 01 complete; lib/tree.ts exports getTreeData/findRootId/flattenMultiSpouses; npm run build exits 0
 progress:
   total_phases: 6
   completed_phases: 1
@@ -25,10 +25,10 @@ See: .planning/PROJECT.md (updated 2026-04-29)
 
 ## Current Position
 
-Phase: 3 of 6 (Video Gallery) — complete
-Plan: 1 of 1 in current phase (all plans done)
-Status: Ready to plan Phase 4
-Last activity: 2026-04-30 — Phase 3 Plan 01 complete; /films page wired to VideoGrid with YouTubeEmbed facade
+Phase: 4 of 6 (Family Tree) — in progress
+Plan: 1 of 3 in current phase (04-01 done; 04-02 and 04-03 pending)
+Status: Executing Phase 4
+Last activity: 2026-04-30 — Phase 4 Plan 01 complete; lib/tree.ts server-only adapter with flattenMultiSpouses mitigation; family.json 6-person multi-spouse dataset
 
 Progress: [█████░░░░░] 50% (3/6 phases complete)
 
@@ -63,6 +63,7 @@ Progress: [█████░░░░░] 50% (3/6 phases complete)
 | Phase 01 P05 | 1m 34s | 2 tasks | 5 files |
 | Phase 02 P01 | 8m 0s | 2 tasks | 5 files |
 | Phase 03 P01 | 3m 0s | 2 tasks | 7 files |
+| Phase 04 P01 | 3m 26s | 3 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -92,6 +93,8 @@ Recent decisions affecting current work:
 - 03-01: @next/third-parties v16 uses playlabel (not title) on YouTubeEmbed — API changed from earlier version documented in plan research
 - 03-01: VimeoPlayer uses plain lazy iframe (no facade) — Vimeo does not have the per-page-load third-party cost that YouTube does
 - 03-01: VideoPlayer throws on unknown source — Zod enforces the enum at load time so this guard only fires for future values not in schema
+- 04-01: Cast RelativesTreeNode[] as unknown as readonly RelNode[] at calcTree call — relatives-tree const enum Gender/RelType incompatible with plain string literals under isolatedModules; structurally safe
+- 04-01: flattenMultiSpouses() runs unconditionally (single-spouse cases pass through) per D-04 — avoids special-casing paths
 
 ### Pending Todos
 
@@ -111,6 +114,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-30T06:06:32.000Z
-Stopped at: Completed 03-01-PLAN.md — VideoPlayer + YouTubePlayer + VimeoPlayer + VideoCard + VideoGrid + /films page; Phase 3 done; ready for Phase 4
+Last session: 2026-04-30T06:35:36.000Z
+Stopped at: Completed 04-01-PLAN.md — PersonSchema gender field, bidirectional validator extension, lib/tree.ts server-only adapter with flattenMultiSpouses, family.json 6-person multi-spouse dataset
 Resume file: None
