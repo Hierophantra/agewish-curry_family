@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: v2 — Collections, Playlists, Lightbox, Brand
 status: executing
-stopped_at: Phase 10 complete — Tree Panel Refresh done. Next: Phase 11 Person Pages v2.
-last_updated: "2026-04-30T08:41:12Z"
-last_activity: 2026-04-30 — Phase 10 complete; PersonPanel prototype-matched (panel-eyebrow gold-deep, panel-name serif 30px, panel-dates italic serif, panel-meta key-value rows, panel-bio italic serif); PhotoCarousel 4:5 aspect + 1.2s crossfade + 4s auto-advance + 5px dots + shared Lightbox integration; FamilyTreeCanvas uses person.relationLabel (v2); npm run build exits 0 (22 static pages)
+stopped_at: Phase 11 complete — Person Pages Refresh done. Next: Phase 12 Home Polish + Curated Previews.
+last_updated: "2026-04-30T08:45:38Z"
+last_activity: 2026-04-30 — Phase 11 complete; person page v2 (eyebrow, datesLabel, spouseLabel), CollectionPhotoGrid (Lightbox-on-click photos), PlaylistVideoGrid (video section new), linked parents/children, npm run build exits 0 (22 pages)
 progress:
   total_phases: 13
-  completed_phases: 10
-  total_plans: 10
-  completed_plans: 10
-  percent: 77
+  completed_phases: 11
+  total_plans: 11
+  completed_plans: 11
+  percent: 85
 ---
 
 # Project State
@@ -25,12 +25,12 @@ See: .planning/PROJECT.md (updated 2026-04-29)
 
 ## Current Position
 
-Phase: 10 of 13 (Tree Panel Refresh) — complete
-Plan: 1 of 1 in current phase (10 done)
-Status: Phase 10 complete — advancing to Phase 11
-Last activity: 2026-04-30 — Phase 10 complete; PersonPanel prototype-matched layout (panel-eyebrow/name/dates/meta/bio CSS classes), PhotoCarousel 4:5 + 1.2s crossfade + 4s advance + 5px dots + shared Lightbox; FamilyTreeCanvas person.relationLabel v2; npm run build exits 0 (22 pages)
+Phase: 11 of 13 (Person Pages Refresh) — complete
+Plan: 1 of 1 in current phase (11 done)
+Status: Phase 11 complete — advancing to Phase 12
+Last activity: 2026-04-30 — Phase 11 complete; person page v2 schema (eyebrow/datesLabel/spouseLabel), CollectionPhotoGrid (Lightbox photos), PlaylistVideoGrid (new video section), linked parents/children; npm run build exits 0 (22 pages)
 
-Progress: [██████████░░░] 77% (10/13 phases complete)
+Progress: [███████████░░] 85% (11/13 phases complete)
 
 ## Phase 1 outcome
 
@@ -72,6 +72,7 @@ Progress: [██████████░░░] 77% (10/13 phases complete)
 | Phase 08 P01 | ~30m | 7 tasks | 7 files |
 | Phase 09 P01 | ~20m | 7 tasks | 8 files |
 | Phase 10 P01 | 2m 14s | 5 tasks | 3 files |
+| Phase 11 P01 | 1m 14s | 3 tasks | 1 file |
 
 ## Accumulated Context
 

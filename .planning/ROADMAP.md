@@ -29,7 +29,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 8: Photo Collections + Lightbox** - `/photographs` becomes collection grid; `/photographs/[collectionId]` shows photos in collection; new shared `<Lightbox />` component (full-screen viewer with prev/next/Esc)
 - [x] **Phase 9: Video Playlists + Video Lightbox + Featured** - `/videos` (renamed) shows featured videos + playlist grid; `/videos/[playlistId]` shows playlist videos; `<VideoLightbox />` component
 - [x] **Phase 10: Tree Refresh** - Adopt prototype's panel UX exactly (4:5 aspect carousel, key-value meta rows, gold-deep eyebrow, italic dates), richer relation labels (GRANDFATHER/SON/DAUGHTER not just CHILD)
-- [ ] **Phase 11: Person Pages Refresh** - Consume new richer schema (eyebrow, datesLabel, relationLabel), photo grid uses collections-aware filter, link from collection back to person
+- [x] **Phase 11: Person Pages Refresh** - Consume new richer schema (eyebrow, datesLabel, spouseLabel), CollectionPhotoGrid with Lightbox, new PlaylistVideoGrid video section, linked parents/children
 - [ ] **Phase 12: Home Polish + Curated Previews** - Home page shows tree preview (one generation), 3-6 highlighted photos, 1-2 featured videos; each preview links to its focus view
 - [ ] **Phase 13: Final v2 Polish + Real Content Prep** - Edge cases, motion refinements, ensure all content is editable via JSON without code changes; documentation for adding real Curry content
 
@@ -144,6 +144,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 8. Photo Collections + Lightbox | 1/1 | Complete | 2026-04-30 |
 | 9. Video Playlists + Featured | 1/1 | Complete | 2026-04-29 |
 | 10. Tree Refresh | 0/1 | Pending | - |
-| 11. Person Pages Refresh | 0/1 | Pending | - |
+| 11. Person Pages Refresh | 1/1 | Complete | 2026-04-30 |
 | 12. Home Polish + Curated Previews | 0/1 | Pending | - |
 | 13. Final v2 Polish + Real Content Prep | 0/1 | Pending | - |
