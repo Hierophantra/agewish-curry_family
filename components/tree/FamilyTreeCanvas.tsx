@@ -38,7 +38,9 @@ function getRelationLabel(node: ExtNode, rootId: string, people: Person[]): stri
     visited.add(id)
     const person = personMap.get(id)
     if (!person) return null
-    for (const childId of person.childIds) {
+    // v2 canonical childrenIds; v1 childIds back-compat fallback
+    const children = person.childrenIds.length > 0 ? person.childrenIds : person.childIds
+    for (const childId of children) {
       const d = depth(childId, target, visited)
       if (d !== null) return d + 1
     }
@@ -59,7 +61,8 @@ function getRelationLabel(node: ExtNode, rootId: string, people: Person[]): stri
   const nodePerson = personMap.get(node.id)
   if (nodePerson) {
     const rootParents = rootPerson?.parentIds ?? []
-    if (nodePerson.childIds.some((c) => rootParents.includes(c) || c === rootId)) return 'PARENT'
+    const nodeChildren = nodePerson.childrenIds.length > 0 ? nodePerson.childrenIds : nodePerson.childIds
+    if (nodeChildren.some((c) => rootParents.includes(c) || c === rootId)) return 'PARENT'
   }
 
   return 'FAMILY'
@@ -109,7 +112,9 @@ export default function FamilyTreeCanvas({
         {nodes.map((node) => {
           const person = peopleById.get(node.id)
           const name = person?.name ?? node.id
-          const label = getRelationLabel(node, rootId, people)
+          // v2: prefer person.relationLabel (e.g. "PATRIARCH", "SON", "GRANDDAUGHTER");
+          // fall back to computed label for people without this field
+          const label = person?.relationLabel ?? getRelationLabel(node, rootId, people)
           return (
             <PersonNode
               key={node.id}
