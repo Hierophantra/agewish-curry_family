@@ -19,8 +19,8 @@ const SECTIONS = [
     description: 'A curated archive of family photographs across the decades.',
   },
   {
-    href: '/films',
-    title: 'Films',
+    href: '/videos',
+    title: 'Videos',
     description: 'Family film recordings, preserved and accessible.',
   },
 ] as const
