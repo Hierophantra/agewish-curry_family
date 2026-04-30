@@ -3,9 +3,9 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 5 Plan 01 complete — Cormorant Garamond typography migration + app/template.tsx entry animation
-last_updated: "2026-04-29T00:00:00.000Z"
-last_activity: 2026-04-29 — Phase 5 Plan 01 complete; Cormorant Garamond loaded via next/font/google, --font-serif CSS token updated, app/template.tsx fade-up entry animation; npm run build exits 0
+stopped_at: Phase 5 Plan 02 complete — hover lifts on cards + Hero stagger animation
+last_updated: "2026-04-30T07:07:24Z"
+last_activity: 2026-04-30 — Phase 5 Plan 02 complete; Hero converted to Client Component with motion staggerChildren; hover lifts on PhotoCard/VideoCard/SectionPreview (Tailwind only); PersonNode gold ring on hover; npm run build exits 0
 progress:
   total_phases: 6
   completed_phases: 1
@@ -26,9 +26,9 @@ See: .planning/PROJECT.md (updated 2026-04-29)
 ## Current Position
 
 Phase: 5 of 6 (Visual Polish) — in progress
-Plan: 1 of 4 in current phase (05-01 done; 05-02, 05-03, 05-04 pending)
+Plan: 2 of 4 in current phase (05-01 done; 05-02 done; 05-03, 05-04 pending)
 Status: Executing Phase 5
-Last activity: 2026-04-29 — Phase 5 Plan 01 complete; Cormorant Garamond via next/font/google, --font-serif CSS token updated to var(--font-cormorant), app/template.tsx 400ms fade-up on every navigation; npm run build exits 0
+Last activity: 2026-04-30 — Phase 5 Plan 02 complete; Hero staggerChildren entry animation (star → heading → subtitle); hover lifts on PhotoCard, VideoCard, SectionPreview cards (Tailwind only, Server Components preserved); PersonNode hover:ring-2 ring-gold-deep; npm run build exits 0
 
 Progress: [█████░░░░░] 50% (3/6 phases complete)
 
@@ -66,6 +66,7 @@ Progress: [█████░░░░░] 50% (3/6 phases complete)
 | Phase 04 P01 | 3m 26s | 3 tasks | 5 files |
 | Phase 04 P02 | 2m 43s | 2 tasks | 3 files |
 | Phase 05 P01 | ~4m 0s | 2 tasks | 3 files |
+| Phase 05 P02 | 2m 43s | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -101,6 +102,8 @@ Recent decisions affecting current work:
 - 04-02: ESLint next/typescript does not enable argsIgnorePattern for _ prefix — eslint-disable-next-line used for _node and _photos (intentionally unused stubs)
 - 05-01: template.tsx entry-only animation (no exit, no AnimatePresence) — cross-page AnimatePresence is broken in App Router; template.tsx re-mounts on navigation making it the idiomatic entry animation location
 - 05-01: Cormorant Garamond weights ['400','500'] only — two-weight rule preserved; style ['normal','italic'] added for future blockquote variants without extra weight load
+- 05-02: motion itemVariants ease requires 'as const' assertion to satisfy TypeScript Easing literal type — string inferred from object literal breaks strict mode
+- 05-02: PhotoCard refactored to extract innerContent fragment to avoid duplicating image/metadata JSX across two render paths (Link-wrapped vs plain article)
 
 ### Pending Todos
 
@@ -120,6 +123,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-29T00:00:00.000Z
-Stopped at: Completed 05-01-PLAN.md — Cormorant Garamond typography migration + app/template.tsx entry animation; npm run build exits 0
+Last session: 2026-04-30T07:07:24Z
+Stopped at: Completed 05-02-PLAN.md — hover lifts + Hero stagger animation; npm run build exits 0
 Resume file: None
