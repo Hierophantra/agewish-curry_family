@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: v2 — Collections, Playlists, Lightbox, Brand
 status: executing
-stopped_at: Phase 9 complete — Video Playlists + VideoLightbox + Featured done. Next: Phase 10 Tree Refresh.
-last_updated: "2026-04-29T00:00:00Z"
-last_activity: 2026-04-29 — Phase 9 complete; VideoLightbox (AnimatePresence, keyboard nav, scroll lock, backdrop close), PlaylistCard (YouTube thumbnail via next/image), PlaylistGrid, PlaylistVideoGrid (Client, owns lightbox state), VideoCard onClick prop (backward compat), /videos featured + playlist landing, /videos/[playlistId] detail with lightbox; npm run build exits 0 (22 static pages, 2 playlist pages pre-rendered)
+stopped_at: Phase 10 complete — Tree Panel Refresh done. Next: Phase 11 Person Pages v2.
+last_updated: "2026-04-30T08:41:12Z"
+last_activity: 2026-04-30 — Phase 10 complete; PersonPanel prototype-matched (panel-eyebrow gold-deep, panel-name serif 30px, panel-dates italic serif, panel-meta key-value rows, panel-bio italic serif); PhotoCarousel 4:5 aspect + 1.2s crossfade + 4s auto-advance + 5px dots + shared Lightbox integration; FamilyTreeCanvas uses person.relationLabel (v2); npm run build exits 0 (22 static pages)
 progress:
   total_phases: 13
-  completed_phases: 9
-  total_plans: 9
-  completed_plans: 9
-  percent: 69
+  completed_phases: 10
+  total_plans: 10
+  completed_plans: 10
+  percent: 77
 ---
 
 # Project State
@@ -25,12 +25,12 @@ See: .planning/PROJECT.md (updated 2026-04-29)
 
 ## Current Position
 
-Phase: 9 of 13 (Video Playlists + VideoLightbox + Featured) — complete
-Plan: 1 of 1 in current phase (09 done)
-Status: Phase 9 complete — advancing to Phase 10
-Last activity: 2026-04-29 — Phase 9 complete; VideoLightbox (AnimatePresence, keyboard nav, scroll lock, backdrop close), PlaylistCard (16:9 cover + YouTube thumbnail via next/image + gradient overlay + play icon), PlaylistGrid (1/2/3 col responsive), PlaylistVideoGrid (Client, owns lightbox state), VideoCard onClick prop (backward compat), /videos → featured + PlaylistGrid landing, /videos/[playlistId] → full detail with lightbox; npm run build exits 0 (22 static pages, 2 playlist detail pages pre-rendered)
+Phase: 10 of 13 (Tree Panel Refresh) — complete
+Plan: 1 of 1 in current phase (10 done)
+Status: Phase 10 complete — advancing to Phase 11
+Last activity: 2026-04-30 — Phase 10 complete; PersonPanel prototype-matched layout (panel-eyebrow/name/dates/meta/bio CSS classes), PhotoCarousel 4:5 + 1.2s crossfade + 4s advance + 5px dots + shared Lightbox; FamilyTreeCanvas person.relationLabel v2; npm run build exits 0 (22 pages)
 
-Progress: [█████████░░░░] 69% (9/13 phases complete)
+Progress: [██████████░░░] 77% (10/13 phases complete)
 
 ## Phase 1 outcome
 
@@ -71,6 +71,7 @@ Progress: [█████████░░░░] 69% (9/13 phases complete)
 | Phase 06 P01 | 2m 15s | 2 tasks | 3 files |
 | Phase 08 P01 | ~30m | 7 tasks | 7 files |
 | Phase 09 P01 | ~20m | 7 tasks | 8 files |
+| Phase 10 P01 | 2m 14s | 5 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -121,6 +122,11 @@ Recent decisions affecting current work:
 - 09: PlaylistVideoGrid owns lightbox state — same server/client boundary split as CollectionPhotoGrid
 - 09: next/image used for YouTube thumbnails (not plain img) — added img.youtube.com to next.config.mjs remotePatterns
 - 09: VideoLightbox embeds VideoPlayer (server component in client context) — no autoplay per D-9.6
+- 10: PersonPanel reads person.eyebrow directly (v2 JSON field) for panel-eyebrow — not computed from person.name
+- 10: PhotoCarousel uses CSS opacity transition (not motion/AnimatePresence) to match prototype 1.2s ease-in-out crossfade
+- 10: PhotoCarousel images wrapped in buttons with onClick; z-index ensures only active photo receives lightbox clicks
+- 10: FamilyTreeCanvas prefers person.relationLabel (v2: PATRIARCH/SON/GRANDDAUGHTER) over computed depth label (ROOT/CHILD/GRANDCHILD)
+- 10: getRelationLabel fallback uses childrenIds with childIds back-compat (v1/v2 dual-support in computed path)
 
 ### Pending Todos
 
@@ -140,6 +146,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-29T00:00:00Z
-Stopped at: Completed 09-PLAN — Video Playlists + VideoLightbox + Featured; VideoLightbox, PlaylistCard, PlaylistGrid, PlaylistVideoGrid, VideoCard onClick prop; npm run build exits 0 (22 pages, 2 playlist pages)
+Last session: 2026-04-30T08:41:12Z
+Stopped at: Completed 10-PLAN — Tree Panel Refresh; PersonPanel prototype-matched, PhotoCarousel 4:5+lightbox, FamilyTreeCanvas v2 relationLabel; npm run build exits 0 (22 pages)
 Resume file: None
