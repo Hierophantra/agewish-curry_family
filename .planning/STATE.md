@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: v2 — Collections, Playlists, Lightbox, Brand
 status: executing
-stopped_at: v1 complete (6 phases). v2 starting — Phase 7 foundation migration
-last_updated: "2026-04-30T07:28:02Z"
-last_activity: 2026-04-30 — Phase 6 Plan 01 complete; app/(protected)/person/[id]/page.tsx full async Server Component with generateStaticParams (6 pre-rendered routes) + notFound(); PhotoGrid refactored to accept optional photos prop; PersonPanel View full page Link added; npm run build exits 0
+stopped_at: Phase 7 complete — v2 foundation migration done. Next: Phase 8 Photo Collections + Lightbox.
+last_updated: "2026-04-29T00:00:00Z"
+last_activity: 2026-04-29 — Phase 7 complete; v2 schema migration, 8-person family data, PNG brand mark, hero/footer copy, films→videos rename, dynamic route stubs; npm run build exits 0 (22 static pages)
 progress:
-  total_phases: 6
-  completed_phases: 1
-  total_plans: 6
-  completed_plans: 6
-  percent: 100
+  total_phases: 13
+  completed_phases: 7
+  total_plans: 7
+  completed_plans: 7
+  percent: 54
 ---
 
 # Project State
@@ -20,17 +20,17 @@ progress:
 
 See: .planning/PROJECT.md (updated 2026-04-29)
 
-**Core value:** Family members can securely access and explore their shared family history — photos, films, and an interactive family tree — through a private, beautifully designed archive.
-**Current focus:** Phase 4 — Family Tree
+**Core value:** Family members can securely access and explore their shared family history — photos, videos, and an interactive family tree — through a private, beautifully designed archive.
+**Current focus:** Phase 8 — Photo Collections + Lightbox
 
 ## Current Position
 
-Phase: 6 of 6 (Person Detail Pages) — complete
-Plan: 1 of 1 in current phase (06-01 done)
-Status: All phases complete — v1.0 archive done
-Last activity: 2026-04-30 — Phase 6 Plan 01 complete; full person detail pages with generateStaticParams (6 pre-rendered routes), notFound() guard, relation links, photo grid; PhotoGrid optional photos prop; PersonPanel View full page Link; npm run build exits 0
+Phase: 7 of 13 (v2 Foundation Migration) — complete
+Plan: 1 of 1 in current phase (07-01 done)
+Status: Phase 7 complete — advancing to Phase 8
+Last activity: 2026-04-29 — Phase 7 complete; v2 schema (Collection/Playlist), 8-person family data, PNG brand mark via next/image, hero "A gathering of generations", footer "Held in trust", films→videos rename, dynamic route stubs; npm run build exits 0 (22 static pages)
 
-Progress: [██████████] 100% (6/6 phases complete)
+Progress: [████████░░░░░] 54% (7/13 phases complete)
 
 ## Phase 1 outcome
 
