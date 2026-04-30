@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Scaffold + Auth Gate + Design System** - Secure foundation, design tokens, content loader contract, and home page (Vercel deploy deferred — code on GitHub, prerequisites complete)
 - [x] **Phase 2: Photo Gallery** - Grid of family photographs with metadata, loaded from JSON
-- [ ] **Phase 3: Video Gallery** - Grid of family films with source-abstracted video player
+- [x] **Phase 3: Video Gallery** - Grid of family films with source-abstracted video player
 - [ ] **Phase 4: Family Tree** - Interactive tree with clickable nodes and person side panel
 - [ ] **Phase 5: Visual Polish** - Responsive QA, motion polish, typography refinement across all pages
 - [ ] **Phase 6: Person Detail Pages** - Individual person pages linked from tree nodes and photo metadata
@@ -63,7 +63,9 @@ Plans:
   2. YouTube videos load on click (deferred iframe), not on page load — the page does not trigger YouTube network requests until a user clicks play
   3. Switching a video's `source` field in `videos.json` from `"youtube"` to `"vimeo"` changes the player component without touching any other code
   4. Visiting `/films` with zero videos in `videos.json` shows a graceful empty state
-**Plans**: TBD
+**Plans**: 1 plan
+Plans:
+- [x] 03-01-PLAN.md — VideoPlayer stack (@next/third-parties), VideoCard + VideoGrid, wire /films page, update videos.json stub
 **UI hint**: yes
 
 ### Phase 4: Family Tree
@@ -109,7 +111,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 |-------|----------------|--------|-----------|
 | 1. Scaffold + Auth Gate + Design System | 5/6 | In Progress|  |
 | 2. Photo Gallery | 1/1 | Complete | 2026-04-29 |
-| 3. Video Gallery | 0/TBD | Not started | - |
+| 3. Video Gallery | 1/1 | Complete | 2026-04-30 |
 | 4. Family Tree | 0/TBD | Not started | - |
 | 5. Visual Polish | 0/TBD | Not started | - |
 | 6. Person Detail Pages | 0/TBD | Not started | - |

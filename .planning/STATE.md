@@ -3,9 +3,9 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 2 Plan 01 complete — PhotoCard + PhotoGrid + /photographs page wired; advancing to Phase 3
-last_updated: "2026-04-29T00:08:00.000Z"
-last_activity: 2026-04-29 — Phase 2 Plan 01 complete; /photographs renders photo grid; npm run build exits 0
+stopped_at: Phase 3 Plan 01 complete — VideoPlayer stack + VideoGrid + /films page wired; advancing to Phase 4
+last_updated: "2026-04-30T06:06:32.000Z"
+last_activity: 2026-04-30 — Phase 3 Plan 01 complete; /films renders video grid with deferred YouTube iframe; npm run build exits 0
 progress:
   total_phases: 6
   completed_phases: 1
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-29)
 
 **Core value:** Family members can securely access and explore their shared family history — photos, films, and an interactive family tree — through a private, beautifully designed archive.
-**Current focus:** Phase 3 — Video Gallery
+**Current focus:** Phase 4 — Family Tree
 
 ## Current Position
 
-Phase: 2 of 6 (Photo Gallery) — complete
+Phase: 3 of 6 (Video Gallery) — complete
 Plan: 1 of 1 in current phase (all plans done)
-Status: Ready to plan Phase 3
-Last activity: 2026-04-29 — Phase 2 Plan 01 complete; /photographs page wired to real content
+Status: Ready to plan Phase 4
+Last activity: 2026-04-30 — Phase 3 Plan 01 complete; /films page wired to VideoGrid with YouTubeEmbed facade
 
-Progress: [████░░░░░░] 33% (2/6 phases complete)
+Progress: [█████░░░░░] 50% (3/6 phases complete)
 
 ## Phase 1 outcome
 
@@ -62,6 +62,7 @@ Progress: [████░░░░░░] 33% (2/6 phases complete)
 | Phase 01 P04 | 2m 1s | 2 tasks | 7 files |
 | Phase 01 P05 | 1m 34s | 2 tasks | 5 files |
 | Phase 02 P01 | 8m 0s | 2 tasks | 5 files |
+| Phase 03 P01 | 3m 0s | 2 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -88,6 +89,9 @@ Recent decisions affecting current work:
 - 02-01: dateTaken formatted inline in PhotoCard as "MONTH YYYY" uppercase; no dateLabel field on Photo type; noon UTC used to avoid timezone-off-by-one on YYYY-MM-DD strings
 - 02-01: Stub images written as minimal valid JPEG (335 bytes) via Node.js Buffer; no ImageMagick/sharp needed at dev time
 - 02-01: New filenames in content/photos.json require matching file in public/photos/ — critical constraint for future content editors
+- 03-01: @next/third-parties v16 uses playlabel (not title) on YouTubeEmbed — API changed from earlier version documented in plan research
+- 03-01: VimeoPlayer uses plain lazy iframe (no facade) — Vimeo does not have the per-page-load third-party cost that YouTube does
+- 03-01: VideoPlayer throws on unknown source — Zod enforces the enum at load time so this guard only fires for future values not in schema
 
 ### Pending Todos
 
@@ -107,6 +111,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-29T00:08:00.000Z
-Stopped at: Completed 02-01-PLAN.md — PhotoCard + PhotoGrid + /photographs page + stub images; Phase 2 done; ready for Phase 3
+Last session: 2026-04-30T06:06:32.000Z
+Stopped at: Completed 03-01-PLAN.md — VideoPlayer + YouTubePlayer + VimeoPlayer + VideoCard + VideoGrid + /films page; Phase 3 done; ready for Phase 4
 Resume file: None
