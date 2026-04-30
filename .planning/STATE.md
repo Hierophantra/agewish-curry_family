@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: v2 — Collections, Playlists, Lightbox, Brand
 status: executing
-stopped_at: Phase 11 complete — Person Pages Refresh done. Next: Phase 12 Home Polish + Curated Previews.
-last_updated: "2026-04-30T08:45:38Z"
-last_activity: 2026-04-30 — Phase 11 complete; person page v2 (eyebrow, datesLabel, spouseLabel), CollectionPhotoGrid (Lightbox-on-click photos), PlaylistVideoGrid (video section new), linked parents/children, npm run build exits 0 (22 pages)
+stopped_at: Phase 12 complete — Home Polish + Curated Previews done. Next: Phase 13 Final v2 Polish + Real Content Prep.
+last_updated: "2026-04-30T08:49:32Z"
+last_activity: 2026-04-30 — Phase 12 complete; home page rebuilt with three curated preview sections (tree, photos, videos); SectionPreview deleted; npm run build exits 0 (22 pages)
 progress:
   total_phases: 13
-  completed_phases: 11
-  total_plans: 11
-  completed_plans: 11
-  percent: 85
+  completed_phases: 12
+  total_plans: 12
+  completed_plans: 12
+  percent: 92
 ---
 
 # Project State
@@ -25,12 +25,14 @@ See: .planning/PROJECT.md (updated 2026-04-29)
 
 ## Current Position
 
-Phase: 11 of 13 (Person Pages Refresh) — complete
-Plan: 1 of 1 in current phase (11 done)
-Status: Phase 11 complete — advancing to Phase 12
-Last activity: 2026-04-30 — Phase 11 complete; person page v2 schema (eyebrow/datesLabel/spouseLabel), CollectionPhotoGrid (Lightbox photos), PlaylistVideoGrid (new video section), linked parents/children; npm run build exits 0 (22 pages)
+Phase: 12 of 13 (Home Polish + Curated Previews) — complete
+Plan: 1 of 1 in current phase (12 done)
+Status: Phase 12 complete — advancing to Phase 13
+Last activity: 2026-04-30 — Phase 12 complete; home page rebuilt with tree/photos/videos curated preview sections; SectionPreview deleted; ivory alternation + eyebrow arrow links; Server Component preserved; npm run build exits 0 (22 pages)
 
-Progress: [███████████░░] 85% (11/13 phases complete)
+Progress: [████████████░] 92% (12/13 phases complete)
+
+Progress: [████████████░] 92% (12/13 phases complete)
 
 ## Phase 1 outcome
 
@@ -73,6 +75,7 @@ Progress: [███████████░░] 85% (11/13 phases complete)
 | Phase 09 P01 | ~20m | 7 tasks | 8 files |
 | Phase 10 P01 | 2m 14s | 5 tasks | 3 files |
 | Phase 11 P01 | 1m 14s | 3 tasks | 1 file |
+| Phase 12 P01 | 1m 4s | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -147,6 +150,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-30T08:41:12Z
-Stopped at: Completed 10-PLAN — Tree Panel Refresh; PersonPanel prototype-matched, PhotoCarousel 4:5+lightbox, FamilyTreeCanvas v2 relationLabel; npm run build exits 0 (22 pages)
+Last session: 2026-04-30T08:49:32Z
+Stopped at: Completed 12-PLAN — Home Polish; tree/photos/videos curated preview sections, SectionPreview deleted, Server Component preserved; npm run build exits 0 (22 pages)
 Resume file: None
