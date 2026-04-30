@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-04-PLAN.md — StarMark component + route group layouts + placeholder pages; ready for 01-05 (TopNav + Footer)
-last_updated: "2026-04-30T04:42:33.041Z"
-last_activity: 2026-04-30
+stopped_at: Completed 01-05-PLAN.md — TopNav + NavTabs + Footer + Login page; ready for 01-06 (Home page hero)
+last_updated: "2026-04-29T00:00:00.000Z"
+last_activity: 2026-04-29
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 6
-  completed_plans: 4
-  percent: 67
+  completed_plans: 5
+  percent: 83
 ---
 
 # Project State
@@ -26,33 +26,34 @@ See: .planning/PROJECT.md (updated 2026-04-29)
 ## Current Position
 
 Phase: 1 of 6 (Scaffold + Auth Gate + Design System)
-Plan: 4 of 6 in current phase (01-03-PLAN.md COMPLETE)
+Plan: 5 of 6 in current phase (01-05-PLAN.md COMPLETE)
 Status: Ready to execute
-Last activity: 2026-04-30
+Last activity: 2026-04-29
 
-Progress: [███░░░░░░░] 50% (3/6 plans in Phase 1)
+Progress: [████░░░░░░] 83% (5/6 plans in Phase 1)
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 3
-- Average duration: 4m 17s
-- Total execution time: ~0.21 hours
+- Total plans completed: 5
+- Average duration: ~3m 30s
+- Total execution time: ~0.29 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 1 — Scaffold + Auth | 3/6 | 12m 51s | 4m 17s |
+| 1 — Scaffold + Auth | 5/6 | ~17m 30s | ~3m 30s |
 
 **Recent Trend:**
 
-- Last 5 plans: 01-01 (8m 13s), 01-02 (2m 19s), 01-03 (2m 19s)
+- Last 5 plans: 01-01 (8m 13s), 01-02 (2m 19s), 01-03 (2m 19s), 01-04 (2m 1s), 01-05 (1m 34s)
 - Trend: Stable at ~2m for well-researched plans with exact code patterns
 
 *Updated after each plan completion*
 | Phase 01 P04 | 2m 1s | 2 tasks | 7 files |
+| Phase 01 P05 | 1m 34s | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -71,8 +72,11 @@ Recent decisions affecting current work:
 - 01-01: zod pinned to v3 — v4 released since research; v3 used per plan spec
 - 01-03: ZodType<Output, Def, Input> generics required in readJSON<> for correct default-filled type inference in TypeScript strict mode
 - 01-03: server-only installed as runtime dependency; build enforces server boundary on lib/content.ts
-- [Phase ?]: 01-04: StarMark generates 7-pointed heptagram inline (no star.svg) using generateStarPath with outerR=size/2, innerR=outerR*0.45
-- [Phase ?]: 01-04: Protected layout ships as stub shell (no TopNav/Footer) — Plan 05 wires nav components via TODO comments
+- 01-04: StarMark generates 7-pointed heptagram inline (no star.svg) using generateStarPath with outerR=size/2, innerR=outerR*0.45
+- 01-04: Protected layout ships as stub shell (no TopNav/Footer) — Plan 05 wires nav components via TODO comments
+- 01-05: NavTabs uses text-muted (token naming resolution from 01-01) — not text-text-muted
+- 01-05: Login error state via searchParams.error (not session); AuthError caught and re-thrown as redirect; NEXT_REDIRECT re-thrown
+- 01-05: autoFocus on password input via HTML attribute only — no useEffect client island needed
 
 ### Pending Todos
 
@@ -92,6 +96,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-30T04:42:33.037Z
-Stopped at: Completed 01-04-PLAN.md — StarMark component + route group layouts + placeholder pages; ready for 01-05 (TopNav + Footer)
+Last session: 2026-04-29T00:00:00.000Z
+Stopped at: Completed 01-05-PLAN.md — TopNav + NavTabs + Footer + Login page; ready for 01-06 (Home page hero)
 Resume file: None

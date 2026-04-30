@@ -17,12 +17,12 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Authentication
 
-- [ ] **AUTH-01**: User can authenticate with the shared family password on the login page
+- [x] **AUTH-01**: User can authenticate with the shared family password on the login page — login page UI completed in 01-05
 - [ ] **AUTH-02**: Auth uses Auth.js v5 Credentials provider with bcryptjs password hash comparison
 - [ ] **AUTH-03**: Auth uses two-file split — `auth.config.ts` (edge-safe) and `auth.ts` (full config); middleware imports config-only
 - [x] **AUTH-04**: All `(protected)` routes are gated by middleware AND `auth()` call in protected layout (defence in depth)
 - [ ] **AUTH-05**: Unauthenticated requests redirect to `/login`; authenticated session persists via JWT cookie
-- [ ] **AUTH-06**: User can log out from any protected page
+- [x] **AUTH-06**: User can log out from any protected page — Sign out server action form in TopNav, completed in 01-05
 - [ ] **AUTH-07**: `AUTH_SECRET` and `AUTH_PASSWORD_HASH` env vars are configured for local dev and Vercel (Production, Preview, Development)
 
 ### Design System
@@ -38,10 +38,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Navigation
 
-- [ ] **NAV-01**: TopNav renders brand mark + tabs (Home, Family tree, Photographs, Films) on every protected page
-- [ ] **NAV-02**: Active nav tab shows gold underline (1.25px) with navy text
-- [ ] **NAV-03**: Footer renders the AgeWish star + serif tagline on every protected page
-- [ ] **NAV-04**: Star motif appears exactly 3 times per page — TopNav, hero (where applicable), and Footer
+- [x] **NAV-01**: TopNav renders brand mark + tabs (Home, Family tree, Photographs, Films) on every protected page — completed in 01-05
+- [x] **NAV-02**: Active nav tab shows gold underline (1.25px) with navy text — completed in 01-05
+- [x] **NAV-03**: Footer renders the AgeWish star + serif tagline on every protected page — completed in 01-05
+- [ ] **NAV-04**: Star motif appears exactly 3 times per page — TopNav, hero (where applicable), and Footer — TopNav+Footer done; hero added in 01-06
 
 ### Content Architecture
 
@@ -141,12 +141,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 | FOUND-03 | Phase 1 | Complete |
 | FOUND-04 | Phase 1 | Pending |
 | FOUND-05 | Phase 1 | Pending |
-| AUTH-01 | Phase 1 | Pending |
+| AUTH-01 | Phase 1 | Complete (01-05) |
 | AUTH-02 | Phase 1 | Pending |
 | AUTH-03 | Phase 1 | Pending |
 | AUTH-04 | Phase 1 | Complete |
 | AUTH-05 | Phase 1 | Pending |
-| AUTH-06 | Phase 1 | Pending |
+| AUTH-06 | Phase 1 | Complete (01-05) |
 | AUTH-07 | Phase 1 | Pending |
 | DESIGN-01 | Phase 1 | Pending |
 | DESIGN-02 | Phase 1 | Pending |
@@ -156,10 +156,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DESIGN-06 | Phase 1 | Complete |
 | DESIGN-07 | Phase 1 | Complete |
 | DESIGN-08 | Phase 5 | Pending |
-| NAV-01 | Phase 1 | Pending |
-| NAV-02 | Phase 1 | Pending |
-| NAV-03 | Phase 1 | Pending |
-| NAV-04 | Phase 1 | Pending |
+| NAV-01 | Phase 1 | Complete (01-05) |
+| NAV-02 | Phase 1 | Complete (01-05) |
+| NAV-03 | Phase 1 | Complete (01-05) |
+| NAV-04 | Phase 1 | Partial (01-05, 01-06) |
 | CONT-01 | Phase 1 | Complete (01-03) |
 | CONT-02 | Phase 1 | Complete (01-03) |
 | CONT-03 | Phase 1 | Complete (01-03) |

@@ -37,7 +37,7 @@ Plans:
 - [x] 01-02-PLAN.md — Auth two-file split: auth.config.ts (edge), auth.ts (Node), middleware.ts, API route
 - [x] 01-03-PLAN.md — Content schema + loader: lib/types.ts, lib/content.ts, stub JSON, lib/utils.ts
 - [x] 01-04-PLAN.md — StarMark SVG, route group layouts, placeholder pages, protected auth() gate
-- [ ] 01-05-PLAN.md — TopNav + NavTabs + Footer + login page UI
+- [x] 01-05-PLAN.md — TopNav + NavTabs + Footer + login page UI
 - [ ] 01-06-PLAN.md — Home page (Hero + SectionPreview), README, Vercel deployment
 **UI hint**: yes
 
@@ -105,7 +105,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Scaffold + Auth Gate + Design System | 4/6 | In Progress|  |
+| 1. Scaffold + Auth Gate + Design System | 5/6 | In Progress|  |
 | 2. Photo Gallery | 0/TBD | Not started | - |
 | 3. Video Gallery | 0/TBD | Not started | - |
 | 4. Family Tree | 0/TBD | Not started | - |
