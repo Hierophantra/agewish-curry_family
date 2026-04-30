@@ -26,7 +26,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 ### v2 (in progress)
 
 - [x] **Phase 7: v2 Foundation Migration** - Schema migrations (collections/playlists, richer Person), rename films→videos, brand mark via real PNG logos, prototype's hero/footer copy, prototype's 8-person family data, fresh photo placeholders
-- [ ] **Phase 8: Photo Collections + Lightbox** - `/photographs` becomes collection grid; `/photographs/[collectionId]` shows photos in collection; new shared `<Lightbox />` component (full-screen viewer with prev/next/Esc)
+- [x] **Phase 8: Photo Collections + Lightbox** - `/photographs` becomes collection grid; `/photographs/[collectionId]` shows photos in collection; new shared `<Lightbox />` component (full-screen viewer with prev/next/Esc)
 - [ ] **Phase 9: Video Playlists + Video Lightbox + Featured** - `/videos` (renamed) shows featured videos + playlist grid; `/videos/[playlistId]` shows playlist videos; `<VideoLightbox />` component
 - [ ] **Phase 10: Tree Refresh** - Adopt prototype's panel UX exactly (4:5 aspect carousel, key-value meta rows, gold-deep eyebrow, italic dates), richer relation labels (GRANDFATHER/SON/DAUGHTER not just CHILD)
 - [ ] **Phase 11: Person Pages Refresh** - Consume new richer schema (eyebrow, datesLabel, relationLabel), photo grid uses collections-aware filter, link from collection back to person
@@ -141,7 +141,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 5. Visual Polish | 3/4 | In Progress | - |
 | 6. Person Detail Pages | 1/1 | Complete | 2026-04-30 |
 | 7. v2 Foundation Migration | 1/1 | Complete | 2026-04-29 |
-| 8. Photo Collections + Lightbox | 0/1 | Pending | - |
+| 8. Photo Collections + Lightbox | 1/1 | Complete | 2026-04-30 |
 | 9. Video Playlists + Featured | 0/1 | Pending | - |
 | 10. Tree Refresh | 0/1 | Pending | - |
 | 11. Person Pages Refresh | 0/1 | Pending | - |

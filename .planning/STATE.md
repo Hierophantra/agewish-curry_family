@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: v2 — Collections, Playlists, Lightbox, Brand
 status: executing
-stopped_at: Phase 7 complete — v2 foundation migration done. Next: Phase 8 Photo Collections + Lightbox.
-last_updated: "2026-04-29T00:00:00Z"
-last_activity: 2026-04-29 — Phase 7 complete; v2 schema migration, 8-person family data, PNG brand mark, hero/footer copy, films→videos rename, dynamic route stubs; npm run build exits 0 (22 static pages)
+stopped_at: Phase 8 complete — Photo Collections + Lightbox done. Next: Phase 9 Video Playlists + Featured.
+last_updated: "2026-04-30T08:29:00Z"
+last_activity: 2026-04-30 — Phase 8 complete; Lightbox component (AnimatePresence, keyboard nav, scroll lock), CollectionCard, CollectionGrid, CollectionPhotoGrid, PhotoCard onClick prop, /photographs collection landing, /photographs/[collectionId] detail with lightbox; npm run build exits 0 (22 static pages)
 progress:
   total_phases: 13
-  completed_phases: 7
-  total_plans: 7
-  completed_plans: 7
-  percent: 54
+  completed_phases: 8
+  total_plans: 8
+  completed_plans: 8
+  percent: 62
 ---
 
 # Project State
@@ -25,12 +25,12 @@ See: .planning/PROJECT.md (updated 2026-04-29)
 
 ## Current Position
 
-Phase: 7 of 13 (v2 Foundation Migration) — complete
-Plan: 1 of 1 in current phase (07-01 done)
-Status: Phase 7 complete — advancing to Phase 8
-Last activity: 2026-04-29 — Phase 7 complete; v2 schema (Collection/Playlist), 8-person family data, PNG brand mark via next/image, hero "A gathering of generations", footer "Held in trust", films→videos rename, dynamic route stubs; npm run build exits 0 (22 static pages)
+Phase: 8 of 13 (Photo Collections + Lightbox) — complete
+Plan: 1 of 1 in current phase (08 done)
+Status: Phase 8 complete — advancing to Phase 9
+Last activity: 2026-04-30 — Phase 8 complete; Lightbox (AnimatePresence, keyboard nav, scroll lock, backdrop close), CollectionCard (4:3 cover + gradient overlay), CollectionGrid (1/2/3 col responsive), CollectionPhotoGrid (Client, owns lightbox state), PhotoCard onClick prop (backward compat), /photographs → CollectionGrid landing, /photographs/[collectionId] → full detail with lightbox; npm run build exits 0 (22 static pages, 3 collection detail pages pre-rendered)
 
-Progress: [████████░░░░░] 54% (7/13 phases complete)
+Progress: [█████████░░░░] 62% (8/13 phases complete)
 
 ## Phase 1 outcome
 
@@ -69,6 +69,7 @@ Progress: [████████░░░░░] 54% (7/13 phases complete)
 | Phase 05 P02 | 2m 43s | 2 tasks | 5 files |
 | Phase 05 P03 | 2m 0s | 2 tasks | 4 files |
 | Phase 06 P01 | 2m 15s | 2 tasks | 3 files |
+| Phase 08 P01 | ~30m | 7 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -112,6 +113,9 @@ Recent decisions affecting current work:
 - 06-01: Photo filter uses photo.peopleIds.includes(person.id) not person.photoIds — photos tag people, not the reverse
 - 06-01: PhotoGrid accepts optional photos prop with = {} default; absent prop falls back to getPhotos() preserving /photographs page
 - 06-01: PersonPanel "View full page" link styled as eyebrow + hover:text-gold — subtle accent consistent with two-weight design system
+- 08: PhotoCard became 'use client' to accept onClick function prop; backward compat preserved (no onClick = original Link/article behavior)
+- 08: CollectionPhotoGrid owns lightbox state (lightboxIndex: number | null) — clean server/client boundary split
+- 08: Photo index counter (1 / N) shown in lightbox per Claude's discretion (D-13 allowed this)
 
 ### Pending Todos
 
@@ -131,6 +135,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-30T07:28:02Z
-Stopped at: Completed 06-01-PLAN.md — person detail pages, PhotoGrid prop refactor, PersonPanel View full page link; npm run build exits 0; all 6 phases complete
+Last session: 2026-04-30T08:29:00Z
+Stopped at: Completed 08-PLAN — Photo Collections + Lightbox; Lightbox, CollectionCard, CollectionGrid, CollectionPhotoGrid, PhotoCard onClick prop; npm run build exits 0 (22 pages)
 Resume file: None
