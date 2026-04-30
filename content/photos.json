@@ -1,18 +1,62 @@
 [
   {
-    "id": "photo-001",
-    "filename": "placeholder-001.jpg",
-    "caption": "William Curry, circa 1950",
-    "dateTaken": "1950-01-01",
-    "peopleIds": [
-      "william-curry"
-    ]
+    "id": "1953-wedding-01",
+    "filename": "1953-wedding-01.jpg",
+    "caption": "William and Eleanor, wedding day",
+    "date": "1953-06-15",
+    "dateLabel": "June 1953",
+    "location": "Dayton, Ohio",
+    "peopleIds": ["william-curry"],
+    "collectionIds": ["wedding-days"]
   },
   {
-    "id": "photo-002",
-    "filename": "placeholder-002.jpg",
-    "caption": "Family gathering",
-    "dateTaken": "1970-06-15",
-    "peopleIds": []
+    "id": "1974-christmas-01",
+    "filename": "1974-christmas-01.jpg",
+    "caption": "Christmas morning at the house on Maple",
+    "date": "1974-12-25",
+    "dateLabel": "December 1974",
+    "location": "Dayton, Ohio",
+    "peopleIds": ["william-curry", "margaret-curry"],
+    "collectionIds": ["christmas-mornings"]
+  },
+  {
+    "id": "1981-lake-house-01",
+    "filename": "1981-lake-house-01.jpg",
+    "caption": "A summer afternoon at the lake house",
+    "date": "1981-08-10",
+    "dateLabel": "August 1981",
+    "location": "Lake house, Ohio",
+    "peopleIds": ["william-curry", "robert-curry"],
+    "collectionIds": ["lake-house-summers"]
+  },
+  {
+    "id": "1989-sunday-dinner-01",
+    "filename": "1989-sunday-dinner-01.jpg",
+    "caption": "Sunday dinner, the whole family around the table",
+    "date": "1989-04-16",
+    "dateLabel": "April 1989",
+    "location": "Dayton, Ohio",
+    "peopleIds": ["william-curry", "margaret-curry", "james-curry"],
+    "collectionIds": []
+  },
+  {
+    "id": "1995-reunion-01",
+    "filename": "1995-reunion-01.jpg",
+    "caption": "Family reunion at the lake, last summer there",
+    "date": "1995-07-04",
+    "dateLabel": "July 1995",
+    "location": "Lake house, Ohio",
+    "peopleIds": ["robert-curry", "margaret-curry", "james-curry", "sarah-curry", "daniel-curry", "emily-walsh", "thomas-walsh"],
+    "collectionIds": ["lake-house-summers"]
+  },
+  {
+    "id": "2005-christmas-01",
+    "filename": "2005-christmas-01.jpg",
+    "caption": "Christmas, the grandchildren all grown",
+    "date": "2005-12-25",
+    "dateLabel": "December 2005",
+    "location": "Dayton, Ohio",
+    "peopleIds": ["robert-curry", "margaret-curry", "sarah-curry", "daniel-curry", "emily-walsh", "thomas-walsh"],
+    "collectionIds": ["christmas-mornings"]
   }
 ]
