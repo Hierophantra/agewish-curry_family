@@ -49,7 +49,9 @@ Plans:
   1. Visiting `/photographs` shows a grid of photo cards, each displaying the image, caption, and date label
   2. Photo images load from `/public/photos/` without broken image errors
   3. Visiting `/photographs` with zero photos in `photos.json` shows a graceful empty state rather than an error
-**Plans**: TBD
+**Plans**: 1 plan
+Plans:
+- [x] 02-01-PLAN.md — PhotoCard + PhotoGrid components, wire /photographs page, add stub images to /public/photos/
 **UI hint**: yes
 
 ### Phase 3: Video Gallery
@@ -106,7 +108,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Scaffold + Auth Gate + Design System | 5/6 | In Progress|  |
-| 2. Photo Gallery | 0/TBD | Not started | - |
+| 2. Photo Gallery | 1/1 | Complete | 2026-04-29 |
 | 3. Video Gallery | 0/TBD | Not started | - |
 | 4. Family Tree | 0/TBD | Not started | - |
 | 5. Visual Polish | 0/TBD | Not started | - |

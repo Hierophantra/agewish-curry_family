@@ -4,7 +4,9 @@
     "filename": "placeholder-001.jpg",
     "caption": "William Curry, circa 1950",
     "dateTaken": "1950-01-01",
-    "peopleIds": ["william-curry"]
+    "peopleIds": [
+      "william-curry"
+    ]
   },
   {
     "id": "photo-002",

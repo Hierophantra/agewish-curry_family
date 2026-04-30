@@ -61,10 +61,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Photo Gallery
 
-- [ ] **PHOTO-01**: `/photographs` route renders a grid of all photos from `photos.json`
-- [ ] **PHOTO-02**: Each photo card displays the image, caption, and date label metadata
-- [ ] **PHOTO-03**: Photo files load from `/public/photos/{filename}`
-- [ ] **PHOTO-04**: Photo grid degrades gracefully when there are zero photos (empty state)
+- [x] **PHOTO-01**: `/photographs` route renders a grid of all photos from `photos.json`
+- [x] **PHOTO-02**: Each photo card displays the image, caption, and date label metadata
+- [x] **PHOTO-03**: Photo files load from `/public/photos/{filename}`
+- [x] **PHOTO-04**: Photo grid degrades gracefully when there are zero photos (empty state)
 
 ### Video Gallery
 
@@ -170,10 +170,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | HOME-01 | Phase 1 | Pending |
 | HOME-02 | Phase 1 | Pending |
 | HOME-03 | Phase 1 | Pending |
-| PHOTO-01 | Phase 2 | Pending |
-| PHOTO-02 | Phase 2 | Pending |
-| PHOTO-03 | Phase 2 | Pending |
-| PHOTO-04 | Phase 2 | Pending |
+| PHOTO-01 | Phase 2 | Complete |
+| PHOTO-02 | Phase 2 | Complete |
+| PHOTO-03 | Phase 2 | Complete |
+| PHOTO-04 | Phase 2 | Complete |
 | VIDEO-01 | Phase 3 | Pending |
 | VIDEO-02 | Phase 3 | Pending |
 | VIDEO-03 | Phase 3 | Pending |

@@ -3,9 +3,9 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 1 complete (Vercel deploy deferred); advancing to Phase 2 — Photo Gallery
-last_updated: "2026-04-29T00:00:00.000Z"
-last_activity: 2026-04-29 — Phase 1 functionally complete locally; code pushed to github.com/Hierophantra/agewish-curry_family; user deferred Vercel deploy
+stopped_at: Phase 2 Plan 01 complete — PhotoCard + PhotoGrid + /photographs page wired; advancing to Phase 3
+last_updated: "2026-04-29T00:08:00.000Z"
+last_activity: 2026-04-29 — Phase 2 Plan 01 complete; /photographs renders photo grid; npm run build exits 0
 progress:
   total_phases: 6
   completed_phases: 1
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-29)
 
 **Core value:** Family members can securely access and explore their shared family history — photos, films, and an interactive family tree — through a private, beautifully designed archive.
-**Current focus:** Phase 2 — Photo Gallery
+**Current focus:** Phase 3 — Video Gallery
 
 ## Current Position
 
-Phase: 2 of 6 (Photo Gallery) — Phase 1 complete (Vercel deploy deferred)
-Plan: 0 of TBD in current phase
-Status: Ready to plan Phase 2
-Last activity: 2026-04-29 — Phase 1 wrapped; advancing to Phase 2
+Phase: 2 of 6 (Photo Gallery) — complete
+Plan: 1 of 1 in current phase (all plans done)
+Status: Ready to plan Phase 3
+Last activity: 2026-04-29 — Phase 2 Plan 01 complete; /photographs page wired to real content
 
-Progress: [██░░░░░░░░] 17% (1/6 phases complete)
+Progress: [████░░░░░░] 33% (2/6 phases complete)
 
 ## Phase 1 outcome
 
@@ -61,6 +61,7 @@ Progress: [██░░░░░░░░] 17% (1/6 phases complete)
 *Updated after each plan completion*
 | Phase 01 P04 | 2m 1s | 2 tasks | 7 files |
 | Phase 01 P05 | 1m 34s | 2 tasks | 5 files |
+| Phase 02 P01 | 8m 0s | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -84,6 +85,9 @@ Recent decisions affecting current work:
 - 01-05: NavTabs uses text-muted (token naming resolution from 01-01) — not text-text-muted
 - 01-05: Login error state via searchParams.error (not session); AuthError caught and re-thrown as redirect; NEXT_REDIRECT re-thrown
 - 01-05: autoFocus on password input via HTML attribute only — no useEffect client island needed
+- 02-01: dateTaken formatted inline in PhotoCard as "MONTH YYYY" uppercase; no dateLabel field on Photo type; noon UTC used to avoid timezone-off-by-one on YYYY-MM-DD strings
+- 02-01: Stub images written as minimal valid JPEG (335 bytes) via Node.js Buffer; no ImageMagick/sharp needed at dev time
+- 02-01: New filenames in content/photos.json require matching file in public/photos/ — critical constraint for future content editors
 
 ### Pending Todos
 
@@ -103,6 +107,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-29T00:00:00.000Z
-Stopped at: Completed 01-05-PLAN.md — TopNav + NavTabs + Footer + Login page; ready for 01-06 (Home page hero)
+Last session: 2026-04-29T00:08:00.000Z
+Stopped at: Completed 02-01-PLAN.md — PhotoCard + PhotoGrid + /photographs page + stub images; Phase 2 done; ready for Phase 3
 Resume file: None
