@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Scaffold + Auth Gate + Design System** - Secure foundation, design tokens, content loader contract, and home page (Vercel deploy deferred — code on GitHub, prerequisites complete)
 - [x] **Phase 2: Photo Gallery** - Grid of family photographs with metadata, loaded from JSON
 - [x] **Phase 3: Video Gallery** - Grid of family films with source-abstracted video player
-- [ ] **Phase 4: Family Tree** - Interactive tree with clickable nodes and person side panel
+- [x] **Phase 4: Family Tree** - Interactive tree with clickable nodes and person side panel (multi-spouse GitHub #24 mitigation verified)
 - [ ] **Phase 5: Visual Polish** - Responsive QA, motion polish, typography refinement across all pages
 - [ ] **Phase 6: Person Detail Pages** - Individual person pages linked from tree nodes and photo metadata
 
