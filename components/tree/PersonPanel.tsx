@@ -2,6 +2,7 @@
 // 'use client' — uses motion/react for slide-in animation
 'use client'
 import { motion } from 'motion/react'
+import Link from 'next/link'
 import type { Person, Photo } from '@/lib/types'
 import PhotoCarousel from './PhotoCarousel'
 
@@ -99,6 +100,16 @@ export default function PersonPanel({ person, photos, people, onClose }: PersonP
             </ul>
           </div>
         )}
+
+        {/* View full page link (per D-08) — subtle text link navigating to person detail page */}
+        <div className="mt-auto pt-3">
+          <Link
+            href={`/person/${person.id}`}
+            className="eyebrow text-quiet hover:text-gold transition-colors"
+          >
+            View full page →
+          </Link>
+        </div>
       </div>
     </motion.aside>
   )
