@@ -9,8 +9,8 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Foundation
 
-- [ ] **FOUND-01**: Project initializes with Next.js 14.2.35, TypeScript strict mode, Tailwind v4
-- [ ] **FOUND-02**: All required libraries installed at correct versions (next-auth@beta, motion, relatives-tree, react-family-tree, bcryptjs, zod)
+- [x] **FOUND-01**: Project initializes with Next.js 14.2.35, TypeScript strict mode, Tailwind v4 — completed in 01-01
+- [x] **FOUND-02**: All required libraries installed at correct versions (next-auth@beta, motion, relatives-tree, react-family-tree, bcryptjs, zod) — completed in 01-01
 - [ ] **FOUND-03**: Folder structure matches the brief — route groups `(auth)` and `(protected)`, `/components/`, `/content/`, `/lib/`, `/public/`
 - [ ] **FOUND-04**: Project deploys cleanly to Vercel from the `main` branch
 - [ ] **FOUND-05**: README.md documents local setup, env vars, and content authoring
@@ -27,9 +27,9 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Design System
 
-- [ ] **DESIGN-01**: Tailwind v4 `@theme {}` block defines navy/gold/ivory palette as complete class-name tokens (no dynamic interpolation)
-- [ ] **DESIGN-02**: Typography uses serif for headings (Georgia fallback initially) and Inter for body
-- [ ] **DESIGN-03**: Only two font weights (400, 500) are available in the design system
+- [x] **DESIGN-01**: Tailwind v4 `@theme {}` block defines navy/gold/ivory palette as complete class-name tokens (no dynamic interpolation) — completed in 01-01
+- [x] **DESIGN-02**: Typography uses serif for headings (Georgia fallback initially) and Inter for body — completed in 01-01
+- [x] **DESIGN-03**: Only two font weights (400, 500) are available in the design system — completed in 01-01
 - [ ] **DESIGN-04**: `<StarMark />` component renders the AgeWish 7-pointed gold star as inline SVG
 - [ ] **DESIGN-05**: All metadata eyebrows use uppercase + 0.22em letter-spacing
 - [ ] **DESIGN-06**: All copy is sentence case — no Title Case, no ALL CAPS (except eyebrows)
