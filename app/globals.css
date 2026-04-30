@@ -20,8 +20,8 @@
   /* var(--font-inter) is injected on <html> by next/font/google in layout.tsx */
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 
-  /* ── Typography — serif headings (Georgia fallback for v1; Cormorant in Phase 5) ── */
-  --font-serif: Georgia, 'Times New Roman', serif;
+  /* ── Typography — serif headings (Cormorant Garamond via next/font; Georgia fallback) ── */
+  --font-serif: var(--font-cormorant), Georgia, 'Times New Roman', serif;
 
   /* ── Font weights — two-weight rule: ONLY 400 and 500 ── */
   /* By defining only these two, Tailwind only generates font-normal and font-medium. */
