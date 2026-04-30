@@ -2,6 +2,28 @@
 
 A private family archive for the Curry family at [curry.agewish.com](https://curry.agewish.com).
 
+## v2 status: complete
+
+All 13 phases of the v2 milestone are shipped. The site is feature-complete.
+
+**What is in place:**
+- Password-gated archive with Auth.js v5 credentials provider
+- Photographs organised into named collections with a full-screen lightbox viewer
+- Videos organised into playlists with an embedded video lightbox (YouTube/Vimeo)
+- Interactive family tree with a prototype-fidelity side panel (photo carousel, key-value metadata)
+- Individual person pages with photographs, videos, and linked relatives
+- Curated home page with tree preview, recent photographs, and featured films
+- AgeWish brand mark (real PNG — navy ring + gold 8-pointed star)
+- Content separated from code: all family data lives in `/content/*.json`
+
+**What remains before launch:**
+- Replace the 6 placeholder photos (1x1 JPEG stubs in `public/photos/`) with real family photographs
+- Update `content/family.json` with real family data (or keep the Curry prototype data)
+- Update `content/videos.json` with real YouTube/Vimeo video IDs (or remove the stub videos)
+- Deploy to Vercel and configure the `curry.agewish.com` DNS record
+
+**See [CONTENT_AUTHORING.md](CONTENT_AUTHORING.md)** for step-by-step instructions on adding real content without touching code.
+
 ## Local development
 
 **Prerequisites:** Node.js 18+, npm
