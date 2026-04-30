@@ -5,9 +5,16 @@ import { useState } from 'react'
 import { AnimatePresence } from 'motion/react'
 import type { ExtNode, Connector } from 'relatives-tree/lib/types'
 import type { Person, Photo } from '@/lib/types'
-import { NODE_WIDTH, NODE_HEIGHT, H_UNIT, V_UNIT } from '@/lib/tree'
 import PersonNode from './PersonNode'
 import ConnectorLine from './ConnectorLine'
+
+// Layout constants — keep in sync with lib/tree.ts (cannot import lib/tree.ts here:
+// it has `import 'server-only'` which would fail in the client bundle).
+// D-13: node dimensions; RESEARCH §Topic 3: padding multipliers for visual breathing room
+const NODE_WIDTH = 160   // px
+const NODE_HEIGHT = 60   // px
+const H_UNIT = 200       // px per horizontal grid unit (160px node + 40px gap)
+const V_UNIT = 100       // px per vertical grid unit  (60px node  + 40px gap)
 // PersonPanel imported in Plan 04-03 — leave a TODO comment here for now:
 // import PersonPanel from './PersonPanel'
 
