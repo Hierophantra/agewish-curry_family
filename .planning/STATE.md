@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: v2 — Collections, Playlists, Lightbox, Brand
 status: executing
-stopped_at: Phase 8 complete — Photo Collections + Lightbox done. Next: Phase 9 Video Playlists + Featured.
-last_updated: "2026-04-30T08:29:00Z"
-last_activity: 2026-04-30 — Phase 8 complete; Lightbox component (AnimatePresence, keyboard nav, scroll lock), CollectionCard, CollectionGrid, CollectionPhotoGrid, PhotoCard onClick prop, /photographs collection landing, /photographs/[collectionId] detail with lightbox; npm run build exits 0 (22 static pages)
+stopped_at: Phase 9 complete — Video Playlists + VideoLightbox + Featured done. Next: Phase 10 Tree Refresh.
+last_updated: "2026-04-29T00:00:00Z"
+last_activity: 2026-04-29 — Phase 9 complete; VideoLightbox (AnimatePresence, keyboard nav, scroll lock, backdrop close), PlaylistCard (YouTube thumbnail via next/image), PlaylistGrid, PlaylistVideoGrid (Client, owns lightbox state), VideoCard onClick prop (backward compat), /videos featured + playlist landing, /videos/[playlistId] detail with lightbox; npm run build exits 0 (22 static pages, 2 playlist pages pre-rendered)
 progress:
   total_phases: 13
-  completed_phases: 8
-  total_plans: 8
-  completed_plans: 8
-  percent: 62
+  completed_phases: 9
+  total_plans: 9
+  completed_plans: 9
+  percent: 69
 ---
 
 # Project State
@@ -25,12 +25,12 @@ See: .planning/PROJECT.md (updated 2026-04-29)
 
 ## Current Position
 
-Phase: 8 of 13 (Photo Collections + Lightbox) — complete
-Plan: 1 of 1 in current phase (08 done)
-Status: Phase 8 complete — advancing to Phase 9
-Last activity: 2026-04-30 — Phase 8 complete; Lightbox (AnimatePresence, keyboard nav, scroll lock, backdrop close), CollectionCard (4:3 cover + gradient overlay), CollectionGrid (1/2/3 col responsive), CollectionPhotoGrid (Client, owns lightbox state), PhotoCard onClick prop (backward compat), /photographs → CollectionGrid landing, /photographs/[collectionId] → full detail with lightbox; npm run build exits 0 (22 static pages, 3 collection detail pages pre-rendered)
+Phase: 9 of 13 (Video Playlists + VideoLightbox + Featured) — complete
+Plan: 1 of 1 in current phase (09 done)
+Status: Phase 9 complete — advancing to Phase 10
+Last activity: 2026-04-29 — Phase 9 complete; VideoLightbox (AnimatePresence, keyboard nav, scroll lock, backdrop close), PlaylistCard (16:9 cover + YouTube thumbnail via next/image + gradient overlay + play icon), PlaylistGrid (1/2/3 col responsive), PlaylistVideoGrid (Client, owns lightbox state), VideoCard onClick prop (backward compat), /videos → featured + PlaylistGrid landing, /videos/[playlistId] → full detail with lightbox; npm run build exits 0 (22 static pages, 2 playlist detail pages pre-rendered)
 
-Progress: [█████████░░░░] 62% (8/13 phases complete)
+Progress: [█████████░░░░] 69% (9/13 phases complete)
 
 ## Phase 1 outcome
 
@@ -70,6 +70,7 @@ Progress: [█████████░░░░] 62% (8/13 phases complete)
 | Phase 05 P03 | 2m 0s | 2 tasks | 4 files |
 | Phase 06 P01 | 2m 15s | 2 tasks | 3 files |
 | Phase 08 P01 | ~30m | 7 tasks | 7 files |
+| Phase 09 P01 | ~20m | 7 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -116,6 +117,10 @@ Recent decisions affecting current work:
 - 08: PhotoCard became 'use client' to accept onClick function prop; backward compat preserved (no onClick = original Link/article behavior)
 - 08: CollectionPhotoGrid owns lightbox state (lightboxIndex: number | null) — clean server/client boundary split
 - 08: Photo index counter (1 / N) shown in lightbox per Claude's discretion (D-13 allowed this)
+- 09: VideoCard became 'use client' to accept onClick prop; dateLabel fallback chain: dateLabel → format(date) → format(dateTaken)
+- 09: PlaylistVideoGrid owns lightbox state — same server/client boundary split as CollectionPhotoGrid
+- 09: next/image used for YouTube thumbnails (not plain img) — added img.youtube.com to next.config.mjs remotePatterns
+- 09: VideoLightbox embeds VideoPlayer (server component in client context) — no autoplay per D-9.6
 
 ### Pending Todos
 
@@ -135,6 +140,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-30T08:29:00Z
-Stopped at: Completed 08-PLAN — Photo Collections + Lightbox; Lightbox, CollectionCard, CollectionGrid, CollectionPhotoGrid, PhotoCard onClick prop; npm run build exits 0 (22 pages)
+Last session: 2026-04-29T00:00:00Z
+Stopped at: Completed 09-PLAN — Video Playlists + VideoLightbox + Featured; VideoLightbox, PlaylistCard, PlaylistGrid, PlaylistVideoGrid, VideoCard onClick prop; npm run build exits 0 (22 pages, 2 playlist pages)
 Resume file: None

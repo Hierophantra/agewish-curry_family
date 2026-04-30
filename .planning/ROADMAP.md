@@ -27,7 +27,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 7: v2 Foundation Migration** - Schema migrations (collections/playlists, richer Person), rename films→videos, brand mark via real PNG logos, prototype's hero/footer copy, prototype's 8-person family data, fresh photo placeholders
 - [x] **Phase 8: Photo Collections + Lightbox** - `/photographs` becomes collection grid; `/photographs/[collectionId]` shows photos in collection; new shared `<Lightbox />` component (full-screen viewer with prev/next/Esc)
-- [ ] **Phase 9: Video Playlists + Video Lightbox + Featured** - `/videos` (renamed) shows featured videos + playlist grid; `/videos/[playlistId]` shows playlist videos; `<VideoLightbox />` component
+- [x] **Phase 9: Video Playlists + Video Lightbox + Featured** - `/videos` (renamed) shows featured videos + playlist grid; `/videos/[playlistId]` shows playlist videos; `<VideoLightbox />` component
 - [ ] **Phase 10: Tree Refresh** - Adopt prototype's panel UX exactly (4:5 aspect carousel, key-value meta rows, gold-deep eyebrow, italic dates), richer relation labels (GRANDFATHER/SON/DAUGHTER not just CHILD)
 - [ ] **Phase 11: Person Pages Refresh** - Consume new richer schema (eyebrow, datesLabel, relationLabel), photo grid uses collections-aware filter, link from collection back to person
 - [ ] **Phase 12: Home Polish + Curated Previews** - Home page shows tree preview (one generation), 3-6 highlighted photos, 1-2 featured videos; each preview links to its focus view
@@ -142,7 +142,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 6. Person Detail Pages | 1/1 | Complete | 2026-04-30 |
 | 7. v2 Foundation Migration | 1/1 | Complete | 2026-04-29 |
 | 8. Photo Collections + Lightbox | 1/1 | Complete | 2026-04-30 |
-| 9. Video Playlists + Featured | 0/1 | Pending | - |
+| 9. Video Playlists + Featured | 1/1 | Complete | 2026-04-29 |
 | 10. Tree Refresh | 0/1 | Pending | - |
 | 11. Person Pages Refresh | 0/1 | Pending | - |
 | 12. Home Polish + Curated Previews | 0/1 | Pending | - |
