@@ -1,0 +1,16 @@
+[
+  {
+    "id": "photo-001",
+    "filename": "placeholder-001.jpg",
+    "caption": "William Curry, circa 1950",
+    "dateTaken": "1950-01-01",
+    "peopleIds": ["william-curry"]
+  },
+  {
+    "id": "photo-002",
+    "filename": "placeholder-002.jpg",
+    "caption": "Family gathering",
+    "dateTaken": "1970-06-15",
+    "peopleIds": []
+  }
+]

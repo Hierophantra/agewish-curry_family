@@ -1,0 +1,36 @@
+[
+  {
+    "id": "william-curry",
+    "name": "William Curry",
+    "birthYear": 1920,
+    "deathYear": 1998,
+    "birthPlace": "London, England",
+    "bio": "Founder of the Curry family line. Born in London, England.",
+    "photoIds": ["photo-001"],
+    "parentIds": [],
+    "childIds": ["james-curry"],
+    "spouseIds": []
+  },
+  {
+    "id": "james-curry",
+    "name": "James Curry",
+    "birthYear": 1948,
+    "birthPlace": "London, England",
+    "bio": "",
+    "photoIds": [],
+    "parentIds": ["william-curry"],
+    "childIds": ["emily-curry"],
+    "spouseIds": []
+  },
+  {
+    "id": "emily-curry",
+    "name": "Emily Curry",
+    "birthYear": 1975,
+    "birthPlace": "London, England",
+    "bio": "",
+    "photoIds": [],
+    "parentIds": ["james-curry"],
+    "childIds": [],
+    "spouseIds": []
+  }
+]
