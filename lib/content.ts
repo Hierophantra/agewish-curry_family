@@ -7,8 +7,8 @@ import 'server-only'
 import { readFileSync } from 'fs'
 import { join } from 'path'
 import { z } from 'zod'
-import { PersonSchema, PhotoSchema, VideoSchema, CollectionSchema, PlaylistSchema } from './types'
-import type { Person, Photo, Video, Collection, Playlist } from './types'
+import { PersonSchema, PhotoSchema, VideoSchema, CollectionSchema, PlaylistSchema, AudioSchema } from './types'
+import type { Person, Photo, Video, Collection, Playlist, Audio } from './types'
 
 // ── Internal file reader ──
 // Uses .parse() (throws ZodError) not .safeParse() — fail loud on bad content.
@@ -86,6 +86,24 @@ export function getVideosByPersonId(personId: string): Video[] {
   return getVideos().filter((v) => v.peopleIds?.includes(personId))
 }
 
+// ── Audio loaders (Phase 17) ──
+
+export function getAudio(): Audio[] {
+  return readJSON('audio.json', z.array(AudioSchema))
+}
+
+export function getAudioById(id: string): Audio | null {
+  return getAudio().find((a) => a.id === id) ?? null
+}
+
+export function getAudioByPersonId(personId: string): Audio[] {
+  return getAudio().filter((a) => a.peopleIds?.includes(personId))
+}
+
+export function getAudioInCollection(collectionId: string): Audio[] {
+  return getAudio().filter((a) => a.collectionIds?.includes(collectionId))
+}
+
 // ── Bidirectional reference validator ──
 // Validates that all cross-references between content types resolve.
 // Throws descriptively if a reference is dangling — surfaces data entry errors.
@@ -106,6 +124,7 @@ export function validateBidirectionalRefs(): void {
   const videos = getVideos()
   const collections = getCollections()
   const playlists = getPlaylists()
+  const audioItems = getAudio()
 
   const personIds = new Set(people.map((p) => p.id))
   const photoIds = new Set(photos.map((p) => p.id))
@@ -178,6 +197,30 @@ export function validateBidirectionalRefs(): void {
         `Content error: Playlist "${playlist.id}" has unknown coverVideoId "${playlist.coverVideoId}". ` +
         `Check content/playlists.json — "${playlist.coverVideoId}" must be an id in content/videos.json.`
       )
+    }
+  }
+
+  // Check audio → person references (Phase 17)
+  for (const audio of audioItems) {
+    for (const pid of audio.peopleIds) {
+      if (!personIds.has(pid)) {
+        throw new Error(
+          `Content error: Audio "${audio.id}" references unknown person ID "${pid}". ` +
+          `Check content/audio.json — "${pid}" must be an id in content/family.json.`
+        )
+      }
+    }
+  }
+
+  // Check audio → collection references (empty collectionIds[] is valid)
+  for (const audio of audioItems) {
+    for (const cid of audio.collectionIds) {
+      if (!collectionIds.has(cid)) {
+        throw new Error(
+          `Content error: Audio "${audio.id}" references unknown collection ID "${cid}". ` +
+          `Check content/audio.json — "${cid}" must be an id in content/collections.json.`
+        )
+      }
     }
   }
 
