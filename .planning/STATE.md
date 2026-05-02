@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v2.1
 milestone_name: v2.1 — User Punch List + A+ Peer Review
 status: executing
-stopped_at: Phase 15 complete — provenance schema + accessibility hardening (focus traps, reduced-motion, keyboard tree nav, ARIA dialogs)
+stopped_at: Phase 16 complete — URL deep linking + BlurHash placeholders (9 tasks, 11 files, 8 commits)
 last_updated: "2026-04-29T00:00:00Z"
-last_activity: 2026-04-29 — Phase 15 complete; 10 commits; npm run build exits 0 (22 pages)
+last_activity: 2026-04-29 — Phase 16 complete; URL-synced tree/lightbox/video state + blur-up placeholders; npm run build exits 0 (22 pages)
 progress:
   total_phases: 18
-  completed_phases: 15
-  total_plans: 22
-  completed_plans: 22
-  percent: 83
+  completed_phases: 16
+  total_plans: 24
+  completed_plans: 24
+  percent: 89
 ---
 
 # Project State
@@ -25,13 +25,13 @@ See: .planning/PROJECT.md (updated 2026-04-29)
 
 ## Current Position
 
-Phase: 15 of 18 (v2.1 Schema + Accessibility) — complete
-Plan: 2 of 2 in current phase (15-01 + 15-02 done)
-Status: executing — Phase 16 next (deep linking + BlurHash)
+Phase: 16 of 18 (v2.1 Deep Linking + BlurHash) — complete
+Plan: 2 of 2 in current phase (16-01 + 16-02 done)
+Status: executing — Phase 17 next (audio content type)
 Current focus: v2.1 in progress
-Last activity: 2026-04-29 — Phase 15 complete; provenance schema + full a11y hardening; npm run build exits 0 (22 pages)
+Last activity: 2026-04-29 — Phase 16 complete; URL-synced state + blur-up placeholders; npm run build exits 0 (22 pages)
 
-Progress: [████████████████░░░░] 83% (15/18 phases complete)
+Progress: [████████████████████░░] 89% (16/18 phases complete)
 
 ## Phase 1 outcome
 
@@ -135,6 +135,11 @@ Recent decisions affecting current work:
 - 15: Arrow-key tree nav uses node.top/node.left grid coordinates (not pixels) for clean spatial comparison
 - 15: PhotoCarousel CSS crossfade guarded via inline style transition value — no conversion to motion.div needed
 - 15: focusedNodeId is separate state from selectedId in FamilyTreeCanvas — keyboard focus and panel-open selection are independent
+- 16: URL state uses router.replace (not router.push) for lightbox prev/next — avoids browser history pollution; only open/close updates the URL
+- 16: ?photo= stores photo ID (not array index) so deep links survive collection reordering
+- 16: ?video= stores sourceId (YouTube/Vimeo ID) — stable, URL-safe, naturally meaningful in a shared URL
+- 16: BlurHash via plaiceholder@3 + sharp — devDependency only; never imported in app code; generated at content-authoring time via npm run blur
+- 16: Conditional spread pattern {...(blurDataUrl ? { placeholder:'blur', blurDataURL } : {})} — prevents next/image error when blurDataURL is empty string
 
 ### Pending Todos
 
@@ -155,5 +160,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-04-29T00:00:00Z
-Stopped at: Completed Phase 15 (15-01 + 15-02) — provenance schema, focus traps, prefers-reduced-motion, keyboard tree nav, ARIA dialogs; npm run build exits 0 (22 pages)
+Stopped at: Completed Phase 16 (16-01 + 16-02) — URL deep linking for tree/lightbox/video, BlurHash blur-up placeholders, npm run blur tooling; npm run build exits 0 (22 pages)
 Resume file: None
