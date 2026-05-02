@@ -16,6 +16,7 @@ import { useEffect } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import VideoPlayer from '@/components/video/VideoPlayer'
 import type { Video } from '@/lib/types'
+import { useFocusTrap } from '@/lib/focus-trap'
 
 interface VideoLightboxProps {
   videos: Video[]
@@ -27,6 +28,10 @@ interface VideoLightboxProps {
 
 export default function VideoLightbox({ videos, currentIndex, onClose, onPrev, onNext }: VideoLightboxProps) {
   const video = videos[currentIndex]
+
+  // Focus trap — active whenever the VideoLightbox component is mounted (always open when rendered).
+  // Returns focus to the trigger element (e.g. video thumbnail) when lightbox unmounts.
+  const trapRef = useFocusTrap<HTMLDivElement>(true)
 
   // D-18: Lock body scroll while lightbox is open; restore on unmount.
   useEffect(() => {
@@ -53,6 +58,7 @@ export default function VideoLightbox({ videos, currentIndex, onClose, onPrev, o
     <AnimatePresence>
       {/* D-10: Backdrop — click to close (D-16) */}
       <motion.div
+        ref={trapRef}
         key="video-lightbox-backdrop"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

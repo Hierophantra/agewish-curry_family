@@ -14,6 +14,7 @@ import { useEffect } from 'react'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'motion/react'
 import type { Photo } from '@/lib/types'
+import { useFocusTrap } from '@/lib/focus-trap'
 
 interface LightboxProps {
   photos: Photo[]
@@ -25,6 +26,10 @@ interface LightboxProps {
 
 export default function Lightbox({ photos, currentIndex, onClose, onPrev, onNext }: LightboxProps) {
   const photo = photos[currentIndex]
+
+  // Focus trap — active whenever the Lightbox component is mounted (it is always open when rendered).
+  // Returns focus to the trigger element (e.g. photo thumbnail) when lightbox unmounts.
+  const trapRef = useFocusTrap<HTMLDivElement>(true)
 
   // D-18: Lock body scroll while lightbox is open; restore on unmount.
   useEffect(() => {
@@ -54,6 +59,7 @@ export default function Lightbox({ photos, currentIndex, onClose, onPrev, onNext
     <AnimatePresence>
       {/* D-10: Backdrop — click to close (D-16) */}
       <motion.div
+        ref={trapRef}
         key="lightbox-backdrop"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
