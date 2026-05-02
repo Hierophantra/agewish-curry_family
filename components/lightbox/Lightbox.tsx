@@ -122,7 +122,15 @@ export default function Lightbox({ photos, currentIndex, onClose, onPrev, onNext
                 <p className="text-white text-sm">{photo.caption}</p>
               )}
               {displayDate && (
-                <p className="text-stone uppercase tracking-[0.22em] text-xs mt-1">{displayDate}</p>
+                <p className="text-stone uppercase tracking-[0.22em] text-xs mt-1">
+                  {photo.circa ? 'Circa ' : ''}{displayDate}
+                </p>
+              )}
+              {/* Provenance: source attribution — shown only when field is present */}
+              {photo.source && (
+                <p className="text-stone/70 text-[10px] tracking-[0.18em] uppercase mt-1.5">
+                  From {photo.source}
+                </p>
               )}
               {/* Photo index counter (D-13 / Claude's discretion) */}
               <p className="text-stone uppercase tracking-[0.22em] text-[10px] mt-2">
