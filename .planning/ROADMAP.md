@@ -8,6 +8,8 @@
 
 **v2.1 milestone (Phases 14-18) — COMPLETE.** User punch list + cross-AI peer review (Claude/Gemini/Codex) recommendations. 15 items across 5 phases. See `.planning/V2.1-FEEDBACK.md` and `.planning/V2.1-MILESTONE-COMPLETE.md`.
 
+**v2.2 milestone (Phase 19) — PLANNED, NOT STARTED.** Chronicles content type — written family stories with optional audio narration (founding moments, watershed events, personal stories like a relative's motorcycle accident). See `.planning/V2.2-FEEDBACK.md` and `.planning/phases/19-chronicles/19-CONTEXT.md`.
+
 ## Phases
 
 **Phase Numbering:**
@@ -25,7 +27,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 5: Visual Polish** - Responsive QA, motion polish, typography refinement across all pages (visual judgment deferred to user real-browser check)
 - [x] **Phase 6: Person Detail Pages** - Individual person pages linked from tree nodes and photo metadata
 
-### v2 (in progress)
+### v2 (complete)
 
 - [x] **Phase 7: v2 Foundation Migration** - Schema migrations (collections/playlists, richer Person), rename films→videos, brand mark via real PNG logos, prototype's hero/footer copy, prototype's 8-person family data, fresh photo placeholders
 - [x] **Phase 8: Photo Collections + Lightbox** - `/photographs` becomes collection grid; `/photographs/[collectionId]` shows photos in collection; new shared `<Lightbox />` component (full-screen viewer with prev/next/Esc)
@@ -35,7 +37,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 12: Home Polish + Curated Previews** - Home page shows tree preview (one generation), 3-6 highlighted photos, 1-2 featured videos; each preview links to its focus view
 - [x] **Phase 13: Final v2 Polish + Real Content Prep** - Edge cases audited clean; star motif confirmed; CONTENT_AUTHORING.md written; README updated; v2 milestone closed
 
-### v2.1 (in progress)
+### v2.1 (complete)
 
 User punch list + cross-AI A+ recommendations. See `.planning/V2.1-FEEDBACK.md` for full scope.
 
@@ -44,6 +46,12 @@ User punch list + cross-AI A+ recommendations. See `.planning/V2.1-FEEDBACK.md` 
 - [x] **Phase 16: v2.1 Deep Linking + BlurHash** - URL-synced state for tree person, lightbox photo, video lightbox; BlurHash placeholders generated at build time
 - [x] **Phase 17: v2.1 Audio Content Type** - audio.json schema, AudioPlayer component, audio attached to people/photos/collections; "Listen to the story" surfaces
 - [x] **Phase 18: v2.1 Archive Export + Slideshow** - Footer "Download archive" generates manifest.zip with JSON + static index.html; /slideshow ambient mode auto-advances photos full-screen with 8s interval, 1.2s crossfade, keyboard nav, collection filtering
+
+### v2.2 (planned, not started)
+
+Chronicles content type. See `.planning/V2.2-FEEDBACK.md` and `.planning/phases/19-chronicles/19-CONTEXT.md` for full scope; markdown body decision locked.
+
+- [ ] **Phase 19: Chronicles** - New content type for written family stories with optional audio narration. Adds /chronicles landing + /chronicles/[id] detail, ChronicleCard/Grid/Body components, react-markdown for body rendering, AudioPlayer reuse for narration, person-page integration ("CHRONICLES FEATURING {NAME}"), home page Recent chronicles section, archive export extension, CONTENT_AUTHORING.md "Writing a chronicle" guide. 5th nav tab.
 
 ## Phase Details
 
