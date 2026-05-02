@@ -1,7 +1,7 @@
 [
   {
     "id": "william-curry",
-    "name": "William Curry",
+    "name": "Bob Curry",
     "gender": "male",
     "relationLabel": "GRANDFATHER",
     "eyebrow": "Patriarch of the family",
@@ -13,10 +13,23 @@
     "datesLabel": "1920 — 2008",
     "birthplace": "Dayton, Ohio",
     "bio": "Founder of the family line. A carpenter by trade who built the lake house with his own hands in 1958. Known for his quiet steadiness and a workshop that smelled forever of cedar and pipe tobacco.",
-    "photoIds": ["1953-wedding-01", "1974-christmas-01", "1981-lake-house-01", "1989-sunday-dinner-01"],
+    "photoIds": [
+      "1953-wedding-01",
+      "1974-christmas-01",
+      "1981-lake-house-01",
+      "1989-sunday-dinner-01"
+    ],
     "parentIds": [],
-    "childrenIds": ["robert-curry", "margaret-curry", "james-curry"],
-    "childIds": ["robert-curry", "margaret-curry", "james-curry"],
+    "childrenIds": [
+      "robert-curry",
+      "margaret-curry",
+      "james-curry"
+    ],
+    "childIds": [
+      "robert-curry",
+      "margaret-curry",
+      "james-curry"
+    ],
     "spouseIds": [],
     "identifiedBy": "Margaret Curry, June 2024",
     "confidence": "high",
@@ -34,10 +47,22 @@
     "datesLabel": "1948 — present",
     "birthplace": "Dayton, Ohio",
     "bio": "The eldest. Took over the family business in 1979 and ran it for three decades. Carries his father's hands and his mother's laugh.",
-    "photoIds": ["1981-lake-house-01", "1995-reunion-01", "2005-christmas-01"],
-    "parentIds": ["william-curry"],
-    "childrenIds": ["sarah-curry", "daniel-curry"],
-    "childIds": ["sarah-curry", "daniel-curry"],
+    "photoIds": [
+      "1981-lake-house-01",
+      "1995-reunion-01",
+      "2005-christmas-01"
+    ],
+    "parentIds": [
+      "william-curry"
+    ],
+    "childrenIds": [
+      "sarah-curry",
+      "daniel-curry"
+    ],
+    "childIds": [
+      "sarah-curry",
+      "daniel-curry"
+    ],
     "spouseIds": []
   },
   {
@@ -52,10 +77,23 @@
     "datesLabel": "1952 — present",
     "birthplace": "Dayton, Ohio",
     "bio": "A schoolteacher for thirty-two years, known in the family for her garden, her letters, and a memory for birthdays that never failed.",
-    "photoIds": ["1974-christmas-01", "1989-sunday-dinner-01", "1995-reunion-01", "2005-christmas-01"],
-    "parentIds": ["william-curry"],
-    "childrenIds": ["emily-walsh", "thomas-walsh"],
-    "childIds": ["emily-walsh", "thomas-walsh"],
+    "photoIds": [
+      "1974-christmas-01",
+      "1989-sunday-dinner-01",
+      "1995-reunion-01",
+      "2005-christmas-01"
+    ],
+    "parentIds": [
+      "william-curry"
+    ],
+    "childrenIds": [
+      "emily-walsh",
+      "thomas-walsh"
+    ],
+    "childIds": [
+      "emily-walsh",
+      "thomas-walsh"
+    ],
     "spouseIds": []
   },
   {
@@ -70,8 +108,13 @@
     "datesLabel": "1956 — present",
     "birthplace": "Dayton, Ohio",
     "bio": "The traveler. Left for the West Coast in 1978 and never quite came back, though he sends a postcard every Christmas without fail. A photographer.",
-    "photoIds": ["1989-sunday-dinner-01", "1995-reunion-01"],
-    "parentIds": ["william-curry"],
+    "photoIds": [
+      "1989-sunday-dinner-01",
+      "1995-reunion-01"
+    ],
+    "parentIds": [
+      "william-curry"
+    ],
     "childrenIds": [],
     "childIds": [],
     "spouseIds": []
@@ -88,8 +131,13 @@
     "datesLabel": "1978 — present",
     "birthplace": "Cincinnati, Ohio",
     "bio": "An architect with her grandfather's eye for structure and her mother's eye for color. Lives in Chicago.",
-    "photoIds": ["1995-reunion-01", "2005-christmas-01"],
-    "parentIds": ["robert-curry"],
+    "photoIds": [
+      "1995-reunion-01",
+      "2005-christmas-01"
+    ],
+    "parentIds": [
+      "robert-curry"
+    ],
     "childrenIds": [],
     "childIds": [],
     "spouseIds": []
@@ -105,8 +153,13 @@
     "datesLabel": "1981 — present",
     "birthplace": "Cincinnati, Ohio",
     "bio": "The musician of the family. Plays bass in a band that has been on the verge of being known for nearly twenty years.",
-    "photoIds": ["1995-reunion-01", "2005-christmas-01"],
-    "parentIds": ["robert-curry"],
+    "photoIds": [
+      "1995-reunion-01",
+      "2005-christmas-01"
+    ],
+    "parentIds": [
+      "robert-curry"
+    ],
     "childrenIds": [],
     "childIds": [],
     "spouseIds": []
@@ -123,8 +176,13 @@
     "datesLabel": "1980 — present",
     "birthplace": "Columbus, Ohio",
     "bio": "A doctor. The first in the family to go to medical school. Practices in Boston but comes home for every reunion.",
-    "photoIds": ["1995-reunion-01", "2005-christmas-01"],
-    "parentIds": ["margaret-curry"],
+    "photoIds": [
+      "1995-reunion-01",
+      "2005-christmas-01"
+    ],
+    "parentIds": [
+      "margaret-curry"
+    ],
     "childrenIds": [],
     "childIds": [],
     "spouseIds": []
@@ -140,8 +198,13 @@
     "datesLabel": "1984 — present",
     "birthplace": "Columbus, Ohio",
     "bio": "Works in publishing. Inherited his uncle James's wandering streak and his grandfather's love of well-made things.",
-    "photoIds": ["1995-reunion-01", "2005-christmas-01"],
-    "parentIds": ["margaret-curry"],
+    "photoIds": [
+      "1995-reunion-01",
+      "2005-christmas-01"
+    ],
+    "parentIds": [
+      "margaret-curry"
+    ],
     "childrenIds": [],
     "childIds": [],
     "spouseIds": []
