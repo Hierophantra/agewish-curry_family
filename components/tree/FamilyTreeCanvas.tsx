@@ -1,7 +1,8 @@
 // components/tree/FamilyTreeCanvas.tsx
 // 'use client' — owns selectedId state; renders positioned nodes + connectors
 'use client'
-import { useState, useRef, useCallback } from 'react'
+import { useState, useRef, useCallback, useEffect } from 'react'
+import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import { AnimatePresence } from 'motion/react'
 import type { ExtNode, Connector } from 'relatives-tree/lib/types'
 import type { Person, Photo } from '@/lib/types'
@@ -75,10 +76,25 @@ export default function FamilyTreeCanvas({
   people,
   photos,
 }: FamilyTreeCanvasProps) {
-  const [selectedId, setSelectedId] = useState<string | null>(null)
+  const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const urlPerson = searchParams.get('person')
+
+  // Initialise from URL so direct visits to /tree?person=<id> open the panel immediately.
+  const [selectedId, setSelectedId] = useState<string | null>(urlPerson)
   // focusedNodeId tracks keyboard focus within the tree canvas (separate from panel selection).
   const [focusedNodeId, setFocusedNodeId] = useState<string | null>(null)
   const nodeRefs = useRef<Map<string, HTMLButtonElement>>(new Map())
+
+  // Sync URL → local state for back/forward browser navigation.
+  // Guard: only update when the value actually differs to avoid infinite loops.
+  useEffect(() => {
+    if (urlPerson !== selectedId) {
+      setSelectedId(urlPerson)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [urlPerson])
 
   const canvasWidth = canvas.width * H_UNIT
   const canvasHeight = canvas.height * V_UNIT
@@ -86,6 +102,24 @@ export default function FamilyTreeCanvas({
   // Build person lookup for name + relation resolution
   const peopleById = new Map(people.map((p) => [p.id, p]))
   const rootId = nodes[0]?.id ?? ''
+
+  // handleSelect: push to history so the back button closes the panel naturally.
+  function handleSelect(id: string) {
+    setSelectedId(id)
+    setFocusedNodeId(id)
+    const params = new URLSearchParams(searchParams.toString())
+    params.set('person', id)
+    router.push(`${pathname}?${params.toString()}`, { scroll: false })
+  }
+
+  // handleClose: replace (no extra history entry — back button goes to previous page, not just un-opens panel).
+  function handleClose() {
+    setSelectedId(null)
+    const params = new URLSearchParams(searchParams.toString())
+    params.delete('person')
+    const qs = params.toString()
+    router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false })
+  }
 
   // Arrow-key spatial navigation:
   // ArrowRight/Left: same row (top), closest horizontal neighbour
@@ -99,7 +133,7 @@ export default function FamilyTreeCanvas({
       // Escape with no panel open: blur tree entirely
       if (e.key === 'Escape') {
         if (selectedId) {
-          setSelectedId(null)
+          handleClose()
           return
         }
         setFocusedNodeId(null)
@@ -173,6 +207,7 @@ export default function FamilyTreeCanvas({
         nodeRefs.current.get(target.id)?.focus()
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [focusedNodeId, selectedId, nodes]
   )
 
@@ -222,9 +257,11 @@ export default function FamilyTreeCanvas({
               isFocused={focusedNodeId === node.id}
               relationLabel={label}
               onClick={() => {
-                const newId = node.id === selectedId ? null : node.id
-                setSelectedId(newId)
-                setFocusedNodeId(node.id)
+                if (node.id === selectedId) {
+                  handleClose()
+                } else {
+                  handleSelect(node.id)
+                }
               }}
               onRef={(el) => {
                 if (el) nodeRefs.current.set(node.id, el)
@@ -257,7 +294,7 @@ export default function FamilyTreeCanvas({
               person={person}           // so exit animation fires between selections
               photos={personPhotos}
               people={people}
-              onClose={() => setSelectedId(null)}
+              onClose={handleClose}
             />
           )
         })()}
