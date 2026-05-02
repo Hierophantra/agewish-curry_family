@@ -3,9 +3,11 @@
 // Manages lightboxIndex (null = closed, number = open at that index).
 // Each VideoCard receives onClick that sets lightboxIndex, opening the lightbox.
 // Renders VideoLightbox conditionally; prev/next wrap around (∞ navigation).
+// Phase 16: URL state — ?video=<id> persists lightbox across refresh and enables deep links.
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import VideoCard from './VideoCard'
 import VideoLightbox from '@/components/lightbox/VideoLightbox'
 import type { Video } from '@/lib/types'
@@ -15,8 +17,31 @@ interface PlaylistVideoGridProps {
 }
 
 export default function PlaylistVideoGrid({ videos }: PlaylistVideoGridProps) {
-  // null = lightbox closed; number = lightbox open at that index
-  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
+  const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const urlVideoId = searchParams.get('video')
+
+  // Resolve URL param to an index. null = lightbox closed.
+  function indexFromId(id: string | null): number | null {
+    if (id === null) return null
+    const idx = videos.findIndex((v) => v.id === id)
+    return idx >= 0 ? idx : null
+  }
+
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(
+    () => indexFromId(urlVideoId)
+  )
+
+  // Sync URL → local state for back/forward browser navigation.
+  // Guard: only update when the resolved index actually differs.
+  useEffect(() => {
+    const next = indexFromId(urlVideoId)
+    if (next !== lightboxIndex) {
+      setLightboxIndex(next)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [urlVideoId])
 
   if (videos.length === 0) {
     return (
@@ -28,11 +53,40 @@ export default function PlaylistVideoGrid({ videos }: PlaylistVideoGridProps) {
     )
   }
 
+  // openVideo: push to history so back button closes the lightbox naturally.
+  function openVideo(index: number) {
+    const video = videos[index]
+    if (!video) return
+    setLightboxIndex(index)
+    const params = new URLSearchParams(searchParams.toString())
+    params.set('video', video.id)
+    router.push(`${pathname}?${params.toString()}`, { scroll: false })
+  }
+
+  // closeVideo: replace so back button returns to the previous page, not just un-opens lightbox.
+  function closeVideo() {
+    setLightboxIndex(null)
+    const params = new URLSearchParams(searchParams.toString())
+    params.delete('video')
+    const qs = params.toString()
+    router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false })
+  }
+
+  // navigateVideo: replace so each prev/next doesn't pollute history — back button closes modal.
+  function navigateVideo(index: number) {
+    const video = videos[index]
+    if (!video) return
+    setLightboxIndex(index)
+    const params = new URLSearchParams(searchParams.toString())
+    params.set('video', video.id)
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false })
+  }
+
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-7">
         {videos.map((v, i) => (
-          <VideoCard key={v.id} video={v} onClick={() => setLightboxIndex(i)} />
+          <VideoCard key={v.id} video={v} onClick={() => openVideo(i)} />
         ))}
       </div>
 
@@ -41,9 +95,9 @@ export default function PlaylistVideoGrid({ videos }: PlaylistVideoGridProps) {
         <VideoLightbox
           videos={videos}
           currentIndex={lightboxIndex}
-          onClose={() => setLightboxIndex(null)}
-          onPrev={() => setLightboxIndex((i) => (i! - 1 + videos.length) % videos.length)}
-          onNext={() => setLightboxIndex((i) => (i! + 1) % videos.length)}
+          onClose={closeVideo}
+          onPrev={() => navigateVideo((lightboxIndex - 1 + videos.length) % videos.length)}
+          onNext={() => navigateVideo((lightboxIndex + 1) % videos.length)}
         />
       )}
     </>
