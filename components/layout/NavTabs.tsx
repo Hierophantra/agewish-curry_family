@@ -31,7 +31,7 @@ export default function NavTabs() {
             key={tab.href}
             href={tab.href}
             className={cn(
-              'text-sm pb-1 transition-colors',
+              'text-base pb-1 transition-colors',
               isActive
                 ? 'text-navy border-b hairline-emphasis border-gold'
                 : 'text-muted hover:text-navy'

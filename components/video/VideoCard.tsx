@@ -37,9 +37,9 @@ export default function VideoCard({ video, onClick }: VideoCardProps) {
         {dateLabel && (
           <p className="eyebrow text-quiet">{dateLabel}</p>
         )}
-        <h2 className="font-serif text-navy text-lg leading-snug">{video.title}</h2>
+        <h2 className="font-serif text-navy text-xl leading-snug">{video.title}</h2>
         {video.description && (
-          <p className="text-muted text-sm leading-relaxed">{video.description}</p>
+          <p className="text-muted text-base leading-relaxed">{video.description}</p>
         )}
       </div>
     </>

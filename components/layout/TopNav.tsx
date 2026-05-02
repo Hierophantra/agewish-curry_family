@@ -24,7 +24,7 @@ export default function TopNav() {
           <StarMark size={36} />
           <div className="flex flex-col leading-tight">
             <span className="eyebrow text-quiet text-[9px]">AgeWish · Private archive</span>
-            <span className="font-serif text-navy text-lg tracking-[0.01em]">The Curry Family</span>
+            <span className="font-serif text-navy text-xl tracking-[0.01em]">The Curry Family</span>
           </div>
         </Link>
 

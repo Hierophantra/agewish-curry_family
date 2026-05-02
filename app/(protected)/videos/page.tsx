@@ -15,8 +15,8 @@ export default function VideosPage() {
       {/* Page header */}
       <header className="mb-9">
         <p className="eyebrow text-quiet mb-3">FAMILY ARCHIVE</p>
-        <h1 className="font-serif text-navy text-3xl mb-2">Videos</h1>
-        <p className="text-muted text-sm">Home movies and recordings, organized by playlist.</p>
+        <h1 className="font-serif text-navy text-4xl mb-2">Videos</h1>
+        <p className="text-muted text-base">Home movies and recordings, organized by playlist.</p>
       </header>
 
       {/* Featured section — only shown when featured videos exist */}

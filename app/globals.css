@@ -36,7 +36,7 @@
 @utility eyebrow {
   text-transform: uppercase;
   letter-spacing: 0.22em;
-  font-size: var(--text-xs, 0.75rem);
+  font-size: 0.6875rem;
   font-weight: 500;
 }
 

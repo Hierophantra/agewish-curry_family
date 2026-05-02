@@ -41,7 +41,7 @@ export default function HomePage() {
           <div className="flex items-baseline justify-between mb-7">
             <div>
               <p className="eyebrow text-quiet mb-2">FAMILY TREE</p>
-              <h2 className="font-serif text-navy text-2xl">The family</h2>
+              <h2 className="font-serif text-navy text-3xl">The family</h2>
             </div>
             <Link
               href="/tree"
@@ -66,9 +66,9 @@ export default function HomePage() {
                   {p.relationLabel && (
                     <p className="eyebrow text-quiet mb-2">{p.relationLabel}</p>
                   )}
-                  <p className="font-serif text-navy text-xl mb-1">{p.name}</p>
+                  <p className="font-serif text-navy text-2xl mb-1">{p.name}</p>
                   {p.datesLabel && (
-                    <p className="font-serif italic text-muted text-sm">{p.datesLabel}</p>
+                    <p className="font-serif italic text-muted text-base">{p.datesLabel}</p>
                   )}
                 </Link>
               ))}
@@ -83,7 +83,7 @@ export default function HomePage() {
           <div className="flex items-baseline justify-between mb-7">
             <div>
               <p className="eyebrow text-quiet mb-2">PHOTOGRAPHS</p>
-              <h2 className="font-serif text-navy text-2xl">Recent photographs</h2>
+              <h2 className="font-serif text-navy text-3xl">Recent photographs</h2>
             </div>
             <Link
               href="/photographs"
@@ -111,7 +111,7 @@ export default function HomePage() {
             <div className="flex items-baseline justify-between mb-7">
               <div>
                 <p className="eyebrow text-quiet mb-2">VIDEOS</p>
-                <h2 className="font-serif text-navy text-2xl">Featured films</h2>
+                <h2 className="font-serif text-navy text-3xl">Featured films</h2>
               </div>
               <Link
                 href="/videos"

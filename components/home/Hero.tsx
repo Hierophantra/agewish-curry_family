@@ -35,7 +35,7 @@ export default function Hero() {
       {/* Primary heading — serif, sentence case, navy */}
       <motion.h1
         variants={itemVariants}
-        className="font-serif text-navy text-5xl md:text-6xl font-normal mb-4"
+        className="font-serif text-navy text-6xl md:text-7xl font-normal mb-4"
       >
         A gathering of generations
       </motion.h1>
@@ -43,7 +43,7 @@ export default function Hero() {
       {/* Subtitle — italic serif, muted, max-w-prose centered */}
       <motion.p
         variants={itemVariants}
-        className="font-serif italic text-muted text-lg font-normal max-w-prose"
+        className="font-serif italic text-muted text-xl font-normal max-w-prose"
       >
         The stories, faces, and moments that make us who we are — kept in one place, for those here now and those to come.
       </motion.p>

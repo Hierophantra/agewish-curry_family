@@ -10,8 +10,8 @@ export default function PhotographsPage() {
       {/* Page header */}
       <header className="mb-9">
         <p className="eyebrow text-quiet mb-3">FAMILY ARCHIVE</p>
-        <h1 className="font-serif text-navy text-3xl mb-2">Photographs</h1>
-        <p className="text-muted text-sm">Collected memories, organized by theme.</p>
+        <h1 className="font-serif text-navy text-4xl mb-2">Photographs</h1>
+        <p className="text-muted text-base">Collected memories, organized by theme.</p>
       </header>
 
       {/* Collection grid — replaces flat photo grid (Phase 8) */}

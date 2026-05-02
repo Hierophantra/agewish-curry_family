@@ -16,9 +16,9 @@ export default function TreePage() {
       {/* D-16: page header — eyebrow + serif h1 + muted subtitle */}
       <header className="mb-9">
         <p className="eyebrow text-quiet mb-3">FAMILY ARCHIVE</p>
-        <h1 className="font-serif text-navy text-3xl mb-2">Family tree</h1>
+        <h1 className="font-serif text-navy text-4xl mb-2">Family tree</h1>
         {/* D-17: subtitle copy — placeholder adapts to real data later */}
-        <p className="text-muted text-sm">
+        <p className="text-muted text-base">
           From William Curry, born 1920 in London, the family expanded across generations.
         </p>
       </header>

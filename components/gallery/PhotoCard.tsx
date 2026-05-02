@@ -48,7 +48,7 @@ export default function PhotoCard({ photo, onClick }: PhotoCardProps) {
           <p className="eyebrow text-quiet">{dateLabel}</p>
         )}
         {photo.caption && (
-          <p className="font-serif text-navy text-sm leading-snug">{photo.caption}</p>
+          <p className="font-serif text-navy text-base leading-snug">{photo.caption}</p>
         )}
       </div>
     </>

@@ -133,7 +133,7 @@ export default async function PersonPage({ params }: PersonPageProps) {
         <p className="eyebrow text-gold-deep mb-3">
           {person.eyebrow ?? person.relationLabel ?? 'FAMILY ARCHIVE'}
         </p>
-        <h1 className="font-serif text-navy text-5xl mb-2 leading-tight">
+        <h1 className="font-serif text-navy text-6xl mb-2 leading-tight">
           {person.name}
         </h1>
         {/* v2 datesLabel: "1920 — 2008", "1952 — present" */}
@@ -149,7 +149,7 @@ export default async function PersonPage({ params }: PersonPageProps) {
         <section className="mb-10">
           <dl className="flex flex-col gap-3.5 max-w-md">
             {meta.map(({ k, v }) => (
-              <div key={k} className="flex justify-between gap-4 text-sm">
+              <div key={k} className="flex justify-between gap-4 text-base">
                 <dt className="text-quiet flex-shrink-0">{k}</dt>
                 <dd className="text-navy text-right">{v}</dd>
               </div>
