@@ -15,6 +15,7 @@ All 13 phases of the v2 milestone are shipped. The site is feature-complete.
 - Curated home page with tree preview, recent photographs, and featured films
 - AgeWish brand mark (real PNG — navy ring + gold 8-pointed star)
 - Content separated from code: all family data lives in `/content/*.json`
+- Archive export: "Download the archive" footer link generates a `manifest.zip` containing all JSON + a self-contained offline `index.html` viewer that works without Vercel or Next.js
 
 **What remains before launch:**
 - Replace the 6 placeholder photos (1x1 JPEG stubs in `public/photos/`) with real family photographs

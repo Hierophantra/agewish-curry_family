@@ -628,6 +628,43 @@ Add provenance fields only as you discover or verify information. The archive ac
 
 ---
 
+## Exporting the archive
+
+Any authenticated family member can download a complete offline copy of the archive at any time.
+
+### How to export
+
+Click **"Download the archive →"** in the footer at the bottom of any page. The browser will immediately download a ZIP file named `curry-family-archive-{date}.zip`.
+
+### What is in the archive
+
+| File | Contents |
+| ---- | -------- |
+| `content/family.json` | All family members |
+| `content/photos.json` | All photograph metadata |
+| `content/videos.json` | All film and recording metadata |
+| `content/audio.json` | All voice recordings and audio metadata |
+| `content/collections.json` | All collection definitions |
+| `content/playlists.json` | All playlist definitions |
+| `index.html` | A self-contained browser viewer for the archive |
+| `README.txt` | Explanation of the archive format |
+
+### The offline viewer
+
+Open `index.html` in any web browser — no internet connection, no Vercel, no Next.js required. It works offline, on any operating system, now and in the future. The viewer shows all six content types in a tabbed interface, with the AgeWish palette and serif typography.
+
+The HTML is a single self-contained file: all JSON data is embedded inline. There are no external scripts, no CDN fonts, no remote resources. As long as the HTML file exists, the archive can be read.
+
+### What is NOT included
+
+The actual photo, audio, and video files are not bundled. The archive documents their filenames and metadata, but the binaries are large (potentially hundreds of MB) and would make the download impractical. To retrieve the binary files, clone the source repository from GitHub. Video recordings are linked to YouTube or Vimeo via their `sourceId` — those remain accessible as long as the platform hosts them.
+
+### Periodic backups recommended
+
+Export the archive whenever significant new content is added. Store the ZIP in a durable location (a hard drive, a cloud storage account, a family member's computer). The archive is the insurance policy for the site — if Vercel ever goes away, the JSON and the offline viewer ensure the family data is never lost.
+
+---
+
 ## Common pitfalls
 
 ### Bcrypt hash escaping in .env.local
