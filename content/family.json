@@ -17,7 +17,10 @@
     "parentIds": [],
     "childrenIds": ["robert-curry", "margaret-curry", "james-curry"],
     "childIds": ["robert-curry", "margaret-curry", "james-curry"],
-    "spouseIds": []
+    "spouseIds": [],
+    "identifiedBy": "Margaret Curry, June 2024",
+    "confidence": "high",
+    "lastVerified": "2024-06-15"
   },
   {
     "id": "robert-curry",

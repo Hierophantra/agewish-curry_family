@@ -9,7 +9,11 @@
     "dateLabel": "April 2000",
     "peopleIds": ["william-curry"],
     "playlistIds": ["birthdays"],
-    "featured": true
+    "featured": true,
+    "source_provenance": "James Curry's home video archive",
+    "identifiedBy": "James Curry, March 2024",
+    "confidence": "high",
+    "recordedDate": "2000-04-12"
   },
   {
     "id": "margarets-65th",

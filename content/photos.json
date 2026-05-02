@@ -7,7 +7,12 @@
     "dateLabel": "June 1953",
     "location": "Dayton, Ohio",
     "peopleIds": ["william-curry"],
-    "collectionIds": ["wedding-days"]
+    "collectionIds": ["wedding-days"],
+    "source": "Margaret Curry's family album",
+    "identifiedBy": "Margaret Curry, June 2024",
+    "confidence": "high",
+    "lastVerified": "2024-06-15",
+    "scannedDate": "2024-06-15"
   },
   {
     "id": "1974-christmas-01",
