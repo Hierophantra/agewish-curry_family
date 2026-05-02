@@ -8,7 +8,7 @@
 
 **v2.1 milestone (Phases 14-18) — COMPLETE.** User punch list + cross-AI peer review (Claude/Gemini/Codex) recommendations. 15 items across 5 phases. See `.planning/V2.1-FEEDBACK.md` and `.planning/V2.1-MILESTONE-COMPLETE.md`.
 
-**v2.2 milestone (Phase 19) — PLANNED, NOT STARTED.** Chronicles content type — written family stories with optional audio narration (founding moments, watershed events, personal stories like a relative's motorcycle accident). See `.planning/V2.2-FEEDBACK.md` and `.planning/phases/19-chronicles/19-CONTEXT.md`.
+**v2.2 milestone (Phase 19) — COMPLETE.** Chronicles content type — written family stories with optional audio narration. Adds /chronicles + /chronicles/[id] routes, ChronicleCard/Grid/Body components, react-markdown rendering, person-page + home-page integrations, 5th nav tab, and archive export extension. 31 static pages; npm run build exits 0. See `.planning/phases/19-chronicles/19-SUMMARY.md`.
 
 **v3 milestone (Phases 20+) — IN PROGRESS.** Admin authoring UI — GitHub OAuth + allowlist + /admin route group + octokit-based content commits to GitHub. Each admin save triggers a Vercel rebuild; live site updates in ~90 seconds. Phase 20 (foundation) is complete. Phases 21+ (full CRUD surface) will be planned after Phase 20 is validated in production.
 
@@ -49,11 +49,11 @@ User punch list + cross-AI A+ recommendations. See `.planning/V2.1-FEEDBACK.md` 
 - [x] **Phase 17: v2.1 Audio Content Type** - audio.json schema, AudioPlayer component, audio attached to people/photos/collections; "Listen to the story" surfaces
 - [x] **Phase 18: v2.1 Archive Export + Slideshow** - Footer "Download archive" generates manifest.zip with JSON + static index.html; /slideshow ambient mode auto-advances photos full-screen with 8s interval, 1.2s crossfade, keyboard nav, collection filtering
 
-### v2.2 (planned, not started)
+### v2.2 (COMPLETE)
 
-Chronicles content type. See `.planning/V2.2-FEEDBACK.md` and `.planning/phases/19-chronicles/19-CONTEXT.md` for full scope; markdown body decision locked.
+Chronicles content type shipped. See `.planning/phases/19-chronicles/19-SUMMARY.md`.
 
-- [ ] **Phase 19: Chronicles** - New content type for written family stories with optional audio narration. Adds /chronicles landing + /chronicles/[id] detail, ChronicleCard/Grid/Body components, react-markdown for body rendering, AudioPlayer reuse for narration, person-page integration ("CHRONICLES FEATURING {NAME}"), home page Recent chronicles section, archive export extension, CONTENT_AUTHORING.md "Writing a chronicle" guide. 5th nav tab.
+- [x] **Phase 19: Chronicles** - New content type for written family stories with optional audio narration. Adds /chronicles landing + /chronicles/[id] detail, ChronicleCard/Grid/Body components, react-markdown for body rendering, AudioPlayer reuse for narration, person-page integration ("CHRONICLES FEATURING {NAME}"), home page Recent chronicles section, archive export extension, CONTENT_AUTHORING.md "Writing a chronicle" guide. 5th nav tab.
 
 ### v3 (in progress)
 
@@ -181,4 +181,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 16. v2.1 Deep Linking + BlurHash | 2/2 | Complete | 2026-04-29 |
 | 17. v2.1 Audio Content Type | 1/1 | Complete | 2026-04-29 |
 | 18. v2.1 Archive Export + Slideshow | 2/2 | Complete | 2026-04-29 |
+| 19. Chronicles — v2.2 content type | 1/1 | Complete | 2026-04-29 |
 | 20. v3 Foundation — GitHub OAuth + Admin UI + Bio Edit CRUD | 1/1 | Complete | 2026-04-29 |

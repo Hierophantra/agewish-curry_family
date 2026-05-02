@@ -1,16 +1,16 @@
 ---
 gsd_state_version: 1.0
-milestone: v3.0
-milestone_name: v3 — Admin authoring UI
+milestone: v2.2
+milestone_name: v2.2 — Chronicles content type (COMPLETE); v3 Phase 20 also complete
 status: in_progress
-stopped_at: v3 Phase 20 complete — GitHub OAuth + admin allowlist + /admin shell + bio edit CRUD; npm run build exits 0 (27 pages); pending user verification in production
+stopped_at: v2.2 Phase 19 complete — Chronicles content type shipped; react-markdown rendering; 31 static pages; npm run build exits 0
 last_updated: "2026-04-29T00:00:00Z"
-last_activity: 2026-04-29 — Phase 20 complete; GitHub OAuth + /admin route group + octokit bio edit CRUD + middleware exclusion; npm run build exits 0 (27 pages)
+last_activity: 2026-04-29 — Phase 19 complete; Chronicles schema + routes + components + nav integration + archive export; npm run build exits 0 (31 pages)
 progress:
-  total_phases: 20
-  completed_phases: 20
-  total_plans: 27
-  completed_plans: 27
+  total_phases: 21
+  completed_phases: 21
+  total_plans: 28
+  completed_plans: 28
   percent: 100
 ---
 
@@ -25,13 +25,13 @@ See: .planning/PROJECT.md (updated 2026-04-29)
 
 ## Current Position
 
-Phase: 20 of 20 (v3 Admin Foundation) — complete
-Plan: 1 of 1 in Phase 20 (20-01 done)
-Status: in_progress (v3.0 milestone open; Phase 20 done, Phases 21+ unplanned)
-Current focus: v3 Phase 20 complete — user to verify GitHub login → bio edit → Vercel rebuild flow in production
-Last activity: 2026-04-29 — Phase 20 complete; GitHub OAuth + /admin + octokit bio edit CRUD; npm run build exits 0 (27 pages)
+Phase: 19 of 21 (v2.2 Chronicles) — complete; Phase 20 (v3 Admin Foundation) also complete
+Plan: 1/1 in Phase 19 (19-chronicles done), 1/1 in Phase 20 (20-v3 done)
+Status: in_progress (v3.0 milestone open; v2.2 COMPLETE; Phase 20 done, Phases 21+ unplanned)
+Current focus: v2.2 milestone complete — Chronicles shipped; user may wish to validate /chronicles route in browser
+Last activity: 2026-04-29 — Phase 19 complete; Chronicles schema + react-markdown + 5 routes + cross-cutting integrations; npm run build exits 0 (31 pages)
 
-Progress: [██████████████████████] 100% (20/20 phases complete — v3 Phase 20 done; Phases 21+ pending planning)
+Progress: [██████████████████████] 100% (21/21 phases complete — v2.2 Phase 19 + v3 Phase 20 done; v3 Phases 21+ pending planning)
 
 ## Phase 1 outcome
 
@@ -175,5 +175,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-04-29T00:00:00Z
-Stopped at: v3 Phase 20 complete — GitHub OAuth + /admin shell + bio edit CRUD; npm run build exits 0 (27 pages); push to GitHub + Vercel to verify production flow
+Stopped at: v2.2 Phase 19 complete — Chronicles content type; /chronicles + /chronicles/[id]; NavTabs 5th tab; person page + home page integrations; archive export; npm run build exits 0 (31 pages)
 Resume file: None
