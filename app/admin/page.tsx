@@ -10,7 +10,7 @@ import { requireAdminOrRedirect } from '@/lib/admin'
 const sections = [
   { href: '/admin/people', label: 'People', desc: 'Edit names, dates, birthplace, spouse, and relation labels', status: 'live' },
   { href: '/admin/chronicles', label: 'Chronicles', desc: 'Write and edit family stories with optional audio narration', status: 'live' },
-  { href: '#', label: 'Photographs', desc: 'Upload photos, edit captions, manage collections', status: 'soon' },
+  { href: '/admin/photos', label: 'Photographs', desc: 'Upload photos, edit captions, manage collections', status: 'live' },
   { href: '#', label: 'Videos', desc: 'Add YouTube/Vimeo links, edit titles, manage playlists', status: 'soon' },
   { href: '#', label: 'Audio', desc: 'Upload voice recordings, edit metadata', status: 'soon' },
   { href: '#', label: 'Collections', desc: 'Create and manage photo collections', status: 'soon' },
