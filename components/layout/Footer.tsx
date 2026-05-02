@@ -11,6 +11,13 @@ export default function Footer() {
         <StarMark size={32} />
         <p className="font-serif italic text-navy text-sm">Held in trust for those who come after.</p>
         <p className="eyebrow text-quiet text-xs">A private archive · AgeWish</p>
+        <a
+          href="/api/archive"
+          className="eyebrow text-quiet hover:text-gold-deep transition-colors text-[10px] mt-1 inline-block"
+          download
+        >
+          Download the archive →
+        </a>
       </div>
     </footer>
   )
