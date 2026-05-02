@@ -6,6 +6,8 @@
 
 **v2 milestone (Phases 7-13) — COMPLETE.** Substantial refactor introducing collections-and-playlists-as-tags architecture, per-section focus views, shared lightbox component, prototype-fidelity tree panel, and the real AgeWish brand mark via PNG logos. Driven by `CURRY_FAMILY_HUB_BRIEF_v2.md` and `curry-family-hub-prototype.html`. See `.planning/V2-MILESTONE-COMPLETE.md` for full close-out summary.
 
+**v2.1 milestone (Phases 14-18) — IN PROGRESS.** User punch list + cross-AI peer review (Claude/Gemini/Codex) recommendations. 15 items across 5 phases. See `.planning/V2.1-FEEDBACK.md`.
+
 ## Phases
 
 **Phase Numbering:**
@@ -32,6 +34,16 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 11: Person Pages Refresh** - Consume new richer schema (eyebrow, datesLabel, spouseLabel), CollectionPhotoGrid with Lightbox, new PlaylistVideoGrid video section, linked parents/children
 - [x] **Phase 12: Home Polish + Curated Previews** - Home page shows tree preview (one generation), 3-6 highlighted photos, 1-2 featured videos; each preview links to its focus view
 - [x] **Phase 13: Final v2 Polish + Real Content Prep** - Edge cases audited clean; star motif confirmed; CONTENT_AUTHORING.md written; README updated; v2 milestone closed
+
+### v2.1 (in progress)
+
+User punch list + cross-AI A+ recommendations. See `.planning/V2.1-FEEDBACK.md` for full scope.
+
+- [ ] **Phase 14: v2.1 Visual + UX Polish** - Nav bar substance, active tab highlight, remove Sign out, restructure person panel (don't overtake tree), remove bio sections, fix thin square box artifacts, bigger fonts + more navy/gold, normalize relation labels (GRANDFATHER not PATRIARCH), custom 404 + polished empty states
+- [ ] **Phase 15: v2.1 Schema + Accessibility** - Provenance metadata fields (source/circa/confidence/identifiedBy/lastVerified) on photos+people; accessibility hardening (focus traps, return-focus, prefers-reduced-motion, keyboard tree nav, ARIA dialogs)
+- [ ] **Phase 16: v2.1 Deep Linking + BlurHash** - URL-synced state for tree person, lightbox photo, video lightbox; BlurHash placeholders generated at build time
+- [ ] **Phase 17: v2.1 Audio Content Type** - audio.json schema, AudioPlayer component, audio attached to people/photos/collections; "Listen to the story" surfaces
+- [ ] **Phase 18: v2.1 Archive Export + Slideshow** - Footer "Download archive" generates manifest.zip with JSON + static index.html; /slideshow ambient mode auto-advances photos full-screen
 
 ## Phase Details
 

@@ -1,17 +1,17 @@
 ---
 gsd_state_version: 1.0
-milestone: v2.0
-milestone_name: v2 — Collections, Playlists, Lightbox, Brand
-status: complete (v2 milestone)
-stopped_at: Phase 13 complete — v2 milestone closed. Ready for real content authoring.
-last_updated: "2026-04-29T00:00:00Z"
-last_activity: 2026-04-29 — Phase 13 complete; edge cases audited; CONTENT_AUTHORING.md written; README updated; npm run build exits 0 (22 pages); v2 milestone closed
+milestone: v2.1
+milestone_name: v2.1 — User Punch List + A+ Peer Review
+status: executing
+stopped_at: v2.1 milestone starting — Phase 14 (Visual + UX Polish)
+last_updated: "2026-05-02T00:00:00Z"
+last_activity: 2026-05-02 — v2.1 scope locked (15 items, 5 phases); Phase 14 launching
 progress:
-  total_phases: 13
+  total_phases: 18
   completed_phases: 13
-  total_plans: 13
-  completed_plans: 13
-  percent: 100
+  total_plans: 18
+  completed_plans: 18
+  percent: 72
 ---
 
 # Project State
