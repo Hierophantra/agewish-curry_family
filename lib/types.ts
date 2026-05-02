@@ -167,6 +167,41 @@ export const AudioSchema = z.object({
   recordedDate: z.string().optional(),
 })
 
+// ── Chronicle schema ──
+// A Chronicle is a written family story (markdown body) with optional audio narration.
+// Audio is embedded directly on the chronicle (audioFilename field), NOT referenced from audio.json.
+// A chronicle's narration is 1:1 with the chronicle; standalone audio lives in audio.json.
+export const ChronicleSchema = z.object({
+  id: z.string().regex(
+    /^[a-z][a-z0-9-]*[a-z0-9]$|^[a-z]$/,
+    'Chronicle ID must be kebab-case (e.g., starting-the-martial-arts-school)'
+  ),
+  title: z.string().min(1),
+  subtitle: z.string().optional(),
+  body: z.string().min(1),                    // markdown source — rendered by ChronicleBody
+
+  // Embedded audio narration (optional) — the author reading the story aloud.
+  // NOT referenced from audio.json. 1:1 with the chronicle.
+  audioFilename: z.string().optional(),        // file in /public/audio/{audioFilename}
+  audioDuration: z.string().optional(),        // e.g. "8:42"
+
+  // Date metadata
+  date: z.string().optional(),                 // ISO YYYY-MM-DD
+  dateLabel: z.string().optional(),            // e.g. "Summer 1979"
+
+  // Cross-references
+  peopleIds: z.array(z.string()).default([]),   // people featured in this story
+  coverPhotoId: z.string().optional(),          // displayed at top of detail page
+  collectionIds: z.array(z.string()).default([]), // future cross-tagging
+
+  // Provenance (Phase 15 pattern)
+  source: z.string().optional(),
+  identifiedBy: z.string().optional(),
+  circa: z.boolean().optional(),
+  confidence: z.enum(['high', 'medium', 'low']).optional(),
+  lastVerified: z.string().optional(),
+})
+
 // ── TypeScript types (derived from schemas — do not manually duplicate) ──
 export type Person = z.infer<typeof PersonSchema>
 export type Photo = z.infer<typeof PhotoSchema>
@@ -174,3 +209,4 @@ export type Video = z.infer<typeof VideoSchema>
 export type Collection = z.infer<typeof CollectionSchema>
 export type Playlist = z.infer<typeof PlaylistSchema>
 export type Audio = z.infer<typeof AudioSchema>
+export type Chronicle = z.infer<typeof ChronicleSchema>
