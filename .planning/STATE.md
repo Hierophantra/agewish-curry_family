@@ -1,11 +1,11 @@
 ---
 gsd_state_version: 1.0
 milestone: v3
-milestone_name: v3 — Admin authoring UI; Phase 21 Chronicle CRUD complete
+milestone_name: v3 — Admin authoring UI; Phase 22 Photo CRUD + Vercel Blob complete
 status: in_progress
-stopped_at: v3 Phase 21 complete — Chronicles CRUD admin UI; list + create + edit + delete; 3 API handlers; npm run build exits 0 (34 pages)
+stopped_at: v3 Phase 22 complete — Photo upload via Vercel Blob; getPhotoUrl helper; /admin/photos list + new + [id]; EditPhotoForm; 2 API handlers; npm run build exits 0 (37 pages)
 last_updated: "2026-04-29T00:00:00Z"
-last_activity: 2026-04-29 — Phase 21 complete; /admin/chronicles list + new + [id] pages; EditChronicleForm; /api/admin/chronicles POST; /api/admin/chronicles/[id] POST+DELETE; npm run build exits 0 (34 pages)
+last_activity: 2026-04-29 — Phase 22 complete; @vercel/blob installed; getPhotoUrl helper in lib/utils.ts; all photo components updated; /admin/photos CRUD; API handlers with Blob upload + plaiceholder BlurHash; npm run build exits 0 (37 pages)
 progress:
   total_phases: 21
   completed_phases: 21
@@ -25,13 +25,13 @@ See: .planning/PROJECT.md (updated 2026-04-29)
 
 ## Current Position
 
-Phase: 21 of 21 (v3 Chronicle CRUD) — complete
-Plan: 1/1 in Phase 21 (21-v3-chronicle-crud done)
-Status: in_progress (v3 milestone; Phase 21 done; Phase 22+ binary upload unplanned)
-Current focus: v3 Phase 21 complete — Chronicles CRUD in admin UI; user may wish to validate /admin/chronicles in production
-Last activity: 2026-04-29 — Phase 21 complete; /admin/chronicles list + create + edit + delete; EditChronicleForm; 3 API handlers; npm run build exits 0 (34 pages)
+Phase: 22 of 22 (v3 Photo CRUD + Vercel Blob) — complete
+Plan: 1/1 in Phase 22 (22-v3-photo-upload done)
+Status: in_progress (v3 milestone; Phase 22 done; Phase 23+ audio upload + further admin planned)
+Current focus: v3 Phase 22 complete — Photo upload via Vercel Blob; /admin/photos CRUD; getPhotoUrl hybrid storage helper
+Last activity: 2026-04-29 — Phase 22 complete; @vercel/blob; getPhotoUrl; /admin/photos list + new + [id]; EditPhotoForm; /api/admin/photos POST; /api/admin/photos/[id] POST+DELETE; npm run build exits 0 (37 pages)
 
-Progress: [██████████████████████] 100% (21/21 phases complete — v2.2 Phase 19 + v3 Phase 20 + v3 Phase 21 done)
+Progress: [██████████████████████] 100% (22/22 phases complete — v2.2 Phase 19 + v3 Phases 20-22 done)
 
 ## Phase 1 outcome
 
@@ -175,5 +175,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-04-29T00:00:00Z
-Stopped at: v3 Phase 21 complete — Chronicle CRUD admin UI; /admin/chronicles list + new + [id]; EditChronicleForm; /api/admin/chronicles POST; /api/admin/chronicles/[id] POST+DELETE; npm run build exits 0 (34 pages)
+Stopped at: v3 Phase 22 complete — Photo upload via Vercel Blob; getPhotoUrl hybrid storage helper; /admin/photos list + new + [id]; EditPhotoForm; /api/admin/photos POST; /api/admin/photos/[id] POST+DELETE; npm run build exits 0 (37 pages)
 Resume file: None

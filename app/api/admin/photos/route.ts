@@ -16,7 +16,7 @@ import { getPlaiceholder } from 'plaiceholder'
 import { auth } from '@/auth'
 import { getAdminUser } from '@/lib/admin'
 import { getFileContent, commitFile } from '@/lib/github'
-import { getPeople, getCollections, getPhotos } from '@/lib/content'
+import { getPeople, getCollections } from '@/lib/content'
 
 const MAX_SIZE_BYTES = 4 * 1024 * 1024 // 4MB
 const ALLOWED_TYPES = new Set(['image/jpeg', 'image/jpg', 'image/png', 'image/webp'])
@@ -237,9 +237,3 @@ function validateCrossRefs(peopleIds: string[], collectionIds: string[]): string
   return null
 }
 
-// Also validate that photos.json itself is readable from content.
-// (getPhotos() is used below for the id-uniqueness check)
-function _ensurePhotosUsed() {
-  getPhotos
-}
-void _ensurePhotosUsed

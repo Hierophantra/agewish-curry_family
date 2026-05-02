@@ -19,15 +19,17 @@ The admin UI at `https://curry.agewish.com/admin` lets you edit content without 
 
 Only GitHub accounts listed in `ADMIN_GITHUB_USERNAMES` on Vercel can access the admin. The family password does not grant admin access — admin login is separate.
 
-### What you can edit in Phase 1 (v3 foundation)
+### What you can edit in the admin UI
 
-- **Person bios** — click "People" → click "Edit bio" next to any person → edit the bio text → click "Save bio"
+- **People** — full CRUD: names, bios, dates, birthplace, relations, and relation labels
+- **Chronicles** — create and edit written family stories with optional audio narration
+- **Photographs** — upload photos (JPEG/PNG/WebP, max 4MB), edit captions, dates, people tags, and collection tags. See the "Adding a photograph" section below for full details.
 
 Each save commits the change directly to the GitHub repo. Vercel detects the push and rebuilds automatically. The live site reflects the change in approximately 90 seconds.
 
-### What is coming in later phases (v3 Phases 21+)
+### What is coming in later phases
 
-Full people CRUD (dates, relationships, names), photograph upload via Vercel Blob, video and audio management, collection and playlist editors. Until those phases are built, editing those fields still requires the manual JSON workflow described below.
+Video and audio management via the admin UI, collection and playlist editors. Until those phases are built, editing those items still requires the manual JSON workflow described below.
 
 ---
 
@@ -120,6 +122,28 @@ The validator enforces bidirectional consistency. If you add person A as a child
 ---
 
 ## Adding a photograph
+
+There are two ways to add a photograph:
+
+1. **Via the admin UI** — upload directly from your browser (no developer involvement)
+2. **Manually** — copy the file into the repo and edit `content/photos.json`
+
+### Option A: admin upload (recommended for most cases)
+
+1. Go to `/admin` on the live site and sign in with your allowlisted GitHub account
+2. Click **"Photographs"**
+3. Click **"+ Upload photo"**
+4. Choose a JPEG, PNG, or WebP image (maximum **4MB**)
+5. Fill in the caption, date, people, and collections
+6. Click **"Upload photo"**
+
+The file is uploaded to Vercel Blob storage and a JSON entry is committed to GitHub. The live site updates in approximately 90 seconds. No code changes or repo access required.
+
+**4MB limit:** The admin uploader is capped at 4MB due to the serverless function body limit. Most family JPEGs after compression are well under this. If your image is larger, compress it first with [Squoosh](https://squoosh.app) (free, browser-based) or reduce the JPEG quality to ~80% in your photo editor. If you regularly need to upload larger files, contact the developer about switching to the client-upload pattern.
+
+**Supported formats:** JPEG, PNG, WebP. HEIC (iPhone default) is not currently supported — convert to JPEG first using the built-in "Convert Image" option in macOS Finder or the Photos app on iPhone.
+
+### Option B: manual (for batches, or when replacing placeholder files)
 
 ### Step 1 — Copy the image file
 
