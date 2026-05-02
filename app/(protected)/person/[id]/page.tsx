@@ -4,7 +4,7 @@
 // All 8 person pages are pre-rendered at build time (static site generation).
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { getPeople, getPersonById, getPhotosByPersonId, getVideosByPersonId, getAudioByPersonId } from '@/lib/content'
+import { getPeople, getPersonById, getPhotosByPersonId, getVideosByPersonId, getAudioByPersonId, getChroniclesByPersonId } from '@/lib/content'
 import CollectionPhotoGrid from '@/components/gallery/CollectionPhotoGrid'
 import PlaylistVideoGrid from '@/components/video/PlaylistVideoGrid'
 import AudioPlayer from '@/components/audio/AudioPlayer'
@@ -34,6 +34,7 @@ export default async function PersonPage({ params }: PersonPageProps) {
 
   const photos = getPhotosByPersonId(person.id)
   const videos = getVideosByPersonId(person.id)
+  const chronicles = getChroniclesByPersonId(person.id)
   const audio = getAudioByPersonId(person.id)
   const allPeople = getPeople()
 
@@ -186,6 +187,46 @@ export default async function PersonPage({ params }: PersonPageProps) {
         </section>
       )}
 
+      {/* Chronicles section — compact card list per D-13 */}
+      {chronicles.length > 0 && (
+        <section className="mb-14">
+          <h2 className="eyebrow text-quiet mb-6 text-xs">
+            CHRONICLES FEATURING {person.name.toUpperCase()}
+          </h2>
+          <div className="flex flex-col gap-3 max-w-2xl">
+            {chronicles.map((c) => {
+              // First sentence of body (strip markdown, take up to first period or 120 chars)
+              const firstSentence = c.body
+                .replace(/#{1,6}\s+/g, '')
+                .replace(/\*\*(.+?)\*\*/g, '$1')
+                .replace(/\*(.+?)\*/g, '$1')
+                .replace(/^>\s*/gm, '')
+                .replace(/\[(.+?)\]\(.+?\)/g, '$1')
+                .replace(/\n+/g, ' ')
+                .trim()
+                .split(/(?<=[.!?])\s/)[0]
+                ?.slice(0, 140) ?? ''
+
+              return (
+                <Link
+                  key={c.id}
+                  href={`/chronicles/${c.id}`}
+                  className="block p-4 border hairline rounded-lg bg-ivory hover:bg-white hover:-translate-y-0.5 hover:shadow-sm transition-all duration-200"
+                >
+                  {c.dateLabel && (
+                    <p className="eyebrow text-quiet text-[10px] mb-1">
+                      {c.circa ? `Circa ${c.dateLabel}` : c.dateLabel}
+                    </p>
+                  )}
+                  <p className="font-serif text-navy text-base leading-snug mb-1">{c.title}</p>
+                  <p className="text-muted text-sm leading-relaxed">{firstSentence}</p>
+                </Link>
+              )
+            })}
+          </div>
+        </section>
+      )}
+
       {/* Audio section — stacked AudioPlayer list */}
       {audio.length > 0 && (
         <section className="mb-14">
@@ -196,11 +237,11 @@ export default async function PersonPage({ params }: PersonPageProps) {
         </section>
       )}
 
-      {/* Combined empty state — only shown when photos, videos, AND audio are all absent */}
-      {photos.length === 0 && videos.length === 0 && audio.length === 0 && (
+      {/* Combined empty state — only shown when photos, videos, chronicles AND audio are all absent */}
+      {photos.length === 0 && videos.length === 0 && chronicles.length === 0 && audio.length === 0 && (
         <section className="py-12 border-t hairline">
           <p className="font-serif italic text-muted text-base">
-            No photographs, films, or recordings of this person have been added to the archive yet.
+            No photographs, films, chronicles, or recordings of this person have been added to the archive yet.
           </p>
         </section>
       )}
