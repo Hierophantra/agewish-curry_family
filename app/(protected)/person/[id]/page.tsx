@@ -129,8 +129,9 @@ export default async function PersonPage({ params }: PersonPageProps) {
         ← Back to family tree
       </Link>
 
-      {/* Header: eyebrow + name + dates */}
-      <header className="mb-10 pb-9 border-b hairline">
+      {/* Header: eyebrow + name + dates — no border/box; the divider below the name
+          is a short gold accent line that floats freely (no enclosing container) */}
+      <header className="mb-8">
         {/* v2 eyebrow: "Patriarch of the family", "Son of William" etc. */}
         <p className="eyebrow text-gold-deep mb-3">
           {person.eyebrow ?? person.relationLabel ?? 'FAMILY ARCHIVE'}
@@ -144,11 +145,14 @@ export default async function PersonPage({ params }: PersonPageProps) {
             {person.datesLabel}
           </p>
         )}
+        {/* Tasteful divider — short gold accent line under the name area.
+            Doesn't enclose anything; works whether meta rows are present or not. */}
+        <div className="h-px bg-gold w-12 mt-7" aria-hidden="true" />
       </header>
 
       {/* Metadata rows: Born, Birthplace, Spouse, Parents, Children */}
       {meta.length > 0 && (
-        <section className="mb-10">
+        <section className="mb-14">
           <dl className="flex flex-col gap-3.5 max-w-md">
             {meta.map(({ k, v }) => (
               <div key={k} className="flex justify-between gap-4 text-base">
@@ -157,15 +161,6 @@ export default async function PersonPage({ params }: PersonPageProps) {
               </div>
             ))}
           </dl>
-        </section>
-      )}
-
-      {/* Bio — hidden if absent */}
-      {person.bio && (
-        <section className="mb-12 pt-9 border-t hairline max-w-prose">
-          <p className="font-serif italic text-muted text-base leading-[1.75]">
-            {person.bio}
-          </p>
         </section>
       )}
 
