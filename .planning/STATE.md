@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v2.1
 milestone_name: v2.1 — User Punch List + A+ Peer Review
 status: executing
-stopped_at: Phase 16 complete — URL deep linking + BlurHash placeholders (9 tasks, 11 files, 8 commits)
+stopped_at: Phase 17 complete — audio content type; AudioSchema, AudioPlayer, audio.json stubs, person-page audio section (7 tasks, 8 files, 6 commits)
 last_updated: "2026-04-29T00:00:00Z"
-last_activity: 2026-04-29 — Phase 16 complete; URL-synced tree/lightbox/video state + blur-up placeholders; npm run build exits 0 (22 pages)
+last_activity: 2026-04-29 — Phase 17 complete; audio as first-class content type; npm run build exits 0 (22 pages)
 progress:
   total_phases: 18
-  completed_phases: 16
+  completed_phases: 17
   total_plans: 24
   completed_plans: 24
-  percent: 89
+  percent: 94
 ---
 
 # Project State
@@ -25,13 +25,13 @@ See: .planning/PROJECT.md (updated 2026-04-29)
 
 ## Current Position
 
-Phase: 16 of 18 (v2.1 Deep Linking + BlurHash) — complete
-Plan: 2 of 2 in current phase (16-01 + 16-02 done)
-Status: executing — Phase 17 next (audio content type)
+Phase: 17 of 18 (v2.1 Audio Content Type) — complete
+Plan: 1 of 1 in current phase (17-01 done)
+Status: executing — Phase 18 next (archive export + slideshow)
 Current focus: v2.1 in progress
-Last activity: 2026-04-29 — Phase 16 complete; URL-synced state + blur-up placeholders; npm run build exits 0 (22 pages)
+Last activity: 2026-04-29 — Phase 17 complete; AudioSchema, AudioPlayer, audio.json stubs, person-page audio section; npm run build exits 0 (22 pages)
 
-Progress: [████████████████████░░] 89% (16/18 phases complete)
+Progress: [█████████████████████░] 94% (17/18 phases complete)
 
 ## Phase 1 outcome
 
@@ -140,6 +140,9 @@ Recent decisions affecting current work:
 - 16: ?video= stores sourceId (YouTube/Vimeo ID) — stable, URL-safe, naturally meaningful in a shared URL
 - 16: BlurHash via plaiceholder@3 + sharp — devDependency only; never imported in app code; generated at content-authoring time via npm run blur
 - 16: Conditional spread pattern {...(blurDataUrl ? { placeholder:'blur', blurDataURL } : {})} — prevents next/image error when blurDataURL is empty string
+- 17: AudioSchema uses `source` (not `source_provenance`) — no platform field conflict unlike VideoSchema
+- 17: AudioPlayer uses native <audio> with onPlay/onPause/onEnded events to track playing state — handles all state changes including programmatic pause from other sources
+- 17: Placeholder audio files are 1-byte stubs; play() promise rejected silently — graceful degradation without page errors
 
 ### Pending Todos
 
