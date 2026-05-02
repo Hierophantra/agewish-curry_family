@@ -7,12 +7,14 @@ import Link from 'next/link'
 import Hero from '@/components/home/Hero'
 import PhotoCard from '@/components/gallery/PhotoCard'
 import VideoCard from '@/components/video/VideoCard'
-import { getPeople, getPhotos, getFeaturedVideos } from '@/lib/content'
+import ChronicleCard from '@/components/chronicles/ChronicleCard'
+import { getPeople, getPhotos, getFeaturedVideos, getChronicles } from '@/lib/content'
 
 export default function HomePage() {
   const people = getPeople()
   const photos = getPhotos()
   const featured = getFeaturedVideos()
+  const allChronicles = getChronicles()
 
   // Patriarch detection: person with no parentIds (generic — works with any root person)
   const patriarch = people.find((p) => (p.parentIds ?? []).length === 0)
@@ -21,6 +23,15 @@ export default function HomePage() {
   const firstGen = patriarch
     ? people.filter((p) => (p.parentIds ?? []).includes(patriarch.id))
     : []
+
+  // Latest 1-2 chronicles sorted by date descending
+  const recentChronicles = [...allChronicles]
+    .sort((a, b) => {
+      const da = a.date ?? ''
+      const db = b.date ?? ''
+      return db.localeCompare(da)
+    })
+    .slice(0, 2)
 
   // Latest 6 photos sorted by date descending
   const latestPhotos = [...photos]
@@ -104,9 +115,40 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Videos preview — bg-ivory (alternates back to ivory) */}
-      {featured.length > 0 && (
+      {/* Chronicles preview — bg-ivory (alternates after white photographs) */}
+      {recentChronicles.length > 0 && (
         <section className="bg-ivory border-t border-stone py-14 px-7 md:px-11">
+          <div className="max-w-6xl mx-auto">
+            <div className="flex items-baseline justify-between mb-7">
+              <div>
+                <p className="eyebrow text-gold-deep mb-2">CHRONICLES</p>
+                <h2 className="font-serif text-navy text-3xl">Recent chronicles</h2>
+              </div>
+              <Link
+                href="/chronicles"
+                className="eyebrow text-gold-deep hover:text-gold transition-colors"
+              >
+                Browse all chronicles →
+              </Link>
+            </div>
+            <div
+              className={`grid gap-7 ${
+                recentChronicles.length === 1
+                  ? 'grid-cols-1 max-w-2xl'
+                  : 'grid-cols-1 md:grid-cols-2'
+              }`}
+            >
+              {recentChronicles.map((c) => (
+                <ChronicleCard key={c.id} chronicle={c} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Videos preview — bg-white (alternates after ivory chronicles) */}
+      {featured.length > 0 && (
+        <section className="bg-white border-t border-stone py-14 px-7 md:px-11">
           <div className="max-w-6xl mx-auto">
             <div className="flex items-baseline justify-between mb-7">
               <div>
