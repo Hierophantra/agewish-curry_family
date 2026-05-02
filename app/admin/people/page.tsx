@@ -1,5 +1,5 @@
 // app/admin/people/page.tsx
-// Admin people list — shows all family members with "Edit" links.
+// Admin people list — shows all family members with "Edit" links and a "+ New person" button.
 // Auth gate is enforced by requireAdminOrRedirect() in the page (NOT the layout —
 // see app/admin/layout.tsx for the rationale).
 import Link from 'next/link'
@@ -23,7 +23,15 @@ export default async function AdminPeopleListPage() {
         ← Back to admin
       </Link>
       <p className="eyebrow text-gold-deep mb-3">FAMILY ARCHIVE · ADMIN</p>
-      <h1 className="font-serif text-navy text-4xl mb-2">People</h1>
+      <div className="flex items-start justify-between gap-4 mb-2">
+        <h1 className="font-serif text-navy text-4xl">People</h1>
+        <Link
+          href="/admin/people/new"
+          className="shrink-0 mt-1 bg-navy text-white px-5 py-2 rounded font-sans text-sm hover:bg-navy-light transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2"
+        >
+          + New person
+        </Link>
+      </div>
       <p className="font-serif italic text-muted text-base mb-9">
         {people.length} {people.length === 1 ? 'person' : 'people'} in the archive.
       </p>
@@ -48,10 +56,6 @@ export default async function AdminPeopleListPage() {
           </li>
         ))}
       </ul>
-      <p className="text-quiet text-xs mt-8 italic font-serif">
-        Edit name, relation, dates, birthplace, and spouse. Adding/removing people, editing parent/child relationships,
-        and managing photo references come in a later admin phase.
-      </p>
     </div>
   )
 }
