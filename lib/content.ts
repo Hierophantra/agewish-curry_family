@@ -7,8 +7,8 @@ import 'server-only'
 import { readFileSync } from 'fs'
 import { join } from 'path'
 import { z } from 'zod'
-import { PersonSchema, PhotoSchema, VideoSchema, CollectionSchema, PlaylistSchema, AudioSchema } from './types'
-import type { Person, Photo, Video, Collection, Playlist, Audio } from './types'
+import { PersonSchema, PhotoSchema, VideoSchema, CollectionSchema, PlaylistSchema, AudioSchema, ChronicleSchema } from './types'
+import type { Person, Photo, Video, Collection, Playlist, Audio, Chronicle } from './types'
 
 // ── Internal file reader ──
 // Uses .parse() (throws ZodError) not .safeParse() — fail loud on bad content.
@@ -104,6 +104,24 @@ export function getAudioInCollection(collectionId: string): Audio[] {
   return getAudio().filter((a) => a.collectionIds?.includes(collectionId))
 }
 
+// ── Chronicle loaders (Phase 19) ──
+
+export function getChronicles(): Chronicle[] {
+  return readJSON('chronicles.json', z.array(ChronicleSchema))
+}
+
+export function getChronicleById(id: string): Chronicle | null {
+  return getChronicles().find((c) => c.id === id) ?? null
+}
+
+export function getChroniclesByPersonId(personId: string): Chronicle[] {
+  return getChronicles().filter((c) => c.peopleIds.includes(personId))
+}
+
+export function getChroniclesInCollection(collectionId: string): Chronicle[] {
+  return getChronicles().filter((c) => c.collectionIds.includes(collectionId))
+}
+
 // ── Bidirectional reference validator ──
 // Validates that all cross-references between content types resolve.
 // Throws descriptively if a reference is dangling — surfaces data entry errors.
@@ -125,6 +143,7 @@ export function validateBidirectionalRefs(): void {
   const collections = getCollections()
   const playlists = getPlaylists()
   const audioItems = getAudio()
+  const chronicles = getChronicles()
 
   const personIds = new Set(people.map((p) => p.id))
   const photoIds = new Set(photos.map((p) => p.id))
@@ -283,6 +302,38 @@ export function validateBidirectionalRefs(): void {
         throw new Error(
           `Content error: Person "${person.id}" has unknown childrenId "${cid}". ` +
           `Check content/family.json.`
+        )
+      }
+    }
+  }
+
+  // --- Chronicle cross-reference validation (Phase 19) ---
+  // D-18: peopleIds → family.json, coverPhotoId → photos.json, collectionIds → collections.json
+  for (const chronicle of chronicles) {
+    // Check chronicle → person references
+    for (const pid of chronicle.peopleIds) {
+      if (!personIds.has(pid)) {
+        throw new Error(
+          `Content error: Chronicle "${chronicle.id}" references unknown person ID "${pid}". ` +
+          `Check content/chronicles.json — "${pid}" must be an id in content/family.json.`
+        )
+      }
+    }
+
+    // Check chronicle → cover photo reference (if present)
+    if (chronicle.coverPhotoId && !photoIds.has(chronicle.coverPhotoId)) {
+      throw new Error(
+        `Content error: Chronicle "${chronicle.id}" has unknown coverPhotoId "${chronicle.coverPhotoId}". ` +
+        `Check content/chronicles.json — "${chronicle.coverPhotoId}" must be an id in content/photos.json.`
+      )
+    }
+
+    // Check chronicle → collection references (empty array is valid)
+    for (const cid of chronicle.collectionIds) {
+      if (!collectionIds.has(cid)) {
+        throw new Error(
+          `Content error: Chronicle "${chronicle.id}" references unknown collection ID "${cid}". ` +
+          `Check content/chronicles.json — "${cid}" must be an id in content/collections.json.`
         )
       }
     }
