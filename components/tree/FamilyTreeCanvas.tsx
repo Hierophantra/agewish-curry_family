@@ -95,10 +95,11 @@ export default function FamilyTreeCanvas({
         style={{ background: 'linear-gradient(to right, transparent, white)' }}
         aria-hidden="true"
       />
-      {/* D-10: overflow-x-auto enables horizontal scroll on narrow viewports */}
+      {/* D-10: overflow-x-auto enables horizontal scroll on narrow viewports.
+          Tree container stays at full width regardless of panel state — panel no longer
+          shrinks the tree (panel is now fixed/viewport-positioned, not docked inside). */}
       <div className="overflow-x-auto">
-        {/* Relative-positioned canvas — all nodes + connectors are absolutely positioned children.
-            PersonPanel's `absolute top-0 right-0` positions relative to this div (D-14). */}
+        {/* Relative-positioned canvas — all nodes + connectors are absolutely positioned children. */}
         <div
           className="relative"
           style={{ width: canvasWidth, height: canvasHeight, minHeight: 120 }}
@@ -112,7 +113,7 @@ export default function FamilyTreeCanvas({
         {nodes.map((node) => {
           const person = peopleById.get(node.id)
           const name = person?.name ?? node.id
-          // v2: prefer person.relationLabel (e.g. "PATRIARCH", "SON", "GRANDDAUGHTER");
+          // v2: prefer person.relationLabel (e.g. "GRANDFATHER", "SON", "GRANDDAUGHTER");
           // fall back to computed label for people without this field
           const label = person?.relationLabel ?? getRelationLabel(node, rootId, people)
           return (
@@ -132,28 +133,29 @@ export default function FamilyTreeCanvas({
             />
           )
         })}
-
-        {/* PersonPanel — D-14: absolutely positioned within tree container (relative parent above).
-            AnimatePresence fires exit animation when selectedId becomes null or changes.
-            key={selectedId} is CRITICAL: forces remount on person change so exit fires between selections. */}
-        <AnimatePresence mode="wait">
-          {selectedId && (() => {
-            const person = people.find((p) => p.id === selectedId)
-            if (!person) return null
-            const personPhotos = photos.filter((ph) => person.photoIds.includes(ph.id))
-            return (
-              <PersonPanel
-                key={selectedId}          // CRITICAL: key forces remount on person change
-                person={person}           // so exit animation fires between selections
-                photos={personPhotos}
-                people={people}
-                onClose={() => setSelectedId(null)}
-              />
-            )
-          })()}
-        </AnimatePresence>
         </div>
       </div>
+
+      {/* PersonPanel — fixed-position right sheet (viewport-anchored, not docked inside tree).
+          Slides in from the right edge of the screen; tree width is NOT affected.
+          AnimatePresence fires exit animation when selectedId becomes null or changes.
+          key={selectedId} is CRITICAL: forces remount on person change so exit fires between selections. */}
+      <AnimatePresence mode="wait">
+        {selectedId && (() => {
+          const person = people.find((p) => p.id === selectedId)
+          if (!person) return null
+          const personPhotos = photos.filter((ph) => person.photoIds.includes(ph.id))
+          return (
+            <PersonPanel
+              key={selectedId}          // CRITICAL: key forces remount on person change
+              person={person}           // so exit animation fires between selections
+              photos={personPhotos}
+              people={people}
+              onClose={() => setSelectedId(null)}
+            />
+          )
+        })()}
+      </AnimatePresence>
     </div>
   )
 }

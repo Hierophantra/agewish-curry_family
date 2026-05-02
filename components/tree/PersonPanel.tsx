@@ -62,10 +62,13 @@ export default function PersonPanel({ person, photos, people, onClose }: PersonP
 
   return (
     // D-16: mobile bottom-sheet (fixed, full-width, slides from bottom, rounded top corners)
-    // md+: absolute right panel, full height, 320px wide
-    // z-10: appears above canvas nodes without covering the full page
+    // md+: fixed right sheet — anchored to viewport right edge, full screen height.
+    //      Does NOT shrink the tree container — tree gets its full width regardless.
+    //      z-40: above tree nodes (z-20 gradient, z-10 nodes) but below TopNav (z-50).
+    //      Shadow on left edge creates visual separation from tree without a backdrop.
     <motion.aside
-      className="fixed bottom-0 inset-x-0 max-h-[80vh] rounded-t-xl md:absolute md:top-0 md:right-0 md:bottom-auto md:inset-x-auto md:h-full md:w-80 md:rounded-none bg-ivory border-t hairline md:border-t-0 md:border-l z-10 flex flex-col overflow-y-auto"
+      className="fixed bottom-0 inset-x-0 max-h-[80vh] rounded-t-xl md:top-0 md:right-0 md:bottom-auto md:inset-x-auto md:h-screen md:w-[400px] md:rounded-none bg-ivory border-t hairline md:border-t-0 md:border-l z-40 flex flex-col overflow-y-auto"
+      style={{ boxShadow: '-8px 0 24px -12px rgba(0,0,0,0.15)' }}
       initial={{ x: '100%', opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       exit={{ x: '100%', opacity: 0 }}
