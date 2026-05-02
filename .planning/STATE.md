@@ -1,11 +1,11 @@
 ---
 gsd_state_version: 1.0
 milestone: v3
-milestone_name: v3 — Admin authoring UI; Phase 24 Audio CRUD complete
+milestone_name: v3 — Admin authoring UI; Phase 25 Collections + Playlists CRUD complete
 status: in_progress
-stopped_at: v3 Phase 24 complete — Audio CRUD with Vercel Blob upload; getAudioUrl helper; EditAudioForm; /admin/audio list + new + [id]; 2 API handlers; npm run build exits 0 (43 pages)
-last_updated: "2026-04-29T00:35:00Z"
-last_activity: 2026-04-29 — Phase 24 complete; getAudioUrl() in lib/utils.ts; AudioPlayer updated; /admin/audio list + new + [id]; EditAudioForm; /api/admin/audio POST; /api/admin/audio/[id] POST+DELETE; CONTENT_AUTHORING.md updated; npm run build exits 0 (43 pages)
+stopped_at: v3 Phase 25 complete — Collections CRUD + Playlists CRUD (metadata-only, cover picker dropdowns, cascade-delete); EditCollectionForm + EditPlaylistForm; /admin/collections + /admin/playlists list/new/[id]; 4 API handlers; npm run build exits 0 (49 pages)
+last_updated: "2026-04-29T01:30:00Z"
+last_activity: 2026-04-29 — Phase 25 complete; EditCollectionForm + EditPlaylistForm; /admin/collections list + new + [id]; /admin/playlists list + new + [id]; /api/admin/collections POST+[id] POST+DELETE (cascade); /api/admin/playlists POST+[id] POST+DELETE (cascade); admin index Collections+Playlists marked live; npm run build exits 0 (49 pages)
 progress:
   total_phases: 22
   completed_phases: 22
@@ -25,13 +25,13 @@ See: .planning/PROJECT.md (updated 2026-04-29)
 
 ## Current Position
 
-Phase: 24 of 24 (v3 Audio CRUD) — complete
-Plan: 1/1 in Phase 24 (24-v3-audio-upload done)
-Status: in_progress (v3 milestone; Phase 24 done; Collections/Playlists admin planned next)
-Current focus: v3 Phase 24 complete — Audio CRUD with Vercel Blob upload; getAudioUrl(); EditAudioForm; /admin/audio list + new + [id]; 2 API handlers
-Last activity: 2026-04-29 — Phase 24 complete; getAudioUrl() in lib/utils.ts; AudioPlayer updated; /admin/audio list + new + [id]; EditAudioForm; /api/admin/audio POST; /api/admin/audio/[id] POST+DELETE; CONTENT_AUTHORING.md updated; npm run build exits 0 (43 pages)
+Phase: 25 of 25 (v3 Collections + Playlists CRUD) — complete
+Plan: 1/1 in Phase 25 (25-v3-collections-playlists done)
+Status: in_progress (v3 milestone; Phase 25 done; full admin CRUD surface complete for core content types)
+Current focus: v3 Phase 25 complete — Collections CRUD + Playlists CRUD; EditCollectionForm + EditPlaylistForm; cascade-delete strips back-references; 4 API handlers; admin index updated; npm run build exits 0 (49 pages)
+Last activity: 2026-04-29 — Phase 25 complete; EditCollectionForm + EditPlaylistForm; /admin/collections + /admin/playlists full CRUD; cascade-delete for both; npm run build exits 0 (49 pages)
 
-Progress: [██████████████████████] 100% (24/24 phases complete — v2.2 Phase 19 + v3 Phases 20-24 done)
+Progress: [███████████████████████] 100% (25/25 phases complete — v2.2 Phase 19 + v3 Phases 20-25 done)
 
 ## Phase 1 outcome
 
@@ -174,6 +174,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-29T00:35:00Z
-Stopped at: v3 Phase 24 complete — Audio CRUD with Vercel Blob upload; getAudioUrl() helper; EditAudioForm; /admin/audio list + new + [id]; /api/admin/audio POST+[id] POST+DELETE; CONTENT_AUTHORING.md updated; npm run build exits 0 (43 pages)
+Last session: 2026-04-29T01:30:00Z
+Stopped at: v3 Phase 25 complete — Collections + Playlists CRUD; EditCollectionForm + EditPlaylistForm; cascade-delete (two sequential commits per delete); /admin/collections + /admin/playlists full CRUD; 4 API handlers; admin index updated; npm run build exits 0 (49 pages)
 Resume file: None
