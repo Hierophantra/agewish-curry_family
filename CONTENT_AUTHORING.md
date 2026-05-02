@@ -138,6 +138,22 @@ To add the photo to an existing collection, add the collection's ID to `collecti
 
 The photo will immediately appear in the collection detail page at `/photographs/lake-house-summers`.
 
+### Step 5 — Generate the blur placeholder (optional but recommended)
+
+After the photo file is in place, run:
+
+```bash
+npm run blur
+```
+
+This reads every photo in `content/photos.json`, generates a tiny base64 blur placeholder for each real image file, and writes the result back into `photos.json` as `blurDataUrl`. Commit the updated `photos.json` alongside the photo file.
+
+The blur placeholder appears instantly as a soft colour wash while the full photo loads, eliminating the broken-image flash on slow connections. Each placeholder is roughly 150–200 characters of base64 — negligible JSON weight.
+
+**If you forget to run `npm run blur`**, photos still load and display correctly — they just show the `bg-ivory` background instead of a blur during the loading transition.
+
+**After replacing placeholder files with real photos**, run `npm run blur` again. The script is idempotent and will overwrite the old blur data with one that reflects the actual photo colours.
+
 ### Photo field reference
 
 | Field          | Required | Description |
