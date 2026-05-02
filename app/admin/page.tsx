@@ -8,7 +8,7 @@ import Link from 'next/link'
 import { requireAdminOrRedirect } from '@/lib/admin'
 
 const sections = [
-  { href: '/admin/people', label: 'People', desc: 'Edit family member bios, dates, and relationships', status: 'live' },
+  { href: '/admin/people', label: 'People', desc: 'Edit names, dates, birthplace, spouse, and relation labels', status: 'live' },
   { href: '#', label: 'Photographs', desc: 'Upload photos, edit captions, manage collections', status: 'soon' },
   { href: '#', label: 'Videos', desc: 'Add YouTube/Vimeo links, edit titles, manage playlists', status: 'soon' },
   { href: '#', label: 'Audio', desc: 'Upload voice recordings, edit metadata', status: 'soon' },

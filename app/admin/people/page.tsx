@@ -1,5 +1,5 @@
 // app/admin/people/page.tsx
-// Admin people list — shows all family members with "Edit bio" links.
+// Admin people list — shows all family members with "Edit" links.
 // Auth gate is enforced by requireAdminOrRedirect() in the page (NOT the layout —
 // see app/admin/layout.tsx for the rationale).
 import Link from 'next/link'
@@ -43,13 +43,14 @@ export default async function AdminPeopleListPage() {
               href={`/admin/people/${p.id}`}
               className="eyebrow text-gold-deep hover:text-gold transition-colors text-[10px] shrink-0"
             >
-              Edit bio →
+              Edit →
             </Link>
           </li>
         ))}
       </ul>
       <p className="text-quiet text-xs mt-8 italic font-serif">
-        Phase 1 ships bio editing only. Editing dates, relationships, and other fields comes in v3 Phase 21.
+        Edit name, relation, dates, birthplace, and spouse. Adding/removing people, editing parent/child relationships,
+        and managing photo references come in a later admin phase.
       </p>
     </div>
   )
