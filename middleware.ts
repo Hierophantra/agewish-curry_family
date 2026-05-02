@@ -20,5 +20,8 @@ export const config = {
   //   through /_next/image. If the underlying URL goes through middleware and gets redirected
   //   to /login, the optimizer receives non-image content and renders broken images.
   //   These are publicly accessible if the exact URL is known, but the slugs are not enumerable.
-  matcher: ['/((?!api|_next/static|_next/image|images|photos|audio|favicon.ico).*)'],
+  // - /admin — The admin route group uses GitHub OAuth (separate from the family Credentials
+  //   provider). The admin layout handles its own auth gate via getAdminUser(). Excluding /admin
+  //   here prevents the family-password middleware from redirecting GitHub OAuth flows to /login.
+  matcher: ['/((?!api|_next/static|_next/image|images|photos|audio|admin|favicon.ico).*)'],
 }
