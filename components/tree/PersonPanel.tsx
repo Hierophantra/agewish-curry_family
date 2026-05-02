@@ -1,7 +1,7 @@
 // components/tree/PersonPanel.tsx
 // 'use client' — uses motion/react for slide-in animation
 'use client'
-import { motion } from 'motion/react'
+import { motion, useReducedMotion } from 'motion/react'
 import Link from 'next/link'
 import type { Person, Photo } from '@/lib/types'
 import PhotoCarousel from './PhotoCarousel'
@@ -16,6 +16,9 @@ interface PersonPanelProps {
 
 export default function PersonPanel({ person, photos, people, onClose }: PersonPanelProps) {
   const peopleById = new Map(people.map((p) => [p.id, p]))
+
+  // prefers-reduced-motion: skip slide-in animation entirely when OS setting is enabled.
+  const reduce = useReducedMotion()
 
   // Focus trap — panel is always open when mounted; returns focus to the tree node on close.
   const trapRef = useFocusTrap<HTMLElement>(true)
@@ -74,10 +77,10 @@ export default function PersonPanel({ person, photos, people, onClose }: PersonP
       ref={trapRef}
       className="fixed bottom-0 inset-x-0 max-h-[80vh] rounded-t-xl md:top-0 md:right-0 md:bottom-auto md:inset-x-auto md:h-screen md:w-[400px] md:rounded-none bg-ivory border-t hairline md:border-t-0 md:border-l z-40 flex flex-col overflow-y-auto"
       style={{ boxShadow: '-8px 0 24px -12px rgba(0,0,0,0.15)' }}
-      initial={{ x: '100%', opacity: 0 }}
+      initial={reduce ? false : { x: '100%', opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
-      exit={{ x: '100%', opacity: 0 }}
-      transition={{ duration: 0.25, ease: 'easeInOut' }}
+      exit={reduce ? { opacity: 0 } : { x: '100%', opacity: 0 }}
+      transition={reduce ? { duration: 0 } : { duration: 0.25, ease: 'easeInOut' }}
     >
       {/* Panel top: eyebrow + close button — matches .panel-top */}
       <div className="flex items-center justify-between px-[22px] pt-[22px] pb-0 mb-0">

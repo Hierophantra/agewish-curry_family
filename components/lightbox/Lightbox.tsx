@@ -12,7 +12,7 @@
 
 import { useEffect } from 'react'
 import Image from 'next/image'
-import { motion, AnimatePresence } from 'motion/react'
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react'
 import type { Photo } from '@/lib/types'
 import { useFocusTrap } from '@/lib/focus-trap'
 
@@ -26,6 +26,9 @@ interface LightboxProps {
 
 export default function Lightbox({ photos, currentIndex, onClose, onPrev, onNext }: LightboxProps) {
   const photo = photos[currentIndex]
+
+  // prefers-reduced-motion: skip fade animations entirely when OS setting is enabled.
+  const reduce = useReducedMotion()
 
   // Focus trap — active whenever the Lightbox component is mounted (it is always open when rendered).
   // Returns focus to the trigger element (e.g. photo thumbnail) when lightbox unmounts.
@@ -61,10 +64,10 @@ export default function Lightbox({ photos, currentIndex, onClose, onPrev, onNext
       <motion.div
         ref={trapRef}
         key="lightbox-backdrop"
-        initial={{ opacity: 0 }}
+        initial={reduce ? false : { opacity: 0 }}
         animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.25 }}
+        exit={reduce ? { opacity: 1 } : { opacity: 0 }}
+        transition={reduce ? { duration: 0 } : { duration: 0.25 }}
         className="fixed inset-0 z-[100] flex items-center justify-center"
         style={{ background: 'rgba(15, 24, 64, 0.95)' }}
         onClick={onClose}
@@ -102,10 +105,10 @@ export default function Lightbox({ photos, currentIndex, onClose, onPrev, onNext
         {/* D-17: Per-photo cross-fade via key={photo.id}; image container stops propagation (D-16) */}
         <motion.div
           key={photo.id}
-          initial={{ opacity: 0 }}
+          initial={reduce ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
+          exit={reduce ? { opacity: 1 } : { opacity: 0 }}
+          transition={reduce ? { duration: 0 } : { duration: 0.2 }}
           className="flex flex-col items-center gap-4 max-w-[90vw] max-h-[90vh]"
           onClick={(e) => e.stopPropagation()}
         >

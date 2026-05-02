@@ -13,7 +13,7 @@
 'use client'
 
 import { useEffect } from 'react'
-import { motion, AnimatePresence } from 'motion/react'
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react'
 import VideoPlayer from '@/components/video/VideoPlayer'
 import type { Video } from '@/lib/types'
 import { useFocusTrap } from '@/lib/focus-trap'
@@ -28,6 +28,9 @@ interface VideoLightboxProps {
 
 export default function VideoLightbox({ videos, currentIndex, onClose, onPrev, onNext }: VideoLightboxProps) {
   const video = videos[currentIndex]
+
+  // prefers-reduced-motion: skip fade animations entirely when OS setting is enabled.
+  const reduce = useReducedMotion()
 
   // Focus trap — active whenever the VideoLightbox component is mounted (always open when rendered).
   // Returns focus to the trigger element (e.g. video thumbnail) when lightbox unmounts.
@@ -60,10 +63,10 @@ export default function VideoLightbox({ videos, currentIndex, onClose, onPrev, o
       <motion.div
         ref={trapRef}
         key="video-lightbox-backdrop"
-        initial={{ opacity: 0 }}
+        initial={reduce ? false : { opacity: 0 }}
         animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.25 }}
+        exit={reduce ? { opacity: 1 } : { opacity: 0 }}
+        transition={reduce ? { duration: 0 } : { duration: 0.25 }}
         className="fixed inset-0 z-[100] flex items-center justify-center"
         style={{ background: 'rgba(15, 24, 64, 0.95)' }}
         onClick={onClose}
@@ -103,10 +106,10 @@ export default function VideoLightbox({ videos, currentIndex, onClose, onPrev, o
         {/* D-17: Per-video cross-fade via key={video.id}; container stops propagation (D-16) */}
         <motion.div
           key={video.id}
-          initial={{ opacity: 0 }}
+          initial={reduce ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
+          exit={reduce ? { opacity: 1 } : { opacity: 0 }}
+          transition={reduce ? { duration: 0 } : { duration: 0.2 }}
           className="flex flex-col items-center gap-4 max-w-[1024px] w-full px-6"
           onClick={(e) => e.stopPropagation()}
         >

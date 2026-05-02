@@ -2,6 +2,7 @@
 // 'use client' — uses useState, useEffect; integrates Lightbox on image click
 'use client'
 import { useState, useEffect } from 'react'
+import { useReducedMotion } from 'motion/react'
 import type { Photo } from '@/lib/types'
 import Lightbox from '@/components/lightbox/Lightbox'
 import { cn } from '@/lib/utils'
@@ -18,6 +19,8 @@ interface PhotoCarouselProps {
 export default function PhotoCarousel({ photos }: PhotoCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0)
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
+  // prefers-reduced-motion: skip 1.2s CSS crossfade when OS setting is enabled.
+  const reduce = useReducedMotion()
 
   // Auto-advance with cleanup — CRITICAL: clearTimeout on each change prevents timer pile-up
   // (RESEARCH §Topic 6 gotcha: multiple timers advancing carousel simultaneously)
@@ -65,7 +68,8 @@ export default function PhotoCarousel({ photos }: PhotoCarouselProps) {
             onClick={() => setLightboxIndex(i)}
             style={{
               opacity: i === activeIndex ? 1 : 0,
-              transition: `opacity ${CROSSFADE_MS}ms ease-in-out`,
+              // Crossfade: 1.2s ease-in-out per prototype; skipped entirely when reduced motion is preferred.
+              transition: reduce ? 'none' : `opacity ${CROSSFADE_MS}ms ease-in-out`,
               // Ensure active photo stacks above inactive (avoids click-through on invisible photos)
               zIndex: i === activeIndex ? 1 : 0,
             }}

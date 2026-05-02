@@ -6,7 +6,9 @@
 // D-34: Hero has bg-white (not bg-ivory).
 // No CTA buttons — the site IS the experience.
 // Star motif rule: TopNav = star 1, Hero = star 2, Footer = star 3.
-import { motion } from 'motion/react'
+// prefers-reduced-motion: when OS setting is enabled, stagger animation is skipped
+// entirely — initial is set to false (already-visible state) and transition duration is 0.
+import { motion, useReducedMotion } from 'motion/react'
 import StarMark from '@/components/ui/StarMark'
 
 const containerVariants = {
@@ -19,22 +21,29 @@ const itemVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: 'easeOut' as const } },
 }
 
+const itemVariantsReduced = {
+  hidden: { opacity: 1, y: 0 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0 } },
+}
+
 export default function Hero() {
+  const reduce = useReducedMotion()
+
   return (
     <motion.section
       className="bg-white pt-16 pb-12 px-7 flex flex-col items-center text-center"
       variants={containerVariants}
-      initial="hidden"
+      initial={reduce ? false : 'hidden'}
       animate="visible"
     >
       {/* Star motif — hero position, 64px (PNG includes navy circle border + star) */}
-      <motion.div variants={itemVariants} className="mb-6">
+      <motion.div variants={reduce ? itemVariantsReduced : itemVariants} className="mb-6">
         <StarMark size={64} />
       </motion.div>
 
       {/* Primary heading — serif, sentence case, navy */}
       <motion.h1
-        variants={itemVariants}
+        variants={reduce ? itemVariantsReduced : itemVariants}
         className="font-serif text-navy text-6xl md:text-7xl font-normal mb-4"
       >
         A gathering of generations
@@ -42,7 +51,7 @@ export default function Hero() {
 
       {/* Subtitle — italic serif, muted, max-w-prose centered */}
       <motion.p
-        variants={itemVariants}
+        variants={reduce ? itemVariantsReduced : itemVariants}
         className="font-serif italic text-muted text-xl font-normal max-w-prose"
       >
         The stories, faces, and moments that make us who we are — kept in one place, for those here now and those to come.
