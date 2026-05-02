@@ -69,7 +69,7 @@ export default function Lightbox({ photos, currentIndex, onClose, onPrev, onNext
         {/* Close button — top-right, D-14 */}
         <button
           onClick={(e) => { e.stopPropagation(); onClose() }}
-          className="absolute top-6 right-6 text-gold w-8 h-8 flex items-center justify-center text-3xl hover:scale-110 transition-transform"
+          className="absolute top-6 right-6 text-gold w-8 h-8 flex items-center justify-center text-3xl hover:scale-110 transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-navy"
           aria-label="Close lightbox"
         >
           ×
@@ -78,7 +78,7 @@ export default function Lightbox({ photos, currentIndex, onClose, onPrev, onNext
         {/* Prev button — D-13 */}
         <button
           onClick={(e) => { e.stopPropagation(); onPrev() }}
-          className="absolute left-6 top-1/2 -translate-y-1/2 text-gold w-11 h-11 flex items-center justify-center text-2xl hover:scale-110 transition-transform"
+          className="absolute left-6 top-1/2 -translate-y-1/2 text-gold w-11 h-11 flex items-center justify-center text-2xl hover:scale-110 transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-navy"
           aria-label="Previous photo"
         >
           ‹
@@ -87,7 +87,7 @@ export default function Lightbox({ photos, currentIndex, onClose, onPrev, onNext
         {/* Next button — D-13 */}
         <button
           onClick={(e) => { e.stopPropagation(); onNext() }}
-          className="absolute right-6 top-1/2 -translate-y-1/2 text-gold w-11 h-11 flex items-center justify-center text-2xl hover:scale-110 transition-transform"
+          className="absolute right-6 top-1/2 -translate-y-1/2 text-gold w-11 h-11 flex items-center justify-center text-2xl hover:scale-110 transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-navy"
           aria-label="Next photo"
         >
           ›

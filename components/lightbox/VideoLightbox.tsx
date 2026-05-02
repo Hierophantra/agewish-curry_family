@@ -68,7 +68,7 @@ export default function VideoLightbox({ videos, currentIndex, onClose, onPrev, o
         {/* Close button — top-right */}
         <button
           onClick={(e) => { e.stopPropagation(); onClose() }}
-          className="absolute top-6 right-6 text-gold w-8 h-8 flex items-center justify-center text-3xl hover:scale-110 transition-transform"
+          className="absolute top-6 right-6 text-gold w-8 h-8 flex items-center justify-center text-3xl hover:scale-110 transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-navy"
           aria-label="Close lightbox"
         >
           ×
@@ -79,14 +79,14 @@ export default function VideoLightbox({ videos, currentIndex, onClose, onPrev, o
           <>
             <button
               onClick={(e) => { e.stopPropagation(); onPrev() }}
-              className="absolute left-6 top-1/2 -translate-y-1/2 text-gold w-11 h-11 flex items-center justify-center text-2xl hover:scale-110 transition-transform"
+              className="absolute left-6 top-1/2 -translate-y-1/2 text-gold w-11 h-11 flex items-center justify-center text-2xl hover:scale-110 transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-navy"
               aria-label="Previous video"
             >
               ‹
             </button>
             <button
               onClick={(e) => { e.stopPropagation(); onNext() }}
-              className="absolute right-6 top-1/2 -translate-y-1/2 text-gold w-11 h-11 flex items-center justify-center text-2xl hover:scale-110 transition-transform"
+              className="absolute right-6 top-1/2 -translate-y-1/2 text-gold w-11 h-11 flex items-center justify-center text-2xl hover:scale-110 transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-navy"
               aria-label="Next video"
             >
               ›

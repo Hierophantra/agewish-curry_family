@@ -85,7 +85,7 @@ export default function PersonPanel({ person, photos, people, onClose }: PersonP
         <button
           type="button"
           onClick={onClose}
-          className="text-quiet hover:text-navy transition-colors flex items-center justify-center w-7 h-7 text-2xl leading-none"
+          className="text-quiet hover:text-navy transition-colors flex items-center justify-center w-7 h-7 text-2xl leading-none focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-1"
           aria-label="Close panel"
         >
           ×

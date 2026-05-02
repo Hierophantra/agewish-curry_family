@@ -30,6 +30,7 @@ export default function PersonNode({ node: _node, name, isActive, relationLabel,
         'relative flex flex-col items-start justify-center px-3',
         'text-left cursor-pointer overflow-hidden',
         'transition-colors duration-150',
+        'focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-1',
         isActive
           ? 'bg-ivory hairline-emphasis border-navy'
           : 'bg-white hairline border-stone hover:bg-ivory hover:ring-2 hover:ring-gold-deep',

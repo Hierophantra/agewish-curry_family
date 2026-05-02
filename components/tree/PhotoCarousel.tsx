@@ -4,6 +4,7 @@
 import { useState, useEffect } from 'react'
 import type { Photo } from '@/lib/types'
 import Lightbox from '@/components/lightbox/Lightbox'
+import { cn } from '@/lib/utils'
 
 // Prototype .panel-img { transition: opacity 1.2s ease-in-out } → 1200ms crossfade
 // Prototype startCrossfade setInterval(..., 4000) → 4s auto-advance
@@ -60,7 +61,7 @@ export default function PhotoCarousel({ photos }: PhotoCarouselProps) {
             key={photo.id}
             type="button"
             aria-label={`View ${photo.caption ?? 'photograph'} full screen`}
-            className="absolute inset-0 w-full h-full cursor-pointer p-0 border-0 bg-transparent"
+            className="absolute inset-0 w-full h-full cursor-pointer p-0 border-0 bg-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-inset"
             onClick={() => setLightboxIndex(i)}
             style={{
               opacity: i === activeIndex ? 1 : 0,
@@ -90,11 +91,10 @@ export default function PhotoCarousel({ photos }: PhotoCarouselProps) {
               onClick={() => setActiveIndex(i)}
               aria-label={`Photo ${i + 1}`}
               // Static Tailwind class strings — NOT bg-${color} (purged in production)
-              className={
-                i === activeIndex
-                  ? 'rounded-full bg-gold'
-                  : 'rounded-full bg-stone'
-              }
+              className={cn(
+                'rounded-full focus:outline-none focus-visible:ring-1 focus-visible:ring-gold focus-visible:ring-offset-1',
+                i === activeIndex ? 'bg-gold' : 'bg-stone'
+              )}
               style={{ width: '5px', height: '5px', border: 'none', padding: 0, cursor: 'pointer' }}
             />
           ))}

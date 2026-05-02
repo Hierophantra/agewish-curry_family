@@ -52,7 +52,7 @@ export default function VideoCard({ video, onClick }: VideoCardProps) {
       <button
         type="button"
         onClick={onClick}
-        className="block w-full text-left transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
+        className="block w-full text-left transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2"
       >
         <article className="flex flex-col">{innerContent}</article>
       </button>

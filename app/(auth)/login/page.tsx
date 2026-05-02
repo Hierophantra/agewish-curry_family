@@ -76,7 +76,7 @@ export default function LoginPage({ searchParams }: LoginPageProps) {
           {/* Navy submit button — D-01 */}
           <button
             type="submit"
-            className="w-full bg-navy text-white py-3 text-sm font-medium hover:bg-navy/90 transition-colors rounded"
+            className="w-full bg-navy text-white py-3 text-sm font-medium hover:bg-navy/90 transition-colors rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2"
           >
             Enter
           </button>
