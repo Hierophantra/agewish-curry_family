@@ -19,21 +19,28 @@ See `CONTENT_AUTHORING.md → Writing a chronicle` for instructions on adding ne
 
 ---
 
-## v3 admin UI: in progress (Phase 20 complete)
+## v3 admin UI: complete
 
-v3 adds a GitHub-authenticated admin interface at `/admin` for editing archive content without touching JSON or code.
+v3 adds a GitHub-authenticated admin interface at `/admin` for editing all archive content without touching JSON or code.
 
-**Phase 20 (foundation) is complete:**
-- `/admin` — admin index listing all content sections
-- `/admin/login` — GitHub OAuth sign-in (separate from the family password)
-- `/admin/people` — list of all family members
-- `/admin/people/[id]` — edit a person's bio (saves directly to GitHub via the API)
+**All six content types are fully manageable via the admin UI:**
+- `/admin/people` — list, create, edit (names, dates, relationships), delete with cascade cleanup
+- `/admin/photos` — list, upload (JPEG/PNG/WebP, 4MB max via Vercel Blob), edit metadata, delete
+- `/admin/videos` — list, add YouTube/Vimeo links, edit metadata, delete
+- `/admin/audio` — list, upload (MP3/M4A/AAC/WAV, 4MB max via Vercel Blob), edit metadata, delete
+- `/admin/collections` — list, create, edit, delete (cascade strips collection tags from photos)
+- `/admin/playlists` — list, create, edit, delete (cascade strips playlist tags from videos)
+- `/admin/chronicles` — list, create, edit markdown stories with audio narration, delete
+
+**Key features of the admin:**
+- GitHub OAuth sign-in — separate from the family password
 - Admin allowlist: set `ADMIN_GITHUB_USERNAMES` in Vercel env vars (comma-separated GitHub logins)
-- Each save triggers a Vercel rebuild; the live site updates in approximately 90 seconds
+- Each save commits directly to the GitHub repo via the octokit API
+- Vercel detects the commit and rebuilds automatically; the live site updates in approximately 90 seconds
+- Bidirectional relationship sync: picking a parent for a person automatically adds that person to the parent's children list
+- Cascade delete: removing a person cleans up all references in photos, videos, audio, chronicles, and other family members
 
-**Phases 21+ (planned):** full people CRUD beyond bio, photograph upload via Vercel Blob, video/audio CRUD, collection and playlist editors.
-
-See `CONTENT_AUTHORING.md` for the admin workflow.
+See `CONTENT_AUTHORING.md` for the full admin workflow.
 
 ---
 

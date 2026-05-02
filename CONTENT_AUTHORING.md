@@ -29,9 +29,15 @@ Only GitHub accounts listed in `ADMIN_GITHUB_USERNAMES` on Vercel can access the
 
 Each save commits the change directly to the GitHub repo. Vercel detects the push and rebuilds automatically. The live site reflects the change in approximately 90 seconds.
 
-### What is coming in later phases
+All six content types are fully editable via the admin UI:
 
-Collection and playlist editors. Until those phases are built, editing those items still requires the manual JSON workflow described below.
+- **People** — full CRUD: create, edit all fields, pick parent/child relationships from a person picker, delete with cascade cleanup
+- **Photographs** — upload JPEG/PNG/WebP (max 4MB), edit metadata, delete (removes from Blob storage)
+- **Videos** — add YouTube/Vimeo links, edit all metadata, delete
+- **Audio recordings** — upload MP3/M4A/AAC/WAV (max 4MB), edit metadata, delete
+- **Collections** — create and edit collection metadata, pick cover photo from dropdown, delete (cascade strips collectionId from photos)
+- **Playlists** — create and edit playlist metadata, pick cover video from dropdown, delete (cascade strips playlistId from videos)
+- **Chronicles** — create and edit written stories with markdown body, people tags, and cover photo
 
 ---
 
@@ -53,6 +59,20 @@ Collection and playlist editors. Until those phases are built, editing those ite
 ---
 
 ## Adding a person
+
+There are two ways to add a person:
+
+1. **Via the admin UI** — sign in with your allowlisted GitHub account, go to People, and click **"+ New person"**. Fill in the form, pick parents and children from the picker. The admin sets bidirectional relationships automatically.
+2. **Manually edit the JSON** — open `content/family.json` and append a new object (described below).
+
+### Admin UI notes
+
+When you create a person via the admin UI:
+- Parent and child relationships are set bidirectionally automatically. If you select William as a parent, the new person is also added to William's `childrenIds` without any extra steps.
+- The person's ID is generated from their name (e.g. "Emily Walsh" → `emily-walsh`). You can override it before saving. **The ID cannot be changed after creation.**
+- Deleting a person removes all references to them from photos, videos, audio, chronicles, and other family members' relationship arrays. The deletion cannot be undone.
+
+### Manual JSON method
 
 Open `content/family.json` and append a new object to the array. Here is a complete example:
 
