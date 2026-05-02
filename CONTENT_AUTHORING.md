@@ -13,6 +13,7 @@ All content lives in JSON files under `/content/`. Edit these files, drop image 
 | A new collection           | `content/collections.json`                       | (no new asset — uses cover photo) |
 | A new video                | `content/videos.json`                            | (uses YouTube/Vimeo ID — no file upload) |
 | A new playlist             | `content/playlists.json`                         | (no new asset — uses cover video) |
+| A new audio recording      | `content/audio.json`                             | `public/audio/{filename}` |
 | Replace a photo file       | (no JSON change)                                 | Overwrite the file in `public/photos/` |
 
 ---
@@ -305,6 +306,123 @@ A video can belong to multiple playlists at once.
 | `subtitle`    | No       | Italic serif subtitle shown on the playlist page. |
 | `coverVideoId` | Yes     | Video ID used for the playlist thumbnail. Must exist in `videos.json`. |
 | `description` | No       | 1–2 sentence description shown on the playlist page. |
+
+---
+
+## Adding an audio recording
+
+Audio recordings are stored as files in the repository, unlike videos which use YouTube or Vimeo. Voicemails, oral history interviews, songs, ambient recordings — anything audio can be added here.
+
+Audio surfaces on each person's detail page under a "Recordings of [Name]" section. The section only appears when the person has at least one audio entry tagged with their ID.
+
+### Step 1 — Prepare the audio file
+
+Place the audio file in `/public/audio/`. Use a meaningful, lowercase, kebab-case filename:
+
+```
+public/audio/william-voicemail-2003.mp3
+```
+
+Guidelines:
+- Start with a descriptive slug: `margaret-oral-history`, `lake-house-singalong`
+- Add a year: `-2003`, `-1985`
+- Lowercase only. Vercel (Linux) is case-sensitive.
+- **Preferred format: MP3 or M4A** — broadest browser support across desktop and mobile.
+- FLAC and WAV are supported by modern browsers but are much larger. Avoid unless archival fidelity is essential.
+- **Voice recordings:** aim for 64–128 kbps mono MP3 — excellent quality at small file size.
+- **Music / group singing:** 128–192 kbps stereo MP3 is sufficient.
+
+### Step 2 — Add the JSON entry
+
+Open `content/audio.json` and append a new object to the array:
+
+```json
+{
+  "id": "william-voicemail-2003",
+  "filename": "william-voicemail-2003.mp3",
+  "title": "William's voicemail, March 2003",
+  "description": "Asking after the family on a Sunday afternoon.",
+  "date": "2003-03-16",
+  "dateLabel": "March 2003",
+  "duration": "0:47",
+  "peopleIds": ["william-curry"],
+  "collectionIds": [],
+  "source": "Margaret's saved voicemails",
+  "confidence": "high"
+}
+```
+
+### Step 3 — Tag people
+
+For each person in `peopleIds`, that recording will appear on their detail page. The person IDs must already exist in `content/family.json`. Unlike photos, audio does **not** require a back-reference in `family.json` — the validator checks only that the person IDs exist.
+
+### Step 4 — Optionally tag a collection
+
+To associate the recording with an existing collection (useful for mixed-media collections like "Lake house summers"), add the collection ID:
+
+```json
+"collectionIds": ["lake-house-summers"]
+```
+
+### Audio field reference
+
+| Field          | Required | Description |
+| -------------- | -------- | ----------- |
+| `id`           | Yes      | Kebab-case slug. Unique across all audio entries. Never rename after publishing. |
+| `filename`     | Yes      | Exact filename in `/public/audio/`. Case-sensitive. |
+| `title`        | Yes      | Display title. Sentence case. Shown in the player. |
+| `description`  | No       | 1–3 sentences of context. Shown in italic below the title. |
+| `date`         | No       | ISO date: `"2003-03-16"`. Used for sorting (future). |
+| `dateLabel`    | No       | Display string: `"March 2003"`. Shown in the player metadata line. |
+| `duration`     | No       | Duration string: `"0:47"` or `"12:34"`. Shown alongside the date label. |
+| `peopleIds`    | No       | Person IDs of everyone audible in the recording. Must exist in `family.json`. |
+| `collectionIds` | No      | Collection IDs this recording belongs to. Empty array is valid. |
+| `source`       | No       | Where the recording came from: `"Margaret's saved voicemails"`. |
+| `identifiedBy` | No       | Who identified the content: `"Emily Walsh, August 2024"`. |
+| `circa`        | No       | `true` when the date is approximate. Displays as "Circa Summer 1985". |
+| `confidence`   | No       | `"high"`, `"medium"`, or `"low"`. Confidence in date and identification. |
+| `lastVerified` | No       | ISO date when this entry was last reviewed: `"2024-08-04"`. |
+| `recordedDate` | No       | ISO date when the recording was originally made (if different from `date`). |
+
+### Worked example — a voicemail
+
+A voicemail from William was discovered on Margaret's old phone. Margaret exported it as an MP3 in June 2024.
+
+```json
+{
+  "id": "william-voicemail-2003",
+  "filename": "william-voicemail-2003.mp3",
+  "title": "William's voicemail, March 2003",
+  "description": "Asking after the family on a Sunday afternoon. His voice is very clear.",
+  "date": "2003-03-16",
+  "dateLabel": "March 2003",
+  "duration": "0:47",
+  "peopleIds": ["william-curry"],
+  "collectionIds": [],
+  "source": "Margaret's saved voicemails, exported June 2024",
+  "identifiedBy": "Margaret Curry, June 2024",
+  "confidence": "high",
+  "lastVerified": "2024-06-15"
+}
+```
+
+Place the file at `public/audio/william-voicemail-2003.mp3` and push. The recording will immediately appear on William's person page under "Recordings of William Curry".
+
+### Replacing placeholder files
+
+The site ships with 1-byte placeholder MP3 files. These will not play. When you have the real audio files, replace them:
+
+```bash
+# Your exported voicemail is already named correctly
+cp ~/Desktop/william-voicemail-2003.mp3 public/audio/william-voicemail-2003.mp3
+```
+
+Push the replacement file. No JSON changes needed — the `filename` field already points to the correct path.
+
+### What works today / what's planned
+
+- **Today:** Audio recordings appear on person detail pages as stacked player cards with play/pause, title, and metadata.
+- **Future:** Collection pages will optionally list audio entries alongside photos. A lightbox-style audio overlay is planned for a later phase.
 
 ---
 
