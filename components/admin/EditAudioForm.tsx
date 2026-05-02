@@ -427,7 +427,7 @@ export default function EditAudioForm({
           disabled={isDisabled}
         />
         <span className={helpClass}>
-          Format: M:SS or MM:SS, e.g. "0:47" or "12:34".
+          Format: M:SS or MM:SS, e.g. &ldquo;0:47&rdquo; or &ldquo;12:34&rdquo;.
           {mode === 'create' && ' Auto-filled from file metadata when possible.'}
         </span>
       </label>
