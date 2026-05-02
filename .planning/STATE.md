@@ -1,11 +1,11 @@
 ---
 gsd_state_version: 1.0
-milestone: v2.2
-milestone_name: v2.2 — Chronicles content type (COMPLETE); v3 Phase 20 also complete
+milestone: v3
+milestone_name: v3 — Admin authoring UI; Phase 21 Chronicle CRUD complete
 status: in_progress
-stopped_at: v2.2 Phase 19 complete — Chronicles content type shipped; react-markdown rendering; 31 static pages; npm run build exits 0
+stopped_at: v3 Phase 21 complete — Chronicles CRUD admin UI; list + create + edit + delete; 3 API handlers; npm run build exits 0 (34 pages)
 last_updated: "2026-04-29T00:00:00Z"
-last_activity: 2026-04-29 — Phase 19 complete; Chronicles schema + routes + components + nav integration + archive export; npm run build exits 0 (31 pages)
+last_activity: 2026-04-29 — Phase 21 complete; /admin/chronicles list + new + [id] pages; EditChronicleForm; /api/admin/chronicles POST; /api/admin/chronicles/[id] POST+DELETE; npm run build exits 0 (34 pages)
 progress:
   total_phases: 21
   completed_phases: 21
@@ -25,13 +25,13 @@ See: .planning/PROJECT.md (updated 2026-04-29)
 
 ## Current Position
 
-Phase: 19 of 21 (v2.2 Chronicles) — complete; Phase 20 (v3 Admin Foundation) also complete
-Plan: 1/1 in Phase 19 (19-chronicles done), 1/1 in Phase 20 (20-v3 done)
-Status: in_progress (v3.0 milestone open; v2.2 COMPLETE; Phase 20 done, Phases 21+ unplanned)
-Current focus: v2.2 milestone complete — Chronicles shipped; user may wish to validate /chronicles route in browser
-Last activity: 2026-04-29 — Phase 19 complete; Chronicles schema + react-markdown + 5 routes + cross-cutting integrations; npm run build exits 0 (31 pages)
+Phase: 21 of 21 (v3 Chronicle CRUD) — complete
+Plan: 1/1 in Phase 21 (21-v3-chronicle-crud done)
+Status: in_progress (v3 milestone; Phase 21 done; Phase 22+ binary upload unplanned)
+Current focus: v3 Phase 21 complete — Chronicles CRUD in admin UI; user may wish to validate /admin/chronicles in production
+Last activity: 2026-04-29 — Phase 21 complete; /admin/chronicles list + create + edit + delete; EditChronicleForm; 3 API handlers; npm run build exits 0 (34 pages)
 
-Progress: [██████████████████████] 100% (21/21 phases complete — v2.2 Phase 19 + v3 Phase 20 done; v3 Phases 21+ pending planning)
+Progress: [██████████████████████] 100% (21/21 phases complete — v2.2 Phase 19 + v3 Phase 20 + v3 Phase 21 done)
 
 ## Phase 1 outcome
 
@@ -175,5 +175,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-04-29T00:00:00Z
-Stopped at: v2.2 Phase 19 complete — Chronicles content type; /chronicles + /chronicles/[id]; NavTabs 5th tab; person page + home page integrations; archive export; npm run build exits 0 (31 pages)
+Stopped at: v3 Phase 21 complete — Chronicle CRUD admin UI; /admin/chronicles list + new + [id]; EditChronicleForm; /api/admin/chronicles POST; /api/admin/chronicles/[id] POST+DELETE; npm run build exits 0 (34 pages)
 Resume file: None

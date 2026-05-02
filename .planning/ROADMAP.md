@@ -60,7 +60,7 @@ Chronicles content type shipped. See `.planning/phases/19-chronicles/19-SUMMARY.
 Admin authoring UI. GitHub OAuth + allowlist + octokit-based JSON commits back to the repo. Hybrid storage: GitHub for JSON edits (Phases 20-21+), Vercel Blob for binary uploads (later phases).
 
 - [x] **Phase 20: v3 Foundation** — GitHub OAuth alongside existing family Credentials provider, admin allowlist via `ADMIN_GITHUB_USERNAMES`, `/admin` route shell with auth-gated layout, lib/admin.ts + lib/github.ts, `/admin/people` list + `/admin/people/[id]` bio edit form, `/api/admin/people/[id]/bio` POST handler commits to GitHub via octokit. Architectural proof: GitHub login → admin edits bio → commit to repo → Vercel rebuild → live in ~90s.
-- [ ] **Phase 21+ (unplanned):** Full people CRUD beyond bio (dates, birthplace, relationship labels), photograph upload via Vercel Blob, video/audio CRUD, collection/playlist editor, chronicle editor. Will be scoped after Phase 20 is validated in production.
+- [x] **Phase 21: Chronicle CRUD** — `/admin/chronicles` list page (date-sorted, edit links, + New button), `/admin/chronicles/new` create page, `/admin/chronicles/[id]` edit page, single `EditChronicleForm` Client Component (mode-switched create/update), `/api/admin/chronicles` POST (create), `/api/admin/chronicles/[id]` POST (update) + DELETE (delete). Full Zod validation + cross-ref checks (peopleIds→family.json, collectionIds→collections.json, coverPhotoId→photos.json). Audio upload deferred to Phase 22. 34 static pages; npm run build exits 0.
 
 ## Phase Details
 
