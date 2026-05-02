@@ -72,7 +72,7 @@ export default function VideoLightbox({ videos, currentIndex, onClose, onPrev, o
         onClick={onClose}
         role="dialog"
         aria-modal="true"
-        aria-label={`Video: ${video.title}`}
+        aria-labelledby="video-lightbox-title"
       >
         {/* Close button — top-right */}
         <button
@@ -118,9 +118,10 @@ export default function VideoLightbox({ videos, currentIndex, onClose, onPrev, o
             <VideoPlayer video={video} />
           </div>
 
-          {/* Video meta: title + dateLabel + duration */}
+          {/* Video meta: title + dateLabel + duration
+              id="video-lightbox-title" is referenced by aria-labelledby on the dialog element */}
           <div className="text-center px-4">
-            <p className="text-white text-base font-serif">{video.title}</p>
+            <p id="video-lightbox-title" className="text-white text-base font-serif">{video.title}</p>
             {(video.dateLabel || video.duration) && (
               <p className="text-stone uppercase tracking-[0.22em] text-xs mt-1.5">
                 {[video.dateLabel, video.duration].filter(Boolean).join(' · ')}

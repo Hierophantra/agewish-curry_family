@@ -73,7 +73,7 @@ export default function Lightbox({ photos, currentIndex, onClose, onPrev, onNext
         onClick={onClose}
         role="dialog"
         aria-modal="true"
-        aria-label={`Photo: ${photo.caption ?? photo.id}`}
+        aria-labelledby="lightbox-caption"
       >
         {/* Close button — top-right, D-14 */}
         <button
@@ -124,9 +124,10 @@ export default function Lightbox({ photos, currentIndex, onClose, onPrev, onNext
             />
           </div>
 
-          {/* D-12: Caption + dateLabel below image */}
+          {/* D-12: Caption + dateLabel below image
+              id="lightbox-caption" is referenced by aria-labelledby on the dialog element */}
           {(photo.caption || displayDate) && (
-            <div className="text-center px-4">
+            <div id="lightbox-caption" className="text-center px-4">
               {photo.caption && (
                 <p className="text-white text-sm">{photo.caption}</p>
               )}

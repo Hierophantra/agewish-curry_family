@@ -73,8 +73,15 @@ export default function PersonPanel({ person, photos, people, onClose }: PersonP
     //      Does NOT shrink the tree container — tree gets its full width regardless.
     //      z-40: above tree nodes (z-20 gradient, z-10 nodes) but below TopNav (z-50).
     //      Shadow on left edge creates visual separation from tree without a backdrop.
+    // ARIA: role="dialog" aria-modal="true" — panel traps focus and overlays the tree.
+    // aria-labelledby points at the h2 (person name) so screen readers announce
+    // "William Curry dialog" when the panel opens.
+    // D-A11Y: aria-modal=true because Tab IS trapped within the panel (useFocusTrap).
     <motion.aside
       ref={trapRef}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby={`person-panel-name-${person.id}`}
       className="fixed bottom-0 inset-x-0 max-h-[80vh] rounded-t-xl md:top-0 md:right-0 md:bottom-auto md:inset-x-auto md:h-screen md:w-[400px] md:rounded-none bg-ivory border-t hairline md:border-t-0 md:border-l z-40 flex flex-col overflow-y-auto"
       style={{ boxShadow: '-8px 0 24px -12px rgba(0,0,0,0.15)' }}
       initial={reduce ? false : { x: '100%', opacity: 0 }}
@@ -103,8 +110,10 @@ export default function PersonPanel({ person, photos, people, onClose }: PersonP
         </button>
       </div>
 
-      {/* panel-name: serif 30px, navy, weight 400 */}
+      {/* panel-name: serif 30px, navy, weight 400
+          id referenced by aria-labelledby on the dialog element above */}
       <h2
+        id={`person-panel-name-${person.id}`}
         className="font-serif text-navy px-[22px] mt-[22px]"
         style={{ fontSize: '30px', fontWeight: 400, lineHeight: 1.1 }}
       >

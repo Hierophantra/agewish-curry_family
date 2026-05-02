@@ -54,8 +54,14 @@ export default function PhotoCarousel({ photos }: PhotoCarouselProps) {
     <div>
       {/* 4:5 aspect container — prototype .panel-img-wrap { aspect-ratio: 4/5 }
           ivory bg, 0.5px border, rounded-sm (border-radius: 6px in prototype)
-          overflow-hidden clips all stacked images to container boundary */}
-      <div className="relative aspect-[4/5] overflow-hidden bg-ivory border hairline rounded-sm">
+          overflow-hidden clips all stacked images to container boundary
+          aria-live="polite": screen reader announces the active photo caption when it changes */}
+      <div
+        className="relative aspect-[4/5] overflow-hidden bg-ivory border hairline rounded-sm"
+        aria-live="polite"
+        aria-atomic="true"
+        aria-label={photos[activeIndex]?.caption ?? 'Family photograph'}
+      >
         {photos.map((photo, i) => (
           /* Each image is absolute/inset-0; opacity transitions handle crossfade.
              Crossfade: 1.2s ease-in-out per prototype .panel-img { transition: opacity 1.2s ease-in-out }
