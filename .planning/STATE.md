@@ -1,16 +1,16 @@
 ---
 gsd_state_version: 1.0
-milestone: v2.1
-milestone_name: v2.1 — User Punch List + A+ Peer Review
-status: complete
-stopped_at: v2.1 MILESTONE COMPLETE — Phase 18 done; archive export + /slideshow ambient mode; npm run build exits 0 (24 pages)
+milestone: v3.0
+milestone_name: v3 — Admin authoring UI
+status: in_progress
+stopped_at: v3 Phase 20 complete — GitHub OAuth + admin allowlist + /admin shell + bio edit CRUD; npm run build exits 0 (27 pages); pending user verification in production
 last_updated: "2026-04-29T00:00:00Z"
-last_activity: 2026-04-29 — Phase 18 complete; manifest.zip archive export + /slideshow ambient mode with shuffle, crossfade, keyboard nav; npm run build exits 0 (24 pages)
+last_activity: 2026-04-29 — Phase 20 complete; GitHub OAuth + /admin route group + octokit bio edit CRUD + middleware exclusion; npm run build exits 0 (27 pages)
 progress:
-  total_phases: 18
-  completed_phases: 18
-  total_plans: 26
-  completed_plans: 26
+  total_phases: 20
+  completed_phases: 20
+  total_plans: 27
+  completed_plans: 27
   percent: 100
 ---
 
@@ -21,17 +21,17 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-29)
 
 **Core value:** Family members can securely access and explore their shared family history — photos, videos, and an interactive family tree — through a private, beautifully designed archive.
-**Current focus:** v2.1 MILESTONE COMPLETE — all 18 phases complete
+**Current focus:** v3 Phase 1 (Phase 20) complete — pending user verification in production; Phases 21+ planned after validation
 
 ## Current Position
 
-Phase: 18 of 18 (v2.1 Archive Export + Slideshow) — complete
-Plan: 2 of 2 in current phase (18-01 + 18-02 done)
-Status: complete (v2.1 milestone closed)
-Current focus: v2.1 complete — v2.2 planning available when ready
-Last activity: 2026-04-29 — Phase 18 complete; manifest.zip archive export + /slideshow ambient mode; npm run build exits 0 (24 pages)
+Phase: 20 of 20 (v3 Admin Foundation) — complete
+Plan: 1 of 1 in Phase 20 (20-01 done)
+Status: in_progress (v3.0 milestone open; Phase 20 done, Phases 21+ unplanned)
+Current focus: v3 Phase 20 complete — user to verify GitHub login → bio edit → Vercel rebuild flow in production
+Last activity: 2026-04-29 — Phase 20 complete; GitHub OAuth + /admin + octokit bio edit CRUD; npm run build exits 0 (27 pages)
 
-Progress: [██████████████████████] 100% (18/18 phases complete — v2.1 MILESTONE COMPLETE)
+Progress: [██████████████████████] 100% (20/20 phases complete — v3 Phase 20 done; Phases 21+ pending planning)
 
 ## Phase 1 outcome
 
@@ -158,14 +158,22 @@ None yet.
 
 ## Deferred Items
 
+- Phase 20: GitHub OAuth added to auth.config.ts (edge-safe) — GitHub provider uses fetch, safe for edge runtime
+- Phase 20: jwt + session callbacks in auth.config.ts capture githubLogin + githubAccessToken from GitHub OAuth flow
+- Phase 20: /admin excluded from middleware matcher — admin layout enforces its own GitHub OAuth + allowlist gate
+- Phase 20: Admin allowlist (ADMIN_GITHUB_USERNAMES) is server-side only — never reaches the client
+- Phase 20: User-token octokit commits — commits attributed to admin's GitHub account, not a bot PAT
+- Phase 20: SHA-first write — always call getFileContent() before commitFile() to get current SHA (GitHub API requires it)
+- Phase 20: Bio-only in Phase 1 — architectural proof; full CRUD expands in Phases 21+
+
 | Category | Item | Status | Deferred At |
 |----------|------|--------|-------------|
 | Typography | Cormorant Garamond / EB Garamond webfont via next/font | v2 POLISH-01 | Init |
 | Search | Search across photos, videos, people | v2 SEARCH-01/02/03 | Init |
-| Admin | Upload UI for photos, videos, persons | v2 ADMIN-01/02/03 | Init |
+| Admin | Full people CRUD, photo/video/audio upload, collection/playlist editor | v3 Phases 21+ | Phase 20 |
 
 ## Session Continuity
 
 Last session: 2026-04-29T00:00:00Z
-Stopped at: v2.1 MILESTONE COMPLETE — Phase 18 (archive export + /slideshow ambient mode); npm run build exits 0 (24 pages); all 18 phases done
+Stopped at: v3 Phase 20 complete — GitHub OAuth + /admin shell + bio edit CRUD; npm run build exits 0 (27 pages); push to GitHub + Vercel to verify production flow
 Resume file: None

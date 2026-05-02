@@ -10,6 +10,8 @@
 
 **v2.2 milestone (Phase 19) — PLANNED, NOT STARTED.** Chronicles content type — written family stories with optional audio narration (founding moments, watershed events, personal stories like a relative's motorcycle accident). See `.planning/V2.2-FEEDBACK.md` and `.planning/phases/19-chronicles/19-CONTEXT.md`.
 
+**v3 milestone (Phases 20+) — IN PROGRESS.** Admin authoring UI — GitHub OAuth + allowlist + /admin route group + octokit-based content commits to GitHub. Each admin save triggers a Vercel rebuild; live site updates in ~90 seconds. Phase 20 (foundation) is complete. Phases 21+ (full CRUD surface) will be planned after Phase 20 is validated in production.
+
 ## Phases
 
 **Phase Numbering:**
@@ -52,6 +54,13 @@ User punch list + cross-AI A+ recommendations. See `.planning/V2.1-FEEDBACK.md` 
 Chronicles content type. See `.planning/V2.2-FEEDBACK.md` and `.planning/phases/19-chronicles/19-CONTEXT.md` for full scope; markdown body decision locked.
 
 - [ ] **Phase 19: Chronicles** - New content type for written family stories with optional audio narration. Adds /chronicles landing + /chronicles/[id] detail, ChronicleCard/Grid/Body components, react-markdown for body rendering, AudioPlayer reuse for narration, person-page integration ("CHRONICLES FEATURING {NAME}"), home page Recent chronicles section, archive export extension, CONTENT_AUTHORING.md "Writing a chronicle" guide. 5th nav tab.
+
+### v3 (in progress)
+
+Admin authoring UI. GitHub OAuth + allowlist + octokit-based JSON commits back to the repo. Hybrid storage: GitHub for JSON edits (Phases 20-21+), Vercel Blob for binary uploads (later phases).
+
+- [x] **Phase 20: v3 Foundation** — GitHub OAuth alongside existing family Credentials provider, admin allowlist via `ADMIN_GITHUB_USERNAMES`, `/admin` route shell with auth-gated layout, lib/admin.ts + lib/github.ts, `/admin/people` list + `/admin/people/[id]` bio edit form, `/api/admin/people/[id]/bio` POST handler commits to GitHub via octokit. Architectural proof: GitHub login → admin edits bio → commit to repo → Vercel rebuild → live in ~90s.
+- [ ] **Phase 21+ (unplanned):** Full people CRUD beyond bio (dates, birthplace, relationship labels), photograph upload via Vercel Blob, video/audio CRUD, collection/playlist editor, chronicle editor. Will be scoped after Phase 20 is validated in production.
 
 ## Phase Details
 
@@ -172,3 +181,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 16. v2.1 Deep Linking + BlurHash | 2/2 | Complete | 2026-04-29 |
 | 17. v2.1 Audio Content Type | 1/1 | Complete | 2026-04-29 |
 | 18. v2.1 Archive Export + Slideshow | 2/2 | Complete | 2026-04-29 |
+| 20. v3 Foundation — GitHub OAuth + Admin UI + Bio Edit CRUD | 1/1 | Complete | 2026-04-29 |
