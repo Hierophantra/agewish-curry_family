@@ -137,15 +137,8 @@ export default function PersonPanel({ person, photos, people, onClose }: PersonP
         </div>
       )}
 
-      {/* panel-bio: italic serif 14px, hairline top border, 22px padding-top + margin-top */}
-      {person.bio && person.bio.trim().length > 0 && (
-        <p
-          className="font-serif italic text-muted px-[22px] border-t hairline"
-          style={{ fontSize: '14px', lineHeight: 1.75, marginTop: '22px', paddingTop: '22px' }}
-        >
-          {person.bio}
-        </p>
-      )}
+      {/* Bio intentionally removed — panel shows info + photos only.
+          Full bio appears on the person detail page at /person/[id]. */}
 
       {/* View full page link — eyebrow style, subtle gold on hover (Phase 6 / D-08) */}
       <div className="px-[22px] pb-[22px] mt-auto pt-4">
