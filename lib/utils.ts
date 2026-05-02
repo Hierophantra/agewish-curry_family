@@ -20,3 +20,15 @@ export function cn(...inputs: ClassValue[]) {
 export function getPhotoUrl(photo: { filename: string }): string {
   return photo.filename.startsWith('http') ? photo.filename : `/photos/${photo.filename}`
 }
+
+// ── Audio URL helper ──
+// Returns the URL to load an audio recording's file.
+// - If filename is a full URL (https://...), returns as-is (Vercel Blob upload)
+// - Otherwise treats filename as a relative name in /public/audio/ (legacy stubs)
+//
+// Components MUST use this helper instead of constructing /audio/${filename} directly,
+// so newly-uploaded Blob audio files render correctly alongside legacy stub files.
+// Safe to import in both Server Components and 'use client' components.
+export function getAudioUrl(audio: { filename: string }): string {
+  return audio.filename.startsWith('http') ? audio.filename : `/audio/${audio.filename}`
+}

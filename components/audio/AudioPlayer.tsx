@@ -6,6 +6,7 @@
 // No waveform visualisation, no scrubber bar — those are future enhancements.
 import { useRef, useState } from 'react'
 import type { Audio as AudioRecord } from '@/lib/types'
+import { getAudioUrl } from '@/lib/utils'
 
 interface AudioPlayerProps {
   audio: AudioRecord
@@ -58,7 +59,7 @@ export default function AudioPlayer({ audio }: AudioPlayerProps) {
       </div>
       <audio
         ref={audioRef}
-        src={`/audio/${audio.filename}`}
+        src={getAudioUrl(audio)}
         onPlay={() => setPlaying(true)}
         onPause={() => setPlaying(false)}
         onEnded={() => setPlaying(false)}
