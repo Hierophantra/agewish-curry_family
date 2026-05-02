@@ -43,6 +43,13 @@ export const PersonSchema = z.object({
 
   // Existing
   gender: z.enum(['male', 'female', 'other']).optional(),
+
+  // Provenance for biographical information
+  identifiedBy: z.string().optional(),    // who provided/confirmed the bio details
+  circa: z.boolean().optional(),          // true if dates are approximate
+  confidence: z.enum(['high', 'medium', 'low']).optional(),
+  lastVerified: z.string().optional(),    // ISO YYYY-MM-DD
+  notes: z.string().optional(),           // private archivist notes (not necessarily surfaced in UI)
 })
 
 // ── Photo schema ──
@@ -65,6 +72,15 @@ export const PhotoSchema = z.object({
   // Optional metadata
   location: z.string().optional(),
   notes: z.string().optional(),
+
+  // Provenance (archivist metadata — optional, surfaced where appropriate)
+  source: z.string().optional(),         // e.g., "Robert Curry's photo album", "Margaret's attic, scanned 2024"
+  identifiedBy: z.string().optional(),   // e.g., "Margaret Curry, March 2024"
+  circa: z.boolean().optional(),         // true if date is approximate
+  confidence: z.enum(['high', 'medium', 'low']).optional(),  // confidence in date/identification
+  lastVerified: z.string().optional(),   // ISO YYYY-MM-DD
+  scannedDate: z.string().optional(),    // ISO YYYY-MM-DD when the photo was digitized
+  originalFilename: z.string().optional(),  // original filename if different from filename (for traceability)
 })
 
 // ── Video schema ──
@@ -83,6 +99,15 @@ export const VideoSchema = z.object({
   dateLabel: z.string().optional(),      // e.g. "April 2000"
 
   duration: z.string().optional(),       // e.g. "12:34"
+
+  // Provenance (archivist metadata — optional)
+  // Note: `source_provenance` avoids a name clash with `source` (which means the video platform).
+  source_provenance: z.string().optional(),  // who provided the recording (e.g., "James Curry's home video archive")
+  identifiedBy: z.string().optional(),
+  circa: z.boolean().optional(),
+  confidence: z.enum(['high', 'medium', 'low']).optional(),
+  lastVerified: z.string().optional(),
+  recordedDate: z.string().optional(),  // ISO date when the video was originally recorded (vs uploaded)
 
   // Tags + featured flag
   peopleIds: z.array(z.string()).default([]),
