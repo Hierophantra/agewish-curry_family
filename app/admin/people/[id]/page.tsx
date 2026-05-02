@@ -1,9 +1,11 @@
 // app/admin/people/[id]/page.tsx
 // Admin edit page for a single person's bio.
-// Auth gate is handled by the parent app/admin/layout.tsx.
+// Auth gate is enforced by requireAdminOrRedirect() in the page (NOT the layout —
+// see app/admin/layout.tsx for the rationale).
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getPersonById } from '@/lib/content'
+import { requireAdminOrRedirect } from '@/lib/admin'
 import EditPersonBioForm from './EditPersonBioForm'
 
 export function generateMetadata({ params }: { params: { id: string } }) {
@@ -12,7 +14,8 @@ export function generateMetadata({ params }: { params: { id: string } }) {
   return { title: `Edit ${person.name} · Admin · The Curry Family` }
 }
 
-export default function AdminEditPersonPage({ params }: { params: { id: string } }) {
+export default async function AdminEditPersonPage({ params }: { params: { id: string } }) {
+  await requireAdminOrRedirect()
   const person = getPersonById(params.id)
   if (!person) notFound()
 

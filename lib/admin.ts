@@ -2,6 +2,7 @@
 // Server-only admin permission helpers.
 // NEVER import this file from client components — it calls auth() which requires Node.js runtime.
 import 'server-only'
+import { redirect } from 'next/navigation'
 import { auth } from '@/auth'
 
 /**
@@ -26,12 +27,27 @@ export async function getAdminUser(): Promise<string | null> {
 
 /**
  * Throws if the current user is not an admin.
- * For use in admin API route handlers and admin Server Components that should hard-fail.
+ * For use in admin API route handlers that should hard-fail.
  */
 export async function requireAdmin(): Promise<string> {
   const adminLogin = await getAdminUser()
   if (!adminLogin) {
     throw new Error('Forbidden: admin access required')
+  }
+  return adminLogin
+}
+
+/**
+ * Redirects to /admin/login if the current user is not an admin.
+ * For use at the top of admin Server Component pages that need protection.
+ *
+ * IMPORTANT: This belongs in PAGES, not in app/admin/layout.tsx — the layout wraps
+ * the login page itself, so a layout-level redirect would create an infinite loop.
+ */
+export async function requireAdminOrRedirect(): Promise<string> {
+  const adminLogin = await getAdminUser()
+  if (!adminLogin) {
+    redirect('/admin/login')
   }
   return adminLogin
 }

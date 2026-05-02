@@ -1,7 +1,11 @@
 // app/admin/page.tsx
 // Admin index — shows the available content sections.
 // Only "People" is live in Phase 1; all others are "coming soon" stubs.
+//
+// Auth check: requireAdminOrRedirect() at the top of this Server Component.
+// (Auth is enforced per-page, not in the layout — see app/admin/layout.tsx for why.)
 import Link from 'next/link'
+import { requireAdminOrRedirect } from '@/lib/admin'
 
 const sections = [
   { href: '/admin/people', label: 'People', desc: 'Edit family member bios, dates, and relationships', status: 'live' },
@@ -12,7 +16,8 @@ const sections = [
   { href: '#', label: 'Playlists', desc: 'Create and manage video playlists', status: 'soon' },
 ] as const
 
-export default function AdminIndex() {
+export default async function AdminIndex() {
+  await requireAdminOrRedirect()
   return (
     <div className="py-11 px-7 md:px-11 max-w-5xl mx-auto">
       <p className="eyebrow text-gold-deep mb-3">FAMILY ARCHIVE · ADMIN</p>
