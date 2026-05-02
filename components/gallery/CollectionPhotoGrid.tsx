@@ -3,9 +3,11 @@
 // D-23: Manages lightboxIndex (null = closed, number = open at index).
 // D-24: Each PhotoCard receives onClick that sets lightboxIndex, opening the lightbox.
 // D-25: Renders <Lightbox> conditionally; prev/next wrap around (∞ navigation, D-13/D-19).
+// Phase 16: URL state — ?photo=<id> persists lightbox across refresh and enables deep links.
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import PhotoCard from './PhotoCard'
 import Lightbox from '@/components/lightbox/Lightbox'
 import type { Photo } from '@/lib/types'
@@ -15,8 +17,31 @@ interface CollectionPhotoGridProps {
 }
 
 export default function CollectionPhotoGrid({ photos }: CollectionPhotoGridProps) {
-  // null = lightbox closed; number = lightbox open at that index
-  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
+  const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const urlPhotoId = searchParams.get('photo')
+
+  // Resolve URL param to an index. null = lightbox closed.
+  function indexFromId(id: string | null): number | null {
+    if (id === null) return null
+    const idx = photos.findIndex((p) => p.id === id)
+    return idx >= 0 ? idx : null
+  }
+
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(
+    () => indexFromId(urlPhotoId)
+  )
+
+  // Sync URL → local state for back/forward browser navigation.
+  // Guard: only update when the resolved index actually differs.
+  useEffect(() => {
+    const next = indexFromId(urlPhotoId)
+    if (next !== lightboxIndex) {
+      setLightboxIndex(next)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [urlPhotoId])
 
   if (photos.length === 0) {
     return (
@@ -28,6 +53,35 @@ export default function CollectionPhotoGrid({ photos }: CollectionPhotoGridProps
     )
   }
 
+  // openPhoto: push to history so back button closes the lightbox naturally.
+  function openPhoto(index: number) {
+    const photo = photos[index]
+    if (!photo) return
+    setLightboxIndex(index)
+    const params = new URLSearchParams(searchParams.toString())
+    params.set('photo', photo.id)
+    router.push(`${pathname}?${params.toString()}`, { scroll: false })
+  }
+
+  // closePhoto: replace so back button returns to the previous page, not just un-opens lightbox.
+  function closePhoto() {
+    setLightboxIndex(null)
+    const params = new URLSearchParams(searchParams.toString())
+    params.delete('photo')
+    const qs = params.toString()
+    router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false })
+  }
+
+  // navigatePhoto: replace so each prev/next doesn't pollute history — back button closes modal.
+  function navigatePhoto(index: number) {
+    const photo = photos[index]
+    if (!photo) return
+    setLightboxIndex(index)
+    const params = new URLSearchParams(searchParams.toString())
+    params.set('photo', photo.id)
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false })
+  }
+
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-7">
@@ -35,7 +89,7 @@ export default function CollectionPhotoGrid({ photos }: CollectionPhotoGridProps
           <PhotoCard
             key={photo.id}
             photo={photo}
-            onClick={() => setLightboxIndex(i)}
+            onClick={() => openPhoto(i)}
           />
         ))}
       </div>
@@ -45,9 +99,9 @@ export default function CollectionPhotoGrid({ photos }: CollectionPhotoGridProps
         <Lightbox
           photos={photos}
           currentIndex={lightboxIndex}
-          onClose={() => setLightboxIndex(null)}
-          onPrev={() => setLightboxIndex((i) => ((i ?? 0) - 1 + photos.length) % photos.length)}
-          onNext={() => setLightboxIndex((i) => ((i ?? 0) + 1) % photos.length)}
+          onClose={closePhoto}
+          onPrev={() => navigatePhoto((lightboxIndex - 1 + photos.length) % photos.length)}
+          onNext={() => navigatePhoto((lightboxIndex + 1) % photos.length)}
         />
       )}
     </>
