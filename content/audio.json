@@ -1,0 +1,41 @@
+[
+  {
+    "id": "william-voicemail-2003",
+    "filename": "william-voicemail-2003.mp3",
+    "title": "William's voicemail, March 2003",
+    "description": "Asking after the family on a Sunday afternoon.",
+    "date": "2003-03-16",
+    "dateLabel": "March 2003",
+    "duration": "0:47",
+    "peopleIds": ["william-curry"],
+    "collectionIds": [],
+    "source": "Margaret's saved voicemails",
+    "confidence": "high"
+  },
+  {
+    "id": "lake-house-singalong-1985",
+    "filename": "lake-house-singalong-1985.mp3",
+    "title": "Singing 'Sweet Caroline' at the lake house",
+    "description": "After dinner on a summer evening, three generations singing.",
+    "dateLabel": "Summer 1985",
+    "duration": "3:12",
+    "peopleIds": ["william-curry", "robert-curry", "margaret-curry", "james-curry"],
+    "collectionIds": ["lake-house-summers"],
+    "circa": true,
+    "confidence": "medium"
+  },
+  {
+    "id": "margaret-oral-history-2024",
+    "filename": "margaret-oral-history-2024.mp3",
+    "title": "Margaret on growing up in Dayton",
+    "description": "Recorded by Margaret's daughter Emily, recounting childhood years.",
+    "date": "2024-08-04",
+    "dateLabel": "August 2024",
+    "duration": "12:34",
+    "peopleIds": ["margaret-curry"],
+    "collectionIds": [],
+    "source": "Emily Walsh's interview series",
+    "identifiedBy": "Emily Walsh, August 2024",
+    "confidence": "high"
+  }
+]
