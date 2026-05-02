@@ -4,9 +4,10 @@
 // All 8 person pages are pre-rendered at build time (static site generation).
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { getPeople, getPersonById, getPhotosByPersonId, getVideosByPersonId } from '@/lib/content'
+import { getPeople, getPersonById, getPhotosByPersonId, getVideosByPersonId, getAudioByPersonId } from '@/lib/content'
 import CollectionPhotoGrid from '@/components/gallery/CollectionPhotoGrid'
 import PlaylistVideoGrid from '@/components/video/PlaylistVideoGrid'
+import AudioPlayer from '@/components/audio/AudioPlayer'
 import type { Person } from '@/lib/types'
 
 // Pre-render every person page at build time (per D-04).
@@ -33,6 +34,7 @@ export default async function PersonPage({ params }: PersonPageProps) {
 
   const photos = getPhotosByPersonId(person.id)
   const videos = getVideosByPersonId(person.id)
+  const audio = getAudioByPersonId(person.id)
   const allPeople = getPeople()
 
   // Format Born from birthDate ISO if present, else fall back to birthYear.
@@ -189,11 +191,21 @@ export default async function PersonPage({ params }: PersonPageProps) {
         </section>
       )}
 
-      {/* Combined empty state — only shown when BOTH photos AND videos are absent */}
-      {photos.length === 0 && videos.length === 0 && (
+      {/* Audio section — stacked AudioPlayer list */}
+      {audio.length > 0 && (
+        <section className="mb-14">
+          <h2 className="eyebrow text-gold-deep mb-6 text-xs">RECORDINGS OF {person.name.toUpperCase()}</h2>
+          <div className="flex flex-col gap-4 max-w-2xl">
+            {audio.map((a) => <AudioPlayer key={a.id} audio={a} />)}
+          </div>
+        </section>
+      )}
+
+      {/* Combined empty state — only shown when photos, videos, AND audio are all absent */}
+      {photos.length === 0 && videos.length === 0 && audio.length === 0 && (
         <section className="py-12 border-t hairline">
           <p className="font-serif italic text-muted text-base">
-            No photographs or films of this person have been added to the archive yet.
+            No photographs, films, or recordings of this person have been added to the archive yet.
           </p>
         </section>
       )}
