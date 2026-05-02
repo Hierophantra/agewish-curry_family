@@ -10,6 +10,11 @@ import Link from 'next/link'
 import { getCollectionById, getPhotosInCollection, getCollections } from '@/lib/content'
 import CollectionPhotoGrid from '@/components/gallery/CollectionPhotoGrid'
 
+// [collectionId] detail page — Server Component.
+// D-04: Fetches collection + filtered photos server-side; delegates interactivity to CollectionPhotoGrid.
+// D-08: "← Back to all collections" link above the header.
+// 18-02: "Play this collection as a slideshow →" link in header.
+
 interface Props {
   params: { collectionId: string }
 }
@@ -48,6 +53,12 @@ export default function CollectionDetailPage({ params }: Props) {
         <p className="eyebrow text-quiet mt-3 text-[10px]">
           {photos.length} {photos.length === 1 ? 'photograph' : 'photographs'}
         </p>
+        <Link
+          href={`/slideshow?collection=${params.collectionId}`}
+          className="eyebrow text-gold-deep hover:text-gold transition-colors text-[10px] mt-2 inline-block"
+        >
+          Play this collection as a slideshow →
+        </Link>
       </header>
 
       {/* D-06: Client wrapper that owns lightbox state */}

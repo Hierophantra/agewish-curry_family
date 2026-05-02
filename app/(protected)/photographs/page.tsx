@@ -2,6 +2,7 @@
 // Protected page — the FAMILY ARCHIVE collection landing page.
 // D-26/D-27: Replaced flat PhotoGrid with CollectionGrid — /photographs now shows collection covers.
 // Server Component: no 'use client' — CollectionGrid handles its own data fetching.
+import Link from 'next/link'
 import CollectionGrid from '@/components/gallery/CollectionGrid'
 
 export default function PhotographsPage() {
@@ -12,6 +13,12 @@ export default function PhotographsPage() {
         <p className="eyebrow text-gold-deep mb-3">FAMILY ARCHIVE</p>
         <h1 className="font-serif text-navy text-4xl mb-2">Photographs</h1>
         <p className="text-muted text-base">Collected memories, organized by theme.</p>
+        <Link
+          href="/slideshow"
+          className="eyebrow text-gold-deep hover:text-gold transition-colors text-[10px] mt-2 inline-block"
+        >
+          Play ambient slideshow →
+        </Link>
       </header>
 
       {/* Collection grid — replaces flat photo grid (Phase 8) */}
