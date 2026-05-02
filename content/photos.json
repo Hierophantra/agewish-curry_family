@@ -6,13 +6,18 @@
     "date": "1953-06-15",
     "dateLabel": "June 1953",
     "location": "Dayton, Ohio",
-    "peopleIds": ["william-curry"],
-    "collectionIds": ["wedding-days"],
+    "peopleIds": [
+      "william-curry"
+    ],
+    "collectionIds": [
+      "wedding-days"
+    ],
     "source": "Margaret Curry's family album",
     "identifiedBy": "Margaret Curry, June 2024",
     "confidence": "high",
     "lastVerified": "2024-06-15",
-    "scannedDate": "2024-06-15"
+    "scannedDate": "2024-06-15",
+    "blurDataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAEklEQVR4nGP4jxcwjEr/xxIsAPoeKuTOO2LEAAAAAElFTkSuQmCC"
   },
   {
     "id": "1974-christmas-01",
@@ -21,8 +26,14 @@
     "date": "1974-12-25",
     "dateLabel": "December 1974",
     "location": "Dayton, Ohio",
-    "peopleIds": ["william-curry", "margaret-curry"],
-    "collectionIds": ["christmas-mornings"]
+    "peopleIds": [
+      "william-curry",
+      "margaret-curry"
+    ],
+    "collectionIds": [
+      "christmas-mornings"
+    ],
+    "blurDataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAEklEQVR4nGP4jxcwjEr/xxIsAPoeKuTOO2LEAAAAAElFTkSuQmCC"
   },
   {
     "id": "1981-lake-house-01",
@@ -31,8 +42,14 @@
     "date": "1981-08-10",
     "dateLabel": "August 1981",
     "location": "Lake house, Ohio",
-    "peopleIds": ["william-curry", "robert-curry"],
-    "collectionIds": ["lake-house-summers"]
+    "peopleIds": [
+      "william-curry",
+      "robert-curry"
+    ],
+    "collectionIds": [
+      "lake-house-summers"
+    ],
+    "blurDataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAEklEQVR4nGP4jxcwjEr/xxIsAPoeKuTOO2LEAAAAAElFTkSuQmCC"
   },
   {
     "id": "1989-sunday-dinner-01",
@@ -41,8 +58,13 @@
     "date": "1989-04-16",
     "dateLabel": "April 1989",
     "location": "Dayton, Ohio",
-    "peopleIds": ["william-curry", "margaret-curry", "james-curry"],
-    "collectionIds": []
+    "peopleIds": [
+      "william-curry",
+      "margaret-curry",
+      "james-curry"
+    ],
+    "collectionIds": [],
+    "blurDataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAEklEQVR4nGP4jxcwjEr/xxIsAPoeKuTOO2LEAAAAAElFTkSuQmCC"
   },
   {
     "id": "1995-reunion-01",
@@ -51,8 +73,19 @@
     "date": "1995-07-04",
     "dateLabel": "July 1995",
     "location": "Lake house, Ohio",
-    "peopleIds": ["robert-curry", "margaret-curry", "james-curry", "sarah-curry", "daniel-curry", "emily-walsh", "thomas-walsh"],
-    "collectionIds": ["lake-house-summers"]
+    "peopleIds": [
+      "robert-curry",
+      "margaret-curry",
+      "james-curry",
+      "sarah-curry",
+      "daniel-curry",
+      "emily-walsh",
+      "thomas-walsh"
+    ],
+    "collectionIds": [
+      "lake-house-summers"
+    ],
+    "blurDataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAEklEQVR4nGP4jxcwjEr/xxIsAPoeKuTOO2LEAAAAAElFTkSuQmCC"
   },
   {
     "id": "2005-christmas-01",
@@ -61,7 +94,17 @@
     "date": "2005-12-25",
     "dateLabel": "December 2005",
     "location": "Dayton, Ohio",
-    "peopleIds": ["robert-curry", "margaret-curry", "sarah-curry", "daniel-curry", "emily-walsh", "thomas-walsh"],
-    "collectionIds": ["christmas-mornings"]
+    "peopleIds": [
+      "robert-curry",
+      "margaret-curry",
+      "sarah-curry",
+      "daniel-curry",
+      "emily-walsh",
+      "thomas-walsh"
+    ],
+    "collectionIds": [
+      "christmas-mornings"
+    ],
+    "blurDataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAEklEQVR4nGP4jxcwjEr/xxIsAPoeKuTOO2LEAAAAAElFTkSuQmCC"
   }
 ]
