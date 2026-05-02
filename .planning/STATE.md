@@ -1,16 +1,16 @@
 ---
 gsd_state_version: 1.0
 milestone: v3
-milestone_name: v3 — Admin authoring UI; Phase 25 Collections + Playlists CRUD complete
-status: in_progress
-stopped_at: v3 Phase 25 complete — Collections CRUD + Playlists CRUD (metadata-only, cover picker dropdowns, cascade-delete); EditCollectionForm + EditPlaylistForm; /admin/collections + /admin/playlists list/new/[id]; 4 API handlers; npm run build exits 0 (49 pages)
-last_updated: "2026-04-29T01:30:00Z"
-last_activity: 2026-04-29 — Phase 25 complete; EditCollectionForm + EditPlaylistForm; /admin/collections list + new + [id]; /admin/playlists list + new + [id]; /api/admin/collections POST+[id] POST+DELETE (cascade); /api/admin/playlists POST+[id] POST+DELETE (cascade); admin index Collections+Playlists marked live; npm run build exits 0 (49 pages)
+milestone_name: v3 — COMPLETE — Admin authoring UI covering all 7 content types
+status: complete
+stopped_at: v3 Phase 26 complete — Person CRUD extension (create + relationship pickers + cascade delete + bidirectional sync); V3-MILESTONE-COMPLETE.md written; npm run build exits 0 (51 pages); v3 milestone closed
+last_updated: "2026-04-29T02:15:00Z"
+last_activity: 2026-04-29 — Phase 26 complete; /admin/people/new; EditPersonForm extended (create mode, parentIds/childrenIds pickers, delete button); /api/admin/people POST (create + bidirectional sync); /api/admin/people/[id] POST extended (array fields + bidirectional sync) + DELETE (cascade all content files); CONTENT_AUTHORING + README updated; V3-MILESTONE-COMPLETE.md; npm run build exits 0 (51 pages)
 progress:
-  total_phases: 22
-  completed_phases: 22
-  total_plans: 29
-  completed_plans: 29
+  total_phases: 26
+  completed_phases: 26
+  total_plans: 30
+  completed_plans: 30
   percent: 100
 ---
 
@@ -21,17 +21,17 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-29)
 
 **Core value:** Family members can securely access and explore their shared family history — photos, videos, and an interactive family tree — through a private, beautifully designed archive.
-**Current focus:** v3 Phase 1 (Phase 20) complete — pending user verification in production; Phases 21+ planned after validation
+**Current focus:** v3 milestone COMPLETE — all 7 content types have full CRUD admin UI; 51 static pages; ready for Vercel deployment
 
 ## Current Position
 
-Phase: 25 of 25 (v3 Collections + Playlists CRUD) — complete
-Plan: 1/1 in Phase 25 (25-v3-collections-playlists done)
-Status: in_progress (v3 milestone; Phase 25 done; full admin CRUD surface complete for core content types)
-Current focus: v3 Phase 25 complete — Collections CRUD + Playlists CRUD; EditCollectionForm + EditPlaylistForm; cascade-delete strips back-references; 4 API handlers; admin index updated; npm run build exits 0 (49 pages)
-Last activity: 2026-04-29 — Phase 25 complete; EditCollectionForm + EditPlaylistForm; /admin/collections + /admin/playlists full CRUD; cascade-delete for both; npm run build exits 0 (49 pages)
+Phase: 26 of 26 (v3 Person CRUD Extension) — complete
+Plan: 1/1 in Phase 26 (26-v3-person-extended done)
+Status: complete (v3 milestone closed; all phases 20-26 done)
+Current focus: v3 milestone complete — admin UI covers people, photos, videos, audio, collections, playlists, chronicles. Full CRUD for all 7 content types. Bidirectional relationship sync. Cascade delete. npm run build exits 0 (51 pages).
+Last activity: 2026-04-29 — Phase 26 complete; V3-MILESTONE-COMPLETE.md written; v3 closed
 
-Progress: [███████████████████████] 100% (25/25 phases complete — v2.2 Phase 19 + v3 Phases 20-25 done)
+Progress: [███████████████████████] 100% (26/26 phases complete — v1 Phases 1-6 + v2 Phases 7-13 + v2.1 Phases 14-18 + v2.2 Phase 19 + v3 Phases 20-26)
 
 ## Phase 1 outcome
 
