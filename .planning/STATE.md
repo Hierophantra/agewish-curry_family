@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v2.1
 milestone_name: v2.1 — User Punch List + A+ Peer Review
 status: executing
-stopped_at: Phase 14 complete — PersonPanel restructure + bio removal + custom 404 + empty states polished
-last_updated: "2026-05-02T09:10:00Z"
-last_activity: 2026-05-02 — Phase 14 complete; 9 commits; npm run build exits 0 (22 pages)
+stopped_at: Phase 15 complete — provenance schema + accessibility hardening (focus traps, reduced-motion, keyboard tree nav, ARIA dialogs)
+last_updated: "2026-04-29T00:00:00Z"
+last_activity: 2026-04-29 — Phase 15 complete; 10 commits; npm run build exits 0 (22 pages)
 progress:
   total_phases: 18
-  completed_phases: 14
-  total_plans: 20
-  completed_plans: 20
-  percent: 78
+  completed_phases: 15
+  total_plans: 22
+  completed_plans: 22
+  percent: 83
 ---
 
 # Project State
@@ -25,13 +25,13 @@ See: .planning/PROJECT.md (updated 2026-04-29)
 
 ## Current Position
 
-Phase: 13 of 13 (Final v2 Polish + Real Content Prep) — complete
-Plan: 1 of 1 in current phase (13 done)
-Status: v2 milestone complete — ready for real content authoring
-Current focus: v2 complete — ready for real content
-Last activity: 2026-04-29 — Phase 13 complete; edge cases audited clean; CONTENT_AUTHORING.md written (444 lines); README updated with v2 status; npm run build exits 0 (22 pages)
+Phase: 15 of 18 (v2.1 Schema + Accessibility) — complete
+Plan: 2 of 2 in current phase (15-01 + 15-02 done)
+Status: executing — Phase 16 next (deep linking + BlurHash)
+Current focus: v2.1 in progress
+Last activity: 2026-04-29 — Phase 15 complete; provenance schema + full a11y hardening; npm run build exits 0 (22 pages)
 
-Progress: [█████████████] 100% (13/13 phases complete)
+Progress: [████████████████░░░░] 83% (15/18 phases complete)
 
 ## Phase 1 outcome
 
@@ -130,6 +130,11 @@ Recent decisions affecting current work:
 - 10: PhotoCarousel images wrapped in buttons with onClick; z-index ensures only active photo receives lightbox clicks
 - 10: FamilyTreeCanvas prefers person.relationLabel (v2: PATRIARCH/SON/GRANDDAUGHTER) over computed depth label (ROOT/CHILD/GRANDCHILD)
 - 10: getRelationLabel fallback uses childrenIds with childIds back-compat (v1/v2 dual-support in computed path)
+- 15: useFocusTrap restores focus in useEffect cleanup (unmount) — not on explicit close call — so focus is restored regardless of how the modal is dismissed
+- 15: PersonPanel aria-modal=true because Tab IS genuinely trapped via useFocusTrap — consistent with implementation
+- 15: Arrow-key tree nav uses node.top/node.left grid coordinates (not pixels) for clean spatial comparison
+- 15: PhotoCarousel CSS crossfade guarded via inline style transition value — no conversion to motion.div needed
+- 15: focusedNodeId is separate state from selectedId in FamilyTreeCanvas — keyboard focus and panel-open selection are independent
 
 ### Pending Todos
 
@@ -149,6 +154,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-02T09:10:00Z
-Stopped at: Completed Phase 14 (14-01 + 14-02) — PersonPanel fixed sheet, bio removed, custom 404, empty states polished, font/saturation/nav/focus chrome; npm run build exits 0 (22 pages)
+Last session: 2026-04-29T00:00:00Z
+Stopped at: Completed Phase 15 (15-01 + 15-02) — provenance schema, focus traps, prefers-reduced-motion, keyboard tree nav, ARIA dialogs; npm run build exits 0 (22 pages)
 Resume file: None

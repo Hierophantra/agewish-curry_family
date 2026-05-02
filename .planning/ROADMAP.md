@@ -40,7 +40,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 User punch list + cross-AI A+ recommendations. See `.planning/V2.1-FEEDBACK.md` for full scope.
 
 - [x] **Phase 14: v2.1 Visual + UX Polish** - Nav bar substance, active tab highlight, remove Sign out, restructure person panel (don't overtake tree), remove bio sections, fix thin square box artifacts, bigger fonts + more navy/gold, normalize relation labels (GRANDFATHER not PATRIARCH), custom 404 + polished empty states
-- [ ] **Phase 15: v2.1 Schema + Accessibility** - Provenance metadata fields (source/circa/confidence/identifiedBy/lastVerified) on photos+people; accessibility hardening (focus traps, return-focus, prefers-reduced-motion, keyboard tree nav, ARIA dialogs)
+- [x] **Phase 15: v2.1 Schema + Accessibility** - Provenance metadata fields (source/circa/confidence/identifiedBy/lastVerified) on photos+people; accessibility hardening (focus traps, return-focus, prefers-reduced-motion, keyboard tree nav, ARIA dialogs)
 - [ ] **Phase 16: v2.1 Deep Linking + BlurHash** - URL-synced state for tree person, lightbox photo, video lightbox; BlurHash placeholders generated at build time
 - [ ] **Phase 17: v2.1 Audio Content Type** - audio.json schema, AudioPlayer component, audio attached to people/photos/collections; "Listen to the story" surfaces
 - [ ] **Phase 18: v2.1 Archive Export + Slideshow** - Footer "Download archive" generates manifest.zip with JSON + static index.html; /slideshow ambient mode auto-advances photos full-screen
@@ -160,3 +160,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 12. Home Polish + Curated Previews | 1/1 | Complete | 2026-04-30 |
 | 13. Final v2 Polish + Real Content Prep | 1/1 | Complete | 2026-04-29 |
 | 14. v2.1 Visual + UX Polish | 2/2 | Complete | 2026-05-02 |
+| 15. v2.1 Schema + Accessibility | 2/2 | Complete | 2026-04-29 |
