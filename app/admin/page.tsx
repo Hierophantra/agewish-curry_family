@@ -12,7 +12,7 @@ const sections = [
   { href: '/admin/chronicles', label: 'Chronicles', desc: 'Write and edit family stories with optional audio narration', status: 'live' },
   { href: '/admin/photos', label: 'Photographs', desc: 'Upload photos, edit captions, manage collections', status: 'live' },
   { href: '/admin/videos', label: 'Videos', desc: 'Add YouTube/Vimeo links, edit titles, manage playlists', status: 'live' },
-  { href: '#', label: 'Audio', desc: 'Upload voice recordings, edit metadata', status: 'soon' },
+  { href: '/admin/audio', label: 'Audio', desc: 'Upload voice recordings, edit metadata', status: 'live' },
   { href: '#', label: 'Collections', desc: 'Create and manage photo collections', status: 'soon' },
   { href: '#', label: 'Playlists', desc: 'Create and manage video playlists', status: 'soon' },
 ] as const
