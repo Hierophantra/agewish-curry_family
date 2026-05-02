@@ -42,6 +42,10 @@ export function getPhotos(): Photo[] {
   return readJSON('photos.json', z.array(PhotoSchema))
 }
 
+export function getPhotoById(id: string): Photo | null {
+  return getPhotos().find((p) => p.id === id) ?? null
+}
+
 export function getVideos(): Video[] {
   return readJSON('videos.json', z.array(VideoSchema))
 }
