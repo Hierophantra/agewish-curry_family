@@ -36,11 +36,11 @@ export default function HomePage() {
       <Hero />
 
       {/* Family tree preview — bg-ivory (alternates with white hero above) */}
-      <section className="bg-ivory border-t hairline py-14 px-7 md:px-11">
+      <section className="bg-ivory border-t border-stone py-14 px-7 md:px-11">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-baseline justify-between mb-7">
             <div>
-              <p className="eyebrow text-quiet mb-2">FAMILY TREE</p>
+              <p className="eyebrow text-gold-deep mb-2">FAMILY TREE</p>
               <h2 className="font-serif text-navy text-3xl">The family</h2>
             </div>
             <Link
@@ -78,11 +78,11 @@ export default function HomePage() {
       </section>
 
       {/* Photographs preview — bg-white */}
-      <section className="bg-white border-t hairline py-14 px-7 md:px-11">
+      <section className="bg-white border-t border-stone py-14 px-7 md:px-11">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-baseline justify-between mb-7">
             <div>
-              <p className="eyebrow text-quiet mb-2">PHOTOGRAPHS</p>
+              <p className="eyebrow text-gold-deep mb-2">PHOTOGRAPHS</p>
               <h2 className="font-serif text-navy text-3xl">Recent photographs</h2>
             </div>
             <Link
@@ -106,11 +106,11 @@ export default function HomePage() {
 
       {/* Videos preview — bg-ivory (alternates back to ivory) */}
       {featured.length > 0 && (
-        <section className="bg-ivory border-t hairline py-14 px-7 md:px-11">
+        <section className="bg-ivory border-t border-stone py-14 px-7 md:px-11">
           <div className="max-w-6xl mx-auto">
             <div className="flex items-baseline justify-between mb-7">
               <div>
-                <p className="eyebrow text-quiet mb-2">VIDEOS</p>
+                <p className="eyebrow text-gold-deep mb-2">VIDEOS</p>
                 <h2 className="font-serif text-navy text-3xl">Featured films</h2>
               </div>
               <Link

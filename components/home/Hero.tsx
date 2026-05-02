@@ -27,9 +27,9 @@ export default function Hero() {
       initial="hidden"
       animate="visible"
     >
-      {/* Star motif — hero position, 56px (PNG includes navy circle border + star) */}
+      {/* Star motif — hero position, 64px (PNG includes navy circle border + star) */}
       <motion.div variants={itemVariants} className="mb-6">
-        <StarMark size={56} />
+        <StarMark size={64} />
       </motion.div>
 
       {/* Primary heading — serif, sentence case, navy */}

@@ -14,7 +14,7 @@ export default function VideosPage() {
     <main className="py-11 px-7 md:px-11 lg:px-15">
       {/* Page header */}
       <header className="mb-9">
-        <p className="eyebrow text-quiet mb-3">FAMILY ARCHIVE</p>
+        <p className="eyebrow text-gold-deep mb-3">FAMILY ARCHIVE</p>
         <h1 className="font-serif text-navy text-4xl mb-2">Videos</h1>
         <p className="text-muted text-base">Home movies and recordings, organized by playlist.</p>
       </header>
@@ -33,7 +33,7 @@ export default function VideosPage() {
 
       {/* Playlist grid — all playlists as cover cards */}
       <section>
-        <h2 className="eyebrow text-quiet mb-5 text-xs">ALL PLAYLISTS</h2>
+        <h2 className="eyebrow text-gold-deep mb-5 text-xs">ALL PLAYLISTS</h2>
         <PlaylistGrid />
       </section>
     </main>

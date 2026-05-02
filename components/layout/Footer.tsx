@@ -8,7 +8,7 @@ export default function Footer() {
   return (
     <footer className="border-t hairline py-11 px-7">
       <div className="flex flex-col items-center gap-3 text-center">
-        <StarMark size={28} />
+        <StarMark size={32} />
         <p className="font-serif italic text-navy text-sm">Held in trust for those who come after.</p>
         <p className="eyebrow text-quiet text-xs">A private archive · AgeWish</p>
       </div>
