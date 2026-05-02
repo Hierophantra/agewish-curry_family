@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@next/third-parties": "^16.2.4",
+    "@octokit/rest": "^22.0.1",
     "@tailwindcss/postcss": "4.2.4",
     "bcryptjs": "^3.0.3",
     "clsx": "^2.1.1",
