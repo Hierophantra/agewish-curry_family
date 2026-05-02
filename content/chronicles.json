@@ -1,0 +1,51 @@
+[
+  {
+    "id": "starting-the-martial-arts-school",
+    "title": "Starting the Curry Martial Arts School",
+    "subtitle": "How a basement studio became a 30-year institution",
+    "body": "In the summer of 1979, Robert Curry cleared out the basement of the house on Garfield Avenue and nailed a wooden plank to the wall to use as a barre. He had been studying karate for six years under Sensei Paul Okafor at the YMCA on Fifth Street, and he had come to believe, quietly and with certainty, that he was ready to teach.\n\nHis father William helped him lay the foam mats. It took them most of a Saturday. William did not ask many questions about the venture -- he was not a man who interrogated plans that were already in motion -- but when they finished and stood back to look at the room, he said, *\"That's a good floor.\"* It was the highest compliment in his vocabulary.\n\nThe school opened with four students: two neighborhood kids, a coworker of Robert's from the plant, and a twelve-year-old girl named Denise who would go on to compete at the state level in 1983. Robert charged three dollars a session and kept a spiral notebook with each student's progress written in pencil.\n\nBy 1985, the school had outgrown the basement and moved into a rented space above the hardware store on Main. By 1992, it had its own building. Robert ran the school until 2009, when he handed it to his senior instructor. The spiral notebook, filled and replaced a dozen times over, still sits on a shelf in his study.\n\nHe has never talked about it much. When family asks what it was like to start something from nothing, he says he just needed somewhere to put the mats.",
+    "audioFilename": "starting-the-school-narration.mp3",
+    "audioDuration": "4:12",
+    "date": "1979-06-01",
+    "dateLabel": "Summer 1979",
+    "peopleIds": ["robert-curry", "william-curry"],
+    "coverPhotoId": "1981-lake-house-01",
+    "collectionIds": [],
+    "source": "Robert Curry, interviewed by Thomas Walsh, 2022",
+    "identifiedBy": "Thomas Walsh, November 2022",
+    "confidence": "high",
+    "lastVerified": "2022-11-14"
+  },
+  {
+    "id": "daniels-musical-life",
+    "title": "Daniel and the bass guitar",
+    "subtitle": "Twenty years on the verge of being known",
+    "body": "Daniel Curry got his first bass guitar at fourteen, a battered Fender Precision that his father Robert found at a garage sale and had restrung for thirty dollars. Daniel played it every day for a year before he let anyone hear him.\n\nHe has always been like that -- deliberate, private, unwilling to perform until he felt ready. The family learned not to ask about the music until he brought it up himself.\n\nBy college he was playing in a band called *The Loaded Rest*, a name that meant something to them that they never fully explained to anyone outside the group. They played bars in Cincinnati, Columbus, and once, memorably, a festival in Louisville where they were third on the bill and the headliner cancelled so they played for two hours to a crowd of several hundred people who had not come to see them.\n\n> \"That night was the best night,\" Daniel told his sister Sarah years later. \"Nobody expected anything. We just played.\"\n\nThe band has been, as Daniel's bio in the family archive notes, *on the verge of being known for nearly twenty years*. Daniel himself composed that line and insisted on it. He finds it accurate and not discouraging.\n\nHe still plays. He practices in the spare bedroom of his apartment in Cincinnati, usually late at night. The neighbors have never complained, which he considers a good sign about the acoustics or possibly about the neighbors.",
+    "audioFilename": "daniels-musical-life-narration.mp3",
+    "audioDuration": "3:28",
+    "date": "2023-03-01",
+    "dateLabel": "March 2023",
+    "peopleIds": ["daniel-curry"],
+    "collectionIds": [],
+    "source": "Written by Thomas Walsh, March 2023",
+    "identifiedBy": "Thomas Walsh, March 2023",
+    "confidence": "high",
+    "lastVerified": "2023-03-15"
+  },
+  {
+    "id": "the-summer-of-1985-at-the-lake",
+    "title": "The summer of 1985 at the lake",
+    "subtitle": "The last summer before everything changed",
+    "body": "The summer of 1985 was the last summer the whole family was at the lake house at the same time. Nobody knew that then. You never do.\n\nWilliam had built the lake house in 1958 from lumber he sourced himself and plans he drew on graph paper at the kitchen table. It was small -- two bedrooms, a sleeping porch, a dock that needed replanting every spring -- but it sat on an acre of Ohio shoreline that in summer turned a particular shade of green that the family associates with that place and no other.\n\nThat year Margaret was thirty-three and had just finished her fifth year teaching. Robert had moved the martial arts school to its rented space above the hardware store. James drove up from Columbus with his camera equipment and spent most of the week photographing the water at different times of day. The children -- Sarah, Daniel, Emily, and Thomas -- were between seven and four years old. They slept in the porch, four of them in a row, and William and Eleanor took the front bedroom.\n\nThe singalong is what people remember. After dinner on the second night, someone started *Sweet Caroline* -- Margaret, probably -- and within two lines everyone had joined in. James caught the last thirty seconds of it on the tape recorder he had brought to document ambient sound for a project that never came to anything. The recording has been in the family archive since 2024.\n\nThe lake house was sold in 1996 when the upkeep became more than the family could manage. The acre of green shoreline belongs to someone else now. But the summer of 1985 is what people mean when they say *the lake house*, even people who were too young to remember it clearly.",
+    "date": "1985-08-01",
+    "dateLabel": "August 1985",
+    "peopleIds": ["william-curry", "margaret-curry", "robert-curry", "james-curry", "sarah-curry", "daniel-curry", "emily-walsh", "thomas-walsh"],
+    "coverPhotoId": "1995-reunion-01",
+    "collectionIds": ["lake-house-summers"],
+    "circa": true,
+    "source": "Composite account, drawn from Margaret Curry and James Curry",
+    "identifiedBy": "Thomas Walsh, January 2024",
+    "confidence": "medium",
+    "lastVerified": "2024-01-20"
+  }
+]
