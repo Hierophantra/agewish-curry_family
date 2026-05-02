@@ -24,12 +24,14 @@ Only GitHub accounts listed in `ADMIN_GITHUB_USERNAMES` on Vercel can access the
 - **People** — full CRUD: names, bios, dates, birthplace, relations, and relation labels
 - **Chronicles** — create and edit written family stories with optional audio narration
 - **Photographs** — upload photos (JPEG/PNG/WebP, max 4MB), edit captions, dates, people tags, and collection tags. See the "Adding a photograph" section below for full details.
+- **Videos** — add YouTube/Vimeo links, edit titles, dates, people tags, and playlist tags
+- **Audio recordings** — upload voice recordings, voicemails, oral histories, and songs (MP3/M4A/AAC/WAV, max 4MB). Edit title, description, dates, duration, people tags, and collection tags. See the "Adding an audio recording via the admin UI" section below.
 
 Each save commits the change directly to the GitHub repo. Vercel detects the push and rebuilds automatically. The live site reflects the change in approximately 90 seconds.
 
 ### What is coming in later phases
 
-Video and audio management via the admin UI, collection and playlist editors. Until those phases are built, editing those items still requires the manual JSON workflow described below.
+Collection and playlist editors. Until those phases are built, editing those items still requires the manual JSON workflow described below.
 
 ---
 
@@ -363,7 +365,35 @@ A video can belong to multiple playlists at once.
 
 ---
 
-## Adding an audio recording
+## Adding an audio recording via the admin UI
+
+The admin UI supports direct audio upload — no developer involvement required.
+
+### Option A: admin upload (recommended)
+
+1. Go to `/admin` on the live site and sign in with your allowlisted GitHub account
+2. Click **"Audio recordings"**
+3. Click **"+ Upload audio"**
+4. Choose an MP3, M4A, AAC, or WAV file (maximum **4MB**)
+5. Fill in the title, description, date, duration, people, and collections
+6. Click **"Upload recording"**
+
+The file is uploaded to Vercel Blob storage and a JSON entry is committed to GitHub. The live site updates in approximately 90 seconds. No code changes or repo access required.
+
+**Duration auto-fill:** After selecting a file, the form attempts to read the duration from the file's metadata and pre-fills the duration field. Check the auto-filled value and correct it if needed (some formats may not report duration until fully decoded).
+
+**4MB limit:** The admin uploader is capped at 4MB due to the serverless function body limit. Voice recordings at 64–128 kbps mono are typically well under 1MB per minute of audio. If your file is larger, compress it first:
+- On macOS, use **QuickTime Player** → File → Export As → Audio Only (exports as M4A at reduced bitrate)
+- Online: [CloudConvert](https://cloudconvert.com) or [Online Audio Converter](https://online-audio-converter.com)
+- For files that must remain above 4MB, contact the developer about switching to client-side direct upload.
+
+**Supported formats:** MP3, M4A (AAC in MPEG-4), AAC, WAV. FLAC and OGG are not currently supported — convert to MP3 or M4A first.
+
+**HEIC / iPhone voice memos:** iPhone voice memos export as M4A. Share the memo to your computer and upload the `.m4a` file directly — no conversion needed.
+
+---
+
+## Adding an audio recording (manually)
 
 Audio recordings are stored as files in the repository, unlike videos which use YouTube or Vimeo. Voicemails, oral history interviews, songs, ambient recordings — anything audio can be added here.
 
