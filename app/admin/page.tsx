@@ -13,8 +13,8 @@ const sections = [
   { href: '/admin/photos', label: 'Photographs', desc: 'Upload photos, edit captions, manage collections', status: 'live' },
   { href: '/admin/videos', label: 'Videos', desc: 'Add YouTube/Vimeo links, edit titles, manage playlists', status: 'live' },
   { href: '/admin/audio', label: 'Audio', desc: 'Upload voice recordings, edit metadata', status: 'live' },
-  { href: '#', label: 'Collections', desc: 'Create and manage photo collections', status: 'soon' },
-  { href: '#', label: 'Playlists', desc: 'Create and manage video playlists', status: 'soon' },
+  { href: '/admin/collections', label: 'Collections', desc: 'Create and manage photo collections', status: 'live' },
+  { href: '/admin/playlists', label: 'Playlists', desc: 'Create and manage video playlists', status: 'live' },
 ] as const
 
 export default async function AdminIndex() {
