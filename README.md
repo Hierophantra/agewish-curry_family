@@ -2,11 +2,11 @@
 
 A private family archive for the Curry family at [curry.agewish.com](https://curry.agewish.com).
 
-## v2 status: complete
+## v2.1 status: complete
 
-All 13 phases of the v2 milestone are shipped. The site is feature-complete.
+All 18 phases of the v2.1 milestone are shipped. The site is feature-complete.
 
-**What is in place:**
+**What is in place (v2 foundation):**
 - Password-gated archive with Auth.js v5 credentials provider
 - Photographs organised into named collections with a full-screen lightbox viewer
 - Videos organised into playlists with an embedded video lightbox (YouTube/Vimeo)
@@ -15,7 +15,16 @@ All 13 phases of the v2 milestone are shipped. The site is feature-complete.
 - Curated home page with tree preview, recent photographs, and featured films
 - AgeWish brand mark (real PNG — navy ring + gold 8-pointed star)
 - Content separated from code: all family data lives in `/content/*.json`
+
+**v2.1 enhancements:**
+- Refined nav bar, larger typography, navy/gold saturation, normalised relation labels, custom 404 + empty states
+- Provenance metadata (source, circa, confidence, identifiedBy, lastVerified) on photos and people
+- Accessibility hardening: focus traps, return-focus, prefers-reduced-motion, keyboard tree nav, ARIA dialogs
+- URL deep linking: `/tree?person=`, `/photographs/collection?photo=`, `/videos/playlist?video=`
+- BlurHash blur-up placeholders for smooth photo loading (generate with `npm run blur`)
+- Audio as a first-class content type: `content/audio.json`, `AudioPlayer` component, audio on person pages
 - Archive export: "Download the archive" footer link generates a `manifest.zip` containing all JSON + a self-contained offline `index.html` viewer that works without Vercel or Next.js
+- Ambient slideshow mode: `/slideshow` auto-advances through random photos every 8 seconds with 1.2s crossfade; `?collection=` filter for a single collection; keyboard ←/→ navigation; perfect for putting on the TV at a family gathering
 
 **What remains before launch:**
 - Replace the 6 placeholder photos (1x1 JPEG stubs in `public/photos/`) with real family photographs
