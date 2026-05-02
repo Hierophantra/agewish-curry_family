@@ -50,6 +50,10 @@ export function getVideos(): Video[] {
   return readJSON('videos.json', z.array(VideoSchema))
 }
 
+export function getVideoById(id: string): Video | null {
+  return getVideos().find((v) => v.id === id) ?? null
+}
+
 export function getPersonById(id: string): Person | null {
   return getPeople().find((p) => p.id === id) ?? null
 }
