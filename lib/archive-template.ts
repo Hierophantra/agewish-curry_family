@@ -114,7 +114,7 @@ function renderChronicles() {
       .replace(/\*(.+?)\*/g, '$1')
       .replace(/^>\s*/gm, '')
       .replace(/\[(.+?)\]\(.+?\)/g, '$1')
-      .replace(/`(.+?)`/g, '$1');
+      .replace(/\`(.+?)\`/g, '$1');
     var paragraphs = plainBody.split(/\n\n+/).map(function(p) {
       return '<p style="margin:0 0 12px">' + p.replace(/\n/g, ' ').trim() + '</p>';
     }).join('');
