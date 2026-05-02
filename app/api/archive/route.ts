@@ -10,7 +10,7 @@
 import { NextResponse } from 'next/server'
 import JSZip from 'jszip'
 import { auth } from '@/auth'
-import { getPeople, getPhotos, getVideos, getAudio, getCollections, getPlaylists } from '@/lib/content'
+import { getPeople, getPhotos, getVideos, getAudio, getCollections, getPlaylists, getChronicles } from '@/lib/content'
 import { generateArchiveHtml } from '@/lib/archive-template'
 
 export async function GET() {
@@ -25,6 +25,7 @@ export async function GET() {
   const audio = getAudio()
   const collections = getCollections()
   const playlists = getPlaylists()
+  const chronicles = getChronicles()
   const exportedDate = new Date().toISOString().split('T')[0]
 
   const zip = new JSZip()
@@ -36,11 +37,12 @@ export async function GET() {
   zip.file('content/audio.json', JSON.stringify(audio, null, 2))
   zip.file('content/collections.json', JSON.stringify(collections, null, 2))
   zip.file('content/playlists.json', JSON.stringify(playlists, null, 2))
+  zip.file('content/chronicles.json', JSON.stringify(chronicles, null, 2))
 
   // ── Self-contained viewer ──
   zip.file(
     'index.html',
-    generateArchiveHtml({ family, photos, videos, audio, collections, playlists, exportedDate })
+    generateArchiveHtml({ family, photos, videos, audio, collections, playlists, chronicles, exportedDate })
   )
 
   // ── README ──
@@ -60,6 +62,7 @@ Files:
   content/audio.json        — Voice recordings, oral histories, songs
   content/collections.json  — Photo collection definitions
   content/playlists.json    — Video playlist definitions
+  content/chronicles.json   — Written family stories and chronicles
   index.html                — Open in any browser to browse the archive
   README.txt                — This file
 

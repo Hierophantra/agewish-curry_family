@@ -3,7 +3,7 @@
 // This file is server-only — it embeds all content inline so the HTML works
 // with no internet connection, no Vercel, and no Next.js, forever.
 import 'server-only'
-import type { Person, Photo, Video, Audio, Collection, Playlist } from './types'
+import type { Person, Photo, Video, Audio, Collection, Playlist, Chronicle } from './types'
 
 interface ArchiveData {
   family: Person[]
@@ -12,6 +12,7 @@ interface ArchiveData {
   audio: Audio[]
   collections: Collection[]
   playlists: Playlist[]
+  chronicles: Chronicle[]
   exportedDate: string
 }
 
@@ -49,6 +50,7 @@ export function generateArchiveHtml(data: ArchiveData): string {
     <button data-tab="audio">Audio (${data.audio.length})</button>
     <button data-tab="collections">Collections (${data.collections.length})</button>
     <button data-tab="playlists">Playlists (${data.playlists.length})</button>
+    <button data-tab="chronicles">Chronicles (${data.chronicles.length})</button>
   </nav>
 
   <script type="application/json" id="data-family">${JSON.stringify(data.family)}</script>
@@ -57,6 +59,7 @@ export function generateArchiveHtml(data: ArchiveData): string {
   <script type="application/json" id="data-audio">${JSON.stringify(data.audio)}</script>
   <script type="application/json" id="data-collections">${JSON.stringify(data.collections)}</script>
   <script type="application/json" id="data-playlists">${JSON.stringify(data.playlists)}</script>
+  <script type="application/json" id="data-chronicles">${JSON.stringify(data.chronicles)}</script>
 
   <section id="section-family" class="active"></section>
   <section id="section-photos"></section>
@@ -64,6 +67,7 @@ export function generateArchiveHtml(data: ArchiveData): string {
   <section id="section-audio"></section>
   <section id="section-collections"></section>
   <section id="section-playlists"></section>
+  <section id="section-chronicles"></section>
 
   <footer>Held in trust for those who come after.</footer>
 
@@ -100,12 +104,31 @@ function renderPlaylists() {
     return '<div class="item"><div class="label">Playlist</div><h3>' + p.title + '</h3>' + row('Subtitle', p.subtitle) + row('Description', p.description) + '</div>';
   }).join('');
 }
+function renderChronicles() {
+  return load('chronicles').map(function(c) {
+    // Render body as plain paragraphs: split on blank lines, strip markdown syntax.
+    // No markdown parser bundled in the export — keeps the HTML self-contained.
+    var plainBody = (c.body || '')
+      .replace(/#{1,6}\s+/g, '')
+      .replace(/\*\*(.+?)\*\*/g, '$1')
+      .replace(/\*(.+?)\*/g, '$1')
+      .replace(/^>\s*/gm, '')
+      .replace(/\[(.+?)\]\(.+?\)/g, '$1')
+      .replace(/`(.+?)`/g, '$1');
+    var paragraphs = plainBody.split(/\n\n+/).map(function(p) {
+      return '<p style="margin:0 0 12px">' + p.replace(/\n/g, ' ').trim() + '</p>';
+    }).join('');
+    var dateDisplay = c.circa ? 'Circa ' + (c.dateLabel || '') : (c.dateLabel || '');
+    return '<div class="item"><div class="label">Chronicle' + (dateDisplay ? ' &mdash; ' + dateDisplay : '') + '</div><h3>' + c.title + '</h3>' + (c.subtitle ? '<div class="field"><i>' + c.subtitle + '</i></div>' : '') + row('People', (c.peopleIds || []).join(', ')) + (c.audioDuration ? row('Narration', c.audioDuration) : '') + '<div style="margin-top:12px;font-size:14px;color:#3a3630;line-height:1.7">' + paragraphs + '</div></div>';
+  }).join('');
+}
 document.getElementById('section-family').innerHTML = renderFamily();
 document.getElementById('section-photos').innerHTML = renderPhotos();
 document.getElementById('section-videos').innerHTML = renderVideos();
 document.getElementById('section-audio').innerHTML = renderAudio();
 document.getElementById('section-collections').innerHTML = renderCollections();
 document.getElementById('section-playlists').innerHTML = renderPlaylists();
+document.getElementById('section-chronicles').innerHTML = renderChronicles();
 
 document.querySelectorAll('nav button').forEach(function(btn) {
   btn.addEventListener('click', function() {
