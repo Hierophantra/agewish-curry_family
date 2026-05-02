@@ -284,7 +284,7 @@ export default function EditChronicleForm({
             placeholder="Summer 1979"
             disabled={isDisabled}
           />
-          <span className={helpClass}>Display string, e.g. "Summer 1979". Shown in cards and detail pages.</span>
+          <span className={helpClass}>Display string, e.g. &ldquo;Summer 1979&rdquo;. Shown in cards and detail pages.</span>
         </label>
       </div>
 
@@ -392,7 +392,7 @@ export default function EditChronicleForm({
             placeholder="4:12"
             disabled={isDisabled}
           />
-          <span className={helpClass}>Display string, e.g. "4:12" or "12:05".</span>
+          <span className={helpClass}>Display string, e.g. &ldquo;4:12&rdquo; or &ldquo;12:05&rdquo;.</span>
         </label>
       </div>
 
