@@ -31,10 +31,10 @@ export default function NavTabs() {
             key={tab.href}
             href={tab.href}
             className={cn(
-              'text-base pb-1 transition-colors',
+              'text-base pb-1 transition-colors rounded-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2',
               isActive
-                ? 'text-navy border-b hairline-emphasis border-gold'
-                : 'text-muted hover:text-navy'
+                ? 'text-navy border-b-2 border-gold-deep'
+                : 'text-muted hover:text-navy hover:bg-gold/5 px-1 -mx-1'
             )}
           >
             {tab.label}
