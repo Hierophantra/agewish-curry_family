@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react'
 import { useReducedMotion } from 'motion/react'
 import type { Photo } from '@/lib/types'
 import Lightbox from '@/components/lightbox/Lightbox'
-import { cn } from '@/lib/utils'
+import { cn, getPhotoUrl } from '@/lib/utils'
 
 // Prototype .panel-img { transition: opacity 1.2s ease-in-out } → 1200ms crossfade
 // Prototype startCrossfade setInterval(..., 4000) → 4s auto-advance
@@ -82,7 +82,7 @@ export default function PhotoCarousel({ photos }: PhotoCarouselProps) {
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={`/photos/${photo.filename}`}
+              src={getPhotoUrl(photo)}
               alt={photo.caption ?? 'Family photograph'}
               className="w-full h-full object-cover"
             />

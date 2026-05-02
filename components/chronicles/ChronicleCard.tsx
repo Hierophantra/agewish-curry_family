@@ -6,6 +6,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import type { Chronicle } from '@/lib/types'
 import { getPhotos } from '@/lib/content'
+import { getPhotoUrl } from '@/lib/utils'
 
 interface ChronicleCardProps {
   chronicle: Chronicle
@@ -45,7 +46,7 @@ export default function ChronicleCard({ chronicle }: ChronicleCardProps) {
       {cover && (
         <div className="relative aspect-video overflow-hidden">
           <Image
-            src={`/photos/${cover.filename}`}
+            src={getPhotoUrl(cover)}
             alt=""
             fill
             sizes="(min-width: 1024px) 50vw, (min-width: 640px) 50vw, 100vw"

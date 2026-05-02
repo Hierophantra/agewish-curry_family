@@ -10,6 +10,12 @@ import { z } from 'zod'
 import { PersonSchema, PhotoSchema, VideoSchema, CollectionSchema, PlaylistSchema, AudioSchema, ChronicleSchema } from './types'
 import type { Person, Photo, Video, Collection, Playlist, Audio, Chronicle } from './types'
 
+// ── Photo URL helper ──
+// Re-exported from lib/utils.ts so server-side imports can use a single source.
+// Client components should import getPhotoUrl from '@/lib/utils' directly
+// (lib/content.ts is server-only and cannot be imported by 'use client' modules).
+export { getPhotoUrl } from './utils'
+
 // ── Internal file reader ──
 // Uses .parse() (throws ZodError) not .safeParse() — fail loud on bad content.
 // z.ZodType<Output, Def, Input> lets TypeScript infer the *output* type (post-default filling),

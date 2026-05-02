@@ -7,6 +7,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import type { Photo } from '@/lib/types'
+import { getPhotoUrl } from '@/lib/utils'
 
 interface PhotoCardProps {
   photo: Photo
@@ -34,7 +35,7 @@ export default function PhotoCard({ photo, onClick }: PhotoCardProps) {
       {/* Image container — 4:3 aspect ratio, blur placeholder while loading */}
       <div className="relative aspect-[4/3] bg-ivory overflow-hidden">
         <Image
-          src={`/photos/${photo.filename}`}
+          src={getPhotoUrl(photo)}
           alt={photo.caption ?? 'Family photograph'}
           fill
           sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"

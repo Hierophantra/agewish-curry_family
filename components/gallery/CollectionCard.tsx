@@ -7,6 +7,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import type { Collection } from '@/lib/types'
 import { getPhotos } from '@/lib/content'
+import { getPhotoUrl } from '@/lib/utils'
 
 interface CollectionCardProps {
   collection: Collection
@@ -26,7 +27,7 @@ export default function CollectionCard({ collection, photoCount }: CollectionCar
       {/* Cover image — fills the card, subtle zoom on hover */}
       {cover && (
         <Image
-          src={`/photos/${cover.filename}`}
+          src={getPhotoUrl(cover)}
           alt=""
           fill
           sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"

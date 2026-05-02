@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import { getChronicles, getChronicleById, getPersonById, getPhotos } from '@/lib/content'
+import { getPhotoUrl } from '@/lib/utils'
 import ChronicleBody from '@/components/chronicles/ChronicleBody'
 import AudioPlayer from '@/components/audio/AudioPlayer'
 import type { Audio as AudioRecord } from '@/lib/types'
@@ -88,7 +89,7 @@ export default async function ChronicleDetailPage({ params }: Props) {
       {coverPhoto && (
         <div className="relative aspect-video max-h-[500px] overflow-hidden rounded-lg mb-8">
           <Image
-            src={`/photos/${coverPhoto.filename}`}
+            src={getPhotoUrl(coverPhoto)}
             alt={coverPhoto.caption ?? ''}
             fill
             sizes="(min-width: 1024px) 800px, 100vw"

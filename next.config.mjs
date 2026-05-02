@@ -9,6 +9,12 @@ const nextConfig = {
         hostname: 'img.youtube.com',
         pathname: '/vi/**',
       },
+      // Vercel Blob CDN — used by admin photo uploader (Phase 22+).
+      // Uploaded photos are stored at https://*.public.blob.vercel-storage.com/...
+      {
+        protocol: 'https',
+        hostname: '*.public.blob.vercel-storage.com',
+      },
     ],
   },
 }

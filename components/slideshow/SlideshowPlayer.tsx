@@ -9,6 +9,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react'
 import type { Photo } from '@/lib/types'
+import { getPhotoUrl } from '@/lib/utils'
 
 const ADVANCE_MS = 8000
 const CONTROLS_HIDE_AFTER_MS = 3000
@@ -101,7 +102,7 @@ export default function SlideshowPlayer({ photos, collectionTitle }: Props) {
           className="flex items-center justify-center max-w-[92vw] max-h-[88vh]"
         >
           <Image
-            src={`/photos/${photo.filename}`}
+            src={getPhotoUrl(photo)}
             alt={photo.caption ?? ''}
             width={2400}
             height={1800}

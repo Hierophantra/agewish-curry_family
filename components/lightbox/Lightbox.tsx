@@ -15,6 +15,7 @@ import Image from 'next/image'
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react'
 import type { Photo } from '@/lib/types'
 import { useFocusTrap } from '@/lib/focus-trap'
+import { getPhotoUrl } from '@/lib/utils'
 
 interface LightboxProps {
   photos: Photo[]
@@ -115,7 +116,7 @@ export default function Lightbox({ photos, currentIndex, onClose, onPrev, onNext
           {/* D-11: Image — object-contain, constrained to viewport */}
           <div className="relative max-w-[90vw] max-h-[80vh] flex items-center justify-center">
             <Image
-              src={`/photos/${photo.filename}`}
+              src={getPhotoUrl(photo)}
               alt={photo.caption ?? ''}
               width={1600}
               height={1200}
