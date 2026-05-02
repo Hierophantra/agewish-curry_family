@@ -1,15 +1,15 @@
 // app/admin/people/[id]/page.tsx
-// Admin edit page for a single person's information (name, dates, birthplace, spouse, etc).
-// Bio is intentionally NOT editable here — bios are not displayed anywhere on the site
-// (per user direction; long-form prose belongs in Chronicles, not on person pages).
+// Admin edit page for a single person's information.
+// Fetches allPeople for the parent/child relationship pickers.
 //
 // Auth gate is enforced by requireAdminOrRedirect() in the page (NOT the layout —
 // see app/admin/layout.tsx for the rationale).
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { getPersonById } from '@/lib/content'
+import { getPersonById, getPeople } from '@/lib/content'
 import { requireAdminOrRedirect } from '@/lib/admin'
 import EditPersonForm from './EditPersonForm'
+import type { PersonFormValues } from './EditPersonForm'
 
 export function generateMetadata({ params }: { params: { id: string } }) {
   const person = getPersonById(params.id)
@@ -22,9 +22,12 @@ export default async function AdminEditPersonPage({ params }: { params: { id: st
   const person = getPersonById(params.id)
   if (!person) notFound()
 
+  const allPeople = getPeople()
+
   // Pre-populate the form with current values; empty string for absent optional fields.
   // birthplace falls back to the v1 birthPlace alias for old records that haven't migrated.
-  const initial = {
+  const initial: PersonFormValues = {
+    id: person.id,
     name: person.name,
     relationLabel: person.relationLabel ?? '',
     eyebrow: person.eyebrow ?? '',
@@ -33,6 +36,8 @@ export default async function AdminEditPersonPage({ params }: { params: { id: st
     datesLabel: person.datesLabel ?? '',
     birthplace: person.birthplace ?? person.birthPlace ?? '',
     spouseLabel: person.spouseLabel ?? '',
+    parentIds: person.parentIds ?? [],
+    childrenIds: person.childrenIds ?? [],
   }
 
   return (
@@ -49,7 +54,12 @@ export default async function AdminEditPersonPage({ params }: { params: { id: st
         <p className="font-serif italic text-muted text-base mb-9">{person.datesLabel}</p>
       )}
 
-      <EditPersonForm personId={person.id} initial={initial} />
+      <EditPersonForm
+        mode="update"
+        personId={person.id}
+        initial={initial}
+        allPeople={allPeople}
+      />
     </div>
   )
 }
