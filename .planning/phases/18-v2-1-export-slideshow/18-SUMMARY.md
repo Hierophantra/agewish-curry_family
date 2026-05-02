@@ -163,6 +163,17 @@ Phase 18 is the final phase of v2.1. The v2.1 milestone is now complete.
 - TV/Firestick deployment optimization
 - Decade timeline view, print stylesheet, sharable single-item URLs with auth tokens (declined in v2.1 scope)
 
+## Self-Check: PASSED
+
+- FOUND: `app/(protected)/slideshow/page.tsx`
+- FOUND: `components/slideshow/SlideshowPlayer.tsx`
+- FOUND: `.planning/phases/18-v2-1-export-slideshow/18-SUMMARY.md`
+- FOUND: `.planning/V2.1-MILESTONE-COMPLETE.md`
+- FOUND: commits b05fb1c, 984ad0c, 7d2432b, a315161
+- FOUND: `useReducedMotion` + `AnimatePresence` (6 occurrences >= 2)
+- FOUND: 8s advance, 1.2s crossfade, keyboard nav, empty state, collection filter, slideshow links
+- `npm run build` exits 0, 24 pages, `/slideshow` in route table
+
 ---
 *Phase: 18-v2-1-export-slideshow*
 *Completed: 2026-04-29*
