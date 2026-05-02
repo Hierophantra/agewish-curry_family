@@ -1,11 +1,11 @@
 ---
 gsd_state_version: 1.0
 milestone: v3
-milestone_name: v3 — Admin authoring UI; Phase 22 Photo CRUD + Vercel Blob complete
+milestone_name: v3 — Admin authoring UI; Phase 23 Video CRUD complete
 status: in_progress
-stopped_at: v3 Phase 22 complete — Photo upload via Vercel Blob; getPhotoUrl helper; /admin/photos list + new + [id]; EditPhotoForm; 2 API handlers; npm run build exits 0 (37 pages)
+stopped_at: v3 Phase 23 complete — Video CRUD (list + new + edit + delete); EditVideoForm; 2 API handlers; getVideoById() in lib/content.ts; npm run build exits 0 (40 pages)
 last_updated: "2026-04-29T00:00:00Z"
-last_activity: 2026-04-29 — Phase 22 complete; @vercel/blob installed; getPhotoUrl helper in lib/utils.ts; all photo components updated; /admin/photos CRUD; API handlers with Blob upload + plaiceholder BlurHash; npm run build exits 0 (37 pages)
+last_activity: 2026-04-29 — Phase 23 complete; /admin/videos list + new + [id]; EditVideoForm; /api/admin/videos POST; /api/admin/videos/[id] POST+DELETE; getVideoById(); npm run build exits 0 (40 pages)
 progress:
   total_phases: 21
   completed_phases: 21
@@ -25,13 +25,13 @@ See: .planning/PROJECT.md (updated 2026-04-29)
 
 ## Current Position
 
-Phase: 22 of 22 (v3 Photo CRUD + Vercel Blob) — complete
-Plan: 1/1 in Phase 22 (22-v3-photo-upload done)
-Status: in_progress (v3 milestone; Phase 22 done; Phase 23+ audio upload + further admin planned)
-Current focus: v3 Phase 22 complete — Photo upload via Vercel Blob; /admin/photos CRUD; getPhotoUrl hybrid storage helper
-Last activity: 2026-04-29 — Phase 22 complete; @vercel/blob; getPhotoUrl; /admin/photos list + new + [id]; EditPhotoForm; /api/admin/photos POST; /api/admin/photos/[id] POST+DELETE; npm run build exits 0 (37 pages)
+Phase: 23 of 23 (v3 Video CRUD) — complete
+Plan: 1/1 in Phase 23 (23-v3-video-crud done)
+Status: in_progress (v3 milestone; Phase 23 done; Phase 24+ audio upload + further admin planned)
+Current focus: v3 Phase 23 complete — Video CRUD; /admin/videos list + new + [id]; EditVideoForm; 2 API handlers; getVideoById()
+Last activity: 2026-04-29 — Phase 23 complete; /admin/videos list + new + [id]; EditVideoForm; /api/admin/videos POST; /api/admin/videos/[id] POST+DELETE; getVideoById(); npm run build exits 0 (40 pages)
 
-Progress: [██████████████████████] 100% (22/22 phases complete — v2.2 Phase 19 + v3 Phases 20-22 done)
+Progress: [██████████████████████] 100% (23/23 phases complete — v2.2 Phase 19 + v3 Phases 20-23 done)
 
 ## Phase 1 outcome
 
