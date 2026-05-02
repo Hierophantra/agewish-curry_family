@@ -8,22 +8,26 @@ interface PersonNodeProps {
   node: ExtNode
   name: string           // person's display name from Person[] lookup in canvas
   isActive: boolean
+  isFocused: boolean     // keyboard focus indicator (separate from panel-open selection)
   relationLabel: string  // e.g., "GRANDFATHER", "FATHER" — computed by canvas
   onClick: () => void
+  onRef: (el: HTMLButtonElement | null) => void  // allows canvas to imperatively focus nodes
   style: CSSProperties
 }
 
 // node is accepted as a prop (required by FamilyTreeCanvas) but not rendered directly
 // — we render `name` (resolved by canvas) instead of node.id
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export default function PersonNode({ node: _node, name, isActive, relationLabel, onClick, style }: PersonNodeProps) {
+export default function PersonNode({ node: _node, name, isActive, isFocused, relationLabel, onClick, onRef, style }: PersonNodeProps) {
   return (
     <button
+      ref={onRef}
       type="button"
       onClick={onClick}
       // D-13: 160px × 60px node
       // Inactive: white bg, stone border (hairline 0.5px)
       // Active (D-11): ivory bg, navy border (hairline-emphasis 1.25px)
+      // isFocused: same visual ring as active for keyboard users navigating without opening panel
       // cursor-pointer: makes the tree feel interactive
       // overflow-hidden: clips the gold dot to top-right corner
       className={[
@@ -33,7 +37,9 @@ export default function PersonNode({ node: _node, name, isActive, relationLabel,
         'focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-1',
         isActive
           ? 'bg-ivory hairline-emphasis border-navy'
-          : 'bg-white hairline border-stone hover:bg-ivory hover:ring-2 hover:ring-gold-deep',
+          : isFocused
+            ? 'bg-ivory ring-2 ring-gold ring-offset-1 hairline border-stone'
+            : 'bg-white hairline border-stone hover:bg-ivory hover:ring-2 hover:ring-gold-deep',
       ].join(' ')}
       style={style}
     >

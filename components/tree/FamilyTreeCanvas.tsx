@@ -1,7 +1,7 @@
 // components/tree/FamilyTreeCanvas.tsx
 // 'use client' — owns selectedId state; renders positioned nodes + connectors
 'use client'
-import { useState } from 'react'
+import { useState, useRef, useCallback } from 'react'
 import { AnimatePresence } from 'motion/react'
 import type { ExtNode, Connector } from 'relatives-tree/lib/types'
 import type { Person, Photo } from '@/lib/types'
@@ -76,6 +76,9 @@ export default function FamilyTreeCanvas({
   photos,
 }: FamilyTreeCanvasProps) {
   const [selectedId, setSelectedId] = useState<string | null>(null)
+  // focusedNodeId tracks keyboard focus within the tree canvas (separate from panel selection).
+  const [focusedNodeId, setFocusedNodeId] = useState<string | null>(null)
+  const nodeRefs = useRef<Map<string, HTMLButtonElement>>(new Map())
 
   const canvasWidth = canvas.width * H_UNIT
   const canvasHeight = canvas.height * V_UNIT
@@ -83,6 +86,95 @@ export default function FamilyTreeCanvas({
   // Build person lookup for name + relation resolution
   const peopleById = new Map(people.map((p) => [p.id, p]))
   const rootId = nodes[0]?.id ?? ''
+
+  // Arrow-key spatial navigation:
+  // ArrowRight/Left: same row (top), closest horizontal neighbour
+  // ArrowDown/Up: move to nearest node one row below/above
+  // We measure row by the node.top value. Horizontal position by node.left.
+  const handleCanvasKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
+      const navKeys = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Escape']
+      if (!navKeys.includes(e.key)) return
+
+      // Escape with no panel open: blur tree entirely
+      if (e.key === 'Escape') {
+        if (selectedId) {
+          setSelectedId(null)
+          return
+        }
+        setFocusedNodeId(null)
+        ;(e.currentTarget as HTMLElement).blur()
+        return
+      }
+
+      e.preventDefault()
+
+      // Determine current node
+      const currentId = focusedNodeId ?? selectedId ?? (nodes[0]?.id ?? null)
+      const currentNode = nodes.find((n) => n.id === currentId)
+      if (!currentNode) {
+        // No focused node yet — move focus to first node
+        const first = nodes[0]
+        if (first) {
+          setFocusedNodeId(first.id)
+          nodeRefs.current.get(first.id)?.focus()
+        }
+        return
+      }
+
+      let target: ExtNode | undefined
+
+      if (e.key === 'ArrowRight') {
+        // Same row, next to the right
+        const sameRow = nodes.filter((n) => n.top === currentNode.top && n.id !== currentNode.id)
+        const rightOf = sameRow.filter((n) => n.left > currentNode.left)
+        target = rightOf.reduce<ExtNode | undefined>((closest, n) => {
+          if (!closest) return n
+          return n.left < closest.left ? n : closest
+        }, undefined)
+      } else if (e.key === 'ArrowLeft') {
+        // Same row, next to the left
+        const sameRow = nodes.filter((n) => n.top === currentNode.top && n.id !== currentNode.id)
+        const leftOf = sameRow.filter((n) => n.left < currentNode.left)
+        target = leftOf.reduce<ExtNode | undefined>((closest, n) => {
+          if (!closest) return n
+          return n.left > closest.left ? n : closest
+        }, undefined)
+      } else if (e.key === 'ArrowDown') {
+        // Row below current row — find horizontally closest node
+        const belowRows = nodes.filter((n) => n.top > currentNode.top)
+        if (belowRows.length > 0) {
+          const nextRow = Math.min(...belowRows.map((n) => n.top))
+          const nextRowNodes = belowRows.filter((n) => n.top === nextRow)
+          target = nextRowNodes.reduce<ExtNode | undefined>((closest, n) => {
+            if (!closest) return n
+            return Math.abs(n.left - currentNode.left) < Math.abs(closest.left - currentNode.left)
+              ? n
+              : closest
+          }, undefined)
+        }
+      } else if (e.key === 'ArrowUp') {
+        // Row above current row — find horizontally closest node
+        const aboveRows = nodes.filter((n) => n.top < currentNode.top)
+        if (aboveRows.length > 0) {
+          const prevRow = Math.max(...aboveRows.map((n) => n.top))
+          const prevRowNodes = aboveRows.filter((n) => n.top === prevRow)
+          target = prevRowNodes.reduce<ExtNode | undefined>((closest, n) => {
+            if (!closest) return n
+            return Math.abs(n.left - currentNode.left) < Math.abs(closest.left - currentNode.left)
+              ? n
+              : closest
+          }, undefined)
+        }
+      }
+
+      if (target) {
+        setFocusedNodeId(target.id)
+        nodeRefs.current.get(target.id)?.focus()
+      }
+    },
+    [focusedNodeId, selectedId, nodes]
+  )
 
   return (
     // D-12: relative wrapper hosts the right-edge gradient indicator
@@ -99,10 +191,15 @@ export default function FamilyTreeCanvas({
           Tree container stays at full width regardless of panel state — panel no longer
           shrinks the tree (panel is now fixed/viewport-positioned, not docked inside). */}
       <div className="overflow-x-auto">
-        {/* Relative-positioned canvas — all nodes + connectors are absolutely positioned children. */}
+        {/* Relative-positioned canvas — all nodes + connectors are absolutely positioned children.
+            onKeyDown handles arrow-key spatial navigation between nodes.
+            role="group" + aria-label groups the tree for screen reader context. */}
         <div
           className="relative"
           style={{ width: canvasWidth, height: canvasHeight, minHeight: 120 }}
+          onKeyDown={handleCanvasKeyDown}
+          role="group"
+          aria-label="Family tree — use arrow keys to navigate between family members, Enter to open panel, Escape to close"
         >
         {/* Connector lines rendered BEFORE nodes so nodes appear on top */}
         {connectors.map(([x1, y1, x2, y2], i) => (
@@ -122,8 +219,17 @@ export default function FamilyTreeCanvas({
               node={node}
               name={name}
               isActive={selectedId === node.id}
+              isFocused={focusedNodeId === node.id}
               relationLabel={label}
-              onClick={() => setSelectedId(node.id === selectedId ? null : node.id)}
+              onClick={() => {
+                const newId = node.id === selectedId ? null : node.id
+                setSelectedId(newId)
+                setFocusedNodeId(node.id)
+              }}
+              onRef={(el) => {
+                if (el) nodeRefs.current.set(node.id, el)
+                else nodeRefs.current.delete(node.id)
+              }}
               style={{
                 position: 'absolute',
                 transform: `translate(${node.left * H_UNIT}px, ${node.top * V_UNIT}px)`,
