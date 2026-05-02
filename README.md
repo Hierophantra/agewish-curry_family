@@ -2,6 +2,24 @@
 
 A private family archive for the Curry family at [curry.agewish.com](https://curry.agewish.com).
 
+## v3 admin UI: in progress (Phase 20 complete)
+
+v3 adds a GitHub-authenticated admin interface at `/admin` for editing archive content without touching JSON or code.
+
+**Phase 20 (foundation) is complete:**
+- `/admin` — admin index listing all content sections
+- `/admin/login` — GitHub OAuth sign-in (separate from the family password)
+- `/admin/people` — list of all family members
+- `/admin/people/[id]` — edit a person's bio (saves directly to GitHub via the API)
+- Admin allowlist: set `ADMIN_GITHUB_USERNAMES` in Vercel env vars (comma-separated GitHub logins)
+- Each save triggers a Vercel rebuild; the live site updates in approximately 90 seconds
+
+**Phases 21+ (planned):** full people CRUD beyond bio, photograph upload via Vercel Blob, video/audio CRUD, collection and playlist editors.
+
+See `CONTENT_AUTHORING.md` for the admin workflow.
+
+---
+
 ## v2.1 status: complete
 
 All 18 phases of the v2.1 milestone are shipped. The site is feature-complete.
@@ -61,9 +79,22 @@ Create `.env.local` in the project root (never commit this file — it is in `.g
 ```
 AUTH_SECRET=<generated value>
 AUTH_PASSWORD_HASH=<generated value>
+
+# v3 admin (required for /admin to work)
+GITHUB_CLIENT_ID=<from GitHub OAuth app>
+GITHUB_CLIENT_SECRET=<from GitHub OAuth app>
+ADMIN_GITHUB_USERNAMES=<comma-separated GitHub logins, e.g. Hierophantra>
 ```
 
 Do NOT set `NEXTAUTH_URL`, `AUTH_URL`, or `NEXTAUTH_SECRET`. These break Vercel preview deployments.
+
+### GitHub OAuth App setup (v3 admin)
+
+1. Go to [GitHub Settings → Developer settings → OAuth Apps](https://github.com/settings/developers) → New OAuth App
+2. Set **Authorization callback URL** to `https://curry.agewish.com/api/auth/callback/github` (production) or `http://localhost:3000/api/auth/callback/github` (local dev)
+3. Copy the **Client ID** → `GITHUB_CLIENT_ID`
+4. Generate a **Client secret** → `GITHUB_CLIENT_SECRET`
+5. Set `ADMIN_GITHUB_USERNAMES` to a comma-separated list of GitHub usernames who should have admin access
 
 ### Generate AUTH_SECRET
 

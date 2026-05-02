@@ -1,6 +1,35 @@
 # Adding content to the Curry Family Hub
 
-All content lives in JSON files under `/content/`. Edit these files, drop image assets in `/public/photos/`, push to GitHub, and Vercel rebuilds the site within a minute. No code changes needed for any routine content addition.
+All content lives in JSON files under `/content/`. You can edit content in two ways:
+
+1. **Admin UI at `/admin`** — sign in with GitHub and edit directly in the browser (v3, available now for bio editing)
+2. **Manually edit the JSON files** — edit locally or on GitHub, push to `main`, Vercel rebuilds
+
+---
+
+## Editing via the admin UI
+
+The admin UI at `https://curry.agewish.com/admin` lets you edit content without touching JSON files or code.
+
+### Access
+
+1. Go to `/admin` on the live site
+2. Sign in with the GitHub account that has been allowlisted as an admin (`ADMIN_GITHUB_USERNAMES` env var)
+3. You will see the content dashboard
+
+Only GitHub accounts listed in `ADMIN_GITHUB_USERNAMES` on Vercel can access the admin. The family password does not grant admin access — admin login is separate.
+
+### What you can edit in Phase 1 (v3 foundation)
+
+- **Person bios** — click "People" → click "Edit bio" next to any person → edit the bio text → click "Save bio"
+
+Each save commits the change directly to the GitHub repo. Vercel detects the push and rebuilds automatically. The live site reflects the change in approximately 90 seconds.
+
+### What is coming in later phases (v3 Phases 21+)
+
+Full people CRUD (dates, relationships, names), photograph upload via Vercel Blob, video and audio management, collection and playlist editors. Until those phases are built, editing those fields still requires the manual JSON workflow described below.
+
+---
 
 ---
 
