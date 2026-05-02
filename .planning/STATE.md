@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v2.1
 milestone_name: v2.1 — User Punch List + A+ Peer Review
 status: executing
-stopped_at: v2.1 milestone starting — Phase 14 (Visual + UX Polish)
-last_updated: "2026-05-02T00:00:00Z"
-last_activity: 2026-05-02 — v2.1 scope locked (15 items, 5 phases); Phase 14 launching
+stopped_at: Phase 14 complete — PersonPanel restructure + bio removal + custom 404 + empty states polished
+last_updated: "2026-05-02T09:10:00Z"
+last_activity: 2026-05-02 — Phase 14 complete; 9 commits; npm run build exits 0 (22 pages)
 progress:
   total_phases: 18
-  completed_phases: 13
-  total_plans: 18
-  completed_plans: 18
-  percent: 72
+  completed_phases: 14
+  total_plans: 20
+  completed_plans: 20
+  percent: 78
 ---
 
 # Project State
@@ -149,6 +149,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-30T08:49:32Z
-Stopped at: Completed 12-PLAN — Home Polish; tree/photos/videos curated preview sections, SectionPreview deleted, Server Component preserved; npm run build exits 0 (22 pages)
+Last session: 2026-05-02T09:10:00Z
+Stopped at: Completed Phase 14 (14-01 + 14-02) — PersonPanel fixed sheet, bio removed, custom 404, empty states polished, font/saturation/nav/focus chrome; npm run build exits 0 (22 pages)
 Resume file: None
