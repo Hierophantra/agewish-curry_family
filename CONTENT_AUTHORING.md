@@ -403,6 +403,97 @@ Alternatively, you can add entirely new photos with new filenames and update `ph
 
 ---
 
+## Provenance and uncertainty
+
+Memory conflicts over time. A photograph surfaced from a box in the attic may have a date written on the back that disagrees with what the family remembers, or no date at all. The person who identified the people in a photo may not be the same person who scanned it. The archive is more trustworthy when it tracks who said what, and when.
+
+Provenance fields let you record this context alongside the content itself. They are all optional — an entry without any provenance fields is still perfectly valid. The goal is gradual accumulation: add what you know, leave blank what you don't, and update over time as more is established.
+
+The principle: **the archive doesn't have to be certain about everything — it just has to be honest about what it doesn't know.**
+
+### Provenance fields for photographs
+
+Add these fields to any entry in `content/photos.json`:
+
+| Field            | Type    | Example value                                      | Purpose |
+| ---------------- | ------- | -------------------------------------------------- | ------- |
+| `source`         | string  | `"Margaret Curry's family album"`                  | Where the original photograph came from — an album, a box in an attic, a relative's collection. |
+| `identifiedBy`   | string  | `"Margaret Curry, June 2024"`                      | Who identified the people in the photograph (and when). Format: `"Name, Month YYYY"`. |
+| `circa`          | boolean | `true`                                             | Set to `true` when the date is approximate. The lightbox will prefix the date with "Circa". |
+| `confidence`     | string  | `"high"`, `"medium"`, or `"low"`                  | Your confidence in the date and identification. Use `"low"` when the date is a guess or the people are uncertain. |
+| `lastVerified`   | string  | `"2024-06-15"`                                     | ISO date (YYYY-MM-DD) when this entry was last reviewed and confirmed accurate. |
+| `scannedDate`    | string  | `"2024-06-15"`                                     | ISO date when the physical photograph was digitized. Useful for tracking the scanning project. |
+| `originalFilename` | string | `"IMG_2034.JPG"`                                 | The filename the scanner assigned before you renamed it. Preserves a traceability link to the raw scan. |
+
+### Provenance fields for videos
+
+Add these fields to any entry in `content/videos.json`:
+
+| Field              | Type    | Example value                              | Purpose |
+| ------------------ | ------- | ------------------------------------------ | ------- |
+| `source_provenance` | string | `"James Curry's home video archive"`       | Who provided the recording. Note: this field is named `source_provenance` (not `source`) because `source` is already taken by the platform field (`"youtube"` or `"vimeo"`). |
+| `identifiedBy`     | string  | `"James Curry, March 2024"`                | Who identified the content or confirmed the date. |
+| `circa`            | boolean | `true`                                     | Set to `true` when the recording date is approximate. |
+| `confidence`       | string  | `"high"`, `"medium"`, or `"low"`          | Confidence in date and identification. |
+| `lastVerified`     | string  | `"2024-06-15"`                             | ISO date when this entry was last reviewed. |
+| `recordedDate`     | string  | `"2000-04-12"`                             | ISO date when the video was originally recorded — useful when the upload date to YouTube/Vimeo differs from the actual recording date. |
+
+### Provenance fields for people
+
+Add these fields to any entry in `content/family.json`:
+
+| Field          | Type    | Example value                      | Purpose |
+| -------------- | ------- | ---------------------------------- | ------- |
+| `identifiedBy` | string  | `"Margaret Curry, June 2024"`      | Who provided or confirmed the biographical details. |
+| `circa`        | boolean | `true`                             | Set to `true` when birth or death dates are approximate (e.g., year known but not month/day). |
+| `confidence`   | string  | `"high"`, `"medium"`, or `"low"` | Confidence in the biographical information overall. |
+| `lastVerified` | string  | `"2024-06-15"`                     | ISO date when this person's record was last reviewed. |
+| `notes`        | string  | `"Birth year from family Bible"`   | Private archivist notes — not surfaced in the UI. Use for source citations, conflicting accounts, or anything you want to track but not display. |
+
+### Worked example
+
+A photograph turned up in a box at Margaret's house. It shows two people at what appears to be a summer gathering, and there is a pencilled year on the back: "1958 or 59?". Margaret identified one of the people as her father William, but was not certain about the other. You scan it in June 2024.
+
+```json
+{
+  "id": "1958-summer-gathering-01",
+  "filename": "1958-summer-gathering-01.jpg",
+  "caption": "William at what may be the lake house, first summer",
+  "date": "1958-01-01",
+  "dateLabel": "1958",
+  "location": "Lake house, Ohio",
+  "peopleIds": ["william-curry"],
+  "collectionIds": ["lake-house-summers"],
+  "source": "Margaret Curry's attic, found June 2024",
+  "identifiedBy": "Margaret Curry, June 2024",
+  "circa": true,
+  "confidence": "low",
+  "scannedDate": "2024-06-15",
+  "originalFilename": "IMG_4871.JPG",
+  "notes": "Second person unidentified. Pencil inscription on back reads '1958 or 59?'. Margaret believes it may be a neighbour."
+}
+```
+
+Because `circa` is `true`, the lightbox displays the date as "Circa 1958" rather than "1958". Because `source` is set, the lightbox shows a small "From Margaret Curry's attic, found June 2024" line below the date.
+
+### All fields are optional
+
+An entry without any provenance fields is completely valid:
+
+```json
+{
+  "id": "1965-unknown-01",
+  "filename": "1965-unknown-01.jpg",
+  "caption": "Unknown location, mid-1960s",
+  "peopleIds": [],
+  "collectionIds": []
+}
+```
+
+Add provenance fields only as you discover or verify information. The archive accumulates knowledge gradually — empty fields are not a failure, they are an invitation.
+
+---
+
 ## Common pitfalls
 
 ### Bcrypt hash escaping in .env.local
