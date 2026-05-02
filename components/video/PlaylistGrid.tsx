@@ -10,8 +10,12 @@ export default function PlaylistGrid() {
 
   if (playlists.length === 0) {
     return (
-      <div className="text-center py-12">
-        <p className="text-muted text-sm">No playlists yet.</p>
+      <div className="text-center py-16">
+        <p className="eyebrow text-quiet mb-3">FAMILY ARCHIVE</p>
+        <h2 className="font-serif text-navy text-2xl mb-2">No playlists yet</h2>
+        <p className="text-muted text-sm">
+          Playlists of family films will appear here as they are organized.
+        </p>
       </div>
     )
   }

@@ -23,7 +23,7 @@ export default function PlaylistVideoGrid({ videos }: PlaylistVideoGridProps) {
       <div className="text-center py-16">
         <p className="eyebrow text-quiet mb-3">FAMILY ARCHIVE</p>
         <h2 className="font-serif text-navy text-2xl mb-2">No videos in this playlist yet</h2>
-        <p className="text-muted text-sm">Videos tagged with this playlist will appear here.</p>
+        <p className="text-muted text-sm">Videos tagged with this playlist will appear here as they are gathered.</p>
       </div>
     )
   }

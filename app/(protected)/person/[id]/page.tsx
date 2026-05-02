@@ -192,8 +192,8 @@ export default async function PersonPage({ params }: PersonPageProps) {
       {/* Combined empty state — only shown when BOTH photos AND videos are absent */}
       {photos.length === 0 && videos.length === 0 && (
         <section className="py-12 border-t hairline">
-          <p className="text-muted text-sm">
-            No photographs or videos of this person yet.
+          <p className="font-serif italic text-muted text-base">
+            No photographs or films of this person have been added to the archive yet.
           </p>
         </section>
       )}

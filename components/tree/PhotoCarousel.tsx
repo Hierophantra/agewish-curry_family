@@ -41,7 +41,7 @@ export default function PhotoCarousel({ photos }: PhotoCarouselProps) {
     return (
       <div className="aspect-[4/5] bg-ivory border hairline rounded-sm flex items-center justify-center">
         <p className="font-serif italic text-muted text-xs text-center px-4">
-          No photographs of this person yet
+          No photographs yet
         </p>
       </div>
     )

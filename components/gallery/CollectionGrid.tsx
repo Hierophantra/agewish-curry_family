@@ -14,7 +14,7 @@ export default function CollectionGrid() {
         <p className="eyebrow text-quiet mb-3">FAMILY ARCHIVE</p>
         <h2 className="font-serif text-navy text-2xl mb-2">No collections yet</h2>
         <p className="text-muted text-sm">
-          Photo collections will appear here as they are added to the archive.
+          Collections of photographs will appear here as they are gathered into the archive.
         </p>
       </div>
     )
