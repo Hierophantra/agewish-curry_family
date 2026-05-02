@@ -2,6 +2,23 @@
 
 A private family archive for the Curry family at [curry.agewish.com](https://curry.agewish.com).
 
+## v2.2 status: complete
+
+v2.2 adds **Chronicles** — a new content type for written family stories with optional audio narration. Examples: founding the martial arts school, a memorable summer at the lake house, twenty years of music.
+
+**What is in place (v2.2):**
+- `content/chronicles.json` — written stories with markdown body, optional narration, cover photo, and people tagging
+- `/chronicles` — landing page listing all chronicles sorted by date, newest first
+- `/chronicles/[id]` — individual chronicle page with cover photo, audio player, markdown-rendered body, and people chips
+- Chronicles tab in the top navigation (5th tab: Home / Family tree / Photographs / Videos / Chronicles)
+- "Chronicles featuring" section on each person's detail page
+- "Recent chronicles" preview on the home page
+- Archive export updated: `chronicles.json` included in ZIP; Chronicles tab in the offline viewer
+
+See `CONTENT_AUTHORING.md → Writing a chronicle` for instructions on adding new entries.
+
+---
+
 ## v3 admin UI: in progress (Phase 20 complete)
 
 v3 adds a GitHub-authenticated admin interface at `/admin` for editing archive content without touching JSON or code.

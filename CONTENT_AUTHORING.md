@@ -43,6 +43,7 @@ Full people CRUD (dates, relationships, names), photograph upload via Vercel Blo
 | A new video                | `content/videos.json`                            | (uses YouTube/Vimeo ID — no file upload) |
 | A new playlist             | `content/playlists.json`                         | (no new asset — uses cover video) |
 | A new audio recording      | `content/audio.json`                             | `public/audio/{filename}` |
+| A new chronicle            | `content/chronicles.json`                        | `public/audio/{audioFilename}` (if narration) |
 | Replace a photo file       | (no JSON change)                                 | Overwrite the file in `public/photos/` |
 
 ---
@@ -691,6 +692,160 @@ The actual photo, audio, and video files are not bundled. The archive documents 
 ### Periodic backups recommended
 
 Export the archive whenever significant new content is added. Store the ZIP in a durable location (a hard drive, a cloud storage account, a family member's computer). The archive is the insurance policy for the site — if Vercel ever goes away, the JSON and the offline viewer ensure the family data is never lost.
+
+---
+
+## Writing a chronicle
+
+A chronicle is a written family story — a founding moment, an ordinary summer, a life at its turning point. Unlike a photo caption or a bio, a chronicle has room to breathe: paragraphs, a chronological or reflective arc, direct quotes from relatives, the kind of detail that would otherwise be lost.
+
+Chronicles live at `/chronicles` and on the detail pages of every person tagged in them.
+
+---
+
+### When to write a chronicle vs leave a memory in a photo caption
+
+Write a chronicle when:
+- The story is more than 2–3 sentences long
+- The event deserves to be read as a narrative, not just glanced at as metadata
+- You have a recording of someone telling the story (or you want to record one)
+- The moment involved multiple people and a sequence of events
+
+A photo caption is enough when:
+- One sentence places the photo in context ("Christmas morning, 1974")
+- The photo speaks for itself and context is minimal
+- The memory belongs primarily to one photo, not a broader period or event
+
+---
+
+### Field reference
+
+| Field          | Required | Description |
+| -------------- | -------- | ----------- |
+| `id`           | Yes      | Kebab-case slug. **Never rename after publishing** — used in the URL (`/chronicles/{id}`) and as the primary key. |
+| `title`        | Yes      | Display title. Sentence case: `"Starting the Curry Martial Arts School"`. |
+| `subtitle`     | No       | Short italic phrase under the title: `"How a basement studio became a 30-year institution"`. |
+| `body`         | Yes      | The chronicle text as a markdown string. Plain prose is fine — markdown is optional. |
+| `audioFilename` | No      | Filename of the narration recording in `/public/audio/`. Example: `"starting-the-school-narration.mp3"`. |
+| `audioDuration` | No      | Duration string: `"8:42"`. Shown alongside the audio player. |
+| `date`         | No       | ISO date `"YYYY-MM-DD"`. Used for sorting (newest first on /chronicles). |
+| `dateLabel`    | No       | Display string: `"Summer 1979"`. Shown as an eyebrow on cards and detail pages. |
+| `peopleIds`    | No       | Array of person IDs who appear in the story. Each person's detail page will show a "Chronicles featuring" section. |
+| `coverPhotoId` | No       | Photo ID from `photos.json` displayed at the top of the chronicle detail page. |
+| `collectionIds` | No      | Collection IDs for future cross-tagging. Empty array is fine. |
+| `source`       | No       | Where this story came from: `"Robert Curry, interviewed by Thomas Walsh, 2022"`. |
+| `identifiedBy` | No       | Who wrote or verified the chronicle: `"Thomas Walsh, November 2022"`. |
+| `circa`        | No       | `true` when the date is approximate. Displays as "Circa Summer 1979". |
+| `confidence`   | No       | `"high"`, `"medium"`, or `"low"`. Confidence in the account. |
+| `lastVerified` | No       | ISO date when this entry was last reviewed: `"2022-11-14"`. |
+
+---
+
+### Markdown cheatsheet
+
+The `body` field is a markdown string. Plain text renders as prose — you do not have to use any markdown syntax. When you want formatting:
+
+| What you want       | How to write it         | Result |
+| ------------------- | ----------------------- | ------ |
+| *Italics*           | `*italicised text*`     | Italics |
+| **Bold**            | `**bold text**`         | Bold |
+| Blockquote          | `> quoted text`         | Indented gold-bordered quote |
+| Section heading     | `## Heading text`       | Section heading |
+| Paragraph break     | Blank line between paragraphs | New paragraph |
+| Em dash             | `--` (two hyphens) or `—` (actual em dash character) | — |
+| Bullet list         | `- item one`            | Bulleted list |
+
+**Rules:**
+- One blank line between paragraphs — a single line break is treated as a space.
+- Do NOT use HTML tags inside the body — they are stripped for security.
+- Chapter headings (`## Heading`) are useful for long chronicles with distinct sections.
+- Blockquotes (`> ...`) work well for direct quotes from family members: *"That's a good floor," he said.*
+
+---
+
+### Recording the narration
+
+An audio narration is the author reading the chronicle aloud. It is optional but adds significant warmth — hearing the story in someone's voice anchors it in a way text alone cannot.
+
+**Recording tips:**
+- Find a quiet room. Close doors, windows, HVAC vents if possible. Carpet absorbs echo; tile reverberates.
+- Do a short test recording and listen back on headphones before the full take.
+- Leave a few seconds of silence at the start and end — gives editing room for any cleanup.
+- Speak at a natural pace. Slightly slower than conversation reads better as a recording.
+- If you stumble, pause, back up to the start of the sentence, and continue — it is easy to edit out.
+
+**File format:**
+- Save as **MP3** for broadest browser support.
+- **Recommended bitrate: 64–128 kbps mono.** Excellent voice quality at small file size.
+- Stereo is only necessary for music — voice recordings sound identical in mono and use half the storage.
+
+**Naming the file:**
+
+Use a descriptive, lowercase, kebab-case filename matching the chronicle ID:
+
+```
+starting-the-school-narration.mp3
+```
+
+Place the file in:
+```
+public/audio/starting-the-school-narration.mp3
+```
+
+Then in `content/chronicles.json`, set:
+```json
+"audioFilename": "starting-the-school-narration.mp3",
+"audioDuration": "8:42"
+```
+
+The audio player appears automatically at the top of the chronicle detail page when `audioFilename` is present.
+
+---
+
+### Worked example — a chronicle from start to finish
+
+**Step 1 — Write the story.** You can write it directly in the JSON, but it is easier to write it as plain text first, then paste it in.
+
+**Step 2 — Add to chronicles.json:**
+
+```json
+{
+  "id": "starting-the-martial-arts-school",
+  "title": "Starting the Curry Martial Arts School",
+  "subtitle": "How a basement studio became a 30-year institution",
+  "body": "In the summer of 1979, Robert Curry cleared out the basement...\n\nHis father William helped him lay the foam mats. It took them most of a Saturday.",
+  "audioFilename": "starting-the-school-narration.mp3",
+  "audioDuration": "4:12",
+  "date": "1979-06-01",
+  "dateLabel": "Summer 1979",
+  "peopleIds": ["robert-curry", "william-curry"],
+  "coverPhotoId": "1981-lake-house-01",
+  "collectionIds": [],
+  "source": "Robert Curry, interviewed by Thomas Walsh, 2022",
+  "identifiedBy": "Thomas Walsh, November 2022",
+  "confidence": "high",
+  "lastVerified": "2022-11-14"
+}
+```
+
+Note: `\n\n` in JSON creates a paragraph break in the rendered chronicle. If you are writing directly in a JSON editor, you can also use actual newlines inside a multi-line string (some editors support this). Both work.
+
+**Step 3 — Place the narration file (if you have one):**
+
+```bash
+cp ~/Desktop/roberts-narration.mp3 public/audio/starting-the-school-narration.mp3
+```
+
+**Step 4 — Verify locally:**
+
+```bash
+npm run build
+```
+
+Visit `http://localhost:3000/chronicles` — the new card appears.
+Visit `http://localhost:3000/chronicles/starting-the-martial-arts-school` — title, audio player, body, and people chips render.
+
+**Step 5 — Push to GitHub.** Vercel rebuilds automatically in approximately 90 seconds.
 
 ---
 
