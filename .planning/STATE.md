@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v2.1
 milestone_name: v2.1 — User Punch List + A+ Peer Review
-status: executing
-stopped_at: Phase 17 complete — audio content type; AudioSchema, AudioPlayer, audio.json stubs, person-page audio section (7 tasks, 8 files, 6 commits)
+status: complete
+stopped_at: v2.1 MILESTONE COMPLETE — Phase 18 done; archive export + /slideshow ambient mode; npm run build exits 0 (24 pages)
 last_updated: "2026-04-29T00:00:00Z"
-last_activity: 2026-04-29 — Phase 17 complete; audio as first-class content type; npm run build exits 0 (22 pages)
+last_activity: 2026-04-29 — Phase 18 complete; manifest.zip archive export + /slideshow ambient mode with shuffle, crossfade, keyboard nav; npm run build exits 0 (24 pages)
 progress:
   total_phases: 18
-  completed_phases: 17
-  total_plans: 24
-  completed_plans: 24
-  percent: 94
+  completed_phases: 18
+  total_plans: 26
+  completed_plans: 26
+  percent: 100
 ---
 
 # Project State
@@ -21,17 +21,17 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-29)
 
 **Core value:** Family members can securely access and explore their shared family history — photos, videos, and an interactive family tree — through a private, beautifully designed archive.
-**Current focus:** Phase 8 — Photo Collections + Lightbox
+**Current focus:** v2.1 MILESTONE COMPLETE — all 18 phases complete
 
 ## Current Position
 
-Phase: 17 of 18 (v2.1 Audio Content Type) — complete
-Plan: 1 of 1 in current phase (17-01 done)
-Status: executing — Phase 18 next (archive export + slideshow)
-Current focus: v2.1 in progress
-Last activity: 2026-04-29 — Phase 17 complete; AudioSchema, AudioPlayer, audio.json stubs, person-page audio section; npm run build exits 0 (22 pages)
+Phase: 18 of 18 (v2.1 Archive Export + Slideshow) — complete
+Plan: 2 of 2 in current phase (18-01 + 18-02 done)
+Status: complete (v2.1 milestone closed)
+Current focus: v2.1 complete — v2.2 planning available when ready
+Last activity: 2026-04-29 — Phase 18 complete; manifest.zip archive export + /slideshow ambient mode; npm run build exits 0 (24 pages)
 
-Progress: [█████████████████████░] 94% (17/18 phases complete)
+Progress: [██████████████████████] 100% (18/18 phases complete — v2.1 MILESTONE COMPLETE)
 
 ## Phase 1 outcome
 
@@ -143,6 +143,10 @@ Recent decisions affecting current work:
 - 17: AudioSchema uses `source` (not `source_provenance`) — no platform field conflict unlike VideoSchema
 - 17: AudioPlayer uses native <audio> with onPlay/onPause/onEnded events to track playing state — handles all state changes including programmatic pause from other sources
 - 17: Placeholder audio files are 1-byte stubs; play() promise rejected silently — graceful degradation without page errors
+- 18: SlideshowPlayer uses fixed inset-0 z-50 to cover TopNav/Footer — no special layout.tsx needed for /slideshow route
+- 18: Shuffle stored in useRef<Photo[]> not state — shuffle once on mount without triggering re-render; currentIndex state drives display
+- 18: Auto-advance interval not reset on manual keyboard nav — interval continues in background; manual nudge is additive; simpler for ambient mode
+- 18: Controls counter uses shuffled.current.length with fallback to photos.length to handle pre-shuffle render frame
 
 ### Pending Todos
 
@@ -163,5 +167,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-04-29T00:00:00Z
-Stopped at: Completed Phase 16 (16-01 + 16-02) — URL deep linking for tree/lightbox/video, BlurHash blur-up placeholders, npm run blur tooling; npm run build exits 0 (22 pages)
+Stopped at: v2.1 MILESTONE COMPLETE — Phase 18 (archive export + /slideshow ambient mode); npm run build exits 0 (24 pages); all 18 phases done
 Resume file: None

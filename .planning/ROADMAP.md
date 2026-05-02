@@ -6,7 +6,7 @@
 
 **v2 milestone (Phases 7-13) — COMPLETE.** Substantial refactor introducing collections-and-playlists-as-tags architecture, per-section focus views, shared lightbox component, prototype-fidelity tree panel, and the real AgeWish brand mark via PNG logos. Driven by `CURRY_FAMILY_HUB_BRIEF_v2.md` and `curry-family-hub-prototype.html`. See `.planning/V2-MILESTONE-COMPLETE.md` for full close-out summary.
 
-**v2.1 milestone (Phases 14-18) — IN PROGRESS.** User punch list + cross-AI peer review (Claude/Gemini/Codex) recommendations. 15 items across 5 phases. See `.planning/V2.1-FEEDBACK.md`.
+**v2.1 milestone (Phases 14-18) — COMPLETE.** User punch list + cross-AI peer review (Claude/Gemini/Codex) recommendations. 15 items across 5 phases. See `.planning/V2.1-FEEDBACK.md` and `.planning/V2.1-MILESTONE-COMPLETE.md`.
 
 ## Phases
 
@@ -43,7 +43,7 @@ User punch list + cross-AI A+ recommendations. See `.planning/V2.1-FEEDBACK.md` 
 - [x] **Phase 15: v2.1 Schema + Accessibility** - Provenance metadata fields (source/circa/confidence/identifiedBy/lastVerified) on photos+people; accessibility hardening (focus traps, return-focus, prefers-reduced-motion, keyboard tree nav, ARIA dialogs)
 - [x] **Phase 16: v2.1 Deep Linking + BlurHash** - URL-synced state for tree person, lightbox photo, video lightbox; BlurHash placeholders generated at build time
 - [x] **Phase 17: v2.1 Audio Content Type** - audio.json schema, AudioPlayer component, audio attached to people/photos/collections; "Listen to the story" surfaces
-- [ ] **Phase 18: v2.1 Archive Export + Slideshow** - Footer "Download archive" generates manifest.zip with JSON + static index.html; /slideshow ambient mode auto-advances photos full-screen
+- [x] **Phase 18: v2.1 Archive Export + Slideshow** - Footer "Download archive" generates manifest.zip with JSON + static index.html; /slideshow ambient mode auto-advances photos full-screen with 8s interval, 1.2s crossfade, keyboard nav, collection filtering
 
 ## Phase Details
 
@@ -163,3 +163,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 15. v2.1 Schema + Accessibility | 2/2 | Complete | 2026-04-29 |
 | 16. v2.1 Deep Linking + BlurHash | 2/2 | Complete | 2026-04-29 |
 | 17. v2.1 Audio Content Type | 1/1 | Complete | 2026-04-29 |
+| 18. v2.1 Archive Export + Slideshow | 2/2 | Complete | 2026-04-29 |
