@@ -144,9 +144,33 @@ export const PlaylistSchema = z.object({
   description: z.string().optional(),
 })
 
+// ── Audio schema ──
+// Audio.filename refers to a file in /public/audio/{filename}.
+// Supports voicemails, oral histories, songs, and any other audio recordings.
+export const AudioSchema = z.object({
+  id: z.string().min(1),
+  filename: z.string().min(1),               // file in /public/audio/{filename}
+  title: z.string().min(1),                  // e.g., "Grandfather's voicemail, March 2003"
+  description: z.string().optional(),        // longer context if needed
+  date: z.string().optional(),               // ISO YYYY-MM-DD
+  dateLabel: z.string().optional(),          // e.g., "March 2003"
+  duration: z.string().optional(),           // e.g., "0:47"
+  peopleIds: z.array(z.string()).default([]),
+  collectionIds: z.array(z.string()).default([]),  // audio CAN be in collections (mixed-media collections)
+
+  // Provenance (Phase 15 pattern)
+  source: z.string().optional(),
+  identifiedBy: z.string().optional(),
+  circa: z.boolean().optional(),
+  confidence: z.enum(['high', 'medium', 'low']).optional(),
+  lastVerified: z.string().optional(),
+  recordedDate: z.string().optional(),
+})
+
 // ── TypeScript types (derived from schemas — do not manually duplicate) ──
 export type Person = z.infer<typeof PersonSchema>
 export type Photo = z.infer<typeof PhotoSchema>
 export type Video = z.infer<typeof VideoSchema>
 export type Collection = z.infer<typeof CollectionSchema>
 export type Playlist = z.infer<typeof PlaylistSchema>
+export type Audio = z.infer<typeof AudioSchema>
