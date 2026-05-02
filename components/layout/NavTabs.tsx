@@ -12,6 +12,7 @@ const TABS = [
   { href: '/tree', label: 'Family tree' },
   { href: '/photographs', label: 'Photographs' },
   { href: '/videos', label: 'Videos' },
+  { href: '/chronicles', label: 'Chronicles' },
 ] as const
 
 export default function NavTabs() {
