@@ -121,6 +121,9 @@ export default function Lightbox({ photos, currentIndex, onClose, onPrev, onNext
               height={1200}
               className="max-w-full max-h-[80vh] object-contain w-auto h-auto"
               priority
+              {...(photo.blurDataUrl
+                ? { placeholder: 'blur' as const, blurDataURL: photo.blurDataUrl }
+                : {})}
             />
           </div>
 

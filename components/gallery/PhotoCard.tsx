@@ -31,7 +31,7 @@ export default function PhotoCard({ photo, onClick }: PhotoCardProps) {
 
   const innerContent = (
     <>
-      {/* Image container — 4:3 aspect ratio, ivory placeholder while loading */}
+      {/* Image container — 4:3 aspect ratio, blur placeholder while loading */}
       <div className="relative aspect-[4/3] bg-ivory overflow-hidden">
         <Image
           src={`/photos/${photo.filename}`}
@@ -39,6 +39,9 @@ export default function PhotoCard({ photo, onClick }: PhotoCardProps) {
           fill
           sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
           className="object-cover"
+          {...(photo.blurDataUrl
+            ? { placeholder: 'blur' as const, blurDataURL: photo.blurDataUrl }
+            : {})}
         />
       </div>
 
