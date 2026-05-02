@@ -1,16 +1,16 @@
 ---
 gsd_state_version: 1.0
 milestone: v3
-milestone_name: v3 — Admin authoring UI; Phase 23 Video CRUD complete
+milestone_name: v3 — Admin authoring UI; Phase 24 Audio CRUD complete
 status: in_progress
-stopped_at: v3 Phase 23 complete — Video CRUD (list + new + edit + delete); EditVideoForm; 2 API handlers; getVideoById() in lib/content.ts; npm run build exits 0 (40 pages)
-last_updated: "2026-04-29T00:00:00Z"
-last_activity: 2026-04-29 — Phase 23 complete; /admin/videos list + new + [id]; EditVideoForm; /api/admin/videos POST; /api/admin/videos/[id] POST+DELETE; getVideoById(); npm run build exits 0 (40 pages)
+stopped_at: v3 Phase 24 complete — Audio CRUD with Vercel Blob upload; getAudioUrl helper; EditAudioForm; /admin/audio list + new + [id]; 2 API handlers; npm run build exits 0 (43 pages)
+last_updated: "2026-04-29T00:35:00Z"
+last_activity: 2026-04-29 — Phase 24 complete; getAudioUrl() in lib/utils.ts; AudioPlayer updated; /admin/audio list + new + [id]; EditAudioForm; /api/admin/audio POST; /api/admin/audio/[id] POST+DELETE; CONTENT_AUTHORING.md updated; npm run build exits 0 (43 pages)
 progress:
-  total_phases: 21
-  completed_phases: 21
-  total_plans: 28
-  completed_plans: 28
+  total_phases: 22
+  completed_phases: 22
+  total_plans: 29
+  completed_plans: 29
   percent: 100
 ---
 
@@ -25,13 +25,13 @@ See: .planning/PROJECT.md (updated 2026-04-29)
 
 ## Current Position
 
-Phase: 23 of 23 (v3 Video CRUD) — complete
-Plan: 1/1 in Phase 23 (23-v3-video-crud done)
-Status: in_progress (v3 milestone; Phase 23 done; Phase 24+ audio upload + further admin planned)
-Current focus: v3 Phase 23 complete — Video CRUD; /admin/videos list + new + [id]; EditVideoForm; 2 API handlers; getVideoById()
-Last activity: 2026-04-29 — Phase 23 complete; /admin/videos list + new + [id]; EditVideoForm; /api/admin/videos POST; /api/admin/videos/[id] POST+DELETE; getVideoById(); npm run build exits 0 (40 pages)
+Phase: 24 of 24 (v3 Audio CRUD) — complete
+Plan: 1/1 in Phase 24 (24-v3-audio-upload done)
+Status: in_progress (v3 milestone; Phase 24 done; Collections/Playlists admin planned next)
+Current focus: v3 Phase 24 complete — Audio CRUD with Vercel Blob upload; getAudioUrl(); EditAudioForm; /admin/audio list + new + [id]; 2 API handlers
+Last activity: 2026-04-29 — Phase 24 complete; getAudioUrl() in lib/utils.ts; AudioPlayer updated; /admin/audio list + new + [id]; EditAudioForm; /api/admin/audio POST; /api/admin/audio/[id] POST+DELETE; CONTENT_AUTHORING.md updated; npm run build exits 0 (43 pages)
 
-Progress: [██████████████████████] 100% (23/23 phases complete — v2.2 Phase 19 + v3 Phases 20-23 done)
+Progress: [██████████████████████] 100% (24/24 phases complete — v2.2 Phase 19 + v3 Phases 20-24 done)
 
 ## Phase 1 outcome
 
@@ -174,6 +174,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-29T00:00:00Z
-Stopped at: v3 Phase 22 complete — Photo upload via Vercel Blob; getPhotoUrl hybrid storage helper; /admin/photos list + new + [id]; EditPhotoForm; /api/admin/photos POST; /api/admin/photos/[id] POST+DELETE; npm run build exits 0 (37 pages)
+Last session: 2026-04-29T00:35:00Z
+Stopped at: v3 Phase 24 complete — Audio CRUD with Vercel Blob upload; getAudioUrl() helper; EditAudioForm; /admin/audio list + new + [id]; /api/admin/audio POST+[id] POST+DELETE; CONTENT_AUTHORING.md updated; npm run build exits 0 (43 pages)
 Resume file: None
