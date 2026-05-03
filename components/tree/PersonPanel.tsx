@@ -47,11 +47,24 @@ export default function PersonPanel({ person, photos, people, onClose }: PersonP
       ? String(person.birthYear)
       : null
 
+  // Build "Died" label — prefer deathDate (full formatted), fall back to deathYear
+  const diedLabel = person.deathDate
+    ? formatDateISO(person.deathDate)
+    : person.deathYear
+      ? String(person.deathYear)
+      : null
+
   // Birthplace — v2 canonical birthplace with v1 birthPlace fallback
   const birthplaceLabel = person.birthplace ?? person.birthPlace ?? null
 
   // Spouse — v2 spouseLabel (plain display string from JSON)
   const spouseLabel = person.spouseLabel ?? null
+
+  // Mother / Father — display-only labels for parents without their own Person record.
+  // Used when the visualized parent (primary spouse, via flattenMultiSpouses workaround)
+  // is not the biological mother/father.
+  const motherLabel = person.motherName ?? null
+  const fatherLabel = person.fatherName ?? null
 
   // Children — comma-separated resolved names; show "(none)" if array is empty
   const childrenLabel =
@@ -61,7 +74,10 @@ export default function PersonPanel({ person, photos, people, onClose }: PersonP
   type MetaRow = [string, string]
   const metaRows: MetaRow[] = []
   if (bornLabel) metaRows.push(['Born', bornLabel])
+  if (diedLabel) metaRows.push(['Died', diedLabel])
   if (birthplaceLabel) metaRows.push(['Birthplace', birthplaceLabel])
+  if (motherLabel) metaRows.push(['Mother', motherLabel])
+  if (fatherLabel) metaRows.push(['Father', fatherLabel])
   if (spouseLabel) metaRows.push(['Spouse', spouseLabel])
   // Always show Children row (shows "(none)" when empty) if person could have children
   // (show only if childrenIds/childIds were defined, even if empty, to match prototype)

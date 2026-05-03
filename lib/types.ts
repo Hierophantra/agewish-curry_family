@@ -44,6 +44,12 @@ export const PersonSchema = z.object({
   // Existing
   gender: z.enum(['male', 'female', 'other']).optional(),
 
+  // Display-only labels for parents who do not have their own Person record.
+  // Used on the panel card to surface biological mother/father when the tree
+  // visualization shows the child under a different (primary-spouse) pairing.
+  motherName: z.string().optional(),
+  fatherName: z.string().optional(),
+
   // Provenance for biographical information
   identifiedBy: z.string().optional(),    // who provided/confirmed the bio details
   circa: z.boolean().optional(),          // true if dates are approximate

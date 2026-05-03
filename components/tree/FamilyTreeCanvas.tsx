@@ -248,6 +248,11 @@ export default function FamilyTreeCanvas({
           // v2: prefer person.relationLabel (e.g. "GRANDFATHER", "SON", "GRANDDAUGHTER");
           // fall back to computed label for people without this field
           const label = person?.relationLabel ?? getRelationLabel(node, rootId, people)
+          // Compute death year for the node card. Prefer explicit deathYear, fall back
+          // to parsing the year from deathDate (ISO YYYY-MM-DD).
+          const deathYear =
+            person?.deathYear ??
+            (person?.deathDate ? Number(person.deathDate.slice(0, 4)) : undefined)
           return (
             <PersonNode
               key={node.id}
@@ -256,6 +261,7 @@ export default function FamilyTreeCanvas({
               isActive={selectedId === node.id}
               isFocused={focusedNodeId === node.id}
               relationLabel={label}
+              deathYear={deathYear}
               onClick={() => {
                 if (node.id === selectedId) {
                   handleClose()

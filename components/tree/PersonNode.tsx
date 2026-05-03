@@ -10,6 +10,7 @@ interface PersonNodeProps {
   isActive: boolean
   isFocused: boolean     // keyboard focus indicator (separate from panel-open selection)
   relationLabel: string  // e.g., "GRANDFATHER", "FATHER" — computed by canvas
+  deathYear?: number     // shown as "d. YYYY" line for deceased people
   onClick: () => void
   onRef: (el: HTMLButtonElement | null) => void  // allows canvas to imperatively focus nodes
   style: CSSProperties
@@ -18,7 +19,7 @@ interface PersonNodeProps {
 // node is accepted as a prop (required by FamilyTreeCanvas) but not rendered directly
 // — we render `name` (resolved by canvas) instead of node.id
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export default function PersonNode({ node: _node, name, isActive, isFocused, relationLabel, onClick, onRef, style }: PersonNodeProps) {
+export default function PersonNode({ node: _node, name, isActive, isFocused, relationLabel, deathYear, onClick, onRef, style }: PersonNodeProps) {
   return (
     <button
       ref={onRef}
@@ -58,6 +59,13 @@ export default function PersonNode({ node: _node, name, isActive, isFocused, rel
 
       {/* Relation label — D-13: eyebrow class (uppercase + tracking) */}
       <span className="eyebrow text-quiet mt-0.5">{relationLabel}</span>
+
+      {/* Deceased indicator — only shown when deathYear is set */}
+      {deathYear && (
+        <span className="text-quiet text-[10px] leading-none mt-0.5 italic">
+          d. {deathYear}
+        </span>
+      )}
     </button>
   )
 }

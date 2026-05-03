@@ -19,7 +19,7 @@ export default function TreePage() {
         <h1 className="font-serif text-navy text-4xl mb-2">Family tree</h1>
         {/* D-17: subtitle copy — placeholder adapts to real data later */}
         <p className="text-muted text-base">
-          From William Curry, born 1920 in London, the family expanded across generations.
+          From Ernest E Curry, born 1930, the family expanded across generations.
         </p>
       </header>
 
