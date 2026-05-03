@@ -7,7 +7,7 @@
     "sourceId": "dQw4w9WgXcQ",
     "date": "2000-04-12",
     "dateLabel": "April 2000",
-    "peopleIds": ["william-curry"],
+    "peopleIds": [],
     "playlistIds": ["birthdays"],
     "featured": true,
     "source_provenance": "James Curry's home video archive",
@@ -23,7 +23,7 @@
     "sourceId": "jNQXAC9IVRw",
     "date": "2017-03-14",
     "dateLabel": "March 2017",
-    "peopleIds": ["margaret-curry"],
+    "peopleIds": [],
     "playlistIds": ["birthdays"],
     "featured": false
   },
@@ -35,7 +35,7 @@
     "sourceId": "9bZkp7q19f0",
     "date": "2019-07-04",
     "dateLabel": "July 2019",
-    "peopleIds": ["robert-curry", "margaret-curry", "james-curry"],
+    "peopleIds": [],
     "playlistIds": ["reunions"],
     "featured": true
   }

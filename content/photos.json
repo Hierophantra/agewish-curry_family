@@ -6,9 +6,7 @@
     "date": "1953-06-15",
     "dateLabel": "June 1953",
     "location": "Dayton, Ohio",
-    "peopleIds": [
-      "william-curry"
-    ],
+    "peopleIds": [],
     "collectionIds": [
       "wedding-days"
     ],
@@ -26,10 +24,7 @@
     "date": "1974-12-25",
     "dateLabel": "December 1974",
     "location": "Dayton, Ohio",
-    "peopleIds": [
-      "william-curry",
-      "margaret-curry"
-    ],
+    "peopleIds": [],
     "collectionIds": [
       "christmas-mornings"
     ],
@@ -42,10 +37,7 @@
     "date": "1981-08-10",
     "dateLabel": "August 1981",
     "location": "Lake house, Ohio",
-    "peopleIds": [
-      "william-curry",
-      "robert-curry"
-    ],
+    "peopleIds": [],
     "collectionIds": [
       "lake-house-summers"
     ],
@@ -58,11 +50,7 @@
     "date": "1989-04-16",
     "dateLabel": "April 1989",
     "location": "Dayton, Ohio",
-    "peopleIds": [
-      "william-curry",
-      "margaret-curry",
-      "james-curry"
-    ],
+    "peopleIds": [],
     "collectionIds": [],
     "blurDataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAEklEQVR4nGP4jxcwjEr/xxIsAPoeKuTOO2LEAAAAAElFTkSuQmCC"
   },
@@ -73,15 +61,7 @@
     "date": "1995-07-04",
     "dateLabel": "July 1995",
     "location": "Lake house, Ohio",
-    "peopleIds": [
-      "robert-curry",
-      "margaret-curry",
-      "james-curry",
-      "sarah-curry",
-      "daniel-curry",
-      "emily-walsh",
-      "thomas-walsh"
-    ],
+    "peopleIds": [],
     "collectionIds": [
       "lake-house-summers"
     ],
@@ -94,14 +74,7 @@
     "date": "2005-12-25",
     "dateLabel": "December 2005",
     "location": "Dayton, Ohio",
-    "peopleIds": [
-      "robert-curry",
-      "margaret-curry",
-      "sarah-curry",
-      "daniel-curry",
-      "emily-walsh",
-      "thomas-walsh"
-    ],
+    "peopleIds": [],
     "collectionIds": [
       "christmas-mornings"
     ],

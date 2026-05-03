@@ -7,7 +7,7 @@
     "date": "2003-03-16",
     "dateLabel": "March 2003",
     "duration": "0:47",
-    "peopleIds": ["william-curry"],
+    "peopleIds": [],
     "collectionIds": [],
     "source": "Margaret's saved voicemails",
     "confidence": "high"
@@ -19,7 +19,7 @@
     "description": "After dinner on a summer evening, three generations singing.",
     "dateLabel": "Summer 1985",
     "duration": "3:12",
-    "peopleIds": ["william-curry", "robert-curry", "margaret-curry", "james-curry"],
+    "peopleIds": [],
     "collectionIds": ["lake-house-summers"],
     "circa": true,
     "confidence": "medium"
@@ -32,7 +32,7 @@
     "date": "2024-08-04",
     "dateLabel": "August 2024",
     "duration": "12:34",
-    "peopleIds": ["margaret-curry"],
+    "peopleIds": [],
     "collectionIds": [],
     "source": "Emily Walsh's interview series",
     "identifiedBy": "Emily Walsh, August 2024",
