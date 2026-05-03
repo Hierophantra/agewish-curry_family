@@ -66,9 +66,8 @@ export default function PersonPanel({ person, photos, people, onClose }: PersonP
   const motherLabel = person.motherName ?? null
   const fatherLabel = person.fatherName ?? null
 
-  // Children — comma-separated resolved names; show "(none)" if array is empty
-  const childrenLabel =
-    childNames.length > 0 ? childNames.join(', ') : '(none)'
+  // Children — comma-separated resolved names; row is omitted entirely when there are none
+  const childrenLabel = childNames.length > 0 ? childNames.join(', ') : null
 
   // Build meta rows — skip rows with no data
   type MetaRow = [string, string]
@@ -79,9 +78,9 @@ export default function PersonPanel({ person, photos, people, onClose }: PersonP
   if (motherLabel) metaRows.push(['Mother', motherLabel])
   if (fatherLabel) metaRows.push(['Father', fatherLabel])
   if (spouseLabel) metaRows.push(['Spouse', spouseLabel])
-  // Always show Children row (shows "(none)" when empty) if person could have children
-  // (show only if childrenIds/childIds were defined, even if empty, to match prototype)
-  metaRows.push(['Children', childrenLabel])
+  // Children row is omitted when the person has no recorded children — avoids
+  // rendering a row that just says "(none)" for everyone in the youngest generation.
+  if (childrenLabel) metaRows.push(['Children', childrenLabel])
 
   return (
     // D-16: mobile bottom-sheet (fixed, full-width, slides from bottom, rounded top corners)
