@@ -96,6 +96,16 @@ export default function FamilyTreeCanvas({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [urlPerson])
 
+  // Zoom: clamp to a sensible range. 1.0 == native size.
+  // Step matches the increments shown in the control cluster.
+  const ZOOM_MIN = 0.5
+  const ZOOM_MAX = 2.0
+  const ZOOM_STEP = 0.1
+  const [zoom, setZoom] = useState(1)
+  const zoomIn = () => setZoom((z) => Math.min(ZOOM_MAX, Math.round((z + ZOOM_STEP) * 10) / 10))
+  const zoomOut = () => setZoom((z) => Math.max(ZOOM_MIN, Math.round((z - ZOOM_STEP) * 10) / 10))
+  const zoomReset = () => setZoom(1)
+
   const canvasWidth = canvas.width * H_UNIT
   const canvasHeight = canvas.height * V_UNIT
 
@@ -222,27 +232,71 @@ export default function FamilyTreeCanvas({
         style={{ background: 'linear-gradient(to right, transparent, white)' }}
         aria-hidden="true"
       />
+      {/* Zoom controls — floating cluster in the top-right of the tree area.
+          z-30 sits above the right-edge gradient (z-20) and tree nodes. */}
+      <div
+        className="absolute right-3 top-3 z-30 flex items-stretch bg-white hairline border-stone rounded shadow-sm"
+        role="group"
+        aria-label="Zoom controls"
+      >
+        <button
+          type="button"
+          onClick={zoomOut}
+          disabled={zoom <= ZOOM_MIN}
+          aria-label="Zoom out"
+          className="px-2.5 py-1 text-navy text-base leading-none hover:bg-ivory disabled:opacity-30 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+        >
+          −
+        </button>
+        <button
+          type="button"
+          onClick={zoomReset}
+          aria-label={`Reset zoom (currently ${Math.round(zoom * 100)} percent)`}
+          className="px-2 py-1 text-quiet text-xs tabular-nums border-l border-r border-stone hover:bg-ivory focus:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+          style={{ minWidth: 48 }}
+        >
+          {Math.round(zoom * 100)}%
+        </button>
+        <button
+          type="button"
+          onClick={zoomIn}
+          disabled={zoom >= ZOOM_MAX}
+          aria-label="Zoom in"
+          className="px-2.5 py-1 text-navy text-base leading-none hover:bg-ivory disabled:opacity-30 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+        >
+          +
+        </button>
+      </div>
       {/* D-10: overflow-x-auto enables horizontal scroll on narrow viewports.
           Tree container stays at full width regardless of panel state — panel no longer
-          shrinks the tree (panel is now fixed/viewport-positioned, not docked inside). */}
-      <div className="overflow-x-auto">
-        {/* Relative-positioned canvas — all nodes + connectors are absolutely positioned children.
-            onKeyDown handles arrow-key spatial navigation between nodes.
-            role="group" + aria-label groups the tree for screen reader context. */}
-        <div
-          className="relative"
-          style={{ width: canvasWidth, height: canvasHeight, minHeight: 120 }}
-          onKeyDown={handleCanvasKeyDown}
-          role="group"
-          aria-label="Family tree — use arrow keys to navigate between family members, Enter to open panel, Escape to close"
-        >
+          shrinks the tree (panel is now fixed/viewport-positioned, not docked inside).
+          Outer wrapper is sized to the SCALED canvas so the scrollbars track zoom. */}
+      <div className="overflow-auto" style={{ maxHeight: '80vh' }}>
+        <div style={{ width: canvasWidth * zoom, height: Math.max(canvasHeight * zoom, 120) }}>
+          {/* Relative-positioned canvas — all nodes + connectors are absolutely positioned children.
+              onKeyDown handles arrow-key spatial navigation between nodes.
+              role="group" + aria-label groups the tree for screen reader context.
+              transform: scale() zooms everything; transform-origin top-left keeps (0,0) anchored. */}
+          <div
+            className="relative"
+            style={{
+              width: canvasWidth,
+              height: canvasHeight,
+              minHeight: 120,
+              transform: `scale(${zoom})`,
+              transformOrigin: 'top left',
+            }}
+            onKeyDown={handleCanvasKeyDown}
+            role="group"
+            aria-label="Family tree — use arrow keys to navigate between family members, Enter to open panel, Escape to close"
+          >
         {/* Connector lines rendered BEFORE nodes so nodes appear on top */}
         {connectors.map(([x1, y1, x2, y2], i) => (
           <ConnectorLine key={i} x1={x1} y1={y1} x2={x2} y2={y2} />
         ))}
 
-        {/* Person nodes — absolutely positioned by transform: translate(left*H_UNIT, top*V_UNIT) */}
-        {nodes.map((node) => {
+          {/* Person nodes — absolutely positioned by transform: translate(left*H_UNIT, top*V_UNIT) */}
+          {nodes.map((node) => {
           const person = peopleById.get(node.id)
           const name = person?.name ?? node.id
           // v2: prefer person.relationLabel (e.g. "GRANDFATHER", "SON", "GRANDDAUGHTER");
@@ -282,6 +336,7 @@ export default function FamilyTreeCanvas({
             />
           )
         })}
+          </div>
         </div>
       </div>
 
