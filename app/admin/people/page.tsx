@@ -38,21 +38,36 @@ export default async function AdminPeopleListPage() {
       <ul className="flex flex-col divide-y divide-stone">
         {people.map((p) => (
           <li key={p.id} className="py-5 flex items-center justify-between gap-4">
-            <div>
+            {/* Name links to the public person page so you can see what the
+                family sees. Edit is a separate explicit action on the right. */}
+            <Link
+              href={`/person/${p.id}`}
+              className="group flex-1 min-w-0 hover:opacity-80 transition-opacity focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 rounded"
+            >
               {p.relationLabel && (
                 <p className="eyebrow text-quiet text-[10px] mb-1">{p.relationLabel}</p>
               )}
-              <p className="font-serif text-navy text-xl">{p.name}</p>
+              <p className="font-serif text-navy text-xl group-hover:underline group-hover:underline-offset-2">{p.name}</p>
               {p.datesLabel && (
                 <p className="font-serif italic text-muted text-sm">{p.datesLabel}</p>
               )}
-            </div>
-            <Link
-              href={`/admin/people/${p.id}`}
-              className="eyebrow text-gold-deep hover:text-gold transition-colors text-[10px] shrink-0"
-            >
-              Edit →
             </Link>
+            <div className="flex items-center gap-4 shrink-0">
+              <Link
+                href={`/person/${p.id}`}
+                className="eyebrow text-quiet hover:text-navy transition-colors text-[10px]"
+                aria-label={`View public page for ${p.name}`}
+              >
+                View
+              </Link>
+              <Link
+                href={`/admin/people/${p.id}`}
+                className="eyebrow text-gold-deep hover:text-gold transition-colors text-[10px]"
+                aria-label={`Edit ${p.name}`}
+              >
+                Edit →
+              </Link>
+            </div>
           </li>
         ))}
       </ul>

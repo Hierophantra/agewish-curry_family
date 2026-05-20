@@ -290,6 +290,7 @@
     "gender": "male",
     "relationLabel": "SECOND GENERATION",
     "eyebrow": "Son of Ernest & Nina",
+    "spouseLabel": "Regina Graham (divorced)",
     "birthYear": 1961,
     "birthDate": "1961-02-14",
     "datesLabel": "1961 - present",
@@ -297,44 +298,41 @@
     "parentIds": ["ernest-curry-sr", "nina-curry"],
     "childrenIds": ["graham-curry", "jalen-curry"],
     "childIds": ["graham-curry", "jalen-curry"],
-    "spouseIds": [],
+    "spouseIds": ["regina-graham", "sherry-stolfo"],
     "confidence": "high",
-    "notes": "Divorced from Regina Graham (b. 1963-01-03), mother of Graham. Regina does not have her own record in this archive."
+    "notes": "Divorced from Regina Graham (mother of Graham). Jalen's mother is Sherry Stolfo, not Regina."
   },
   {
     "id": "graham-curry",
     "name": "Graham N Curry",
     "gender": "male",
     "relationLabel": "THIRD GENERATION",
-    "eyebrow": "Son of Mark",
-    "motherName": "Regina Graham",
+    "eyebrow": "Son of Mark & Regina",
     "birthYear": 1998,
     "birthDate": "1998-03-18",
     "datesLabel": "1998 - present",
     "photoIds": [],
-    "parentIds": ["mark-curry"],
+    "parentIds": ["mark-curry", "regina-graham"],
     "childrenIds": [],
     "childIds": [],
     "spouseIds": [],
-    "confidence": "high",
-    "notes": "Mother: Regina Graham, b. 1963-01-03 (Mark's ex-spouse)."
+    "confidence": "high"
   },
   {
     "id": "jalen-curry",
     "name": "Jalen S Curry",
     "gender": "male",
     "relationLabel": "THIRD GENERATION",
-    "eyebrow": "Son of Mark",
-    "motherName": "Sherry Stolfo",
+    "eyebrow": "Son of Mark & Sherry",
     "birthYear": 2000,
     "datesLabel": "Born June 2000",
     "photoIds": [],
-    "parentIds": ["mark-curry"],
+    "parentIds": ["mark-curry", "sherry-stolfo"],
     "childrenIds": [],
     "childIds": [],
     "spouseIds": [],
     "confidence": "medium",
-    "notes": "Mother: Sherry Stolfo. Day of birth in June 2000 not yet confirmed."
+    "notes": "Day of birth in June 2000 not yet confirmed."
   },
   {
     "id": "dawn-manuel",
@@ -446,6 +444,36 @@
     "childIds": ["robert-curry"],
     "spouseIds": ["ernest-curry-sr"],
     "confidence": "low",
-    "notes": "Robert's biological mother (not Nina). Name and dates pending. Included for tree linkage only; surfaced via Robert's motherName field."
+    "notes": "Robert's biological mother (not Nina). Name and dates pending."
+  },
+  {
+    "id": "regina-graham",
+    "name": "Regina Graham",
+    "gender": "female",
+    "relationLabel": "MOTHER OF GRAHAM",
+    "eyebrow": "Mark's ex-wife, mother of Graham",
+    "birthYear": 1963,
+    "birthDate": "1963-01-03",
+    "photoIds": [],
+    "parentIds": [],
+    "childrenIds": ["graham-curry"],
+    "childIds": ["graham-curry"],
+    "spouseIds": ["mark-curry"],
+    "confidence": "high",
+    "notes": "Mark's ex-wife (divorced). Graham's mother."
+  },
+  {
+    "id": "sherry-stolfo",
+    "name": "Sherry Stolfo",
+    "gender": "female",
+    "relationLabel": "MOTHER OF JALEN",
+    "eyebrow": "Mother of Jalen",
+    "photoIds": [],
+    "parentIds": [],
+    "childrenIds": ["jalen-curry"],
+    "childIds": ["jalen-curry"],
+    "spouseIds": ["mark-curry"],
+    "confidence": "medium",
+    "notes": "Jalen's mother. Not married to Mark. Birth date pending."
   }
 ]
