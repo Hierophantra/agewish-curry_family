@@ -1,16 +1,58 @@
 [
   {
-    "id": "birthdays",
-    "title": "Birthdays",
-    "subtitle": "Candles, cake, and the songs we always sing",
-    "coverVideoId": "grandfather-80th",
-    "description": "Birthday recordings from across the years."
+    "id": "2025-christmas-eve",
+    "title": "Christmas Eve",
+    "subtitle": "December 24, 2025",
+    "coverVideoId": "2025-christmas-eve-part-1",
+    "description": ""
   },
   {
-    "id": "reunions",
-    "title": "Reunions",
-    "subtitle": "When the whole family was together",
-    "coverVideoId": "summer-reunion-2019",
-    "description": "Every reunion the family captured on video."
+    "id": "2025-dawn-currys-60th-birthday",
+    "title": "Dawn Curry's 60th Birthday",
+    "subtitle": "April 12, 2025",
+    "coverVideoId": "2025-dawn-currys-60th-birthday-part-1",
+    "description": ""
+  },
+  {
+    "id": "2024-papa-94th-birthday-celebration-alabama",
+    "title": "Papa 94th Birthday Celebration Alabama",
+    "subtitle": "June 19, 2024",
+    "coverVideoId": "2024-papa-94th-birthday-celebration-alabama-part-1",
+    "description": ""
+  },
+  {
+    "id": "2024-naomis-1st-birthday",
+    "title": "Naomi's 1st Birthday",
+    "subtitle": "May 19, 2024",
+    "coverVideoId": "2024-naomis-1st-birthday-part-1",
+    "description": ""
+  },
+  {
+    "id": "2024-mark-currys-62nd-birthday",
+    "title": "Mark Curry's 62nd Birthday",
+    "subtitle": "February 14, 2024",
+    "coverVideoId": "2024-mark-currys-62nd-birthday-part-1",
+    "description": ""
+  },
+  {
+    "id": "2023-angels-birthday",
+    "title": "Angel's Birthday",
+    "subtitle": "November 21, 2023",
+    "coverVideoId": "2023-angels-birthday-part-1",
+    "description": ""
+  },
+  {
+    "id": "2022-dinner",
+    "title": "Dinner",
+    "subtitle": "October 9, 2022",
+    "coverVideoId": "2022-dinner-part-1",
+    "description": ""
+  },
+  {
+    "id": "2022-gatlinburg-trip",
+    "title": "Gatlinburg Trip",
+    "subtitle": "July 25, 2022",
+    "coverVideoId": "2022-gatlinburg-trip-part-1",
+    "description": ""
   }
 ]
