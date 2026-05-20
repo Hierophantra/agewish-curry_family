@@ -112,6 +112,21 @@ export default function FamilyTreeCanvas({
 
   // Build person lookup for name + relation resolution
   const peopleById = new Map(people.map((p) => [p.id, p]))
+
+  // "Spouse-by-marriage": joined the family by marriage (no parents in the
+  // archive, at least one spouse in the archive) and not a founder or
+  // alt-parent. The cool navy tint in PersonNode distinguishes these from
+  // blood descendants.
+  function isSpouseByMarriage(person: Person | undefined): boolean {
+    if (!person) return false
+    const noParents = (person.parentIds ?? []).length === 0
+    const hasSpouse = (person.spouseIds ?? []).length > 0
+    const label = person.relationLabel ?? ''
+    const isFounder = label === 'PATRIARCH' || label === 'MATRIARCH'
+    const isAltParent = label.startsWith('MOTHER OF') || label.startsWith('FATHER OF')
+      || label === 'MOTHER' || label === 'FATHER'
+    return noParents && hasSpouse && !isFounder && !isAltParent
+  }
   const rootId = nodes[0]?.id ?? ''
 
   // handleSelect: push to history so the back button closes the panel naturally.
@@ -317,6 +332,7 @@ export default function FamilyTreeCanvas({
               isFocused={focusedNodeId === node.id}
               relationLabel={label}
               deathYear={deathYear}
+              isSpouseByMarriage={isSpouseByMarriage(person)}
               onClick={() => {
                 if (node.id === selectedId) {
                   handleClose()

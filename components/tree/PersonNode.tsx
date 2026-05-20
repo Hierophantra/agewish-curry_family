@@ -11,6 +11,13 @@ interface PersonNodeProps {
   isFocused: boolean     // keyboard focus indicator (separate from panel-open selection)
   relationLabel: string  // e.g., "PATRIARCH", "SECOND GENERATION" - computed by canvas
   deathYear?: number     // shown as "d. YYYY" line for deceased people
+  /**
+   * True when this person married into the family (no parents in the archive,
+   * at least one spouse in the archive, not a founder or alt-parent).
+   * Computed in FamilyTreeCanvas from the person record. Renders the node
+   * with a cool navy tint to distinguish from blood descendants.
+   */
+  isSpouseByMarriage?: boolean
   onClick: () => void
   onRef: (el: HTMLButtonElement | null) => void  // allows canvas to imperatively focus nodes
   style: CSSProperties
@@ -19,30 +26,28 @@ interface PersonNodeProps {
 // node is accepted as a prop (required by FamilyTreeCanvas) but not rendered directly
 // - we render `name` (resolved by canvas) instead of node.id
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export default function PersonNode({ node: _node, name, isActive, isFocused, relationLabel, deathYear, onClick, onRef, style }: PersonNodeProps) {
-  // Founders get a distinct visual treatment so the eye starts at the top of
-  // the tree. Subtle gold accent rather than a loud highlight.
+export default function PersonNode({ node: _node, name, isActive, isFocused, relationLabel, deathYear, isSpouseByMarriage, onClick, onRef, style }: PersonNodeProps) {
+  // Founders get a warm gold treatment so the eye starts at the top of the tree.
   const isFounder = relationLabel === 'PATRIARCH' || relationLabel === 'MATRIARCH'
 
   // Alt-parent records (e.g. Laurie Darrisaw, recorded only as the mother of
-  // Trace, no full family entry) use a quieter, dashed-border treatment so
-  // they visually read as "the other parent, not a fully-archived family
-  // member". Detected from the relationLabel field.
+  // Trace) use a quieter, dashed-border treatment so they visually read as
+  // "the other parent, not a fully-archived family member".
   const isAltParent = relationLabel === 'MOTHER' || relationLabel === 'FATHER'
     || relationLabel.startsWith('MOTHER OF') || relationLabel.startsWith('FATHER OF')
+
+  // Visual color logic:
+  //   - Founders          : warm ivory + gold border    (the roots)
+  //   - Spouses-by-marriage: cool navy-tinted card      (joined by marriage)
+  //   - Alt-parents       : dashed + faded ivory        (noted only)
+  //   - Default (descendants): neutral white + ivory    (Curry lineage)
+  // Active/focused states (the user's current interaction) override everything.
 
   return (
     <button
       ref={onRef}
       type="button"
       onClick={onClick}
-      // v3 upgraded sizing and treatment:
-      //   - 200 x 88 px (was 160 x 60) for breathing room and readability
-      //   - rounded-md corners feel less mechanical than sharp rectangles
-      //   - gradient surface for subtle depth instead of flat white
-      //   - shadow-sm baseline -> shadow-md on hover for lift
-      //   - founders: ivory background + gold border for emphasis
-      //   - active: navy border + ivory background + gold corner dot
       className={[
         'relative flex flex-col items-start justify-center px-4 py-2.5',
         'text-left cursor-pointer overflow-hidden rounded-md',
@@ -56,7 +61,9 @@ export default function PersonNode({ node: _node, name, isActive, isFocused, rel
               ? 'bg-gradient-to-br from-ivory to-ivory-deep border-[1px] border-gold-deep/60 shadow-sm hover:shadow-md hover:border-gold hover:-translate-y-0.5'
               : isAltParent
                 ? 'bg-ivory/70 border border-dashed border-stone shadow-none opacity-90 hover:opacity-100 hover:border-gold-deep/60 hover:-translate-y-0.5'
-                : 'bg-gradient-to-br from-white to-ivory border-[0.5px] border-stone shadow-sm hover:shadow-md hover:border-gold hover:-translate-y-0.5',
+                : isSpouseByMarriage
+                  ? 'bg-gradient-to-br from-white to-navy/[0.06] border-[0.5px] border-navy/30 shadow-sm hover:shadow-md hover:border-navy hover:-translate-y-0.5'
+                  : 'bg-gradient-to-br from-white to-ivory border-[0.5px] border-stone shadow-sm hover:shadow-md hover:border-gold hover:-translate-y-0.5',
       ].join(' ')}
       style={style}
     >
@@ -68,8 +75,18 @@ export default function PersonNode({ node: _node, name, isActive, isFocused, rel
         />
       )}
 
-      {/* Name - font-serif, navy. Alt-parent records render slightly smaller
-          and in italic to read as "noted but not fully archived". */}
+      {/* Tiny navy ring indicator in the corner for married-in spouses.
+          A small, quiet "this person is here by marriage" cue. */}
+      {!isActive && isSpouseByMarriage && (
+        <span
+          className="absolute top-2 right-2 w-1.5 h-1.5 rounded-full border border-navy/60"
+          aria-hidden="true"
+          title="Married into the family"
+        />
+      )}
+
+      {/* Name - font-serif. Alt-parent records render slightly smaller and in
+          italic to read as "noted but not fully archived". */}
       <span
         className={[
           'font-serif leading-tight truncate w-full',
@@ -79,11 +96,18 @@ export default function PersonNode({ node: _node, name, isActive, isFocused, rel
         {name}
       </span>
 
-      {/* Relation label - uppercase eyebrow. Founders: gold. Alt-parents: muted italic. */}
+      {/* Relation label - uppercase eyebrow.
+          Founders -> gold.  Spouses-by-marriage -> navy.  Alt-parents -> muted italic. */}
       <span
         className={[
           'eyebrow mt-1 truncate w-full',
-          isFounder ? 'text-gold-deep' : isAltParent ? 'text-quiet italic normal-case tracking-normal text-xs' : 'text-quiet',
+          isFounder
+            ? 'text-gold-deep'
+            : isAltParent
+              ? 'text-quiet italic normal-case tracking-normal text-xs'
+              : isSpouseByMarriage
+                ? 'text-navy/70'
+                : 'text-quiet',
         ].join(' ')}
       >
         {relationLabel}
