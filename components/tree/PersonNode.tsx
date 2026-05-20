@@ -24,6 +24,13 @@ export default function PersonNode({ node: _node, name, isActive, isFocused, rel
   // the tree. Subtle gold accent rather than a loud highlight.
   const isFounder = relationLabel === 'PATRIARCH' || relationLabel === 'MATRIARCH'
 
+  // Alt-parent records (e.g. Laurie Darrisaw, recorded only as the mother of
+  // Trace, no full family entry) use a quieter, dashed-border treatment so
+  // they visually read as "the other parent, not a fully-archived family
+  // member". Detected from the relationLabel field.
+  const isAltParent = relationLabel === 'MOTHER' || relationLabel === 'FATHER'
+    || relationLabel.startsWith('MOTHER OF') || relationLabel.startsWith('FATHER OF')
+
   return (
     <button
       ref={onRef}
@@ -47,7 +54,9 @@ export default function PersonNode({ node: _node, name, isActive, isFocused, rel
             ? 'bg-ivory ring-2 ring-gold ring-offset-1 border-[0.5px] border-stone'
             : isFounder
               ? 'bg-gradient-to-br from-ivory to-ivory-deep border-[1px] border-gold-deep/60 shadow-sm hover:shadow-md hover:border-gold hover:-translate-y-0.5'
-              : 'bg-gradient-to-br from-white to-ivory border-[0.5px] border-stone shadow-sm hover:shadow-md hover:border-gold hover:-translate-y-0.5',
+              : isAltParent
+                ? 'bg-ivory/70 border border-dashed border-stone shadow-none opacity-90 hover:opacity-100 hover:border-gold-deep/60 hover:-translate-y-0.5'
+                : 'bg-gradient-to-br from-white to-ivory border-[0.5px] border-stone shadow-sm hover:shadow-md hover:border-gold hover:-translate-y-0.5',
       ].join(' ')}
       style={style}
     >
@@ -59,16 +68,22 @@ export default function PersonNode({ node: _node, name, isActive, isFocused, rel
         />
       )}
 
-      {/* Name - font-serif, navy, larger size for readability at any zoom */}
-      <span className="font-serif text-navy text-base leading-tight truncate w-full">
+      {/* Name - font-serif, navy. Alt-parent records render slightly smaller
+          and in italic to read as "noted but not fully archived". */}
+      <span
+        className={[
+          'font-serif leading-tight truncate w-full',
+          isAltParent ? 'text-muted text-sm italic' : 'text-navy text-base',
+        ].join(' ')}
+      >
         {name}
       </span>
 
-      {/* Relation label - uppercase eyebrow, gold for founders, quiet otherwise */}
+      {/* Relation label - uppercase eyebrow. Founders: gold. Alt-parents: muted italic. */}
       <span
         className={[
           'eyebrow mt-1 truncate w-full',
-          isFounder ? 'text-gold-deep' : 'text-quiet',
+          isFounder ? 'text-gold-deep' : isAltParent ? 'text-quiet italic normal-case tracking-normal text-xs' : 'text-quiet',
         ].join(' ')}
       >
         {relationLabel}

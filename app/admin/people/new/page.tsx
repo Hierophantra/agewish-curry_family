@@ -21,6 +21,11 @@ const EMPTY_INITIAL: PersonFormValues = {
   datesLabel: '',
   birthplace: '',
   spouseLabel: '',
+  gender: '',
+  motherName: '',
+  fatherName: '',
+  bio: '',
+  notes: '',
   parentIds: [],
   childrenIds: [],
 }

@@ -42,6 +42,12 @@ export interface PersonFormValues {
   datesLabel: string
   birthplace: string
   spouseLabel: string
+  // v3 additions - panel-card display fields and identity flags
+  gender: '' | 'male' | 'female' | 'other'
+  motherName: string
+  fatherName: string
+  bio: string
+  notes: string
   parentIds: string[]
   childrenIds: string[]
 }
@@ -129,6 +135,11 @@ export default function EditPersonForm({ mode, personId, initial, allPeople }: P
       if (values.datesLabel.trim()) body.datesLabel = values.datesLabel.trim()
       if (values.birthplace.trim()) body.birthplace = values.birthplace.trim()
       if (values.spouseLabel.trim()) body.spouseLabel = values.spouseLabel.trim()
+      if (values.gender) body.gender = values.gender
+      if (values.motherName.trim()) body.motherName = values.motherName.trim()
+      if (values.fatherName.trim()) body.fatherName = values.fatherName.trim()
+      if (values.bio.trim()) body.bio = values.bio.trim()
+      if (values.notes.trim()) body.notes = values.notes.trim()
       body.parentIds = values.parentIds
       body.childrenIds = values.childrenIds
 
@@ -157,6 +168,7 @@ export default function EditPersonForm({ mode, personId, initial, allPeople }: P
     // Scalar fields
     const scalarFields: Array<keyof PersonFormValues> = [
       'name', 'relationLabel', 'eyebrow', 'birthDate', 'deathDate', 'datesLabel', 'birthplace', 'spouseLabel',
+      'gender', 'motherName', 'fatherName', 'bio', 'notes',
     ]
     for (const key of scalarFields) {
       if (values[key] !== initial[key]) {
@@ -353,6 +365,101 @@ export default function EditPersonForm({ mode, personId, initial, allPeople }: P
           disabled={isDisabled}
         />
         <span className={helpClass}>Spouse&apos;s name as a display string. (Linking to a separate person record with referential integrity comes via spouseIds[] in the JSON.)</span>
+      </label>
+
+      {/* Mother / Father display names. Used when the biological parent does
+          not have their own Person record. Shown as a "Mother" / "Father" row
+          on the tree-card panel and on the person's full page. */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <label className={labelClass}>
+          <span className={labelTextClass}>Mother (display name)</span>
+          <input
+            type="text"
+            value={values.motherName}
+            onChange={handleTextChange('motherName')}
+            className={inputClass}
+            placeholder="Laurie Darrisaw"
+            disabled={isDisabled}
+          />
+          <span className={helpClass}>Use only if the mother is not a separate person record in the archive.</span>
+        </label>
+
+        <label className={labelClass}>
+          <span className={labelTextClass}>Father (display name)</span>
+          <input
+            type="text"
+            value={values.fatherName}
+            onChange={handleTextChange('fatherName')}
+            className={inputClass}
+            placeholder=""
+            disabled={isDisabled}
+          />
+          <span className={helpClass}>Use only if the father is not a separate person record in the archive.</span>
+        </label>
+      </div>
+
+      {/* Gender - affects tree-layout symmetry and pronoun-derived copy. */}
+      <fieldset>
+        <legend className={`${labelTextClass} mb-2`}>Gender</legend>
+        <div className="flex flex-wrap gap-5">
+          {[
+            { v: '', label: 'Unspecified' },
+            { v: 'male', label: 'Male' },
+            { v: 'female', label: 'Female' },
+            { v: 'other', label: 'Other' },
+          ].map((opt) => (
+            <label key={opt.v || 'none'} className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="radio"
+                name="gender"
+                value={opt.v}
+                checked={values.gender === opt.v}
+                onChange={() => {
+                  setValues((prev) => ({ ...prev, gender: opt.v as PersonFormValues['gender'] }))
+                  if (status === 'saved') setStatus('idle')
+                }}
+                disabled={isDisabled}
+                className="w-4 h-4 accent-navy"
+              />
+              <span className="font-sans text-sm text-navy">{opt.label}</span>
+            </label>
+          ))}
+        </div>
+        <p className={helpClass}>Used by the tree library to balance the layout. Choose &ldquo;Unspecified&rdquo; to leave the field empty.</p>
+      </fieldset>
+
+      {/* Bio - longer-form prose for the person's own page. */}
+      <label className={labelClass}>
+        <span className={labelTextClass}>Bio</span>
+        <textarea
+          value={values.bio}
+          onChange={(e) => {
+            setValues((prev) => ({ ...prev, bio: e.target.value }))
+            if (status === 'saved') setStatus('idle')
+          }}
+          className={`${inputClass} font-serif resize-y min-h-[140px]`}
+          placeholder="A short biography to appear on this person's page..."
+          disabled={isDisabled}
+          rows={6}
+        />
+        <span className={helpClass}>Optional. Shown on the person&apos;s detail page below the meta. Not shown in the tree card.</span>
+      </label>
+
+      {/* Notes - private archivist notes; not necessarily surfaced in the UI. */}
+      <label className={labelClass}>
+        <span className={labelTextClass}>Notes (private)</span>
+        <textarea
+          value={values.notes}
+          onChange={(e) => {
+            setValues((prev) => ({ ...prev, notes: e.target.value }))
+            if (status === 'saved') setStatus('idle')
+          }}
+          className={`${inputClass} font-serif resize-y min-h-[100px]`}
+          placeholder="Pending corrections, source notes, anything to remember about this record..."
+          disabled={isDisabled}
+          rows={4}
+        />
+        <span className={helpClass}>For the archivist&apos;s eyes. Useful for tracking what still needs confirming (e.g. &ldquo;Birth date pending&rdquo;).</span>
       </label>
 
       {/* Parent picker */}

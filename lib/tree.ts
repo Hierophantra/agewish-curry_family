@@ -113,76 +113,109 @@ function personGender(person: Person): 'male' | 'female' {
  *
  * Bug mechanism (verified from node_modules/relatives-tree/src/children/create.ts):
  *   calcTree's getChildUnitsFunc filters children with first.children.filter(hasSameRelation(second))
- *   - only children that BOTH parents share are included. Children from a non-primary spouse
- *   pairing are silently dropped because that spouse doesn't claim them.
+ *   - only children that BOTH parents share are included. A child whose
+ *   parents[] lists only one member of a couple gets dropped from the layout.
  *
- * Mitigation (D-03):
- *   For each person with >1 spouse:
- *     - Keep only the PRIMARY (first) spouse in spouses[] for layout
- *     - Ensure primary spouse's children[] includes ALL children from ALL pairings
- *     - Rewrite children's parents[] to reference primary spouse instead of non-primary
- *     - Remove non-primary spouse nodes from the layout entirely
- *   PersonPanel reads from the original Person.spouseIds[] (untouched) to show all spouses.
+ * v3 change - "Option A" alt-parent treatment:
+ *   This function now only flattens a non-primary spouse when that spouse has
+ *   NO children of their own in the graph. Those spouses are pure layout
+ *   placeholders and the original mitigation still applies: their kids get
+ *   re-pointed to the primary spouse so the library doesn't drop them.
+ *
+ *   When the non-primary spouse DOES have their own children list (e.g.
+ *   Laurie Darrisaw is Trace's mother, recorded as a minimal record with
+ *   childrenIds=[trace]), we leave the spouse and her children alone. The
+ *   library handles multi-spouse rendering correctly when each (parent,
+ *   spouse, child) triangle is mutually reciprocal in the data - the bug
+ *   only bites when one side of the triangle is missing.
+ *
+ *   The result is bio-accurate: Trace appears under a "Galen + Laurie"
+ *   couple-unit rather than the misleading "Galen + Cheryl" unit.
  *
  * Per D-04: runs unconditionally - single-spouse cases pass through unchanged.
- * Per D-05: documented inline here; if GitHub #24 is fixed upstream, this function
- *   can be simplified to a no-op while keeping the same signature.
  */
 function flattenMultiSpouses(nodes: RelativesTreeNode[]): RelativesTreeNode[] {
   // Build a mutable map for O(1) lookup and in-place updates
   const byId = new Map(nodes.map((n) => [n.id, { ...n }]))
 
   for (const node of nodes) {
-    // D-04: unconditional - single-spouse (or no-spouse) nodes pass through
+    // Single-spouse (or no-spouse) nodes pass through untouched
     if (node.spouses.length <= 1) continue
 
+    // Partition non-primary spouses into two buckets:
+    //   - "placeholder" spouses with no children of their own -> flatten away
+    //   - "alt-parent" spouses with their own children list -> leave visible
     const primarySpouseId = node.spouses[0]!.id
-    const nonPrimarySpouseIds = new Set(node.spouses.slice(1).map((s) => s.id))
+    const nonPrimarySpouseIds = node.spouses.slice(1).map((s) => s.id)
+    const placeholderIds: string[] = []
+    const altParentIds: string[] = []
 
-    // Update this node: keep only primary spouse in spouses[]
-    // children[] remains unchanged - it already has all children from all pairings
+    for (const sid of nonPrimarySpouseIds) {
+      const spouse = byId.get(sid)
+      if (!spouse) continue
+      if (spouse.children.length === 0) {
+        placeholderIds.push(sid)
+      } else {
+        altParentIds.push(sid)
+      }
+    }
+
+    // If no placeholders to flatten, the library can handle this multi-spouse
+    // case natively - leave everything as-is.
+    if (placeholderIds.length === 0) continue
+
+    // Compute the spouses we keep visible after flattening: primary + any
+    // alt-parents that have their own children.
+    const survivingSpouseIds = [primarySpouseId, ...altParentIds]
     byId.set(node.id, {
       ...byId.get(node.id)!,
-      spouses: [node.spouses[0]!],
+      spouses: survivingSpouseIds.map(
+        (id) => node.spouses.find((s) => s.id === id)!,
+      ),
     })
 
-    // Update primary spouse: add any children from this node that primary doesn't yet claim
+    // Add any orphan-from-placeholder children to the primary spouse so the
+    // library renders them under the (primary) couple unit.
+    const placeholderSet = new Set(placeholderIds)
+    const orphanChildIds = new Set<string>()
+    for (const pid of placeholderIds) {
+      const placeholder = byId.get(pid)
+      if (!placeholder) continue
+      for (const c of placeholder.children) orphanChildIds.add(c.id)
+    }
+
     const primarySpouse = byId.get(primarySpouseId)
-    if (primarySpouse) {
-      const existingChildIds = new Set(primarySpouse.children.map((c) => c.id))
-      const missingChildren = node.children.filter((c) => !existingChildIds.has(c.id))
+    if (primarySpouse && orphanChildIds.size > 0) {
+      const existing = new Set(primarySpouse.children.map((c) => c.id))
+      const missing = [...orphanChildIds]
+        .filter((id) => !existing.has(id))
+        .map((id) => ({ id, type: 'blood' as RelType }))
       byId.set(primarySpouseId, {
         ...primarySpouse,
-        children: [...primarySpouse.children, ...missingChildren],
+        children: [...primarySpouse.children, ...missing],
       })
     }
 
-    // For each non-primary spouse: redirect their children to claim primary spouse as parent
-    for (const nonPrimaryId of nonPrimarySpouseIds) {
-      const allChildIds = new Set(node.children.map((c) => c.id))
-
-      for (const childId of allChildIds) {
-        const child = byId.get(childId)
-        if (!child) continue
-
-        const hasNonPrimaryAsParent = child.parents.some((p) => p.id === nonPrimaryId)
-        if (hasNonPrimaryAsParent) {
-          // Replace non-primary parent ref with primary spouse ref
-          byId.set(childId, {
-            ...child,
-            parents: child.parents.map((p) =>
-              p.id === nonPrimaryId ? { id: primarySpouseId, type: p.type } : p
-            ),
-          })
-        }
-      }
-
-      // Remove non-primary spouse from layout (PersonPanel shows them via Person.spouseIds[])
-      byId.delete(nonPrimaryId)
+    // Rewrite each orphan's parents[] to swap the placeholder for the primary
+    // spouse, so the library can find a matching couple unit.
+    for (const childId of orphanChildIds) {
+      const child = byId.get(childId)
+      if (!child) continue
+      const hasPlaceholderParent = child.parents.some((p) => placeholderSet.has(p.id))
+      if (!hasPlaceholderParent) continue
+      byId.set(childId, {
+        ...child,
+        parents: child.parents.map((p) =>
+          placeholderSet.has(p.id) ? { id: primarySpouseId, type: p.type } : p,
+        ),
+      })
     }
+
+    // Remove placeholder spouses from the layout entirely
+    for (const pid of placeholderIds) byId.delete(pid)
   }
 
-  // Return only nodes still present in byId (non-primary spouses were deleted above)
+  // Return only nodes still present in byId
   return nodes
     .filter((n) => byId.has(n.id))
     .map((n) => byId.get(n.id)!)

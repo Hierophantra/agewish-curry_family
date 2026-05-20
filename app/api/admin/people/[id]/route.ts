@@ -31,6 +31,13 @@ const SCALAR_EDITABLE_FIELDS = [
   'datesLabel',
   'birthplace',
   'spouseLabel',
+  // v3 additions - panel-card display fields
+  'motherName',
+  'fatherName',
+  'bio',
+  'notes',
+  // Tree library uses gender for layout symmetry; admin can override
+  'gender',
 ] as const
 
 type ScalarField = (typeof SCALAR_EDITABLE_FIELDS)[number]
@@ -68,6 +75,11 @@ export async function POST(request: Request, { params }: { params: { id: string 
       const value = body[key]
       if (typeof value !== 'string') {
         return new NextResponse(`Field '${key}' must be a string (use empty string to clear)`, { status: 400 })
+      }
+      // Gender is an enum - reject invalid values before they hit the JSON file
+      // and break the next Zod parse at read time.
+      if (key === 'gender' && value !== '' && !['male', 'female', 'other'].includes(value)) {
+        return new NextResponse(`Field 'gender' must be one of: male, female, other (or empty to clear)`, { status: 400 })
       }
       scalarChanges[key] = value
     }

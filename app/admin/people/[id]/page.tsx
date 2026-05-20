@@ -36,6 +36,11 @@ export default async function AdminEditPersonPage({ params }: { params: { id: st
     datesLabel: person.datesLabel ?? '',
     birthplace: person.birthplace ?? person.birthPlace ?? '',
     spouseLabel: person.spouseLabel ?? '',
+    gender: person.gender ?? '',
+    motherName: person.motherName ?? '',
+    fatherName: person.fatherName ?? '',
+    bio: person.bio ?? '',
+    notes: person.notes ?? '',
     parentIds: person.parentIds ?? [],
     childrenIds: person.childrenIds ?? [],
   }

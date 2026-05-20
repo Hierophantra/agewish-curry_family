@@ -113,9 +113,15 @@ export async function POST(request: Request) {
     'relationLabel', 'eyebrow', 'spouseLabel',
     'birthDate', 'deathDate', 'datesLabel', 'birthplace',
     'gender', 'bio',
+    // v3 additions - panel-card display fields
+    'motherName', 'fatherName', 'notes',
   ]
   for (const key of optionalScalars) {
     if (typeof body[key] === 'string' && (body[key] as string).trim()) {
+      // Validate gender enum at create time too
+      if (key === 'gender' && !['male', 'female', 'other'].includes((body[key] as string).trim())) {
+        return new NextResponse(`Field 'gender' must be one of: male, female, other`, { status: 400 })
+      }
       newPerson[key] = (body[key] as string).trim()
     }
   }
