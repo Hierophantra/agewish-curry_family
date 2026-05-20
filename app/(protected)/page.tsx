@@ -166,10 +166,12 @@ export default function HomePage() {
               className={`grid gap-7 ${
                 featured.length === 1
                   ? 'grid-cols-1 max-w-3xl mx-auto'
-                  : 'grid-cols-1 md:grid-cols-2'
+                  : featured.length === 2
+                    ? 'grid-cols-1 md:grid-cols-2'
+                    : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
               }`}
             >
-              {featured.slice(0, 2).map((v) => (
+              {featured.slice(0, 3).map((v) => (
                 <VideoCard key={v.id} video={v} />
               ))}
             </div>

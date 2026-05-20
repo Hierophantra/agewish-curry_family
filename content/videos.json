@@ -11,7 +11,7 @@
     "playlistIds": [
       "2025-christmas-eve"
     ],
-    "featured": false
+    "featured": true
   },
   {
     "id": "2025-christmas-eve-part-2",
@@ -375,7 +375,7 @@
     "playlistIds": [
       "2025-dawn-currys-60th-birthday"
     ],
-    "featured": false
+    "featured": true
   },
   {
     "id": "2025-dawn-currys-60th-birthday-part-2",
@@ -669,7 +669,7 @@
     "playlistIds": [
       "2024-papa-94th-birthday-celebration-alabama"
     ],
-    "featured": false
+    "featured": true
   },
   {
     "id": "2024-papa-94th-birthday-celebration-alabama-part-2",
