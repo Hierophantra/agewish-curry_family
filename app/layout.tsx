@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 import { Inter, Cormorant_Garamond } from 'next/font/google'
 import './globals.css'
 
-// Load Inter with exactly weights 400 and 500 — no more
+// Load Inter with exactly weights 400 and 500 - no more
 // subsets: 'latin' covers English and Western European characters
 // display: 'swap' renders with fallback font until Inter loads (prevents invisible text)
 // variable: '--font-inter' injects a CSS custom property on <html>
@@ -15,7 +15,7 @@ const inter = Inter({
   variable: '--font-inter',
 })
 
-// Load Cormorant Garamond with exactly weights 400 and 500 — two-weight rule (D-01)
+// Load Cormorant Garamond with exactly weights 400 and 500 - two-weight rule (D-01)
 // style: ['normal', 'italic'] ensures italic variants are available for blockquotes
 // display: 'swap' prevents invisible text during font load (matches Inter pattern)
 // variable: '--font-cormorant' injects a CSS custom property on <html>
@@ -31,7 +31,7 @@ const cormorant = Cormorant_Garamond({
 export const metadata: Metadata = {
   title: 'The Curry Family',
   description: 'A private family archive.',
-  robots: 'noindex, nofollow', // Private site — never index
+  robots: 'noindex, nofollow', // Private site - never index
 }
 
 export default function RootLayout({

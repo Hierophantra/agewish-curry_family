@@ -1,5 +1,5 @@
 // app/admin/chronicles/new/page.tsx
-// Admin new-chronicle page — renders EditChronicleForm in create mode.
+// Admin new-chronicle page - renders EditChronicleForm in create mode.
 // Auth gate is enforced by requireAdminOrRedirect() (not the layout).
 import Link from 'next/link'
 import { getPeople, getCollections, getPhotos } from '@/lib/content'

@@ -1,6 +1,6 @@
 // app/api/admin/people/[id]/route.ts
-// POST  — update one or more fields on a person record (extended from Phase 20).
-// DELETE — remove a person with full cascade cleanup:
+// POST  - update one or more fields on a person record (extended from Phase 20).
+// DELETE - remove a person with full cascade cleanup:
 //   - Removes person's id from photos.json, videos.json, audio.json, chronicles.json peopleIds[]
 //   - Removes person's id from other people's parentIds[] and childrenIds[]/childIds[]
 //   - Removes the person from family.json
@@ -12,7 +12,7 @@
 //
 // Flow for POST:
 //   1. Auth check
-//   2. Validate body — scalar fields must be strings; array fields must be string arrays
+//   2. Validate body - scalar fields must be strings; array fields must be string arrays
 //   3. Read family.json, find person, merge changes
 //   4. Bidirectional sync for parentIds/childrenIds changes
 //   5. Commit family.json
@@ -21,7 +21,7 @@ import { auth } from '@/auth'
 import { getAdminUser } from '@/lib/admin'
 import { getFileContent, commitFile } from '@/lib/github'
 
-// Scalar editable fields — empty string means "remove this field"
+// Scalar editable fields - empty string means "remove this field"
 const SCALAR_EDITABLE_FIELDS = [
   'name',
   'relationLabel',
@@ -35,7 +35,7 @@ const SCALAR_EDITABLE_FIELDS = [
 
 type ScalarField = (typeof SCALAR_EDITABLE_FIELDS)[number]
 
-// Array editable fields — handled separately (type differs from scalars)
+// Array editable fields - handled separately (type differs from scalars)
 const ARRAY_EDITABLE_FIELDS = ['parentIds', 'childrenIds'] as const
 
 export async function POST(request: Request, { params }: { params: { id: string } }) {
@@ -132,7 +132,7 @@ export async function POST(request: Request, { params }: { params: { id: string 
     }
   }
 
-  // Apply scalar changes — empty strings delete the field; non-empty strings set it.
+  // Apply scalar changes - empty strings delete the field; non-empty strings set it.
   // 'name' is special: cannot be cleared.
   for (const [key, value] of Object.entries(scalarChanges)) {
     if (key === 'name' && (!value || value.trim() === '')) {
@@ -242,7 +242,7 @@ export async function DELETE(_request: Request, { params }: { params: { id: stri
     return new NextResponse('No GitHub access token in session', { status: 401 })
   }
 
-  // ── Read family.json — confirm person exists ──
+  // ── Read family.json - confirm person exists ──
   const familyFile = await getFileContent(accessToken, 'content/family.json')
   if (!familyFile) {
     return new NextResponse('content/family.json not found in repo', { status: 500 })
@@ -346,7 +346,7 @@ async function cleanupPeopleIds(
     items = JSON.parse(file.content)
     if (!Array.isArray(items)) return null
   } catch {
-    return null  // non-fatal — skip this file
+    return null  // non-fatal - skip this file
   }
 
   let changed = false

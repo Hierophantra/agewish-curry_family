@@ -1,11 +1,11 @@
 'use client'
 // components/admin/EditChronicleForm.tsx
-// Client Component — multi-field editor for creating or updating a chronicle.
+// Client Component - multi-field editor for creating or updating a chronicle.
 // Used by both /admin/chronicles/new (mode='create') and /admin/chronicles/[id] (mode='update').
 //
-// Create: POST /api/admin/chronicles — body is the full new chronicle object
-// Update: POST /api/admin/chronicles/[id] — body is the changed fields only
-// Delete: DELETE /api/admin/chronicles/[id] — removes the chronicle (update mode only)
+// Create: POST /api/admin/chronicles - body is the full new chronicle object
+// Update: POST /api/admin/chronicles/[id] - body is the changed fields only
+// Delete: DELETE /api/admin/chronicles/[id] - removes the chronicle (update mode only)
 //
 // On create success: redirects to /admin/chronicles
 // On update success: calls router.refresh() to re-read updated JSON
@@ -143,7 +143,7 @@ export default function EditChronicleForm({
       return
     }
 
-    // Update mode — build changed fields diff
+    // Update mode - build changed fields diff
     const changed: Partial<Record<keyof ChronicleFormValues, unknown>> = {}
 
     // For scalar string fields
@@ -157,7 +157,7 @@ export default function EditChronicleForm({
       }
     }
 
-    // For array fields — compare by serialised value
+    // For array fields - compare by serialised value
     if (JSON.stringify(values.peopleIds) !== JSON.stringify(initial.peopleIds)) {
       changed.peopleIds = values.peopleIds
     }
@@ -227,7 +227,7 @@ export default function EditChronicleForm({
         />
         <span className={helpClass}>
           {mode === 'create'
-            ? 'Kebab-case slug — auto-generated from title; you can override it. Cannot be changed after creation.'
+            ? 'Kebab-case slug - auto-generated from title; you can override it. Cannot be changed after creation.'
             : 'Read-only. The ID is permanent once a chronicle is published.'}
         </span>
       </label>
@@ -271,7 +271,7 @@ export default function EditChronicleForm({
             placeholder="YYYY-MM-DD"
             disabled={isDisabled}
           />
-          <span className={helpClass}>ISO date, e.g. 1979-06-01. Approximate is fine — leave empty if unknown.</span>
+          <span className={helpClass}>ISO date, e.g. 1979-06-01. Approximate is fine - leave empty if unknown.</span>
         </label>
 
         <label className={labelClass}>
@@ -355,10 +355,10 @@ export default function EditChronicleForm({
           className={inputClass}
           disabled={isDisabled}
         >
-          <option value="">— None —</option>
+          <option value="">- None -</option>
           {allPhotos.map((photo) => (
             <option key={photo.id} value={photo.id}>
-              {photo.id}{photo.caption ? ` — ${photo.caption}` : ''}{photo.dateLabel ? ` (${photo.dateLabel})` : ''}
+              {photo.id}{photo.caption ? ` - ${photo.caption}` : ''}{photo.dateLabel ? ` (${photo.dateLabel})` : ''}
             </option>
           ))}
         </select>
@@ -378,7 +378,7 @@ export default function EditChronicleForm({
             disabled={isDisabled}
           />
           <span className={helpClass}>
-            Filename of an audio file in /public/audio/. The file must be added to the repo separately — admin audio upload arrives in a later phase.
+            Filename of an audio file in /public/audio/. The file must be added to the repo separately - admin audio upload arrives in a later phase.
           </span>
         </label>
 

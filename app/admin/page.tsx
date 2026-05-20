@@ -1,9 +1,9 @@
 // app/admin/page.tsx
-// Admin index — shows the available content sections.
+// Admin index - shows the available content sections.
 // Only "People" is live in Phase 1; all others are "coming soon" stubs.
 //
 // Auth check: requireAdminOrRedirect() at the top of this Server Component.
-// (Auth is enforced per-page, not in the layout — see app/admin/layout.tsx for why.)
+// (Auth is enforced per-page, not in the layout - see app/admin/layout.tsx for why.)
 import Link from 'next/link'
 import { requireAdminOrRedirect } from '@/lib/admin'
 

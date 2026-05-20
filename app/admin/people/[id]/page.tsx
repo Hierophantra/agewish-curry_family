@@ -2,7 +2,7 @@
 // Admin edit page for a single person's information.
 // Fetches allPeople for the parent/child relationship pickers.
 //
-// Auth gate is enforced by requireAdminOrRedirect() in the page (NOT the layout —
+// Auth gate is enforced by requireAdminOrRedirect() in the page (NOT the layout -
 // see app/admin/layout.tsx for the rationale).
 import Link from 'next/link'
 import { notFound } from 'next/navigation'

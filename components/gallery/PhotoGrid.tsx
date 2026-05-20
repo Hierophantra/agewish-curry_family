@@ -1,8 +1,8 @@
 // components/gallery/PhotoGrid.tsx
-// Server Component — renders a photo grid.
+// Server Component - renders a photo grid.
 // When `photos` prop is provided, renders that filtered set.
 // When `photos` is absent, fetches all photos via getPhotos() (preserves /photographs behavior).
-// No 'use client' — data fetching and rendering happen entirely on the server.
+// No 'use client' - data fetching and rendering happen entirely on the server.
 import { getPhotos } from '@/lib/content'
 import PhotoCard from '@/components/gallery/PhotoCard'
 import type { Photo } from '@/lib/types'
@@ -23,7 +23,7 @@ export default function PhotoGrid({ photos }: PhotoGridProps = {}) {
     return a.dateTaken.localeCompare(b.dateTaken)
   })
 
-  // Empty state — no error, no blank white void
+  // Empty state - no error, no blank white void
   if (sorted.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-16 px-7 text-center">

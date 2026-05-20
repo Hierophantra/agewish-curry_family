@@ -1,6 +1,6 @@
 'use client'
 // app/admin/people/[id]/EditPersonForm.tsx
-// Client Component — multi-field editor for creating or updating a person record.
+// Client Component - multi-field editor for creating or updating a person record.
 // Used by both /admin/people/new (mode='create') and /admin/people/[id] (mode='update').
 //
 // Create: JSON POST to /api/admin/people with full person object
@@ -11,8 +11,8 @@
 // On update success: calls router.refresh() to re-read updated JSON
 //
 // Relationship pickers:
-//   parentIds — multi-select checkboxes from allPeople (filtered to exclude current person)
-//   childrenIds — same pattern
+//   parentIds - multi-select checkboxes from allPeople (filtered to exclude current person)
+//   childrenIds - same pattern
 //   Bidirectional sync is handled server-side: picking a parent here adds this person to that
 //   parent's childrenIds automatically (and vice versa).
 
@@ -151,7 +151,7 @@ export default function EditPersonForm({ mode, personId, initial, allPeople }: P
       return
     }
 
-    // Update mode — send only changed fields
+    // Update mode - send only changed fields
     const changed: Record<string, unknown> = {}
 
     // Scalar fields
@@ -239,8 +239,8 @@ export default function EditPersonForm({ mode, personId, initial, allPeople }: P
         />
         <span className={helpClass}>
           {mode === 'create'
-            ? 'Kebab-case slug — auto-suggested from name; you can override it. Cannot be changed after creation (used in URLs and all cross-references).'
-            : 'Read-only. The ID is permanent once a person is published — renaming it would break URLs and all photo, video, and chronicle references.'}
+            ? 'Kebab-case slug - auto-suggested from name; you can override it. Cannot be changed after creation (used in URLs and all cross-references).'
+            : 'Read-only. The ID is permanent once a person is published - renaming it would break URLs and all photo, video, and chronicle references.'}
         </span>
       </label>
 
@@ -297,7 +297,7 @@ export default function EditPersonForm({ mode, personId, initial, allPeople }: P
             placeholder="YYYY-MM-DD"
             disabled={isDisabled}
           />
-          <span className={helpClass}>ISO date (e.g. 1920-04-12). Approximate dates are fine — leave empty if unknown.</span>
+          <span className={helpClass}>ISO date (e.g. 1920-04-12). Approximate dates are fine - leave empty if unknown.</span>
         </label>
 
         <label className={labelClass}>
@@ -322,10 +322,10 @@ export default function EditPersonForm({ mode, personId, initial, allPeople }: P
           value={values.datesLabel}
           onChange={handleTextChange('datesLabel')}
           className={inputClass}
-          placeholder="1920 — 2008"
+          placeholder="1920 - 2008"
           disabled={isDisabled}
         />
-        <span className={helpClass}>Display string shown under the name. Use em dash. Examples: &ldquo;1920 — 2008&rdquo;, &ldquo;1952 — present&rdquo;, &ldquo;b. 1980&rdquo;.</span>
+        <span className={helpClass}>Display string shown under the name. Use em dash. Examples: &ldquo;1920 - 2008&rdquo;, &ldquo;1952 - present&rdquo;, &ldquo;b. 1980&rdquo;.</span>
       </label>
 
       {/* Birthplace */}
@@ -382,7 +382,7 @@ export default function EditPersonForm({ mode, personId, initial, allPeople }: P
             )}
           </div>
           <p className={helpClass}>
-            Pick parents from existing people. The bidirectional relationship is set automatically — selecting a parent here will also add this person to that parent&apos;s children list.
+            Pick parents from existing people. The bidirectional relationship is set automatically - selecting a parent here will also add this person to that parent&apos;s children list.
           </p>
         </fieldset>
       )}
@@ -457,7 +457,7 @@ export default function EditPersonForm({ mode, personId, initial, allPeople }: P
             {status === 'deleting' ? 'Deleting...' : 'Delete this person'}
           </button>
           <p className={helpClass}>
-            This permanently removes the person and cleans up all references — in photos, videos, audio, chronicles, and other family members&apos; parent/child lists. This cannot be undone.
+            This permanently removes the person and cleans up all references - in photos, videos, audio, chronicles, and other family members&apos; parent/child lists. This cannot be undone.
           </p>
         </div>
       )}

@@ -1,5 +1,5 @@
 // components/video/PlaylistGrid.tsx
-// Server Component — fetches all playlists and renders a responsive grid of PlaylistCards.
+// Server Component - fetches all playlists and renders a responsive grid of PlaylistCards.
 // Mirrors CollectionGrid but for video playlists.
 // D-03 (adapted): 1 col mobile / 2 cols tablet / 3 cols desktop.
 import PlaylistCard from './PlaylistCard'

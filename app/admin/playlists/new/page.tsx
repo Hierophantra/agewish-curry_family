@@ -1,5 +1,5 @@
 // app/admin/playlists/new/page.tsx
-// Admin new-playlist page — renders EditPlaylistForm in create mode.
+// Admin new-playlist page - renders EditPlaylistForm in create mode.
 // Auth gate is enforced by requireAdminOrRedirect() (not the layout).
 import Link from 'next/link'
 import { getVideos } from '@/lib/content'

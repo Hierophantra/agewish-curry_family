@@ -1,11 +1,11 @@
 'use client'
 // components/admin/EditPlaylistForm.tsx
-// Client Component — multi-field editor for creating or updating a playlist.
+// Client Component - multi-field editor for creating or updating a playlist.
 // Used by both /admin/playlists/new (mode='create') and /admin/playlists/[id] (mode='update').
 //
-// Create: POST /api/admin/playlists — body is the full new playlist object
-// Update: POST /api/admin/playlists/[id] — body is the changed fields only
-// Delete: DELETE /api/admin/playlists/[id] — removes the playlist (update mode only)
+// Create: POST /api/admin/playlists - body is the full new playlist object
+// Update: POST /api/admin/playlists/[id] - body is the changed fields only
+// Delete: DELETE /api/admin/playlists/[id] - removes the playlist (update mode only)
 //
 // On create success: redirects to /admin/playlists
 // On update success: calls router.refresh() to re-read updated JSON
@@ -116,7 +116,7 @@ export default function EditPlaylistForm({
       return
     }
 
-    // Update mode — build changed fields diff
+    // Update mode - build changed fields diff
     const changed: Partial<Record<keyof PlaylistFormValues, unknown>> = {}
 
     const scalarStringFields: Array<keyof PlaylistFormValues> = [
@@ -190,7 +190,7 @@ export default function EditPlaylistForm({
         />
         <span className={helpClass}>
           {mode === 'create'
-            ? 'Kebab-case slug — auto-generated from title; you can override it. Cannot be changed after creation.'
+            ? 'Kebab-case slug - auto-generated from title; you can override it. Cannot be changed after creation.'
             : 'Read-only. The ID is permanent once a playlist is published.'}
         </span>
       </label>
@@ -246,7 +246,7 @@ export default function EditPlaylistForm({
           disabled={isDisabled}
           required
         >
-          <option value="">— Select a video —</option>
+          <option value="">- Select a video -</option>
           {allVideos.map((video) => (
             <option key={video.id} value={video.id}>
               {video.id} · {video.title} ({video.source})

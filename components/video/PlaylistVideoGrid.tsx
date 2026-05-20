@@ -1,9 +1,9 @@
 // components/video/PlaylistVideoGrid.tsx
-// 'use client' — owns VideoLightbox open/close state for a playlist's video grid.
+// 'use client' - owns VideoLightbox open/close state for a playlist's video grid.
 // Manages lightboxIndex (null = closed, number = open at that index).
 // Each VideoCard receives onClick that sets lightboxIndex, opening the lightbox.
 // Renders VideoLightbox conditionally; prev/next wrap around (∞ navigation).
-// Phase 16: URL state — ?video=<id> persists lightbox across refresh and enables deep links.
+// Phase 16: URL state - ?video=<id> persists lightbox across refresh and enables deep links.
 'use client'
 
 import { useState, useEffect } from 'react'
@@ -72,7 +72,7 @@ export default function PlaylistVideoGrid({ videos }: PlaylistVideoGridProps) {
     router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false })
   }
 
-  // navigateVideo: replace so each prev/next doesn't pollute history — back button closes modal.
+  // navigateVideo: replace so each prev/next doesn't pollute history - back button closes modal.
   function navigateVideo(index: number) {
     const video = videos[index]
     if (!video) return

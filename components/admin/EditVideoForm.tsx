@@ -1,11 +1,11 @@
 'use client'
 // components/admin/EditVideoForm.tsx
-// Client Component — multi-field editor for creating or updating a video.
+// Client Component - multi-field editor for creating or updating a video.
 // Used by both /admin/videos/new (mode='create') and /admin/videos/[id] (mode='update').
 //
-// Create: POST /api/admin/videos — body is the full new video object
-// Update: POST /api/admin/videos/[id] — body is the changed fields only
-// Delete: DELETE /api/admin/videos/[id] — removes the video (update mode only)
+// Create: POST /api/admin/videos - body is the full new video object
+// Update: POST /api/admin/videos/[id] - body is the changed fields only
+// Delete: DELETE /api/admin/videos/[id] - removes the video (update mode only)
 //
 // On create success: redirects to /admin/videos
 // On update success: calls router.refresh() to re-read updated JSON
@@ -146,7 +146,7 @@ export default function EditVideoForm({
       return
     }
 
-    // Update mode — build changed fields diff
+    // Update mode - build changed fields diff
     const changed: Partial<Record<keyof VideoFormValues, unknown>> = {}
 
     // Scalar string fields
@@ -164,7 +164,7 @@ export default function EditVideoForm({
       changed.featured = values.featured
     }
 
-    // Array fields — compare by serialised value
+    // Array fields - compare by serialised value
     if (JSON.stringify(values.peopleIds) !== JSON.stringify(initial.peopleIds)) {
       changed.peopleIds = values.peopleIds
     }
@@ -234,7 +234,7 @@ export default function EditVideoForm({
         />
         <span className={helpClass}>
           {mode === 'create'
-            ? 'Kebab-case slug — auto-generated from title; you can override it. Cannot be changed after creation.'
+            ? 'Kebab-case slug - auto-generated from title; you can override it. Cannot be changed after creation.'
             : 'Read-only. The ID is permanent once a video is published.'}
         </span>
       </label>
@@ -310,7 +310,7 @@ export default function EditVideoForm({
             placeholder="YYYY-MM-DD"
             disabled={isDisabled}
           />
-          <span className={helpClass}>ISO date, e.g. 2000-04-12. Approximate is fine — leave empty if unknown.</span>
+          <span className={helpClass}>ISO date, e.g. 2000-04-12. Approximate is fine - leave empty if unknown.</span>
         </label>
 
         <label className={labelClass}>

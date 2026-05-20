@@ -1,5 +1,5 @@
 // app/api/admin/people/route.ts
-// POST — create a new person record and commit it to family.json.
+// POST - create a new person record and commit it to family.json.
 //
 // Flow:
 //   1. Auth check (must be in ADMIN_GITHUB_USERNAMES allowlist)
@@ -121,7 +121,7 @@ export async function POST(request: Request) {
   }
   newPerson.parentIds = parentIds
   newPerson.childrenIds = childrenIds
-  newPerson.childIds = childrenIds    // v1 alias — keep in sync
+  newPerson.childIds = childrenIds    // v1 alias - keep in sync
   newPerson.photoIds = []
   newPerson.spouseIds = []
 

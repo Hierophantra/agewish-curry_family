@@ -1,6 +1,6 @@
 // components/video/VideoGrid.tsx
-// Server Component — fetches all videos, sorts chronologically, renders grid or empty state.
-// No 'use client' — data fetching and rendering happen entirely on the server.
+// Server Component - fetches all videos, sorts chronologically, renders grid or empty state.
+// No 'use client' - data fetching and rendering happen entirely on the server.
 import { getVideos } from '@/lib/content'
 import VideoCard from '@/components/video/VideoCard'
 
@@ -16,7 +16,7 @@ export default function VideoGrid() {
     return a.dateTaken.localeCompare(b.dateTaken)
   })
 
-  // Inline empty state (per D-15) — no error, no blank white void
+  // Inline empty state (per D-15) - no error, no blank white void
   if (sorted.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-24 px-7 text-center">

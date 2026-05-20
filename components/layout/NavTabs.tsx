@@ -1,6 +1,6 @@
 'use client'
 // components/layout/NavTabs.tsx
-// Client island — uses usePathname() which is a client-only hook.
+// Client island - uses usePathname() which is a client-only hook.
 // Parent TopNav stays a Server Component; this is the thin interactive slice.
 // Tab labels use sentence case per D-13.
 import Link from 'next/link'

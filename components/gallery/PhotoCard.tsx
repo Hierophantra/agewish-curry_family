@@ -1,7 +1,7 @@
 // components/gallery/PhotoCard.tsx
-// 'use client' — supports optional onClick prop for lightbox integration (Phase 8, D-20..D-22).
+// 'use client' - supports optional onClick prop for lightbox integration (Phase 8, D-20..D-22).
 // When onClick is absent: renders with Link to /person/[id] (original Server-compat behavior).
-// When onClick is present: renders as a <button> — no Link — click opens lightbox.
+// When onClick is present: renders as a <button> - no Link - click opens lightbox.
 // D-07: Hover lift (shadow-md + -translate-y-0.5) applied to outermost element per render path.
 'use client'
 import Image from 'next/image'
@@ -32,7 +32,7 @@ export default function PhotoCard({ photo, onClick }: PhotoCardProps) {
 
   const innerContent = (
     <>
-      {/* Image container — 4:3 aspect ratio, blur placeholder while loading */}
+      {/* Image container - 4:3 aspect ratio, blur placeholder while loading */}
       <div className="relative aspect-[4/3] bg-ivory overflow-hidden">
         <Image
           src={getPhotoUrl(photo)}
@@ -59,7 +59,7 @@ export default function PhotoCard({ photo, onClick }: PhotoCardProps) {
   )
 
   // D-21/D-22: When onClick is provided (e.g. CollectionPhotoGrid lightbox integration),
-  // render as a button — no Link navigation. Hover lift preserved.
+  // render as a button - no Link navigation. Hover lift preserved.
   if (onClick) {
     return (
       <button

@@ -1,5 +1,5 @@
 // components/layout/Footer.tsx
-// Server Component — renders centered StarMark, italic serif tagline, eyebrow metadata.
+// Server Component - renders centered StarMark, italic serif tagline, eyebrow metadata.
 // D-11: Tagline "Held in trust for those who come after." (italic serif).
 // D-11: Meta "A private archive · AgeWish" (eyebrow uppercase, 0.22em letter-spacing).
 import StarMark from '@/components/ui/StarMark'

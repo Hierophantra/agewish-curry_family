@@ -1,9 +1,9 @@
 // app/(protected)/videos/[playlistId]/page.tsx
-// Playlist detail page — Server Component.
+// Playlist detail page - Server Component.
 // Fetches playlist + filtered videos server-side; delegates interactivity to PlaylistVideoGrid.
 // Header shows FAMILY ARCHIVE · PLAYLIST eyebrow, serif h1, italic subtitle, description, count.
 // "← Back to all playlists" link above the header.
-// PlaylistVideoGrid (Client) owns the VideoLightbox state — clicking a video opens lightbox.
+// PlaylistVideoGrid (Client) owns the VideoLightbox state - clicking a video opens lightbox.
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { getPlaylistById, getVideosInPlaylist, getPlaylists } from '@/lib/content'

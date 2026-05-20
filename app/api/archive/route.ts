@@ -5,7 +5,7 @@
 // The archive is designed to outlive the framework: open index.html in any
 // browser, offline, without Vercel or Next.js, and browse the full archive.
 //
-// Binary assets (photos, audio) are NOT included — they are referenced by
+// Binary assets (photos, audio) are NOT included - they are referenced by
 // filename only. To get the binaries, clone the source repository.
 import { NextResponse } from 'next/server'
 import JSZip from 'jszip'
@@ -56,15 +56,15 @@ plus a self-contained index.html viewer that requires no internet connection
 or framework to read.
 
 Files:
-  content/family.json       — Family members (people)
-  content/photos.json       — Photographs metadata
-  content/videos.json       — Films and recordings
-  content/audio.json        — Voice recordings, oral histories, songs
-  content/collections.json  — Photo collection definitions
-  content/playlists.json    — Video playlist definitions
-  content/chronicles.json   — Written family stories and chronicles
-  index.html                — Open in any browser to browse the archive
-  README.txt                — This file
+  content/family.json       - Family members (people)
+  content/photos.json       - Photographs metadata
+  content/videos.json       - Films and recordings
+  content/audio.json        - Voice recordings, oral histories, songs
+  content/collections.json  - Photo collection definitions
+  content/playlists.json    - Video playlist definitions
+  content/chronicles.json   - Written family stories and chronicles
+  index.html                - Open in any browser to browse the archive
+  README.txt                - This file
 
 This export does not include the actual photo, video, or audio files.
 Those live at /public/photos/, /public/audio/ in the source repository.

@@ -1,6 +1,6 @@
 // lib/archive-template.ts
 // Generates a self-contained, framework-free index.html for the archive ZIP.
-// This file is server-only — it embeds all content inline so the HTML works
+// This file is server-only - it embeds all content inline so the HTML works
 // with no internet connection, no Vercel, and no Next.js, forever.
 import 'server-only'
 import type { Person, Photo, Video, Audio, Collection, Playlist, Chronicle } from './types'
@@ -21,7 +21,7 @@ export function generateArchiveHtml(data: ArchiveData): string {
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>The Curry Family Archive — exported ${data.exportedDate}</title>
+<title>The Curry Family Archive - exported ${data.exportedDate}</title>
 <style>
   body { font-family: Georgia, 'Times New Roman', serif; color: #1F2D5C; background: #FBF9F2; max-width: 1100px; margin: 0 auto; padding: 40px 24px; line-height: 1.6; }
   h1 { font-weight: 400; font-size: 36px; margin-bottom: 8px; }
@@ -107,7 +107,7 @@ function renderPlaylists() {
 function renderChronicles() {
   return load('chronicles').map(function(c) {
     // Render body as plain paragraphs: split on blank lines, strip markdown syntax.
-    // No markdown parser bundled in the export — keeps the HTML self-contained.
+    // No markdown parser bundled in the export - keeps the HTML self-contained.
     var plainBody = (c.body || '')
       .replace(/#{1,6}\s+/g, '')
       .replace(/\*\*(.+?)\*\*/g, '$1')

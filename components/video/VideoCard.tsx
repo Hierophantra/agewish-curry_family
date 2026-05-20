@@ -1,7 +1,7 @@
 // components/video/VideoCard.tsx
-// 'use client' — supports optional onClick prop for lightbox integration (Phase 9).
+// 'use client' - supports optional onClick prop for lightbox integration (Phase 9).
 // When onClick is absent: renders as a plain article (original behavior, no Link needed for videos).
-// When onClick is present: renders as a <button> — click opens lightbox.
+// When onClick is present: renders as a <button> - click opens lightbox.
 // D-07: Hover lift (shadow-md + -translate-y-0.5) on outermost element per render path.
 'use client'
 
@@ -29,7 +29,7 @@ export default function VideoCard({ video, onClick }: VideoCardProps) {
 
   const innerContent = (
     <>
-      {/* 16:9 player — YouTubeEmbed facade handles thumbnail + deferred iframe internally */}
+      {/* 16:9 player - YouTubeEmbed facade handles thumbnail + deferred iframe internally */}
       <VideoPlayer video={video} />
 
       {/* Card metadata */}
@@ -46,7 +46,7 @@ export default function VideoCard({ video, onClick }: VideoCardProps) {
   )
 
   // When onClick is provided (e.g. PlaylistVideoGrid lightbox integration),
-  // render as a button — no navigation. Hover lift preserved.
+  // render as a button - no navigation. Hover lift preserved.
   if (onClick) {
     return (
       <button
@@ -59,7 +59,7 @@ export default function VideoCard({ video, onClick }: VideoCardProps) {
     )
   }
 
-  // Default: plain article with hover lift (no Link — videos don't have detail pages).
+  // Default: plain article with hover lift (no Link - videos don't have detail pages).
   return (
     <article className="flex flex-col transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md">
       {innerContent}

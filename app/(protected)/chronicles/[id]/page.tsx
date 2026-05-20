@@ -1,5 +1,5 @@
 // app/(protected)/chronicles/[id]/page.tsx
-// Chronicle detail page — Server Component, async.
+// Chronicle detail page - Server Component, async.
 // D-07: getChronicleById; notFound() if missing; generateStaticParams for all IDs.
 // D-08: Back link → eyebrow → title → subtitle → dateLabel → cover photo → AudioPlayer → body → people chips.
 import { notFound } from 'next/navigation'
@@ -35,7 +35,7 @@ export default async function ChronicleDetailPage({ params }: Props) {
     ? {
         id: chronicle.id,
         filename: chronicle.audioFilename,
-        title: `Narration — ${chronicle.title}`,
+        title: `Narration - ${chronicle.title}`,
         duration: chronicle.audioDuration,
         dateLabel: chronicle.dateLabel,
         circa: chronicle.circa,
@@ -85,7 +85,7 @@ export default async function ChronicleDetailPage({ params }: Props) {
       {/* Gold accent divider */}
       <div className="h-px bg-gold w-12 mb-8" aria-hidden="true" />
 
-      {/* D-08 step 6: Cover photo — full-width, ~16:9 max, BlurHash placeholder */}
+      {/* D-08 step 6: Cover photo - full-width, ~16:9 max, BlurHash placeholder */}
       {coverPhoto && (
         <div className="relative aspect-video max-h-[500px] overflow-hidden rounded-lg mb-8">
           <Image
@@ -102,7 +102,7 @@ export default async function ChronicleDetailPage({ params }: Props) {
         </div>
       )}
 
-      {/* D-08 step 7: AudioPlayer — placed early so narration is findable */}
+      {/* D-08 step 7: AudioPlayer - placed early so narration is findable */}
       {narrationAudio && (
         <div className="mb-8 max-w-prose">
           <AudioPlayer audio={narrationAudio} />
@@ -114,7 +114,7 @@ export default async function ChronicleDetailPage({ params }: Props) {
         <ChronicleBody body={chronicle.body} />
       </div>
 
-      {/* D-08 step 9: People chips — "About the people in this story" */}
+      {/* D-08 step 9: People chips - "About the people in this story" */}
       {people.length > 0 && (
         <section className="border-t hairline pt-8">
           <h2 className="eyebrow text-quiet text-xs mb-5">

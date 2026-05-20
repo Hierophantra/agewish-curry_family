@@ -1,5 +1,5 @@
 // app/admin/layout.tsx
-// Admin route group layout — chrome only, NO auth check.
+// Admin route group layout - chrome only, NO auth check.
 //
 // IMPORTANT: This layout wraps app/admin/login/page.tsx as well as the gated pages.
 // Putting an auth gate here would create an infinite redirect loop:
@@ -8,7 +8,7 @@
 // Auth gating instead lives in each protected page via `await requireAdminOrRedirect()`.
 // The login page intentionally has no such call.
 //
-// The @username badge in the chrome is rendered conditionally — present when the user is
+// The @username badge in the chrome is rendered conditionally - present when the user is
 // signed in as an admin, absent on /admin/login (since they haven't signed in yet).
 import { getAdminUser } from '@/lib/admin'
 import Link from 'next/link'

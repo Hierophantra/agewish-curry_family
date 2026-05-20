@@ -1,5 +1,5 @@
 // components/chronicles/ChronicleCard.tsx
-// Server Component — renders one chronicle card for the /chronicles landing grid.
+// Server Component - renders one chronicle card for the /chronicles landing grid.
 // Shows: cover photo (if present) + title + subtitle + dateLabel + duration + first ~150 words preview.
 // Wraps a <Link href="/chronicles/{chronicle.id}">.
 import Image from 'next/image'
@@ -42,7 +42,7 @@ export default function ChronicleCard({ chronicle }: ChronicleCardProps) {
       href={`/chronicles/${chronicle.id}`}
       className="group block border hairline rounded-lg bg-white hover:-translate-y-0.5 hover:shadow-md transition-all duration-300 overflow-hidden"
     >
-      {/* Cover photo — 16:9 aspect, fills top of card */}
+      {/* Cover photo - 16:9 aspect, fills top of card */}
       {cover && (
         <div className="relative aspect-video overflow-hidden">
           <Image

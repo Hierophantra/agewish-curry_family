@@ -1,5 +1,5 @@
 // components/tree/PersonPanel.tsx
-// 'use client' — uses motion/react for slide-in animation
+// 'use client' - uses motion/react for slide-in animation
 'use client'
 import { motion, useReducedMotion } from 'motion/react'
 import Link from 'next/link'
@@ -10,7 +10,7 @@ import { useFocusTrap } from '@/lib/focus-trap'
 interface PersonPanelProps {
   person: Person
   photos: Photo[]      // pre-filtered to this person's photos (passed from FamilyTreeCanvas)
-  people: Person[]     // full list — needed to resolve childrenIds → child names
+  people: Person[]     // full list - needed to resolve childrenIds → child names
   onClose: () => void
 }
 
@@ -20,10 +20,10 @@ export default function PersonPanel({ person, photos, people, onClose }: PersonP
   // prefers-reduced-motion: skip slide-in animation entirely when OS setting is enabled.
   const reduce = useReducedMotion()
 
-  // Focus trap — panel is always open when mounted; returns focus to the tree node on close.
+  // Focus trap - panel is always open when mounted; returns focus to the tree node on close.
   const trapRef = useFocusTrap<HTMLElement>(true)
 
-  // Resolve children names — v2 canonical childrenIds with v1 childIds fallback
+  // Resolve children names - v2 canonical childrenIds with v1 childIds fallback
   const resolvedChildrenIds = person.childrenIds.length > 0 ? person.childrenIds : person.childIds
   const childNames = resolvedChildrenIds
     .map((cid) => peopleById.get(cid)?.name ?? cid)
@@ -40,36 +40,36 @@ export default function PersonPanel({ person, photos, people, onClose }: PersonP
     return `${monthName} ${day}, ${year}`
   }
 
-  // Build "Born" label — prefer birthDate (full formatted), fall back to birthYear
+  // Build "Born" label - prefer birthDate (full formatted), fall back to birthYear
   const bornLabel = person.birthDate
     ? formatDateISO(person.birthDate)
     : person.birthYear
       ? String(person.birthYear)
       : null
 
-  // Build "Died" label — prefer deathDate (full formatted), fall back to deathYear
+  // Build "Died" label - prefer deathDate (full formatted), fall back to deathYear
   const diedLabel = person.deathDate
     ? formatDateISO(person.deathDate)
     : person.deathYear
       ? String(person.deathYear)
       : null
 
-  // Birthplace — v2 canonical birthplace with v1 birthPlace fallback
+  // Birthplace - v2 canonical birthplace with v1 birthPlace fallback
   const birthplaceLabel = person.birthplace ?? person.birthPlace ?? null
 
-  // Spouse — v2 spouseLabel (plain display string from JSON)
+  // Spouse - v2 spouseLabel (plain display string from JSON)
   const spouseLabel = person.spouseLabel ?? null
 
-  // Mother / Father — display-only labels for parents without their own Person record.
+  // Mother / Father - display-only labels for parents without their own Person record.
   // Used when the visualized parent (primary spouse, via flattenMultiSpouses workaround)
   // is not the biological mother/father.
   const motherLabel = person.motherName ?? null
   const fatherLabel = person.fatherName ?? null
 
-  // Children — comma-separated resolved names; row is omitted entirely when there are none
+  // Children - comma-separated resolved names; row is omitted entirely when there are none
   const childrenLabel = childNames.length > 0 ? childNames.join(', ') : null
 
-  // Build meta rows — skip rows with no data
+  // Build meta rows - skip rows with no data
   type MetaRow = [string, string]
   const metaRows: MetaRow[] = []
   if (bornLabel) metaRows.push(['Born', bornLabel])
@@ -78,17 +78,17 @@ export default function PersonPanel({ person, photos, people, onClose }: PersonP
   if (motherLabel) metaRows.push(['Mother', motherLabel])
   if (fatherLabel) metaRows.push(['Father', fatherLabel])
   if (spouseLabel) metaRows.push(['Spouse', spouseLabel])
-  // Children row is omitted when the person has no recorded children — avoids
+  // Children row is omitted when the person has no recorded children - avoids
   // rendering a row that just says "(none)" for everyone in the youngest generation.
   if (childrenLabel) metaRows.push(['Children', childrenLabel])
 
   return (
     // D-16: mobile bottom-sheet (fixed, full-width, slides from bottom, rounded top corners)
-    // md+: fixed right sheet — anchored to viewport right edge, full screen height.
-    //      Does NOT shrink the tree container — tree gets its full width regardless.
+    // md+: fixed right sheet - anchored to viewport right edge, full screen height.
+    //      Does NOT shrink the tree container - tree gets its full width regardless.
     //      z-40: above tree nodes (z-20 gradient, z-10 nodes) but below TopNav (z-50).
     //      Shadow on left edge creates visual separation from tree without a backdrop.
-    // ARIA: role="dialog" aria-modal="true" — panel traps focus and overlays the tree.
+    // ARIA: role="dialog" aria-modal="true" - panel traps focus and overlays the tree.
     // aria-labelledby points at the h2 (person name) so screen readers announce
     // "William Curry dialog" when the panel opens.
     // D-A11Y: aria-modal=true because Tab IS trapped within the panel (useFocusTrap).
@@ -104,7 +104,7 @@ export default function PersonPanel({ person, photos, people, onClose }: PersonP
       exit={reduce ? { opacity: 0 } : { x: '100%', opacity: 0 }}
       transition={reduce ? { duration: 0 } : { duration: 0.25, ease: 'easeInOut' }}
     >
-      {/* Panel top: eyebrow + close button — matches .panel-top */}
+      {/* Panel top: eyebrow + close button - matches .panel-top */}
       <div className="flex items-center justify-between px-[22px] pt-[22px] pb-0 mb-0">
         {/* panel-eyebrow: 10px, 0.22em tracking, uppercase, gold-deep */}
         <span
@@ -145,7 +145,7 @@ export default function PersonPanel({ person, photos, people, onClose }: PersonP
         </p>
       )}
 
-      {/* Photo carousel — 4:5 aspect, Lightbox integration (Task 2) */}
+      {/* Photo carousel - 4:5 aspect, Lightbox integration (Task 2) */}
       <div className="px-[22px]">
         <PhotoCarousel photos={photos} />
       </div>
@@ -169,10 +169,10 @@ export default function PersonPanel({ person, photos, people, onClose }: PersonP
         </div>
       )}
 
-      {/* Bio intentionally removed — panel shows info + photos only.
+      {/* Bio intentionally removed - panel shows info + photos only.
           Full bio appears on the person detail page at /person/[id]. */}
 
-      {/* View full page link — eyebrow style, subtle gold on hover (Phase 6 / D-08) */}
+      {/* View full page link - eyebrow style, subtle gold on hover (Phase 6 / D-08) */}
       <div className="px-[22px] pb-[22px] mt-auto pt-4">
         <Link
           href={`/person/${person.id}`}

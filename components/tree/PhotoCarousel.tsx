@@ -1,5 +1,5 @@
 // components/tree/PhotoCarousel.tsx
-// 'use client' — uses useState, useEffect; integrates Lightbox on image click
+// 'use client' - uses useState, useEffect; integrates Lightbox on image click
 'use client'
 import { useState, useEffect } from 'react'
 import { useReducedMotion } from 'motion/react'
@@ -22,7 +22,7 @@ export default function PhotoCarousel({ photos }: PhotoCarouselProps) {
   // prefers-reduced-motion: skip 1.2s CSS crossfade when OS setting is enabled.
   const reduce = useReducedMotion()
 
-  // Auto-advance with cleanup — CRITICAL: clearTimeout on each change prevents timer pile-up
+  // Auto-advance with cleanup - CRITICAL: clearTimeout on each change prevents timer pile-up
   // (RESEARCH §Topic 6 gotcha: multiple timers advancing carousel simultaneously)
   useEffect(() => {
     if (photos.length <= 1) return
@@ -52,7 +52,7 @@ export default function PhotoCarousel({ photos }: PhotoCarouselProps) {
 
   return (
     <div>
-      {/* 4:5 aspect container — prototype .panel-img-wrap { aspect-ratio: 4/5 }
+      {/* 4:5 aspect container - prototype .panel-img-wrap { aspect-ratio: 4/5 }
           ivory bg, 0.5px border, rounded-sm (border-radius: 6px in prototype)
           overflow-hidden clips all stacked images to container boundary
           aria-live="polite": screen reader announces the active photo caption when it changes */}
@@ -90,7 +90,7 @@ export default function PhotoCarousel({ photos }: PhotoCarouselProps) {
         ))}
       </div>
 
-      {/* Dot indicators — prototype .panel-dot: 5×5px, border-radius 50%, gap 6px
+      {/* Dot indicators - prototype .panel-dot: 5×5px, border-radius 50%, gap 6px
           Active: bg-gold (prototype var(--gold)); inactive: bg-stone (prototype #D8D3C2) */}
       {photos.length > 1 && (
         <div className="flex justify-center mt-2" style={{ gap: '6px' }}>
@@ -100,7 +100,7 @@ export default function PhotoCarousel({ photos }: PhotoCarouselProps) {
               type="button"
               onClick={() => setActiveIndex(i)}
               aria-label={`Photo ${i + 1}`}
-              // Static Tailwind class strings — NOT bg-${color} (purged in production)
+              // Static Tailwind class strings - NOT bg-${color} (purged in production)
               className={cn(
                 'rounded-full focus:outline-none focus-visible:ring-1 focus-visible:ring-gold focus-visible:ring-offset-1',
                 i === activeIndex ? 'bg-gold' : 'bg-stone'
@@ -111,7 +111,7 @@ export default function PhotoCarousel({ photos }: PhotoCarouselProps) {
         </div>
       )}
 
-      {/* Lightbox — shared component (D-09/Phase 8); receives same photos array (D-19: wraps at boundaries) */}
+      {/* Lightbox - shared component (D-09/Phase 8); receives same photos array (D-19: wraps at boundaries) */}
       {lightboxIndex !== null && (
         <Lightbox
           photos={photos}

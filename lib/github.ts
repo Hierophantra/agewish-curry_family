@@ -14,7 +14,7 @@ const BRANCH = 'main'
  * Returns null if the file does not exist.
  *
  * The SHA is a required parameter when calling createOrUpdateFileContents to update
- * an existing file — GitHub uses it to detect concurrent edits.
+ * an existing file - GitHub uses it to detect concurrent edits.
  */
 export async function getFileContent(
   accessToken: string,

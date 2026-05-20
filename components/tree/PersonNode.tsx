@@ -1,5 +1,5 @@
 // components/tree/PersonNode.tsx
-// 'use client' — needs onClick for selectedId state in parent canvas
+// 'use client' - needs onClick for selectedId state in parent canvas
 'use client'
 import type { ExtNode } from 'relatives-tree/lib/types'
 import type { CSSProperties } from 'react'
@@ -9,7 +9,7 @@ interface PersonNodeProps {
   name: string           // person's display name from Person[] lookup in canvas
   isActive: boolean
   isFocused: boolean     // keyboard focus indicator (separate from panel-open selection)
-  relationLabel: string  // e.g., "GRANDFATHER", "FATHER" — computed by canvas
+  relationLabel: string  // e.g., "GRANDFATHER", "FATHER" - computed by canvas
   deathYear?: number     // shown as "d. YYYY" line for deceased people
   onClick: () => void
   onRef: (el: HTMLButtonElement | null) => void  // allows canvas to imperatively focus nodes
@@ -17,7 +17,7 @@ interface PersonNodeProps {
 }
 
 // node is accepted as a prop (required by FamilyTreeCanvas) but not rendered directly
-// — we render `name` (resolved by canvas) instead of node.id
+// - we render `name` (resolved by canvas) instead of node.id
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function PersonNode({ node: _node, name, isActive, isFocused, relationLabel, deathYear, onClick, onRef, style }: PersonNodeProps) {
   return (
@@ -52,15 +52,15 @@ export default function PersonNode({ node: _node, name, isActive, isFocused, rel
         />
       )}
 
-      {/* Name — D-13: font-serif, navy, sentence case */}
+      {/* Name - D-13: font-serif, navy, sentence case */}
       <span className="font-serif text-navy text-sm leading-tight truncate w-full">
         {name}
       </span>
 
-      {/* Relation label — D-13: eyebrow class (uppercase + tracking) */}
+      {/* Relation label - D-13: eyebrow class (uppercase + tracking) */}
       <span className="eyebrow text-quiet mt-0.5">{relationLabel}</span>
 
-      {/* Deceased indicator — only shown when deathYear is set */}
+      {/* Deceased indicator - only shown when deathYear is set */}
       {deathYear && (
         <span className="text-quiet text-[10px] leading-none mt-0.5 italic">
           d. {deathYear}

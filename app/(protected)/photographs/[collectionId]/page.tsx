@@ -1,16 +1,16 @@
 // app/(protected)/photographs/[collectionId]/page.tsx
-// Collection detail page — Server Component.
+// Collection detail page - Server Component.
 // D-04: Fetches collection + filtered photos server-side; delegates interactivity to CollectionPhotoGrid.
 // D-05: Header shows FAMILY ARCHIVE · COLLECTION eyebrow, serif h1, italic subtitle, dateLabel, count, description.
 // D-06: Photo grid via CollectionPhotoGrid (Client); each photo click opens Lightbox at that index.
-// D-07: Empty collection — header renders, CollectionPhotoGrid handles empty state.
+// D-07: Empty collection - header renders, CollectionPhotoGrid handles empty state.
 // D-08: "← Back to all collections" link above the header.
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { getCollectionById, getPhotosInCollection, getCollections } from '@/lib/content'
 import CollectionPhotoGrid from '@/components/gallery/CollectionPhotoGrid'
 
-// [collectionId] detail page — Server Component.
+// [collectionId] detail page - Server Component.
 // D-04: Fetches collection + filtered photos server-side; delegates interactivity to CollectionPhotoGrid.
 // D-08: "← Back to all collections" link above the header.
 // 18-02: "Play this collection as a slideshow →" link in header.

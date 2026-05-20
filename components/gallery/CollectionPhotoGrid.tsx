@@ -1,9 +1,9 @@
 // components/gallery/CollectionPhotoGrid.tsx
-// 'use client' — owns lightbox open/close state for a collection's photo grid.
+// 'use client' - owns lightbox open/close state for a collection's photo grid.
 // D-23: Manages lightboxIndex (null = closed, number = open at index).
 // D-24: Each PhotoCard receives onClick that sets lightboxIndex, opening the lightbox.
 // D-25: Renders <Lightbox> conditionally; prev/next wrap around (∞ navigation, D-13/D-19).
-// Phase 16: URL state — ?photo=<id> persists lightbox across refresh and enables deep links.
+// Phase 16: URL state - ?photo=<id> persists lightbox across refresh and enables deep links.
 'use client'
 
 import { useState, useEffect } from 'react'
@@ -72,7 +72,7 @@ export default function CollectionPhotoGrid({ photos }: CollectionPhotoGridProps
     router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false })
   }
 
-  // navigatePhoto: replace so each prev/next doesn't pollute history — back button closes modal.
+  // navigatePhoto: replace so each prev/next doesn't pollute history - back button closes modal.
   function navigatePhoto(index: number) {
     const photo = photos[index]
     if (!photo) return

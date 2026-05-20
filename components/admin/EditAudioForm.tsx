@@ -1,6 +1,6 @@
 'use client'
 // components/admin/EditAudioForm.tsx
-// Client Component — multi-field editor for creating or updating an audio recording entry.
+// Client Component - multi-field editor for creating or updating an audio recording entry.
 // Used by both /admin/audio/new (mode='create') and /admin/audio/[id] (mode='update').
 //
 // Create: multipart/form-data POST to /api/admin/audio
@@ -17,7 +17,7 @@ import { useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import type { Person, Collection } from '@/lib/types'
 
-const MAX_FILE_SIZE_BYTES = 4 * 1024 * 1024 // 4MB — serverless body limit
+const MAX_FILE_SIZE_BYTES = 4 * 1024 * 1024 // 4MB - serverless body limit
 
 export interface AudioFormValues {
   id: string
@@ -33,7 +33,7 @@ export interface AudioFormValues {
 interface Props {
   mode: 'create' | 'update'
   audioId?: string            // only required in update mode
-  currentFilename?: string    // only in update mode — shown as read-only info
+  currentFilename?: string    // only in update mode - shown as read-only info
   initial: AudioFormValues
   allPeople: Person[]
   allCollections: Collection[]
@@ -86,7 +86,7 @@ export default function EditAudioForm({
 
   const isDisabled = status === 'saving' || status === 'deleting'
 
-  // Handle file selection — validate type/size client-side
+  // Handle file selection - validate type/size client-side
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0] ?? null
     if (!file) {
@@ -117,7 +117,7 @@ export default function EditAudioForm({
       return
     }
 
-    // Validate file size (4MB limit — serverless body limit)
+    // Validate file size (4MB limit - serverless body limit)
     if (file.size > MAX_FILE_SIZE_BYTES) {
       setErrorMessage(
         'File is too large (maximum 4MB). Compress the audio or contact the developer for larger files.'
@@ -139,7 +139,7 @@ export default function EditAudioForm({
     }
 
     // Attempt to read duration from audio metadata via the Web Audio API
-    // This is a best-effort — it works for most MP3/WAV files in modern browsers.
+    // This is a best-effort - it works for most MP3/WAV files in modern browsers.
     // For M4A/AAC the browser may not surface duration until the file is fully parsed.
     const objectUrl = URL.createObjectURL(file)
     const tempAudio = new Audio(objectUrl)
@@ -232,7 +232,7 @@ export default function EditAudioForm({
       return
     }
 
-    // Update mode — send changed metadata fields as JSON
+    // Update mode - send changed metadata fields as JSON
     const body: Record<string, unknown> = {}
     const scalarFields: Array<keyof AudioFormValues> = [
       'title', 'description', 'date', 'dateLabel', 'duration',
@@ -312,7 +312,7 @@ export default function EditAudioForm({
             <span className={helpClass}>
               MP3, M4A, AAC, or WAV. Maximum 4MB.{' '}
               For voice recordings, 64–128 kbps mono MP3 gives excellent quality at small size.
-              Files larger than 4MB cannot be uploaded via the form — contact the developer.
+              Files larger than 4MB cannot be uploaded via the form - contact the developer.
             </span>
           </label>
 
@@ -354,7 +354,7 @@ export default function EditAudioForm({
         />
         <span className={helpClass}>
           {mode === 'create'
-            ? 'Kebab-case slug — auto-generated from filename; you can override it. Cannot be changed after upload.'
+            ? 'Kebab-case slug - auto-generated from filename; you can override it. Cannot be changed after upload.'
             : 'Read-only. The ID is permanent once a recording is published.'}
         </span>
       </label>

@@ -1,11 +1,11 @@
 'use client'
 // components/admin/EditCollectionForm.tsx
-// Client Component — multi-field editor for creating or updating a collection.
+// Client Component - multi-field editor for creating or updating a collection.
 // Used by both /admin/collections/new (mode='create') and /admin/collections/[id] (mode='update').
 //
-// Create: POST /api/admin/collections — body is the full new collection object
-// Update: POST /api/admin/collections/[id] — body is the changed fields only
-// Delete: DELETE /api/admin/collections/[id] — removes the collection (update mode only)
+// Create: POST /api/admin/collections - body is the full new collection object
+// Update: POST /api/admin/collections/[id] - body is the changed fields only
+// Delete: DELETE /api/admin/collections/[id] - removes the collection (update mode only)
 //
 // On create success: redirects to /admin/collections
 // On update success: calls router.refresh() to re-read updated JSON
@@ -120,7 +120,7 @@ export default function EditCollectionForm({
       return
     }
 
-    // Update mode — build changed fields diff
+    // Update mode - build changed fields diff
     const changed: Partial<Record<keyof CollectionFormValues, unknown>> = {}
 
     const scalarStringFields: Array<keyof CollectionFormValues> = [
@@ -194,7 +194,7 @@ export default function EditCollectionForm({
         />
         <span className={helpClass}>
           {mode === 'create'
-            ? 'Kebab-case slug — auto-generated from title; you can override it. Cannot be changed after creation.'
+            ? 'Kebab-case slug - auto-generated from title; you can override it. Cannot be changed after creation.'
             : 'Read-only. The ID is permanent once a collection is published.'}
         </span>
       </label>
@@ -249,7 +249,7 @@ export default function EditCollectionForm({
             value={values.dateLabel}
             onChange={handleTextChange('dateLabel')}
             className={inputClass}
-            placeholder="1974 — 2005"
+            placeholder="1974 - 2005"
             disabled={isDisabled}
           />
           <span className={helpClass}>Display string, e.g. &ldquo;1974 &mdash; 2005&rdquo;. Shown on cards and list pages.</span>
@@ -279,7 +279,7 @@ export default function EditCollectionForm({
           disabled={isDisabled}
           required
         >
-          <option value="">— Select a photo —</option>
+          <option value="">- Select a photo -</option>
           {allPhotos.map((photo) => (
             <option key={photo.id} value={photo.id}>
               {photo.id}{photo.caption ? ` · ${photo.caption}` : ''}{photo.filename ? ` (${photo.filename})` : ''}

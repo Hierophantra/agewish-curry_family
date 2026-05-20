@@ -1,5 +1,5 @@
 // app/api/admin/chronicles/route.ts
-// POST — create a new chronicle.
+// POST - create a new chronicle.
 // Body: full chronicle object (id, title, body are required; all other fields optional).
 //
 // Flow:

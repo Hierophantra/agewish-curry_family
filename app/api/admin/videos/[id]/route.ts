@@ -1,6 +1,6 @@
 // app/api/admin/videos/[id]/route.ts
-// POST  — update an existing video (partial update; omitted fields preserved).
-// DELETE — remove a video by id.
+// POST  - update an existing video (partial update; omitted fields preserved).
+// DELETE - remove a video by id.
 //
 // Flow:
 //   1. Auth check (must be in ADMIN_GITHUB_USERNAMES allowlist)

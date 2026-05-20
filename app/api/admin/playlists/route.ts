@@ -1,5 +1,5 @@
 // app/api/admin/playlists/route.ts
-// POST — create a new playlist.
+// POST - create a new playlist.
 // Body: full playlist object (id, title, coverVideoId are required; all other fields optional).
 //
 // Flow:

@@ -1,8 +1,8 @@
 // app/(protected)/videos/page.tsx
-// Protected page — videos landing. Shows every playlist as a cover card.
+// Protected page - videos landing. Shows every playlist as a cover card.
 // No featured section: the home page is the hub, and the videos page is the
 // full catalog of playlists.
-// Server Component: no 'use client' — PlaylistGrid handles its own data fetching.
+// Server Component: no 'use client' - PlaylistGrid handles its own data fetching.
 import PlaylistGrid from '@/components/video/PlaylistGrid'
 
 export default function VideosPage() {

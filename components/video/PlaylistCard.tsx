@@ -1,9 +1,9 @@
 // components/video/PlaylistCard.tsx
-// Server Component — renders one playlist cover card with YouTube thumbnail.
+// Server Component - renders one playlist cover card with YouTube thumbnail.
 // Mirrors CollectionCard but uses video thumbnail instead of a photo.
 // YouTube thumbnails: https://img.youtube.com/vi/{sourceId}/hqdefault.jpg
 //   (img.youtube.com is whitelisted in next.config.mjs images.remotePatterns)
-// Vimeo thumbnails require an API call — falls back to a solid navy background.
+// Vimeo thumbnails require an API call - falls back to a solid navy background.
 // D-07 (inherited): Hover lift (-translate-y-0.5 + shadow-md) on the card.
 import Image from 'next/image'
 import Link from 'next/link'
@@ -30,7 +30,7 @@ export default function PlaylistCard({ playlist, videoCount }: PlaylistCardProps
       href={`/videos/${playlist.id}`}
       className="group relative block aspect-video overflow-hidden rounded-lg border hairline bg-navy transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
     >
-      {/* Cover thumbnail — YouTube hqdefault; fills card with subtle hover zoom */}
+      {/* Cover thumbnail - YouTube hqdefault; fills card with subtle hover zoom */}
       {thumbUrl ? (
         <Image
           src={thumbUrl}
@@ -43,10 +43,10 @@ export default function PlaylistCard({ playlist, videoCount }: PlaylistCardProps
         <div className="absolute inset-0 bg-navy" />
       )}
 
-      {/* Gradient overlay: dark at bottom, fades upward — ensures text legibility */}
+      {/* Gradient overlay: dark at bottom, fades upward - ensures text legibility */}
       <div className="absolute inset-0 bg-gradient-to-t from-navy/85 via-navy/30 to-transparent" />
 
-      {/* Play indicator — centered, subtle circle with gold triangle */}
+      {/* Play indicator - centered, subtle circle with gold triangle */}
       <div className="absolute inset-0 flex items-center justify-center">
         <div className="w-14 h-14 rounded-full bg-white/15 border-[1.25px] border-white flex items-center justify-center group-hover:bg-white/25 group-hover:scale-105 transition-all">
           <svg viewBox="0 0 12 12" width="14" height="14" fill="none" aria-hidden="true">

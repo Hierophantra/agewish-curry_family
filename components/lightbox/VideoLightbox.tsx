@@ -1,15 +1,15 @@
 // components/lightbox/VideoLightbox.tsx
-// 'use client' — owns keyboard listeners, body scroll lock, and open/close animation.
+// 'use client' - owns keyboard listeners, body scroll lock, and open/close animation.
 // Receives a pre-filtered videos array (playlist's videos) and the current index.
 // D-09 (video variant): Triggered by PlaylistVideoGrid (Phase 9).
 // Mirrors Lightbox.tsx but embeds VideoPlayer instead of next/image.
-// D-10: Backdrop rgba(15, 24, 64, 0.95) — navy-derived dark overlay.
+// D-10: Backdrop rgba(15, 24, 64, 0.95) - navy-derived dark overlay.
 // D-15: Keyboard nav: Escape → close, ArrowLeft → prev, ArrowRight → next.
 // D-16: Backdrop click closes; click on video container does NOT propagate.
 // D-17: AnimatePresence opacity fade-in/out 250ms; per-video cross-fade via key={video.id}.
 // D-18: Body scroll locked while open; restored on unmount.
 // D-19: Wraps around at boundaries (∞ navigation).
-// D-9.6: No autoplay on open — user must click play themselves.
+// D-9.6: No autoplay on open - user must click play themselves.
 'use client'
 
 import { useEffect } from 'react'
@@ -32,7 +32,7 @@ export default function VideoLightbox({ videos, currentIndex, onClose, onPrev, o
   // prefers-reduced-motion: skip fade animations entirely when OS setting is enabled.
   const reduce = useReducedMotion()
 
-  // Focus trap — active whenever the VideoLightbox component is mounted (always open when rendered).
+  // Focus trap - active whenever the VideoLightbox component is mounted (always open when rendered).
   // Returns focus to the trigger element (e.g. video thumbnail) when lightbox unmounts.
   const trapRef = useFocusTrap<HTMLDivElement>(true)
 
@@ -59,7 +59,7 @@ export default function VideoLightbox({ videos, currentIndex, onClose, onPrev, o
 
   return (
     <AnimatePresence>
-      {/* D-10: Backdrop — click to close (D-16) */}
+      {/* D-10: Backdrop - click to close (D-16) */}
       <motion.div
         ref={trapRef}
         key="video-lightbox-backdrop"
@@ -74,7 +74,7 @@ export default function VideoLightbox({ videos, currentIndex, onClose, onPrev, o
         aria-modal="true"
         aria-labelledby="video-lightbox-title"
       >
-        {/* Close button — top-right */}
+        {/* Close button - top-right */}
         <button
           onClick={(e) => { e.stopPropagation(); onClose() }}
           className="absolute top-6 right-6 text-gold w-8 h-8 flex items-center justify-center text-3xl hover:scale-110 transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-navy"
@@ -83,7 +83,7 @@ export default function VideoLightbox({ videos, currentIndex, onClose, onPrev, o
           ×
         </button>
 
-        {/* Prev / Next buttons — only shown when there is more than one video */}
+        {/* Prev / Next buttons - only shown when there is more than one video */}
         {videos.length > 1 && (
           <>
             <button
@@ -113,7 +113,7 @@ export default function VideoLightbox({ videos, currentIndex, onClose, onPrev, o
           className="flex flex-col items-center gap-4 max-w-[1024px] w-full px-6"
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Video player — constrained to 16:9 aspect ratio */}
+          {/* Video player - constrained to 16:9 aspect ratio */}
           <div className="aspect-video w-full">
             <VideoPlayer video={video} />
           </div>

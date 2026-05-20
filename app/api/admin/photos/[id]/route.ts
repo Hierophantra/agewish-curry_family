@@ -1,6 +1,6 @@
 // app/api/admin/photos/[id]/route.ts
-// POST  — update an existing photo's metadata (no file change; file is immutable).
-// DELETE — remove a photo entry from photos.json; deletes from Vercel Blob if it was uploaded.
+// POST  - update an existing photo's metadata (no file change; file is immutable).
+// DELETE - remove a photo entry from photos.json; deletes from Vercel Blob if it was uploaded.
 //
 // Flow:
 //   1. Auth check (must be in ADMIN_GITHUB_USERNAMES allowlist)
@@ -15,7 +15,7 @@ import { getAdminUser } from '@/lib/admin'
 import { getFileContent, commitFile } from '@/lib/github'
 import { getPeople, getCollections } from '@/lib/content'
 
-// Whitelist of editable metadata fields — filename/id/blurDataUrl are immutable after upload.
+// Whitelist of editable metadata fields - filename/id/blurDataUrl are immutable after upload.
 const EDITABLE_FIELDS = new Set([
   'caption', 'date', 'dateLabel', 'location', 'notes', 'peopleIds', 'collectionIds',
 ])

@@ -1,5 +1,5 @@
 // app/admin/audio/new/page.tsx
-// Admin new-audio page — renders EditAudioForm in create mode.
+// Admin new-audio page - renders EditAudioForm in create mode.
 // Auth gate is enforced by requireAdminOrRedirect() (not the layout).
 import Link from 'next/link'
 import { getPeople, getCollections } from '@/lib/content'

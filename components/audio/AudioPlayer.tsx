@@ -1,9 +1,9 @@
 'use client'
 
 // components/audio/AudioPlayer.tsx
-// Client component — manages native <audio> playback state.
+// Client component - manages native <audio> playback state.
 // Intentionally simple in v1: play/pause button + title + metadata.
-// No waveform visualisation, no scrubber bar — those are future enhancements.
+// No waveform visualisation, no scrubber bar - those are future enhancements.
 import { useRef, useState } from 'react'
 import type { Audio as AudioRecord } from '@/lib/types'
 import { getAudioUrl } from '@/lib/utils'
@@ -23,7 +23,7 @@ export default function AudioPlayer({ audio }: AudioPlayerProps) {
       el.pause()
     } else {
       el.play().catch(() => {
-        // Silent fail — placeholder files are not real audio; real files will play correctly.
+        // Silent fail - placeholder files are not real audio; real files will play correctly.
       })
     }
   }

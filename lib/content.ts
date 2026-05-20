@@ -17,7 +17,7 @@ import type { Person, Photo, Video, Collection, Playlist, Audio, Chronicle } fro
 export { getPhotoUrl } from './utils'
 
 // ── Internal file reader ──
-// Uses .parse() (throws ZodError) not .safeParse() — fail loud on bad content.
+// Uses .parse() (throws ZodError) not .safeParse() - fail loud on bad content.
 // z.ZodType<Output, Def, Input> lets TypeScript infer the *output* type (post-default filling),
 // not the input type. This ensures fields with .default([]) appear as string[], not string[] | undefined.
 function readJSON<Output, Def extends z.ZodTypeDef, Input>(
@@ -138,7 +138,7 @@ export function getChroniclesInCollection(collectionId: string): Chronicle[] {
 
 // ── Bidirectional reference validator ──
 // Validates that all cross-references between content types resolve.
-// Throws descriptively if a reference is dangling — surfaces data entry errors.
+// Throws descriptively if a reference is dangling - surfaces data entry errors.
 //
 // Checks:
 // 1. Photo.peopleIds[] → every ID must exist in family.json
@@ -171,7 +171,7 @@ export function validateBidirectionalRefs(): void {
       if (!personIds.has(pid)) {
         throw new Error(
           `Content error: Photo "${photo.id}" references unknown person ID "${pid}". ` +
-          `Check content/photos.json — "${pid}" must be an id in content/family.json.`
+          `Check content/photos.json - "${pid}" must be an id in content/family.json.`
         )
       }
     }
@@ -183,7 +183,7 @@ export function validateBidirectionalRefs(): void {
       if (!photoIds.has(phid)) {
         throw new Error(
           `Content error: Person "${person.id}" references unknown photo ID "${phid}". ` +
-          `Check content/family.json — "${phid}" must be an id in content/photos.json.`
+          `Check content/family.json - "${phid}" must be an id in content/photos.json.`
         )
       }
     }
@@ -195,7 +195,7 @@ export function validateBidirectionalRefs(): void {
       if (!collectionIds.has(cid)) {
         throw new Error(
           `Content error: Photo "${photo.id}" references unknown collection ID "${cid}". ` +
-          `Check content/photos.json — "${cid}" must be an id in content/collections.json.`
+          `Check content/photos.json - "${cid}" must be an id in content/collections.json.`
         )
       }
     }
@@ -207,7 +207,7 @@ export function validateBidirectionalRefs(): void {
       if (!playlistIds.has(pid)) {
         throw new Error(
           `Content error: Video "${video.id}" references unknown playlist ID "${pid}". ` +
-          `Check content/videos.json — "${pid}" must be an id in content/playlists.json.`
+          `Check content/videos.json - "${pid}" must be an id in content/playlists.json.`
         )
       }
     }
@@ -218,7 +218,7 @@ export function validateBidirectionalRefs(): void {
     if (!photoIds.has(collection.coverPhotoId)) {
       throw new Error(
         `Content error: Collection "${collection.id}" has unknown coverPhotoId "${collection.coverPhotoId}". ` +
-        `Check content/collections.json — "${collection.coverPhotoId}" must be an id in content/photos.json.`
+        `Check content/collections.json - "${collection.coverPhotoId}" must be an id in content/photos.json.`
       )
     }
   }
@@ -228,7 +228,7 @@ export function validateBidirectionalRefs(): void {
     if (!videoIds.has(playlist.coverVideoId)) {
       throw new Error(
         `Content error: Playlist "${playlist.id}" has unknown coverVideoId "${playlist.coverVideoId}". ` +
-        `Check content/playlists.json — "${playlist.coverVideoId}" must be an id in content/videos.json.`
+        `Check content/playlists.json - "${playlist.coverVideoId}" must be an id in content/videos.json.`
       )
     }
   }
@@ -239,7 +239,7 @@ export function validateBidirectionalRefs(): void {
       if (!personIds.has(pid)) {
         throw new Error(
           `Content error: Audio "${audio.id}" references unknown person ID "${pid}". ` +
-          `Check content/audio.json — "${pid}" must be an id in content/family.json.`
+          `Check content/audio.json - "${pid}" must be an id in content/family.json.`
         )
       }
     }
@@ -251,7 +251,7 @@ export function validateBidirectionalRefs(): void {
       if (!collectionIds.has(cid)) {
         throw new Error(
           `Content error: Audio "${audio.id}" references unknown collection ID "${cid}". ` +
-          `Check content/audio.json — "${cid}" must be an id in content/collections.json.`
+          `Check content/audio.json - "${cid}" must be an id in content/collections.json.`
         )
       }
     }
@@ -290,7 +290,7 @@ export function validateBidirectionalRefs(): void {
         )
       }
       const parent = treePersons.find((p) => p.id === pid)!
-      // Support both childIds (v1) and childrenIds (v2) — check either
+      // Support both childIds (v1) and childrenIds (v2) - check either
       const parentChildren = parent.childIds.length > 0 ? parent.childIds : parent.childrenIds
       if (!parentChildren.includes(person.id)) {
         throw new Error(
@@ -329,7 +329,7 @@ export function validateBidirectionalRefs(): void {
       if (!personIds.has(pid)) {
         throw new Error(
           `Content error: Chronicle "${chronicle.id}" references unknown person ID "${pid}". ` +
-          `Check content/chronicles.json — "${pid}" must be an id in content/family.json.`
+          `Check content/chronicles.json - "${pid}" must be an id in content/family.json.`
         )
       }
     }
@@ -338,7 +338,7 @@ export function validateBidirectionalRefs(): void {
     if (chronicle.coverPhotoId && !photoIds.has(chronicle.coverPhotoId)) {
       throw new Error(
         `Content error: Chronicle "${chronicle.id}" has unknown coverPhotoId "${chronicle.coverPhotoId}". ` +
-        `Check content/chronicles.json — "${chronicle.coverPhotoId}" must be an id in content/photos.json.`
+        `Check content/chronicles.json - "${chronicle.coverPhotoId}" must be an id in content/photos.json.`
       )
     }
 
@@ -347,7 +347,7 @@ export function validateBidirectionalRefs(): void {
       if (!collectionIds.has(cid)) {
         throw new Error(
           `Content error: Chronicle "${chronicle.id}" references unknown collection ID "${cid}". ` +
-          `Check content/chronicles.json — "${cid}" must be an id in content/collections.json.`
+          `Check content/chronicles.json - "${cid}" must be an id in content/collections.json.`
         )
       }
     }

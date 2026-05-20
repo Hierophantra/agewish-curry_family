@@ -1,5 +1,5 @@
 // app/admin/videos/new/page.tsx
-// Admin new-video page — renders EditVideoForm in create mode.
+// Admin new-video page - renders EditVideoForm in create mode.
 // Auth gate is enforced by requireAdminOrRedirect() (not the layout).
 import Link from 'next/link'
 import { getPeople, getPlaylists } from '@/lib/content'

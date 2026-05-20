@@ -1,5 +1,5 @@
 // app/api/admin/photos/route.ts
-// POST — upload a new photograph and commit its JSON entry to GitHub.
+// POST - upload a new photograph and commit its JSON entry to GitHub.
 //
 // Flow:
 //   1. Auth check (must be in ADMIN_GITHUB_USERNAMES allowlist)
@@ -9,7 +9,7 @@
 //   5. Generate BlurHash data URL from file buffer via plaiceholder
 //   6. Validate id uniqueness + cross-references (peopleIds, collectionIds)
 //   7. Append new Photo entry to content/photos.json, commit via GitHub API
-//   8. Return { ok: true, id } — Vercel rebuilds; live site updates in ~90s
+//   8. Return { ok: true, id } - Vercel rebuilds; live site updates in ~90s
 import { NextResponse } from 'next/server'
 import { put } from '@vercel/blob'
 import { getPlaiceholder } from 'plaiceholder'
@@ -163,7 +163,7 @@ export async function POST(request: Request) {
     )
   }
 
-  // Build new photo entry — filename is the Blob URL (hybrid storage pattern)
+  // Build new photo entry - filename is the Blob URL (hybrid storage pattern)
   const newPhoto: Record<string, unknown> = {
     id,
     filename: blobUrl,  // full Vercel Blob URL; getPhotoUrl() handles both URL + legacy paths

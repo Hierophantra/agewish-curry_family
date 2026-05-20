@@ -1,6 +1,6 @@
 // app/admin/chronicles/page.tsx
-// Admin chronicles list — shows all chronicles with title + dateLabel + duration, plus edit links.
-// Auth gate is enforced by requireAdminOrRedirect() in the page (NOT the layout —
+// Admin chronicles list - shows all chronicles with title + dateLabel + duration, plus edit links.
+// Auth gate is enforced by requireAdminOrRedirect() in the page (NOT the layout -
 // see app/admin/layout.tsx for the rationale).
 import Link from 'next/link'
 import { getChronicles } from '@/lib/content'
@@ -14,7 +14,7 @@ export default async function AdminChroniclesListPage() {
   await requireAdminOrRedirect()
   const chronicles = getChronicles()
 
-  // Sort by date descending — newest first (same order as public /chronicles page)
+  // Sort by date descending - newest first (same order as public /chronicles page)
   const sorted = [...chronicles].sort((a, b) => {
     if (!a.date && !b.date) return 0
     if (!a.date) return 1

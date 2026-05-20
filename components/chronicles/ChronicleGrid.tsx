@@ -1,5 +1,5 @@
 // components/chronicles/ChronicleGrid.tsx
-// Server Component — loads all chronicles, sorts by date descending, renders ChronicleCard grid.
+// Server Component - loads all chronicles, sorts by date descending, renders ChronicleCard grid.
 // D-06: /chronicles landing sorts newest-first.
 // D-09: Server Component; no client state needed.
 import ChronicleCard from './ChronicleCard'
@@ -20,7 +20,7 @@ export default function ChronicleGrid() {
     )
   }
 
-  // Sort by date descending — chronicles without a date sort to the end
+  // Sort by date descending - chronicles without a date sort to the end
   const sorted = [...chronicles].sort((a, b) => {
     const da = a.date ?? ''
     const db = b.date ?? ''

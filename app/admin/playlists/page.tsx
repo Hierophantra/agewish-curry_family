@@ -1,5 +1,5 @@
 // app/admin/playlists/page.tsx
-// Admin playlists list — shows all playlists with title, subtitle, video count,
+// Admin playlists list - shows all playlists with title, subtitle, video count,
 // and an edit link.
 // Auth gate is enforced by requireAdminOrRedirect() (not the layout).
 import Link from 'next/link'

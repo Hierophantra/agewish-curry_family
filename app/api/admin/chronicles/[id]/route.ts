@@ -1,6 +1,6 @@
 // app/api/admin/chronicles/[id]/route.ts
-// POST  — update an existing chronicle (partial update; omitted fields preserved).
-// DELETE — remove a chronicle by id.
+// POST  - update an existing chronicle (partial update; omitted fields preserved).
+// DELETE - remove a chronicle by id.
 //
 // Flow:
 //   1. Auth check (must be in ADMIN_GITHUB_USERNAMES allowlist)

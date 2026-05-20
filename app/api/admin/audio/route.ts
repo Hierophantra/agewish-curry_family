@@ -1,5 +1,5 @@
 // app/api/admin/audio/route.ts
-// POST — upload a new audio recording and commit its JSON entry to GitHub.
+// POST - upload a new audio recording and commit its JSON entry to GitHub.
 //
 // Flow:
 //   1. Auth check (must be in ADMIN_GITHUB_USERNAMES allowlist)
@@ -8,7 +8,7 @@
 //   4. Upload to Vercel Blob (public access) → get Blob URL
 //   5. Validate id uniqueness + cross-references (peopleIds, collectionIds)
 //   6. Append new Audio entry to content/audio.json, commit via GitHub API
-//   7. Return { ok: true, id } — Vercel rebuilds; live site updates in ~90s
+//   7. Return { ok: true, id } - Vercel rebuilds; live site updates in ~90s
 //
 // Size limit note: serverless function bodies are limited to ~4MB by default.
 // For files larger than 4MB, the client-upload (Blob direct upload) pattern would be needed.
@@ -178,7 +178,7 @@ export async function POST(request: Request) {
     )
   }
 
-  // Build new audio entry — filename is the Blob URL (hybrid storage pattern)
+  // Build new audio entry - filename is the Blob URL (hybrid storage pattern)
   const newAudio: Record<string, unknown> = {
     id,
     filename: blobUrl,  // full Vercel Blob URL; getAudioUrl() handles both URL + legacy paths

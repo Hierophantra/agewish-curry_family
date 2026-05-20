@@ -1,5 +1,5 @@
 // app/(protected)/layout.tsx
-// SERVER COMPONENT — auth() gate + layout shell with TopNav and Footer.
+// SERVER COMPONENT - auth() gate + layout shell with TopNav and Footer.
 // Calls await auth() independently of middleware (defence in depth, CVE-2025-29927).
 import { redirect } from 'next/navigation'
 import { auth } from '@/auth'

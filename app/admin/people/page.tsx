@@ -1,6 +1,6 @@
 // app/admin/people/page.tsx
-// Admin people list — shows all family members with "Edit" links and a "+ New person" button.
-// Auth gate is enforced by requireAdminOrRedirect() in the page (NOT the layout —
+// Admin people list - shows all family members with "Edit" links and a "+ New person" button.
+// Auth gate is enforced by requireAdminOrRedirect() in the page (NOT the layout -
 // see app/admin/layout.tsx for the rationale).
 import Link from 'next/link'
 import { getPeople } from '@/lib/content'

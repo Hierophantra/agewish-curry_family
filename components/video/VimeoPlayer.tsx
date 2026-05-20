@@ -1,7 +1,7 @@
 // components/video/VimeoPlayer.tsx
-// Server Component — plain Vimeo iframe with lazy loading.
+// Server Component - plain Vimeo iframe with lazy loading.
 // No facade needed for Vimeo (no per-page-load third-party cost unlike YouTube).
-// No 'use client' needed — no interactivity in this component.
+// No 'use client' needed - no interactivity in this component.
 
 interface VimeoPlayerProps {
   videoId: string

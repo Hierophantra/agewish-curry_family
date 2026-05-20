@@ -1,6 +1,6 @@
 'use client'
 // components/admin/EditPhotoForm.tsx
-// Client Component — multi-field editor for creating or updating a photograph entry.
+// Client Component - multi-field editor for creating or updating a photograph entry.
 // Used by both /admin/photos/new (mode='create') and /admin/photos/[id] (mode='update').
 //
 // Create: multipart/form-data POST to /api/admin/photos
@@ -35,7 +35,7 @@ export interface PhotoFormValues {
 interface Props {
   mode: 'create' | 'update'
   photoId?: string              // only required in update mode
-  currentFilename?: string      // only in update mode — for showing the current image
+  currentFilename?: string      // only in update mode - for showing the current image
   initial: PhotoFormValues
   allPeople: Person[]
   allCollections: Collection[]
@@ -81,7 +81,7 @@ export default function EditPhotoForm({
 
   const isDisabled = status === 'saving' || status === 'deleting'
 
-  // Handle file selection — validate type/size client-side; generate preview
+  // Handle file selection - validate type/size client-side; generate preview
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0] ?? null
     if (!file) {
@@ -99,7 +99,7 @@ export default function EditPhotoForm({
       return
     }
 
-    // Validate file size (4MB limit — serverless body limit)
+    // Validate file size (4MB limit - serverless body limit)
     if (file.size > MAX_FILE_SIZE_BYTES) {
       setErrorMessage(
         'Image is too large. Compress to under 4MB or contact the developer.'
@@ -194,7 +194,7 @@ export default function EditPhotoForm({
       return
     }
 
-    // Update mode — send changed metadata fields as JSON
+    // Update mode - send changed metadata fields as JSON
     const body: Record<string, unknown> = {}
     const scalarFields: Array<keyof PhotoFormValues> = [
       'caption', 'date', 'dateLabel', 'location', 'notes',
@@ -328,7 +328,7 @@ export default function EditPhotoForm({
         />
         <span className={helpClass}>
           {mode === 'create'
-            ? 'Kebab-case slug — auto-generated from filename; you can override it. Cannot be changed after upload.'
+            ? 'Kebab-case slug - auto-generated from filename; you can override it. Cannot be changed after upload.'
             : 'Read-only. The ID is permanent once a photo is published.'}
         </span>
       </label>
@@ -358,7 +358,7 @@ export default function EditPhotoForm({
             placeholder="YYYY-MM-DD"
             disabled={isDisabled}
           />
-          <span className={helpClass}>ISO date, e.g. 1953-06-15. Approximate is fine — leave empty if unknown.</span>
+          <span className={helpClass}>ISO date, e.g. 1953-06-15. Approximate is fine - leave empty if unknown.</span>
         </label>
 
         <label className={labelClass}>
@@ -395,7 +395,7 @@ export default function EditPhotoForm({
           value={values.notes}
           onChange={handleTextChange('notes')}
           className={`${inputClass} min-h-[100px] resize-y`}
-          placeholder="Private archivist notes — not shown on the public site."
+          placeholder="Private archivist notes - not shown on the public site."
           disabled={isDisabled}
         />
         <span className={helpClass}>Internal notes only. Not displayed to family members.</span>

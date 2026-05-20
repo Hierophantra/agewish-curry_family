@@ -1,5 +1,5 @@
 // app/admin/photos/new/page.tsx
-// Admin new-photograph page — renders EditPhotoForm in create mode.
+// Admin new-photograph page - renders EditPhotoForm in create mode.
 // Auth gate is enforced by requireAdminOrRedirect() (not the layout).
 import Link from 'next/link'
 import { getPeople, getCollections } from '@/lib/content'

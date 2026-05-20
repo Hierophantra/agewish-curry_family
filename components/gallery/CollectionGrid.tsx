@@ -1,6 +1,6 @@
 // components/gallery/CollectionGrid.tsx
-// Server Component — fetches all collections and renders a responsive grid of CollectionCards.
-// D-03: 1 col mobile / 2 cols tablet / 3 cols desktop — collections are large, need breathing room.
+// Server Component - fetches all collections and renders a responsive grid of CollectionCards.
+// D-03: 1 col mobile / 2 cols tablet / 3 cols desktop - collections are large, need breathing room.
 // D-26: Replaces the flat PhotoGrid on /photographs.
 import CollectionCard from './CollectionCard'
 import { getCollections, getPhotosInCollection } from '@/lib/content'

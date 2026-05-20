@@ -1,5 +1,5 @@
 // app/api/admin/videos/route.ts
-// POST — create a new video.
+// POST - create a new video.
 // Body: full video object (id, title, source, sourceId are required; all other fields optional).
 //
 // Flow:

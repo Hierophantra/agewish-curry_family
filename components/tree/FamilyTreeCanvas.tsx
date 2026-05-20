@@ -1,5 +1,5 @@
 // components/tree/FamilyTreeCanvas.tsx
-// 'use client' — owns selectedId state; renders positioned nodes + connectors
+// 'use client' - owns selectedId state; renders positioned nodes + connectors
 'use client'
 import { useState, useRef, useCallback, useEffect } from 'react'
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
@@ -10,7 +10,7 @@ import PersonNode from './PersonNode'
 import ConnectorLine from './ConnectorLine'
 import PersonPanel from './PersonPanel'
 
-// Layout constants — keep in sync with lib/tree.ts (cannot import lib/tree.ts here:
+// Layout constants - keep in sync with lib/tree.ts (cannot import lib/tree.ts here:
 // it has `import 'server-only'` which would fail in the client bundle).
 // D-13: node dimensions; RESEARCH §Topic 3: padding multipliers for visual breathing room
 const NODE_WIDTH = 160   // px
@@ -122,7 +122,7 @@ export default function FamilyTreeCanvas({
     router.push(`${pathname}?${params.toString()}`, { scroll: false })
   }
 
-  // handleClose: replace (no extra history entry — back button goes to previous page, not just un-opens panel).
+  // handleClose: replace (no extra history entry - back button goes to previous page, not just un-opens panel).
   function handleClose() {
     setSelectedId(null)
     const params = new URLSearchParams(searchParams.toString())
@@ -157,7 +157,7 @@ export default function FamilyTreeCanvas({
       const currentId = focusedNodeId ?? selectedId ?? (nodes[0]?.id ?? null)
       const currentNode = nodes.find((n) => n.id === currentId)
       if (!currentNode) {
-        // No focused node yet — move focus to first node
+        // No focused node yet - move focus to first node
         const first = nodes[0]
         if (first) {
           setFocusedNodeId(first.id)
@@ -185,7 +185,7 @@ export default function FamilyTreeCanvas({
           return n.left > closest.left ? n : closest
         }, undefined)
       } else if (e.key === 'ArrowDown') {
-        // Row below current row — find horizontally closest node
+        // Row below current row - find horizontally closest node
         const belowRows = nodes.filter((n) => n.top > currentNode.top)
         if (belowRows.length > 0) {
           const nextRow = Math.min(...belowRows.map((n) => n.top))
@@ -198,7 +198,7 @@ export default function FamilyTreeCanvas({
           }, undefined)
         }
       } else if (e.key === 'ArrowUp') {
-        // Row above current row — find horizontally closest node
+        // Row above current row - find horizontally closest node
         const aboveRows = nodes.filter((n) => n.top < currentNode.top)
         if (aboveRows.length > 0) {
           const prevRow = Math.max(...aboveRows.map((n) => n.top))
@@ -224,7 +224,7 @@ export default function FamilyTreeCanvas({
   return (
     // D-12: relative wrapper hosts the right-edge gradient indicator
     <div className="relative">
-      {/* Right-edge gradient fade — signals there is more content to scroll to on mobile.
+      {/* Right-edge gradient fade - signals there is more content to scroll to on mobile.
           pointer-events-none so it does not block horizontal scroll touch events.
           lg:hidden hides it on laptop+ where the tree typically fits the viewport. */}
       <div
@@ -232,7 +232,7 @@ export default function FamilyTreeCanvas({
         style={{ background: 'linear-gradient(to right, transparent, white)' }}
         aria-hidden="true"
       />
-      {/* Zoom controls — floating cluster in the top-right of the tree area.
+      {/* Zoom controls - floating cluster in the top-right of the tree area.
           z-30 sits above the right-edge gradient (z-20) and tree nodes. */}
       <div
         className="absolute right-3 top-3 z-30 flex items-stretch bg-white hairline border-stone rounded shadow-sm"
@@ -268,12 +268,12 @@ export default function FamilyTreeCanvas({
         </button>
       </div>
       {/* D-10: overflow-x-auto enables horizontal scroll on narrow viewports.
-          Tree container stays at full width regardless of panel state — panel no longer
+          Tree container stays at full width regardless of panel state - panel no longer
           shrinks the tree (panel is now fixed/viewport-positioned, not docked inside).
           Outer wrapper is sized to the SCALED canvas so the scrollbars track zoom. */}
       <div className="overflow-auto" style={{ maxHeight: '80vh' }}>
         <div style={{ width: canvasWidth * zoom, height: Math.max(canvasHeight * zoom, 120) }}>
-          {/* Relative-positioned canvas — all nodes + connectors are absolutely positioned children.
+          {/* Relative-positioned canvas - all nodes + connectors are absolutely positioned children.
               onKeyDown handles arrow-key spatial navigation between nodes.
               role="group" + aria-label groups the tree for screen reader context.
               transform: scale() zooms everything; transform-origin top-left keeps (0,0) anchored. */}
@@ -288,14 +288,14 @@ export default function FamilyTreeCanvas({
             }}
             onKeyDown={handleCanvasKeyDown}
             role="group"
-            aria-label="Family tree — use arrow keys to navigate between family members, Enter to open panel, Escape to close"
+            aria-label="Family tree - use arrow keys to navigate between family members, Enter to open panel, Escape to close"
           >
         {/* Connector lines rendered BEFORE nodes so nodes appear on top */}
         {connectors.map(([x1, y1, x2, y2], i) => (
           <ConnectorLine key={i} x1={x1} y1={y1} x2={x2} y2={y2} />
         ))}
 
-          {/* Person nodes — absolutely positioned by transform: translate(left*H_UNIT, top*V_UNIT) */}
+          {/* Person nodes - absolutely positioned by transform: translate(left*H_UNIT, top*V_UNIT) */}
           {nodes.map((node) => {
           const person = peopleById.get(node.id)
           const name = person?.name ?? node.id
@@ -340,7 +340,7 @@ export default function FamilyTreeCanvas({
         </div>
       </div>
 
-      {/* PersonPanel — fixed-position right sheet (viewport-anchored, not docked inside tree).
+      {/* PersonPanel - fixed-position right sheet (viewport-anchored, not docked inside tree).
           Slides in from the right edge of the screen; tree width is NOT affected.
           AnimatePresence fires exit animation when selectedId becomes null or changes.
           key={selectedId} is CRITICAL: forces remount on person change so exit fires between selections. */}

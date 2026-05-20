@@ -1,5 +1,5 @@
 // app/(protected)/person/[id]/page.tsx
-// Server Component — individual person detail page (v2 schema, Phase 11).
+// Server Component - individual person detail page (v2 schema, Phase 11).
 // Fetches person by id slug; calls notFound() if person not in family.json.
 // All 8 person pages are pre-rendered at build time (static site generation).
 import { notFound } from 'next/navigation'
@@ -11,12 +11,12 @@ import AudioPlayer from '@/components/audio/AudioPlayer'
 import type { Person } from '@/lib/types'
 
 // Pre-render every person page at build time (per D-04).
-// Returns [{ id: "william-curry" }, { id: "robert-curry" }, ...] — one entry per person.
+// Returns [{ id: "william-curry" }, { id: "robert-curry" }, ...] - one entry per person.
 export function generateStaticParams() {
   return getPeople().map((p) => ({ id: p.id }))
 }
 
-// dynamicParams = true is the Next.js default — if a new person is added without rebuild,
+// dynamicParams = true is the Next.js default - if a new person is added without rebuild,
 // the page generates on first request. Explicit declaration kept for clarity.
 export const dynamicParams = true
 
@@ -51,7 +51,7 @@ export default async function PersonPage({ params }: PersonPageProps) {
     ? String(person.birthYear)
     : null
 
-  // Resolve children — v2 canonical childrenIds with v1 childIds fallback.
+  // Resolve children - v2 canonical childrenIds with v1 childIds fallback.
   const childIdList =
     person.childrenIds && person.childrenIds.length > 0
       ? person.childrenIds
@@ -65,17 +65,17 @@ export default async function PersonPage({ params }: PersonPageProps) {
     .map((pid) => allPeople.find((p) => p.id === pid))
     .filter((p): p is Person => p !== undefined)
 
-  // Build metadata rows — each row only shown when value is present.
+  // Build metadata rows - each row only shown when value is present.
   type MetaEntry = { k: string; v: React.ReactNode }
   const meta: MetaEntry[] = []
 
   if (bornStr) meta.push({ k: 'Born', v: bornStr })
 
-  // Birthplace — v2 canonical with v1 birthPlace back-compat.
+  // Birthplace - v2 canonical with v1 birthPlace back-compat.
   const birthplaceValue = person.birthplace ?? person.birthPlace
   if (birthplaceValue) meta.push({ k: 'Birthplace', v: birthplaceValue })
 
-  // Spouse — v2 spouseLabel is a plain display string (no separate Person record).
+  // Spouse - v2 spouseLabel is a plain display string (no separate Person record).
   if (person.spouseLabel) meta.push({ k: 'Spouse', v: person.spouseLabel })
 
   if (parents.length > 0) {
@@ -130,7 +130,7 @@ export default async function PersonPage({ params }: PersonPageProps) {
         ← Back to family tree
       </Link>
 
-      {/* Header: eyebrow + name + dates — no border/box; the divider below the name
+      {/* Header: eyebrow + name + dates - no border/box; the divider below the name
           is a short gold accent line that floats freely (no enclosing container) */}
       <header className="mb-8">
         {/* v2 eyebrow: "Patriarch of the family", "Son of William" etc. */}
@@ -140,13 +140,13 @@ export default async function PersonPage({ params }: PersonPageProps) {
         <h1 className="font-serif text-navy text-6xl mb-2 leading-tight">
           {person.name}
         </h1>
-        {/* v2 datesLabel: "1920 — 2008", "1952 — present" */}
+        {/* v2 datesLabel: "1920 - 2008", "1952 - present" */}
         {person.datesLabel && (
           <p className="font-serif italic text-muted text-lg">
             {person.datesLabel}
           </p>
         )}
-        {/* Tasteful divider — short gold accent line under the name area.
+        {/* Tasteful divider - short gold accent line under the name area.
             Doesn't enclose anything; works whether meta rows are present or not. */}
         <div className="h-px bg-gold w-12 mt-7" aria-hidden="true" />
       </header>
@@ -165,7 +165,7 @@ export default async function PersonPage({ params }: PersonPageProps) {
         </section>
       )}
 
-      {/* Photo grid — CollectionPhotoGrid is the Phase 8 Client wrapper;
+      {/* Photo grid - CollectionPhotoGrid is the Phase 8 Client wrapper;
           clicking a photo opens the shared Lightbox filtered to this person's photos */}
       {photos.length > 0 && (
         <section className="mb-14">
@@ -176,7 +176,7 @@ export default async function PersonPage({ params }: PersonPageProps) {
         </section>
       )}
 
-      {/* Video grid — PlaylistVideoGrid is the Phase 9 Client wrapper;
+      {/* Video grid - PlaylistVideoGrid is the Phase 9 Client wrapper;
           clicking a video opens VideoLightbox filtered to this person's videos */}
       {videos.length > 0 && (
         <section className="mb-14">
@@ -187,7 +187,7 @@ export default async function PersonPage({ params }: PersonPageProps) {
         </section>
       )}
 
-      {/* Chronicles section — compact card list per D-13 */}
+      {/* Chronicles section - compact card list per D-13 */}
       {chronicles.length > 0 && (
         <section className="mb-14">
           <h2 className="eyebrow text-quiet mb-6 text-xs">
@@ -227,7 +227,7 @@ export default async function PersonPage({ params }: PersonPageProps) {
         </section>
       )}
 
-      {/* Audio section — stacked AudioPlayer list */}
+      {/* Audio section - stacked AudioPlayer list */}
       {audio.length > 0 && (
         <section className="mb-14">
           <h2 className="eyebrow text-gold-deep mb-6 text-xs">RECORDINGS OF {person.name.toUpperCase()}</h2>
@@ -237,7 +237,7 @@ export default async function PersonPage({ params }: PersonPageProps) {
         </section>
       )}
 
-      {/* Combined empty state — only shown when photos, videos, chronicles AND audio are all absent */}
+      {/* Combined empty state - only shown when photos, videos, chronicles AND audio are all absent */}
       {photos.length === 0 && videos.length === 0 && chronicles.length === 0 && audio.length === 0 && (
         <section className="py-12 border-t hairline">
           <p className="font-serif italic text-muted text-base">

@@ -1,6 +1,6 @@
 // app/api/admin/audio/[id]/route.ts
-// POST  — update an existing audio recording's metadata (no file change; file is immutable).
-// DELETE — remove an audio entry from audio.json; deletes from Vercel Blob if it was uploaded.
+// POST  - update an existing audio recording's metadata (no file change; file is immutable).
+// DELETE - remove an audio entry from audio.json; deletes from Vercel Blob if it was uploaded.
 //
 // Flow:
 //   1. Auth check (must be in ADMIN_GITHUB_USERNAMES allowlist)
@@ -15,7 +15,7 @@ import { getAdminUser } from '@/lib/admin'
 import { getFileContent, commitFile } from '@/lib/github'
 import { getPeople, getCollections } from '@/lib/content'
 
-// Whitelist of editable metadata fields — filename and id are immutable after upload.
+// Whitelist of editable metadata fields - filename and id are immutable after upload.
 const EDITABLE_FIELDS = new Set([
   'title', 'description', 'date', 'dateLabel', 'duration', 'peopleIds', 'collectionIds',
 ])
@@ -51,7 +51,7 @@ export async function POST(request: Request, { params }: { params: { id: string 
     }
   }
 
-  // Validate title if being updated — must not be empty
+  // Validate title if being updated - must not be empty
   if ('title' in filteredBody) {
     const newTitle = typeof filteredBody.title === 'string' ? filteredBody.title.trim() : ''
     if (!newTitle) {

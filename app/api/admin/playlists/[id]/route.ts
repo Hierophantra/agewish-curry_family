@@ -1,6 +1,6 @@
 // app/api/admin/playlists/[id]/route.ts
-// POST   — update an existing playlist (partial update; omitted fields preserved).
-// DELETE — remove a playlist by id.
+// POST   - update an existing playlist (partial update; omitted fields preserved).
+// DELETE - remove a playlist by id.
 //
 // Flow:
 //   1. Auth check (must be in ADMIN_GITHUB_USERNAMES allowlist)
@@ -162,13 +162,13 @@ export async function DELETE(_request: Request, { params }: { params: { id: stri
     return new NextResponse(`Commit failed (playlists.json): ${err}`, { status: 500 })
   }
 
-  // ── Step 2: Cascade — remove the deleted playlistId from videos.json ──
+  // ── Step 2: Cascade - remove the deleted playlistId from videos.json ──
   // Read the updated videos.json. Any video whose playlistIds[] contains params.id
   // must have that id removed. This keeps bidirectional references consistent.
   // Committed as a separate commit for clear audit history.
   const videosFile = await getFileContent(accessToken, 'content/videos.json')
   if (!videosFile) {
-    // videos.json missing is unexpected but non-fatal — playlist already removed.
+    // videos.json missing is unexpected but non-fatal - playlist already removed.
     console.error(
       `[admin/playlists] WARNING: could not read videos.json for cascade removal of "${params.id}".` +
       ` Playlist deleted but videos.json references may be stale.`
@@ -196,7 +196,7 @@ export async function DELETE(_request: Request, { params }: { params: { id: stri
   })
 
   if (!videosChanged) {
-    // No videos referenced this playlist — nothing to cascade.
+    // No videos referenced this playlist - nothing to cascade.
     return NextResponse.json({ ok: true, deleted: params.id })
   }
 
@@ -213,7 +213,7 @@ export async function DELETE(_request: Request, { params }: { params: { id: stri
       committerEmail: `${adminLogin}@users.noreply.github.com`,
     })
   } catch (err) {
-    // Cascade commit failed — the playlist is already deleted. Log and return partial success.
+    // Cascade commit failed - the playlist is already deleted. Log and return partial success.
     console.error(`[admin/playlists] WARNING: cascade commit to videos.json failed: ${err}`)
     return NextResponse.json({
       ok: true,

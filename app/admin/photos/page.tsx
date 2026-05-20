@@ -1,5 +1,5 @@
 // app/admin/photos/page.tsx
-// Admin photographs list — thumbnail grid with edit links and an upload button.
+// Admin photographs list - thumbnail grid with edit links and an upload button.
 // Auth gate enforced by requireAdminOrRedirect() (not the layout).
 import Image from 'next/image'
 import Link from 'next/link'
@@ -15,7 +15,7 @@ export default async function AdminPhotosListPage() {
   await requireAdminOrRedirect()
   const photos = getPhotos()
 
-  // Sort by date descending — newest first
+  // Sort by date descending - newest first
   const sorted = [...photos].sort((a, b) => {
     const da = a.date ?? a.dateTaken ?? ''
     const db = b.date ?? b.dateTaken ?? ''

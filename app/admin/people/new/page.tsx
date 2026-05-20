@@ -1,5 +1,5 @@
 // app/admin/people/new/page.tsx
-// Admin new-person page — renders EditPersonForm in create mode.
+// Admin new-person page - renders EditPersonForm in create mode.
 // Auth gate is enforced by requireAdminOrRedirect() (not the layout).
 import Link from 'next/link'
 import { getPeople } from '@/lib/content'
@@ -40,7 +40,7 @@ export default async function AdminNewPersonPage() {
       <p className="eyebrow text-gold-deep mb-3">FAMILY ARCHIVE · ADMIN</p>
       <h1 className="font-serif text-navy text-4xl mb-2">Add a person</h1>
       <p className="font-serif italic text-muted text-base mb-8">
-        Create a new family member record. The ID is permanent — choose it carefully. Parent and child
+        Create a new family member record. The ID is permanent - choose it carefully. Parent and child
         relationships will be set bidirectionally in the archive automatically.
       </p>
 

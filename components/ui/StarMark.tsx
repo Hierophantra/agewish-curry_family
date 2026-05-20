@@ -1,7 +1,7 @@
 // components/ui/StarMark.tsx
-// Server Component — no 'use client'. Wraps next/image referencing the brand PNG.
+// Server Component - no 'use client'. Wraps next/image referencing the brand PNG.
 // The PNG already contains: navy-bordered circle + gold 8-pointed star.
-// aria-hidden="true" because this is decorative — not informational content.
+// aria-hidden="true" because this is decorative - not informational content.
 // Three appearances per page: TopNav (size=36), Hero (size=56), Footer (size=28).
 import Image from 'next/image'
 

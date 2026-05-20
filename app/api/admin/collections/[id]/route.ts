@@ -1,6 +1,6 @@
 // app/api/admin/collections/[id]/route.ts
-// POST   — update an existing collection (partial update; omitted fields preserved).
-// DELETE — remove a collection by id.
+// POST   - update an existing collection (partial update; omitted fields preserved).
+// DELETE - remove a collection by id.
 //
 // Flow:
 //   1. Auth check (must be in ADMIN_GITHUB_USERNAMES allowlist)
@@ -162,13 +162,13 @@ export async function DELETE(_request: Request, { params }: { params: { id: stri
     return new NextResponse(`Commit failed (collections.json): ${err}`, { status: 500 })
   }
 
-  // ── Step 2: Cascade — remove the deleted collectionId from photos.json ──
+  // ── Step 2: Cascade - remove the deleted collectionId from photos.json ──
   // Read the updated photos.json. Any photo whose collectionIds[] contains params.id
   // must have that id removed. This keeps bidirectional references consistent.
   // Committed as a separate commit for clear audit history.
   const photosFile = await getFileContent(accessToken, 'content/photos.json')
   if (!photosFile) {
-    // photos.json missing is unexpected but non-fatal — collection already removed.
+    // photos.json missing is unexpected but non-fatal - collection already removed.
     // Return success; log the incomplete cascade.
     console.error(
       `[admin/collections] WARNING: could not read photos.json for cascade removal of "${params.id}".` +
@@ -197,7 +197,7 @@ export async function DELETE(_request: Request, { params }: { params: { id: stri
   })
 
   if (!photosChanged) {
-    // No photos referenced this collection — nothing to cascade.
+    // No photos referenced this collection - nothing to cascade.
     return NextResponse.json({ ok: true, deleted: params.id })
   }
 
@@ -214,7 +214,7 @@ export async function DELETE(_request: Request, { params }: { params: { id: stri
       committerEmail: `${adminLogin}@users.noreply.github.com`,
     })
   } catch (err) {
-    // Cascade commit failed — the collection is already deleted. Log and return partial success.
+    // Cascade commit failed - the collection is already deleted. Log and return partial success.
     console.error(`[admin/collections] WARNING: cascade commit to photos.json failed: ${err}`)
     return NextResponse.json({
       ok: true,

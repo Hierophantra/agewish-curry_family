@@ -1,5 +1,5 @@
 // app/admin/collections/page.tsx
-// Admin collections list — shows all collections with title, subtitle, dateLabel,
+// Admin collections list - shows all collections with title, subtitle, dateLabel,
 // photo count, and an edit link.
 // Auth gate is enforced by requireAdminOrRedirect() (not the layout).
 import Link from 'next/link'

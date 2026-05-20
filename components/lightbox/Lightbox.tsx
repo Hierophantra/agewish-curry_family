@@ -1,8 +1,8 @@
 // components/lightbox/Lightbox.tsx
-// 'use client' — owns keyboard listeners, body scroll lock, and open/close animation.
+// 'use client' - owns keyboard listeners, body scroll lock, and open/close animation.
 // Receives a pre-filtered photos array (collection's photos) and the current index.
 // D-09: Triggered by CollectionPhotoGrid (Phase 8) or future PersonPanel carousel (Phase 10).
-// D-10: Backdrop rgba(15, 24, 64, 0.95) — navy-derived dark overlay.
+// D-10: Backdrop rgba(15, 24, 64, 0.95) - navy-derived dark overlay.
 // D-15: Keyboard nav: Escape → close, ArrowLeft → prev, ArrowRight → next.
 // D-16: Backdrop click closes; click on image container does NOT propagate.
 // D-17: AnimatePresence opacity fade-in/out 250ms; per-photo cross-fade via key={photo.id}.
@@ -31,7 +31,7 @@ export default function Lightbox({ photos, currentIndex, onClose, onPrev, onNext
   // prefers-reduced-motion: skip fade animations entirely when OS setting is enabled.
   const reduce = useReducedMotion()
 
-  // Focus trap — active whenever the Lightbox component is mounted (it is always open when rendered).
+  // Focus trap - active whenever the Lightbox component is mounted (it is always open when rendered).
   // Returns focus to the trigger element (e.g. photo thumbnail) when lightbox unmounts.
   const trapRef = useFocusTrap<HTMLDivElement>(true)
 
@@ -56,12 +56,12 @@ export default function Lightbox({ photos, currentIndex, onClose, onPrev, onNext
 
   if (!photo) return null
 
-  // Resolve display label — prefer dateLabel (v2 canonical), fall back to date string.
+  // Resolve display label - prefer dateLabel (v2 canonical), fall back to date string.
   const displayDate = photo.dateLabel ?? photo.dateTaken ?? null
 
   return (
     <AnimatePresence>
-      {/* D-10: Backdrop — click to close (D-16) */}
+      {/* D-10: Backdrop - click to close (D-16) */}
       <motion.div
         ref={trapRef}
         key="lightbox-backdrop"
@@ -76,7 +76,7 @@ export default function Lightbox({ photos, currentIndex, onClose, onPrev, onNext
         aria-modal="true"
         aria-labelledby="lightbox-caption"
       >
-        {/* Close button — top-right, D-14 */}
+        {/* Close button - top-right, D-14 */}
         <button
           onClick={(e) => { e.stopPropagation(); onClose() }}
           className="absolute top-6 right-6 text-gold w-8 h-8 flex items-center justify-center text-3xl hover:scale-110 transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-navy"
@@ -85,7 +85,7 @@ export default function Lightbox({ photos, currentIndex, onClose, onPrev, onNext
           ×
         </button>
 
-        {/* Prev button — D-13 */}
+        {/* Prev button - D-13 */}
         <button
           onClick={(e) => { e.stopPropagation(); onPrev() }}
           className="absolute left-6 top-1/2 -translate-y-1/2 text-gold w-11 h-11 flex items-center justify-center text-2xl hover:scale-110 transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-navy"
@@ -94,7 +94,7 @@ export default function Lightbox({ photos, currentIndex, onClose, onPrev, onNext
           ‹
         </button>
 
-        {/* Next button — D-13 */}
+        {/* Next button - D-13 */}
         <button
           onClick={(e) => { e.stopPropagation(); onNext() }}
           className="absolute right-6 top-1/2 -translate-y-1/2 text-gold w-11 h-11 flex items-center justify-center text-2xl hover:scale-110 transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-navy"
@@ -113,7 +113,7 @@ export default function Lightbox({ photos, currentIndex, onClose, onPrev, onNext
           className="flex flex-col items-center gap-4 max-w-[90vw] max-h-[90vh]"
           onClick={(e) => e.stopPropagation()}
         >
-          {/* D-11: Image — object-contain, constrained to viewport */}
+          {/* D-11: Image - object-contain, constrained to viewport */}
           <div className="relative max-w-[90vw] max-h-[80vh] flex items-center justify-center">
             <Image
               src={getPhotoUrl(photo)}
@@ -140,7 +140,7 @@ export default function Lightbox({ photos, currentIndex, onClose, onPrev, onNext
                   {photo.circa ? 'Circa ' : ''}{displayDate}
                 </p>
               )}
-              {/* Provenance: source attribution — shown only when field is present */}
+              {/* Provenance: source attribution - shown only when field is present */}
               {photo.source && (
                 <p className="text-stone/70 text-[10px] tracking-[0.18em] uppercase mt-1.5">
                   From {photo.source}

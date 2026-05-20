@@ -1,6 +1,6 @@
 'use client'
 // components/slideshow/SlideshowPlayer.tsx
-// Ambient slideshow player — full-screen auto-advance through shuffled photos.
+// Ambient slideshow player - full-screen auto-advance through shuffled photos.
 // D-14 (v2.1 Feedback): 8s auto-advance, crossfade 1.2s, keyboard ←/→, controls auto-hide after 3s.
 // Phase 15 standard: prefers-reduced-motion respected via useReducedMotion().
 // Phase 16 standard: blurDataUrl placeholder flows naturally from PhotoSchema.
@@ -91,7 +91,7 @@ export default function SlideshowPlayer({ photos, collectionTitle }: Props) {
       className="fixed inset-0 z-50 bg-[#0F1840] flex items-center justify-center"
       onMouseMove={handleMouseMove}
     >
-      {/* Per-photo crossfade — key={photo.id} triggers AnimatePresence */}
+      {/* Per-photo crossfade - key={photo.id} triggers AnimatePresence */}
       <AnimatePresence mode="wait">
         <motion.div
           key={photo.id}
@@ -115,7 +115,7 @@ export default function SlideshowPlayer({ photos, collectionTitle }: Props) {
         </motion.div>
       </AnimatePresence>
 
-      {/* Caption + date overlay — always visible at bottom */}
+      {/* Caption + date overlay - always visible at bottom */}
       {(photo.caption || photo.dateLabel) && (
         <div className="absolute bottom-12 left-0 right-0 text-center px-8 pointer-events-none">
           {photo.caption && (
@@ -130,7 +130,7 @@ export default function SlideshowPlayer({ photos, collectionTitle }: Props) {
         </div>
       )}
 
-      {/* Controls overlay — auto-hides after 3s of mouse inactivity */}
+      {/* Controls overlay - auto-hides after 3s of mouse inactivity */}
       <motion.div
         initial={false}
         animate={{ opacity: showControls ? 1 : 0 }}

@@ -1,7 +1,7 @@
 // app/(protected)/photographs/page.tsx
-// Protected page — the FAMILY ARCHIVE collection landing page.
-// D-26/D-27: Replaced flat PhotoGrid with CollectionGrid — /photographs now shows collection covers.
-// Server Component: no 'use client' — CollectionGrid handles its own data fetching.
+// Protected page - the FAMILY ARCHIVE collection landing page.
+// D-26/D-27: Replaced flat PhotoGrid with CollectionGrid - /photographs now shows collection covers.
+// Server Component: no 'use client' - CollectionGrid handles its own data fetching.
 import Link from 'next/link'
 import CollectionGrid from '@/components/gallery/CollectionGrid'
 
@@ -21,7 +21,7 @@ export default function PhotographsPage() {
         </Link>
       </header>
 
-      {/* Collection grid — replaces flat photo grid (Phase 8) */}
+      {/* Collection grid - replaces flat photo grid (Phase 8) */}
       <CollectionGrid />
     </main>
   )

@@ -1,5 +1,5 @@
 // app/admin/login/page.tsx
-// Admin login page — GitHub OAuth sign-in.
+// Admin login page - GitHub OAuth sign-in.
 // This page is intentionally outside the admin layout (no auth gate) so unauthenticated
 // users can reach it. The admin layout redirect sends users here if not authenticated.
 import { signIn } from '@/auth'

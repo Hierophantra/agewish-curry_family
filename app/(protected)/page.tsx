@@ -1,11 +1,11 @@
 // app/(protected)/page.tsx
-// Home page — Server Component. The HUB.
+// Home page - Server Component. The HUB.
 //
 // Intentional design choice: the home page is NOT a preview surface for
 // recent photos / featured videos / latest chronicles. It is a calm landing
 // that gives the family a clear menu of where to go. Optimised for a
-// "10-foot UI" feel — large typography, generous hit targets, minimal
-// visual noise — so it reads well on a TV or tablet as well as a laptop.
+// "10-foot UI" feel - large typography, generous hit targets, minimal
+// visual noise - so it reads well on a TV or tablet as well as a laptop.
 //
 // Composition: Hero (bg-white) → Hub card grid (bg-ivory).
 // Star motif rule: TopNav = star 1, Hero = star 2, Footer = star 3.
@@ -68,7 +68,7 @@ export default function HomePage() {
     ? `${chronicles.length} stor${chronicles.length === 1 ? 'y' : 'ies'}`
     : 'No stories yet'
 
-  // Cards data — order matches the TopNav reading order so muscle memory transfers.
+  // Cards data - order matches the TopNav reading order so muscle memory transfers.
   const cards: Array<{
     href: string
     eyebrow: string
@@ -80,7 +80,7 @@ export default function HomePage() {
       href: '/tree',
       eyebrow: 'FAMILY TREE',
       title: 'The family',
-      description: 'See how everyone connects — from the patriarch down through every branch.',
+      description: 'See how everyone connects - from the patriarch down through every branch.',
       stat: treeStat,
     },
     {
@@ -94,7 +94,7 @@ export default function HomePage() {
       href: '/videos',
       eyebrow: 'VIDEOS',
       title: 'Home movies',
-      description: 'Recorded moments, gathered by occasion — birthdays, trips, holidays, dinners.',
+      description: 'Recorded moments, gathered by occasion - birthdays, trips, holidays, dinners.',
       stat: videoStat,
     },
     {
@@ -110,7 +110,7 @@ export default function HomePage() {
     <>
       <Hero />
 
-      {/* Hub grid — bg-ivory (alternates with white hero above).
+      {/* Hub grid - bg-ivory (alternates with white hero above).
           2-col on tablet, 4-col on desktop. Larger cards on lg+ for TV-style scanning. */}
       <section className="bg-ivory border-t border-stone py-16 px-7 md:px-11">
         <div className="max-w-6xl mx-auto">
@@ -143,7 +143,7 @@ export default function HomePage() {
                   <p className="text-quiet text-xs uppercase tracking-[0.18em] leading-snug">
                     {c.stat}
                   </p>
-                  {/* Arrow indicator — slides on hover/focus */}
+                  {/* Arrow indicator - slides on hover/focus */}
                   <span
                     className="text-gold-deep text-2xl leading-none transition-transform duration-200 group-hover:translate-x-1 group-focus-visible:translate-x-1"
                     aria-hidden="true"

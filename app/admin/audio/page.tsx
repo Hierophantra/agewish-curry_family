@@ -1,5 +1,5 @@
 // app/admin/audio/page.tsx
-// Admin audio list — compact list with title, dateLabel, duration, and "Edit →" links.
+// Admin audio list - compact list with title, dateLabel, duration, and "Edit →" links.
 // Auth gate enforced by requireAdminOrRedirect() (not the layout).
 import Link from 'next/link'
 import { getAudio } from '@/lib/content'
@@ -13,7 +13,7 @@ export default async function AdminAudioListPage() {
   await requireAdminOrRedirect()
   const audioItems = getAudio()
 
-  // Sort by date descending — newest first; undated items go to the end
+  // Sort by date descending - newest first; undated items go to the end
   const sorted = [...audioItems].sort((a, b) => {
     const da = a.date ?? ''
     const db = b.date ?? ''

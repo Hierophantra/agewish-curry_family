@@ -1,8 +1,8 @@
 // components/tree/ConnectorLine.tsx
-// 'use client' — co-located with canvas; positioned divs require DOM calculations
+// 'use client' - co-located with canvas; positioned divs require DOM calculations
 'use client'
 
-// H_UNIT and V_UNIT from lib/tree.ts — keep in sync if changed
+// H_UNIT and V_UNIT from lib/tree.ts - keep in sync if changed
 // D-12: connector lines are 1px stone (#C9C4B0) positioned divs, NOT SVG
 const H_UNIT = 200
 const V_UNIT = 100

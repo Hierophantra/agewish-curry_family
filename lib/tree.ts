@@ -1,7 +1,7 @@
 // lib/tree.ts
 // Server-side adapter: transforms Person[] to relatives-tree input shape,
 // applies multi-spouse flattening mitigation, runs calcTree, returns layout data.
-// NO 'use client' — this module must never run in the browser.
+// NO 'use client' - this module must never run in the browser.
 import 'server-only'
 import calcTree from 'relatives-tree'
 import type { ExtNode, Connector, Node as RelNode } from 'relatives-tree/lib/types'
@@ -18,7 +18,7 @@ export const V_UNIT = 100  // px per vertical grid unit  (60px node  + 40px gap)
 
 // ── Internal types ──
 // The shape calcTree expects as input. Matches relatives-tree Node type exactly.
-// 'gender' only accepts 'male'|'female' — no 'other' (library constraint, RESEARCH §Topic 1)
+// 'gender' only accepts 'male'|'female' - no 'other' (library constraint, RESEARCH §Topic 1)
 type RelType = 'blood' | 'married' | 'divorced' | 'adopted' | 'half'
 type Relation = { id: string; type: RelType }
 type RelativesTreeNode = {
@@ -71,7 +71,7 @@ export function getTreeData(rootId: string): TreeData {
     // relatives-tree uses 'parents', 'children', 'siblings', 'spouses' (plural noun arrays)
     parents: p.parentIds.map((id) => ({ id, type: 'blood' as RelType })),
     children: p.childIds.map((id) => ({ id, type: 'blood' as RelType })),
-    siblings: [],  // not tracked in our Person schema — relatives-tree discovers them via shared parents
+    siblings: [],  // not tracked in our Person schema - relatives-tree discovers them via shared parents
     spouses: p.spouseIds.map((id) => ({ id, type: 'married' as RelType })),
   }))
 
@@ -79,7 +79,7 @@ export function getTreeData(rootId: string): TreeData {
   const flattenedNodes = flattenMultiSpouses(rawNodes)
 
   // Step 4: run calcTree
-  // Cast to RelNode[] — our RelativesTreeNode is structurally identical to RelNode,
+  // Cast to RelNode[] - our RelativesTreeNode is structurally identical to RelNode,
   // but relatives-tree uses const enum Gender/RelType in its .d.ts which TypeScript
   // treats as opaque types incompatible with plain string literals (isolatedModules constraint).
   const result = calcTree(flattenedNodes as unknown as readonly RelNode[], { rootId })
@@ -88,7 +88,7 @@ export function getTreeData(rootId: string): TreeData {
     nodes: result.nodes,
     connectors: result.connectors,
     canvas: result.canvas,
-    people,  // original Person[] — PersonPanel reads from this (not from ExtNode)
+    people,  // original Person[] - PersonPanel reads from this (not from ExtNode)
   }
 }
 
@@ -96,7 +96,7 @@ export function getTreeData(rootId: string): TreeData {
 
 /**
  * Maps Person.gender to the 'male'|'female' values relatives-tree expects.
- * 'other' and undefined both default to 'male' — gender only affects layout symmetry,
+ * 'other' and undefined both default to 'male' - gender only affects layout symmetry,
  * not displayed anywhere in our renderer (RESEARCH §Topic 7).
  */
 function personGender(person: Person): 'male' | 'female' {
@@ -106,12 +106,12 @@ function personGender(person: Person): 'male' | 'female' {
 }
 
 /**
- * Multi-spouse flattening mitigation — addresses relatives-tree GitHub #24.
+ * Multi-spouse flattening mitigation - addresses relatives-tree GitHub #24.
  * https://github.com/SanichKotikov/relatives-tree/issues/24
  *
  * Bug mechanism (verified from node_modules/relatives-tree/src/children/create.ts):
  *   calcTree's getChildUnitsFunc filters children with first.children.filter(hasSameRelation(second))
- *   — only children that BOTH parents share are included. Children from a non-primary spouse
+ *   - only children that BOTH parents share are included. Children from a non-primary spouse
  *   pairing are silently dropped because that spouse doesn't claim them.
  *
  * Mitigation (D-03):
@@ -122,7 +122,7 @@ function personGender(person: Person): 'male' | 'female' {
  *     - Remove non-primary spouse nodes from the layout entirely
  *   PersonPanel reads from the original Person.spouseIds[] (untouched) to show all spouses.
  *
- * Per D-04: runs unconditionally — single-spouse cases pass through unchanged.
+ * Per D-04: runs unconditionally - single-spouse cases pass through unchanged.
  * Per D-05: documented inline here; if GitHub #24 is fixed upstream, this function
  *   can be simplified to a no-op while keeping the same signature.
  */
@@ -131,14 +131,14 @@ function flattenMultiSpouses(nodes: RelativesTreeNode[]): RelativesTreeNode[] {
   const byId = new Map(nodes.map((n) => [n.id, { ...n }]))
 
   for (const node of nodes) {
-    // D-04: unconditional — single-spouse (or no-spouse) nodes pass through
+    // D-04: unconditional - single-spouse (or no-spouse) nodes pass through
     if (node.spouses.length <= 1) continue
 
     const primarySpouseId = node.spouses[0]!.id
     const nonPrimarySpouseIds = new Set(node.spouses.slice(1).map((s) => s.id))
 
     // Update this node: keep only primary spouse in spouses[]
-    // children[] remains unchanged — it already has all children from all pairings
+    // children[] remains unchanged - it already has all children from all pairings
     byId.set(node.id, {
       ...byId.get(node.id)!,
       spouses: [node.spouses[0]!],

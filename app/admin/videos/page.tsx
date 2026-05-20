@@ -1,6 +1,6 @@
 // app/admin/videos/page.tsx
-// Admin videos list — shows all videos with title, dateLabel, source/sourceId, plus edit links.
-// Auth gate is enforced by requireAdminOrRedirect() in the page (NOT the layout —
+// Admin videos list - shows all videos with title, dateLabel, source/sourceId, plus edit links.
+// Auth gate is enforced by requireAdminOrRedirect() in the page (NOT the layout -
 // see app/admin/layout.tsx for the rationale).
 import Link from 'next/link'
 import { getVideos } from '@/lib/content'
@@ -14,7 +14,7 @@ export default async function AdminVideosListPage() {
   await requireAdminOrRedirect()
   const videos = getVideos()
 
-  // Sort by date descending — newest first
+  // Sort by date descending - newest first
   const sorted = [...videos].sort((a, b) => {
     if (!a.date && !b.date) return 0
     if (!a.date) return 1

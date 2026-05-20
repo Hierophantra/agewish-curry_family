@@ -1,5 +1,5 @@
 // app/api/admin/collections/route.ts
-// POST — create a new collection.
+// POST - create a new collection.
 // Body: full collection object (id, title, coverPhotoId are required; all other fields optional).
 //
 // Flow:
