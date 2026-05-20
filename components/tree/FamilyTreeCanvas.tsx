@@ -13,10 +13,11 @@ import PersonPanel from './PersonPanel'
 // Layout constants - keep in sync with lib/tree.ts (cannot import lib/tree.ts here:
 // it has `import 'server-only'` which would fail in the client bundle).
 // D-13: node dimensions; RESEARCH §Topic 3: padding multipliers for visual breathing room
-const NODE_WIDTH = 160   // px
-const NODE_HEIGHT = 60   // px
-const H_UNIT = 200       // px per horizontal grid unit (160px node + 40px gap)
-const V_UNIT = 100       // px per vertical grid unit  (60px node  + 40px gap)
+// v3 visual upgrade - mirrored from lib/tree.ts (must stay in sync)
+const NODE_WIDTH = 200   // px
+const NODE_HEIGHT = 88   // px
+const H_UNIT = 240       // px per horizontal grid unit (200px node + 40px gap)
+const V_UNIT = 132       // px per vertical grid unit  (88px node + 44px gap)
 
 export interface FamilyTreeCanvasProps {
   nodes: readonly ExtNode[]

@@ -10,11 +10,13 @@ import type { Person } from './types'
 
 // ── Layout constants (exported so FamilyTreeCanvas can import them) ──
 // D-13: node dimensions
-export const NODE_WIDTH = 160  // px
-export const NODE_HEIGHT = 60  // px
+// v3 visual upgrade: bumped from 160x60 to 200x88 for readability and warmth.
+// H_UNIT/V_UNIT must stay larger than NODE so connector geometry has gap.
+export const NODE_WIDTH = 200  // px
+export const NODE_HEIGHT = 88  // px
 // RESEARCH §Topic 3: use padding multipliers for visual breathing room
-export const H_UNIT = 200  // px per horizontal grid unit (160px node + 40px gap)
-export const V_UNIT = 100  // px per vertical grid unit  (60px node  + 40px gap)
+export const H_UNIT = 240  // px per horizontal grid unit (200px node + 40px gap)
+export const V_UNIT = 132  // px per vertical grid unit  (88px node + 44px gap)
 
 // ── Internal types ──
 // The shape calcTree expects as input. Matches relatives-tree Node type exactly.

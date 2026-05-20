@@ -9,7 +9,7 @@ interface PersonNodeProps {
   name: string           // person's display name from Person[] lookup in canvas
   isActive: boolean
   isFocused: boolean     // keyboard focus indicator (separate from panel-open selection)
-  relationLabel: string  // e.g., "GRANDFATHER", "FATHER" - computed by canvas
+  relationLabel: string  // e.g., "PATRIARCH", "SECOND GENERATION" - computed by canvas
   deathYear?: number     // shown as "d. YYYY" line for deceased people
   onClick: () => void
   onRef: (el: HTMLButtonElement | null) => void  // allows canvas to imperatively focus nodes
@@ -20,49 +20,63 @@ interface PersonNodeProps {
 // - we render `name` (resolved by canvas) instead of node.id
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function PersonNode({ node: _node, name, isActive, isFocused, relationLabel, deathYear, onClick, onRef, style }: PersonNodeProps) {
+  // Founders get a distinct visual treatment so the eye starts at the top of
+  // the tree. Subtle gold accent rather than a loud highlight.
+  const isFounder = relationLabel === 'PATRIARCH' || relationLabel === 'MATRIARCH'
+
   return (
     <button
       ref={onRef}
       type="button"
       onClick={onClick}
-      // D-13: 160px × 60px node
-      // Inactive: white bg, stone border (hairline 0.5px)
-      // Active (D-11): ivory bg, navy border (hairline-emphasis 1.25px)
-      // isFocused: same visual ring as active for keyboard users navigating without opening panel
-      // cursor-pointer: makes the tree feel interactive
-      // overflow-hidden: clips the gold dot to top-right corner
+      // v3 upgraded sizing and treatment:
+      //   - 200 x 88 px (was 160 x 60) for breathing room and readability
+      //   - rounded-md corners feel less mechanical than sharp rectangles
+      //   - gradient surface for subtle depth instead of flat white
+      //   - shadow-sm baseline -> shadow-md on hover for lift
+      //   - founders: ivory background + gold border for emphasis
+      //   - active: navy border + ivory background + gold corner dot
       className={[
-        'relative flex flex-col items-start justify-center px-3',
-        'text-left cursor-pointer overflow-hidden',
-        'transition-colors duration-150',
-        'focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-1',
+        'relative flex flex-col items-start justify-center px-4 py-2.5',
+        'text-left cursor-pointer overflow-hidden rounded-md',
+        'transition-all duration-200',
+        'focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2',
         isActive
-          ? 'bg-ivory hairline-emphasis border-navy'
+          ? 'bg-ivory border-[1.25px] border-navy shadow-md'
           : isFocused
-            ? 'bg-ivory ring-2 ring-gold ring-offset-1 hairline border-stone'
-            : 'bg-white hairline border-stone hover:bg-ivory hover:ring-2 hover:ring-gold-deep',
+            ? 'bg-ivory ring-2 ring-gold ring-offset-1 border-[0.5px] border-stone'
+            : isFounder
+              ? 'bg-gradient-to-br from-ivory to-ivory-deep border-[1px] border-gold-deep/60 shadow-sm hover:shadow-md hover:border-gold hover:-translate-y-0.5'
+              : 'bg-gradient-to-br from-white to-ivory border-[0.5px] border-stone shadow-sm hover:shadow-md hover:border-gold hover:-translate-y-0.5',
       ].join(' ')}
       style={style}
     >
-      {/* D-11: gold active dot, top-right corner */}
+      {/* Active dot - gold, top-right */}
       {isActive && (
         <span
-          className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-gold"
+          className="absolute top-2 right-2 w-2 h-2 rounded-full bg-gold"
           aria-hidden="true"
         />
       )}
 
-      {/* Name - D-13: font-serif, navy, sentence case */}
-      <span className="font-serif text-navy text-sm leading-tight truncate w-full">
+      {/* Name - font-serif, navy, larger size for readability at any zoom */}
+      <span className="font-serif text-navy text-base leading-tight truncate w-full">
         {name}
       </span>
 
-      {/* Relation label - D-13: eyebrow class (uppercase + tracking) */}
-      <span className="eyebrow text-quiet mt-0.5">{relationLabel}</span>
+      {/* Relation label - uppercase eyebrow, gold for founders, quiet otherwise */}
+      <span
+        className={[
+          'eyebrow mt-1 truncate w-full',
+          isFounder ? 'text-gold-deep' : 'text-quiet',
+        ].join(' ')}
+      >
+        {relationLabel}
+      </span>
 
-      {/* Deceased indicator - only shown when deathYear is set */}
+      {/* Deceased indicator - italic, only shown when deathYear is set */}
       {deathYear && (
-        <span className="text-quiet text-[10px] leading-none mt-0.5 italic">
+        <span className="text-quiet text-[11px] leading-none mt-1 italic">
           d. {deathYear}
         </span>
       )}

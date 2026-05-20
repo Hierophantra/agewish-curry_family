@@ -3,9 +3,9 @@
 'use client'
 
 // H_UNIT and V_UNIT from lib/tree.ts - keep in sync if changed
-// D-12: connector lines are 1px stone (#C9C4B0) positioned divs, NOT SVG
-const H_UNIT = 200
-const V_UNIT = 100
+// v3 visual upgrade: connector lines are 1.5px gold-deep/40 for subtle warmth.
+const H_UNIT = 240
+const V_UNIT = 132
 
 interface ConnectorLineProps {
   x1: number
@@ -27,14 +27,16 @@ export default function ConnectorLine({ x1, y1, x2, y2 }: ConnectorLineProps) {
 
   return (
     <div
-      // bg-stone: D-12 specifies stone color #C9C4B0 for connector lines
-      // pointer-events-none: connectors must not intercept clicks intended for nodes
-      className="absolute bg-stone pointer-events-none"
+      // v3: subtle gold connector lines instead of stone gray. 1.5px gives
+      // them just enough presence to read as "branches" of a tree without
+      // shouting. pointer-events-none so connectors don't intercept node clicks.
+      className="absolute pointer-events-none"
       style={{
         left,
         top,
-        width: isHorizontal ? width : 1,
-        height: isHorizontal ? 1 : height,
+        width: isHorizontal ? width : 1.5,
+        height: isHorizontal ? 1.5 : height,
+        backgroundColor: 'rgba(184, 133, 26, 0.35)',
       }}
     />
   )
