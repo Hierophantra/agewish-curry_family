@@ -1,5 +1,5 @@
 // components/video/YouTubeFacade.tsx
-// 'use client' - owns a small loaded-state toggle.
+// 'use client' - owns the loaded-state toggle when interactive.
 //
 // Why we hand-rolled this instead of using @next/third-parties YouTubeEmbed:
 // YouTubeEmbed wraps the lite-youtube web component, which hardcodes the
@@ -7,8 +7,17 @@
 // the actual 16:9 footage with black bars to fit a 4:3 box), so when forced
 // into our 16:9 card with object-cover the top/bottom got cropped.
 //
-// This facade defers to YouTubeThumb for the image (which handles the
-// maxresdefault.jpg -> hqdefault.jpg fallback automatically).
+// Two render modes:
+//
+//   interactive=true (default): clicking the facade swaps to a live iframe
+//     that autoplays. Used wherever the player should play in place.
+//
+//   interactive=false: renders a purely decorative thumbnail with a play
+//     button overlay (no <button>, no click handler). Used when this player
+//     is nested inside a parent that owns the click (e.g. VideoCard inside
+//     PlaylistVideoGrid, where the parent opens a lightbox). Without this
+//     mode we'd have nested buttons and the click would both swap to an
+//     iframe AND open the lightbox - two players autoplaying at once.
 //
 // Performance behavior matches lite-youtube: only the thumbnail image loads
 // on first paint; the iframe is mounted only after the user clicks play.
@@ -20,12 +29,18 @@ import YouTubeThumb from '@/components/video/YouTubeThumb'
 interface YouTubeFacadeProps {
   videoId: string
   title: string
+  /**
+   * When true (default), facade renders a button that swaps to an iframe on
+   * click. When false, renders a static thumbnail + play-button decoration -
+   * use this when a parent owns the click (e.g. opens a lightbox).
+   */
+  interactive?: boolean
 }
 
-export default function YouTubeFacade({ videoId, title }: YouTubeFacadeProps) {
+export default function YouTubeFacade({ videoId, title, interactive = true }: YouTubeFacadeProps) {
   const [loaded, setLoaded] = useState(false)
 
-  if (loaded) {
+  if (interactive && loaded) {
     // Iframe takes over once the user clicks play. autoplay=1 starts playback
     // immediately since the click counts as user gesture (required by browsers).
     return (
@@ -43,19 +58,10 @@ export default function YouTubeFacade({ videoId, title }: YouTubeFacadeProps) {
     )
   }
 
-  // Pre-click facade: thumbnail + play button overlay. button element gives us
-  // free keyboard activation (Enter/Space) and focus ring.
-  return (
-    <button
-      type="button"
-      onClick={() => setLoaded(true)}
-      aria-label={`Play video: ${title}`}
-      className="
-        relative aspect-video w-full overflow-hidden bg-black
-        group cursor-pointer
-        focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2
-      "
-    >
+  // Shared visual content: thumbnail + gradient + play button. Used by both
+  // render branches below so the appearance is identical regardless of mode.
+  const visual = (
+    <>
       <YouTubeThumb
         videoId={videoId}
         className="absolute inset-0 w-full h-full object-cover"
@@ -67,7 +73,9 @@ export default function YouTubeFacade({ videoId, title }: YouTubeFacadeProps) {
         aria-hidden="true"
       />
 
-      {/* YouTube-style red play button. Scales slightly on hover/focus for affordance. */}
+      {/* YouTube-style red play button. In interactive mode the parent button's
+          group-hover/group-focus drive the hover effect; in non-interactive
+          mode the play button is purely decorative (parent group handles it). */}
       <span
         className="
           absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
@@ -80,7 +88,6 @@ export default function YouTubeFacade({ videoId, title }: YouTubeFacadeProps) {
         "
         aria-hidden="true"
       >
-        {/* Right-pointing triangle - SVG so it scales crisply at any size */}
         <svg
           viewBox="0 0 24 24"
           className="w-7 h-7 md:w-9 md:h-9 fill-white"
@@ -88,6 +95,33 @@ export default function YouTubeFacade({ videoId, title }: YouTubeFacadeProps) {
           <path d="M8 5v14l11-7z" />
         </svg>
       </span>
+    </>
+  )
+
+  // Non-interactive mode: just a div. The parent (e.g. VideoCard's outer
+  // button) owns the click - no nested button, no event bubbling surprises.
+  if (!interactive) {
+    return (
+      <div className="relative aspect-video w-full overflow-hidden bg-black group">
+        {visual}
+      </div>
+    )
+  }
+
+  // Interactive mode: button element gives us free keyboard activation
+  // (Enter/Space) and focus ring; click swaps to the iframe.
+  return (
+    <button
+      type="button"
+      onClick={() => setLoaded(true)}
+      aria-label={`Play video: ${title}`}
+      className="
+        relative aspect-video w-full overflow-hidden bg-black
+        group cursor-pointer
+        focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2
+      "
+    >
+      {visual}
     </button>
   )
 }

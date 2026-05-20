@@ -1,22 +1,24 @@
 // components/video/YouTubePlayer.tsx
 // Server Component - thin wrapper around the YouTubeFacade client island.
 //
-// Earlier versions used @next/third-parties YouTubeEmbed (a wrapper for the
-// lite-youtube web component). That component hardcoded the hqdefault.jpg
-// thumbnail, which is 4:3 with black bars - cropping the top/bottom of the
-// actual video in our 16:9 card. We replaced it with YouTubeFacade, which
-// pulls the maxresdefault.jpg (true 16:9, up to 1280x720) with an automatic
-// hqdefault.jpg fallback for videos that lack an HD upload.
+// Earlier versions used @next/third-parties YouTubeEmbed. That component
+// hardcoded the hqdefault.jpg thumbnail (4:3 with black bars). We replaced
+// it with YouTubeFacade, which uses maxresdefault.jpg (true 16:9, up to
+// 1280x720) with an automatic hqdefault.jpg fallback.
 //
-// Behavior is otherwise the same as before: only the thumbnail image loads
-// on first paint, and the iframe is mounted only after the user clicks play.
+// The optional `interactive` flag is forwarded to the facade. When false,
+// the facade renders a static thumbnail + decorative play button (no inner
+// button, no click handler). Used when a parent owns the click - e.g.
+// VideoCard inside a lightbox grid, so the card opens the lightbox without
+// also autoplaying an inline iframe.
 import YouTubeFacade from '@/components/video/YouTubeFacade'
 
 interface YouTubePlayerProps {
   videoId: string
   title: string
+  interactive?: boolean
 }
 
-export default function YouTubePlayer({ videoId, title }: YouTubePlayerProps) {
-  return <YouTubeFacade videoId={videoId} title={title} />
+export default function YouTubePlayer({ videoId, title, interactive = true }: YouTubePlayerProps) {
+  return <YouTubeFacade videoId={videoId} title={title} interactive={interactive} />
 }

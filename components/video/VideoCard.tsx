@@ -27,10 +27,17 @@ export default function VideoCard({ video, onClick }: VideoCardProps) {
 
   const dateLabel = video.dateLabel ?? formatDate(video.date ?? video.dateTaken)
 
+  // When onClick is set, the parent owns the click - render the player as a
+  // non-interactive thumbnail so we do not get nested buttons (which would
+  // autoplay an inline iframe in the background while the lightbox opens).
+  const interactive = onClick === undefined
+
   const innerContent = (
     <>
-      {/* 16:9 player - YouTubeEmbed facade handles thumbnail + deferred iframe internally */}
-      <VideoPlayer video={video} />
+      {/* 16:9 player. interactive=true plays in place when clicked.
+          interactive=false renders a thumbnail-only decoration so the outer
+          button (lightbox trigger) is the only click target. */}
+      <VideoPlayer video={video} interactive={interactive} />
 
       {/* Card metadata */}
       <div className="pt-3 flex flex-col gap-1">
