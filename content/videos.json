@@ -28,8 +28,8 @@
     "featured": false
   },
   {
-    "id": "2025-christmas-eve-part-3",
-    "title": "Christmas Eve - Part 3",
+    "id": "2025-christmas-eve-part-4",
+    "title": "Christmas Eve - Part 4",
     "source": "youtube",
     "sourceId": "Nj7-ZhES7bc",
     "date": "2025-12-24",
@@ -42,8 +42,8 @@
     "featured": false
   },
   {
-    "id": "2025-christmas-eve-part-4",
-    "title": "Christmas Eve - Part 4",
+    "id": "2025-christmas-eve-part-5",
+    "title": "Christmas Eve - Part 5",
     "source": "youtube",
     "sourceId": "UUrhjLDoIzQ",
     "date": "2025-12-24",
@@ -56,8 +56,8 @@
     "featured": false
   },
   {
-    "id": "2025-christmas-eve-part-5",
-    "title": "Christmas Eve - Part 5",
+    "id": "2025-christmas-eve-part-6",
+    "title": "Christmas Eve - Part 6",
     "source": "youtube",
     "sourceId": "ih86UFLetmI",
     "date": "2025-12-24",
@@ -70,8 +70,8 @@
     "featured": false
   },
   {
-    "id": "2025-christmas-eve-part-6",
-    "title": "Christmas Eve - Part 6",
+    "id": "2025-christmas-eve-part-7",
+    "title": "Christmas Eve - Part 7",
     "source": "youtube",
     "sourceId": "NKMz04r1VfY",
     "date": "2025-12-24",
@@ -84,8 +84,8 @@
     "featured": false
   },
   {
-    "id": "2025-christmas-eve-part-7",
-    "title": "Christmas Eve - Part 7",
+    "id": "2025-christmas-eve-part-8",
+    "title": "Christmas Eve - Part 8",
     "source": "youtube",
     "sourceId": "jGfZuMKufs4",
     "date": "2025-12-24",
@@ -98,8 +98,8 @@
     "featured": false
   },
   {
-    "id": "2025-christmas-eve-part-8",
-    "title": "Christmas Eve - Part 8",
+    "id": "2025-christmas-eve-part-9",
+    "title": "Christmas Eve - Part 9",
     "source": "youtube",
     "sourceId": "qOfCNz8ytuI",
     "date": "2025-12-24",
@@ -112,8 +112,8 @@
     "featured": false
   },
   {
-    "id": "2025-christmas-eve-part-9",
-    "title": "Christmas Eve - Part 9",
+    "id": "2025-christmas-eve-part-10",
+    "title": "Christmas Eve - Part 10",
     "source": "youtube",
     "sourceId": "8xHgDpCex6g",
     "date": "2025-12-24",
@@ -126,8 +126,8 @@
     "featured": false
   },
   {
-    "id": "2025-christmas-eve-part-10",
-    "title": "Christmas Eve - Part 10",
+    "id": "2025-christmas-eve-part-11",
+    "title": "Christmas Eve - Part 11",
     "source": "youtube",
     "sourceId": "Lekr153mOm0",
     "date": "2025-12-24",
@@ -140,8 +140,8 @@
     "featured": false
   },
   {
-    "id": "2025-christmas-eve-part-11",
-    "title": "Christmas Eve - Part 11",
+    "id": "2025-christmas-eve-part-12",
+    "title": "Christmas Eve - Part 12",
     "source": "youtube",
     "sourceId": "F6tSffSfAbk",
     "date": "2025-12-24",
@@ -154,8 +154,8 @@
     "featured": false
   },
   {
-    "id": "2025-christmas-eve-part-12",
-    "title": "Christmas Eve - Part 12",
+    "id": "2025-christmas-eve-part-13",
+    "title": "Christmas Eve - Part 13",
     "source": "youtube",
     "sourceId": "rVCGIVWYONc",
     "date": "2025-12-24",
@@ -269,62 +269,6 @@
     "id": "2022-gatlinburg-trip-part-1",
     "title": "Gatlinburg Trip - Part 1",
     "source": "youtube",
-    "sourceId": "OBkLbJpC9Ps",
-    "date": "2022-07-25",
-    "dateLabel": "July 25, 2022",
-    "duration": "0:47",
-    "peopleIds": [],
-    "playlistIds": [
-      "2022-gatlinburg-trip"
-    ],
-    "featured": false
-  },
-  {
-    "id": "2022-gatlinburg-trip-part-2",
-    "title": "Gatlinburg Trip - Part 2",
-    "source": "youtube",
-    "sourceId": "tunvnf6SRhY",
-    "date": "2022-07-25",
-    "dateLabel": "July 25, 2022",
-    "duration": "0:20",
-    "peopleIds": [],
-    "playlistIds": [
-      "2022-gatlinburg-trip"
-    ],
-    "featured": false
-  },
-  {
-    "id": "2022-gatlinburg-trip-part-3",
-    "title": "Gatlinburg Trip - Part 3",
-    "source": "youtube",
-    "sourceId": "6yOhFZKUPP4",
-    "date": "2022-07-25",
-    "dateLabel": "July 25, 2022",
-    "duration": "1:00",
-    "peopleIds": [],
-    "playlistIds": [
-      "2022-gatlinburg-trip"
-    ],
-    "featured": false
-  },
-  {
-    "id": "2022-gatlinburg-trip-part-4",
-    "title": "Gatlinburg Trip - Part 4",
-    "source": "youtube",
-    "sourceId": "gD8p2LVs9ko",
-    "date": "2022-07-25",
-    "dateLabel": "July 25, 2022",
-    "duration": "1:14",
-    "peopleIds": [],
-    "playlistIds": [
-      "2022-gatlinburg-trip"
-    ],
-    "featured": false
-  },
-  {
-    "id": "2022-gatlinburg-trip-part-5",
-    "title": "Gatlinburg Trip - Part 5",
-    "source": "youtube",
     "sourceId": "bG8UlJfYLR4",
     "date": "2022-07-25",
     "dateLabel": "July 25, 2022",
@@ -336,22 +280,8 @@
     "featured": false
   },
   {
-    "id": "2022-gatlinburg-trip-part-6",
-    "title": "Gatlinburg Trip - Part 6",
-    "source": "youtube",
-    "sourceId": "AVRT2jxJFb8",
-    "date": "2022-07-25",
-    "dateLabel": "July 25, 2022",
-    "duration": "0:16",
-    "peopleIds": [],
-    "playlistIds": [
-      "2022-gatlinburg-trip"
-    ],
-    "featured": false
-  },
-  {
-    "id": "2022-gatlinburg-trip-part-7",
-    "title": "Gatlinburg Trip - Part 7",
+    "id": "2022-gatlinburg-trip-part-2",
+    "title": "Gatlinburg Trip - Part 2",
     "source": "youtube",
     "sourceId": "sIQ3jMmeC6s",
     "date": "2022-07-25",
@@ -364,13 +294,83 @@
     "featured": false
   },
   {
+    "id": "2022-gatlinburg-trip-part-3",
+    "title": "Gatlinburg Trip - Part 3",
+    "source": "youtube",
+    "sourceId": "AVRT2jxJFb8",
+    "date": "2022-07-25",
+    "dateLabel": "July 25, 2022",
+    "duration": "0:16",
+    "peopleIds": [],
+    "playlistIds": [
+      "2022-gatlinburg-trip"
+    ],
+    "featured": false
+  },
+  {
+    "id": "2022-gatlinburg-trip-part-4",
+    "title": "Gatlinburg Trip - Part 4",
+    "source": "youtube",
+    "sourceId": "OBkLbJpC9Ps",
+    "date": "2022-07-25",
+    "dateLabel": "July 25, 2022",
+    "duration": "0:47",
+    "peopleIds": [],
+    "playlistIds": [
+      "2022-gatlinburg-trip"
+    ],
+    "featured": false
+  },
+  {
+    "id": "2022-gatlinburg-trip-part-5",
+    "title": "Gatlinburg Trip - Part 5",
+    "source": "youtube",
+    "sourceId": "6yOhFZKUPP4",
+    "date": "2022-07-25",
+    "dateLabel": "July 25, 2022",
+    "duration": "1:00",
+    "peopleIds": [],
+    "playlistIds": [
+      "2022-gatlinburg-trip"
+    ],
+    "featured": false
+  },
+  {
+    "id": "2022-gatlinburg-trip-part-6",
+    "title": "Gatlinburg Trip - Part 6",
+    "source": "youtube",
+    "sourceId": "gD8p2LVs9ko",
+    "date": "2022-07-25",
+    "dateLabel": "July 25, 2022",
+    "duration": "1:14",
+    "peopleIds": [],
+    "playlistIds": [
+      "2022-gatlinburg-trip"
+    ],
+    "featured": false
+  },
+  {
+    "id": "2022-gatlinburg-trip-part-7",
+    "title": "Gatlinburg Trip - Part 7",
+    "source": "youtube",
+    "sourceId": "tunvnf6SRhY",
+    "date": "2022-07-25",
+    "dateLabel": "July 25, 2022",
+    "duration": "0:20",
+    "peopleIds": [],
+    "playlistIds": [
+      "2022-gatlinburg-trip"
+    ],
+    "featured": false
+  },
+  {
     "id": "2025-dawn-currys-60th-birthday-part-1",
     "title": "Dawn Curry's 60th Birthday - Part 1",
     "source": "youtube",
-    "sourceId": "JYi9ofJS48c",
+    "sourceId": "va9XrdlGRXY",
     "date": "2025-04-12",
     "dateLabel": "April 12, 2025",
-    "duration": "3:26",
+    "duration": "0:14",
     "peopleIds": [],
     "playlistIds": [
       "2025-dawn-currys-60th-birthday"
@@ -381,10 +381,10 @@
     "id": "2025-dawn-currys-60th-birthday-part-2",
     "title": "Dawn Curry's 60th Birthday - Part 2",
     "source": "youtube",
-    "sourceId": "K8N7hOTtDq4",
+    "sourceId": "8cUTgUyloSs",
     "date": "2025-04-12",
     "dateLabel": "April 12, 2025",
-    "duration": "11:51",
+    "duration": "0:19",
     "peopleIds": [],
     "playlistIds": [
       "2025-dawn-currys-60th-birthday"
@@ -406,8 +406,8 @@
     "featured": false
   },
   {
-    "id": "2025-dawn-currys-60th-birthday-part-4",
-    "title": "Dawn Curry's 60th Birthday - Part 4",
+    "id": "2025-dawn-currys-60th-birthday-part-3-b",
+    "title": "Dawn Curry's 60th Birthday - Part 3",
     "source": "youtube",
     "sourceId": "BxHe7MRBad0",
     "date": "2025-04-12",
@@ -420,13 +420,27 @@
     "featured": false
   },
   {
+    "id": "2025-dawn-currys-60th-birthday-part-4",
+    "title": "Dawn Curry's 60th Birthday - Part 4",
+    "source": "youtube",
+    "sourceId": "K8N7hOTtDq4",
+    "date": "2025-04-12",
+    "dateLabel": "April 12, 2025",
+    "duration": "11:51",
+    "peopleIds": [],
+    "playlistIds": [
+      "2025-dawn-currys-60th-birthday"
+    ],
+    "featured": false
+  },
+  {
     "id": "2025-dawn-currys-60th-birthday-part-5",
     "title": "Dawn Curry's 60th Birthday - Part 5",
     "source": "youtube",
-    "sourceId": "8cUTgUyloSs",
+    "sourceId": "JYi9ofJS48c",
     "date": "2025-04-12",
     "dateLabel": "April 12, 2025",
-    "duration": "0:19",
+    "duration": "3:26",
     "peopleIds": [],
     "playlistIds": [
       "2025-dawn-currys-60th-birthday"
@@ -437,10 +451,10 @@
     "id": "2025-dawn-currys-60th-birthday-part-6",
     "title": "Dawn Curry's 60th Birthday - Part 6",
     "source": "youtube",
-    "sourceId": "va9XrdlGRXY",
+    "sourceId": "zs8NokMxuv8",
     "date": "2025-04-12",
     "dateLabel": "April 12, 2025",
-    "duration": "0:14",
+    "duration": "0:21",
     "peopleIds": [],
     "playlistIds": [
       "2025-dawn-currys-60th-birthday"
@@ -451,10 +465,10 @@
     "id": "2025-dawn-currys-60th-birthday-part-7",
     "title": "Dawn Curry's 60th Birthday - Part 7",
     "source": "youtube",
-    "sourceId": "amJFyF05fQw",
+    "sourceId": "ORxjVd6rkH8",
     "date": "2025-04-12",
     "dateLabel": "April 12, 2025",
-    "duration": "1:20",
+    "duration": "6:30",
     "peopleIds": [],
     "playlistIds": [
       "2025-dawn-currys-60th-birthday"
@@ -465,10 +479,10 @@
     "id": "2025-dawn-currys-60th-birthday-part-8",
     "title": "Dawn Curry's 60th Birthday - Part 8",
     "source": "youtube",
-    "sourceId": "xJg-g_O-pyQ",
+    "sourceId": "Ttj45SlYLvI",
     "date": "2025-04-12",
     "dateLabel": "April 12, 2025",
-    "duration": "2:18",
+    "duration": "1:26",
     "peopleIds": [],
     "playlistIds": [
       "2025-dawn-currys-60th-birthday"
@@ -493,10 +507,10 @@
     "id": "2025-dawn-currys-60th-birthday-part-10",
     "title": "Dawn Curry's 60th Birthday - Part 10",
     "source": "youtube",
-    "sourceId": "Ttj45SlYLvI",
+    "sourceId": "xJg-g_O-pyQ",
     "date": "2025-04-12",
     "dateLabel": "April 12, 2025",
-    "duration": "1:26",
+    "duration": "2:18",
     "peopleIds": [],
     "playlistIds": [
       "2025-dawn-currys-60th-birthday"
@@ -507,24 +521,10 @@
     "id": "2025-dawn-currys-60th-birthday-part-11",
     "title": "Dawn Curry's 60th Birthday - Part 11",
     "source": "youtube",
-    "sourceId": "ORxjVd6rkH8",
+    "sourceId": "amJFyF05fQw",
     "date": "2025-04-12",
     "dateLabel": "April 12, 2025",
-    "duration": "6:30",
-    "peopleIds": [],
-    "playlistIds": [
-      "2025-dawn-currys-60th-birthday"
-    ],
-    "featured": false
-  },
-  {
-    "id": "2025-dawn-currys-60th-birthday-part-12",
-    "title": "Dawn Curry's 60th Birthday - Part 12",
-    "source": "youtube",
-    "sourceId": "zs8NokMxuv8",
-    "date": "2025-04-12",
-    "dateLabel": "April 12, 2025",
-    "duration": "0:21",
+    "duration": "1:20",
     "peopleIds": [],
     "playlistIds": [
       "2025-dawn-currys-60th-birthday"
@@ -534,48 +534,6 @@
   {
     "id": "2024-mark-currys-62nd-birthday-part-1",
     "title": "Mark Curry's 62nd Birthday - Part 1",
-    "source": "youtube",
-    "sourceId": "CnRzDdtAZng",
-    "date": "2024-02-14",
-    "dateLabel": "February 14, 2024",
-    "duration": "3:06",
-    "peopleIds": [],
-    "playlistIds": [
-      "2024-mark-currys-62nd-birthday"
-    ],
-    "featured": false
-  },
-  {
-    "id": "2024-mark-currys-62nd-birthday-part-2",
-    "title": "Mark Curry's 62nd Birthday - Part 2",
-    "source": "youtube",
-    "sourceId": "cO_sL_OaJlE",
-    "date": "2024-02-14",
-    "dateLabel": "February 14, 2024",
-    "duration": "3:52",
-    "peopleIds": [],
-    "playlistIds": [
-      "2024-mark-currys-62nd-birthday"
-    ],
-    "featured": false
-  },
-  {
-    "id": "2024-mark-currys-62nd-birthday-part-3",
-    "title": "Mark Curry's 62nd Birthday - Part 3",
-    "source": "youtube",
-    "sourceId": "u8hIVh9gvUI",
-    "date": "2024-02-14",
-    "dateLabel": "February 14, 2024",
-    "duration": "5:39",
-    "peopleIds": [],
-    "playlistIds": [
-      "2024-mark-currys-62nd-birthday"
-    ],
-    "featured": false
-  },
-  {
-    "id": "2024-mark-currys-62nd-birthday-part-4",
-    "title": "Mark Curry's 62nd Birthday - Part 4",
     "source": "youtube",
     "sourceId": "3X3vTdtVU-Q",
     "date": "2024-02-14",
@@ -588,13 +546,55 @@
     "featured": false
   },
   {
+    "id": "2024-mark-currys-62nd-birthday-part-2",
+    "title": "Mark Curry's 62nd Birthday - Part 2",
+    "source": "youtube",
+    "sourceId": "u8hIVh9gvUI",
+    "date": "2024-02-14",
+    "dateLabel": "February 14, 2024",
+    "duration": "5:39",
+    "peopleIds": [],
+    "playlistIds": [
+      "2024-mark-currys-62nd-birthday"
+    ],
+    "featured": false
+  },
+  {
+    "id": "2024-mark-currys-62nd-birthday-part-3",
+    "title": "Mark Curry's 62nd Birthday - Part 3",
+    "source": "youtube",
+    "sourceId": "TwSjseBhjUY",
+    "date": "2024-02-14",
+    "dateLabel": "February 14, 2024",
+    "duration": "17:05",
+    "peopleIds": [],
+    "playlistIds": [
+      "2024-mark-currys-62nd-birthday"
+    ],
+    "featured": false
+  },
+  {
+    "id": "2024-mark-currys-62nd-birthday-part-4",
+    "title": "Mark Curry's 62nd Birthday - Part 4",
+    "source": "youtube",
+    "sourceId": "-r2GL6w8Bp0",
+    "date": "2024-02-14",
+    "dateLabel": "February 14, 2024",
+    "duration": "16:10",
+    "peopleIds": [],
+    "playlistIds": [
+      "2024-mark-currys-62nd-birthday"
+    ],
+    "featured": false
+  },
+  {
     "id": "2024-mark-currys-62nd-birthday-part-5",
     "title": "Mark Curry's 62nd Birthday - Part 5",
     "source": "youtube",
-    "sourceId": "IgJTD34jK_k",
+    "sourceId": "cO_sL_OaJlE",
     "date": "2024-02-14",
     "dateLabel": "February 14, 2024",
-    "duration": "1:31",
+    "duration": "3:52",
     "peopleIds": [],
     "playlistIds": [
       "2024-mark-currys-62nd-birthday"
@@ -604,6 +604,20 @@
   {
     "id": "2024-mark-currys-62nd-birthday-part-6",
     "title": "Mark Curry's 62nd Birthday - Part 6",
+    "source": "youtube",
+    "sourceId": "CnRzDdtAZng",
+    "date": "2024-02-14",
+    "dateLabel": "February 14, 2024",
+    "duration": "3:06",
+    "peopleIds": [],
+    "playlistIds": [
+      "2024-mark-currys-62nd-birthday"
+    ],
+    "featured": false
+  },
+  {
+    "id": "2024-mark-currys-62nd-birthday-part-7",
+    "title": "Mark Curry's 62nd Birthday - Part 7",
     "source": "youtube",
     "sourceId": "s8XqeAJu9JQ",
     "date": "2024-02-14",
@@ -616,7 +630,7 @@
     "featured": false
   },
   {
-    "id": "2024-mark-currys-62nd-birthday-part-7",
+    "id": "2024-mark-currys-62nd-birthday-part-7-b",
     "title": "Mark Curry's 62nd Birthday - Part 7",
     "source": "youtube",
     "sourceId": "CknJhKRGnT4",
@@ -633,24 +647,10 @@
     "id": "2024-mark-currys-62nd-birthday-part-8",
     "title": "Mark Curry's 62nd Birthday - Part 8",
     "source": "youtube",
-    "sourceId": "-r2GL6w8Bp0",
+    "sourceId": "IgJTD34jK_k",
     "date": "2024-02-14",
     "dateLabel": "February 14, 2024",
-    "duration": "16:10",
-    "peopleIds": [],
-    "playlistIds": [
-      "2024-mark-currys-62nd-birthday"
-    ],
-    "featured": false
-  },
-  {
-    "id": "2024-mark-currys-62nd-birthday-part-9",
-    "title": "Mark Curry's 62nd Birthday - Part 9",
-    "source": "youtube",
-    "sourceId": "TwSjseBhjUY",
-    "date": "2024-02-14",
-    "dateLabel": "February 14, 2024",
-    "duration": "17:05",
+    "duration": "1:31",
     "peopleIds": [],
     "playlistIds": [
       "2024-mark-currys-62nd-birthday"
@@ -801,20 +801,6 @@
     "id": "2022-dinner-part-1",
     "title": "Dinner - Part 1",
     "source": "youtube",
-    "sourceId": "ebio8xbxg_Q",
-    "date": "2022-10-09",
-    "dateLabel": "October 9, 2022",
-    "duration": "0:38",
-    "peopleIds": [],
-    "playlistIds": [
-      "2022-dinner"
-    ],
-    "featured": false
-  },
-  {
-    "id": "2022-dinner-part-2",
-    "title": "Dinner - Part 2",
-    "source": "youtube",
     "sourceId": "4qsC3UqS3Co",
     "date": "2022-10-09",
     "dateLabel": "October 9, 2022",
@@ -826,13 +812,27 @@
     "featured": false
   },
   {
+    "id": "2022-dinner-part-2",
+    "title": "Dinner - Part 2",
+    "source": "youtube",
+    "sourceId": "ebio8xbxg_Q",
+    "date": "2022-10-09",
+    "dateLabel": "October 9, 2022",
+    "duration": "0:38",
+    "peopleIds": [],
+    "playlistIds": [
+      "2022-dinner"
+    ],
+    "featured": false
+  },
+  {
     "id": "2022-dinner-part-3",
     "title": "Dinner - Part 3",
     "source": "youtube",
-    "sourceId": "mrVc3T6l9lQ",
+    "sourceId": "7U8LYOv6dW4",
     "date": "2022-10-09",
     "dateLabel": "October 9, 2022",
-    "duration": "0:44",
+    "duration": "15:58",
     "peopleIds": [],
     "playlistIds": [
       "2022-dinner"
@@ -843,10 +843,10 @@
     "id": "2022-dinner-part-4",
     "title": "Dinner - Part 4",
     "source": "youtube",
-    "sourceId": "7U8LYOv6dW4",
+    "sourceId": "mrVc3T6l9lQ",
     "date": "2022-10-09",
     "dateLabel": "October 9, 2022",
-    "duration": "15:58",
+    "duration": "0:44",
     "peopleIds": [],
     "playlistIds": [
       "2022-dinner"
