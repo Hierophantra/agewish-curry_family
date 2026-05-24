@@ -111,6 +111,12 @@ export const VideoSchema = z.object({
 
   duration: z.string().optional(),       // e.g. "12:34"
 
+  // Cached thumbnail URL. YouTube videos derive their thumbnail from
+  // i.ytimg.com/vi/<id>/maxresdefault.jpg at render time so they don't
+  // populate this field. Vimeo requires an API call to discover the real
+  // frame thumbnail, so we bake the URL in at ingest time.
+  thumbnailUrl: z.string().optional(),
+
   // Provenance (archivist metadata - optional)
   // Note: `source_provenance` avoids a name clash with `source` (which means the video platform).
   source_provenance: z.string().optional(),  // who provided the recording (e.g., "James Curry's home video archive")

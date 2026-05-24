@@ -24,10 +24,14 @@ export default function VideoPlayer({ video, interactive = true }: VideoPlayerPr
     return <YouTubePlayer videoId={video.sourceId} title={video.title} interactive={interactive} />
   }
   if (video.source === 'vimeo') {
-    // Vimeo player is a static iframe and does not autoplay on render, so
-    // the dual-playback problem does not apply. The interactive flag is
-    // accepted but ignored for Vimeo until we add a Vimeo facade.
-    return <VimeoPlayer videoId={video.sourceId} title={video.title} />
+    return (
+      <VimeoPlayer
+        videoId={video.sourceId}
+        title={video.title}
+        thumbnailUrl={video.thumbnailUrl}
+        interactive={interactive}
+      />
+    )
   }
   // TypeScript exhaustiveness guard - Zod enforces the enum at load time,
   // but this makes future additions visible at compile time.

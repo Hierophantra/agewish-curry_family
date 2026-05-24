@@ -1,18 +1,20 @@
 // components/video/PlaylistCard.tsx
-// Server Component - renders one playlist cover card with YouTube thumbnail.
+// Server Component - renders one playlist cover card with a video thumbnail.
 // Mirrors CollectionCard but uses video thumbnail instead of a photo.
 //
 // YouTube thumbnail: delegated to <YouTubeThumb>, which uses maxresdefault.jpg
-// (true 16:9, up to 1280x720) with an automatic fallback to hqdefault.jpg for
-// videos that lack an HD upload. Earlier this card used hqdefault directly,
-// which is 4:3 with black bars and cropped the top/bottom of the actual video.
+// (true 16:9, up to 1280x720) with an automatic fallback to hqdefault.jpg.
 //
-// Vimeo thumbnails require an API call - falls back to a solid navy background.
+// Vimeo thumbnail: uses the baked thumbnailUrl on the video record (populated
+// from the Vimeo OEmbed API at ingest time). Falls back to <VimeoThumb> which
+// handles the broken-URL case gracefully with a navy panel.
+//
 // D-07 (inherited): Hover lift (-translate-y-0.5 + shadow-md) on the card.
 import Link from 'next/link'
 import type { Playlist } from '@/lib/types'
 import { getVideos } from '@/lib/content'
 import YouTubeThumb from '@/components/video/YouTubeThumb'
+import VimeoThumb from '@/components/video/VimeoThumb'
 
 interface PlaylistCardProps {
   playlist: Playlist
@@ -22,7 +24,7 @@ interface PlaylistCardProps {
 export default function PlaylistCard({ playlist, videoCount }: PlaylistCardProps) {
   // Resolve cover video to get its source info for thumbnail generation.
   const cover = getVideos().find((v) => v.id === playlist.coverVideoId)
-  const isYouTube = cover?.source === 'youtube'
+  const thumbClass = 'absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]'
 
   return (
     <Link
@@ -30,11 +32,10 @@ export default function PlaylistCard({ playlist, videoCount }: PlaylistCardProps
       className="group relative block aspect-video overflow-hidden rounded-lg border hairline bg-navy transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
     >
       {/* Cover thumbnail - true 16:9, fills card with subtle hover zoom */}
-      {isYouTube ? (
-        <YouTubeThumb
-          videoId={cover!.sourceId}
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-        />
+      {cover?.source === 'youtube' ? (
+        <YouTubeThumb videoId={cover.sourceId} className={thumbClass} />
+      ) : cover?.source === 'vimeo' && cover.thumbnailUrl ? (
+        <VimeoThumb src={cover.thumbnailUrl} className={thumbClass} />
       ) : (
         <div className="absolute inset-0 bg-navy" />
       )}
