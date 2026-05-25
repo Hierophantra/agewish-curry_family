@@ -9,14 +9,34 @@ export default function CollectionGrid() {
   const collections = getCollections()
 
   if (collections.length === 0) {
+    // v3.1 empty state - dignified placeholder rather than "nothing here".
+    // Three inset wells in a 3-col grid evoke the future album layout so
+    // the visitor sees a place with purpose, not an unfinished page.
     return (
-      <div className="text-center py-16">
-        <p className="eyebrow text-quiet mb-3">FAMILY ARCHIVE</p>
-        <h2 className="font-serif text-navy text-2xl mb-2">No collections yet</h2>
-        <p className="text-muted text-sm">
-          Collections of photographs will appear here as they are gathered into the archive.
-        </p>
-      </div>
+      <section className="py-12 md:py-16">
+        <div className="max-w-3xl">
+          <p className="eyebrow text-gold-deep mb-4">Photographs</p>
+          <h2 className="font-serif text-navy text-3xl md:text-4xl leading-tight mb-4">
+            A place for the family image record
+          </h2>
+          <p className="text-muted text-base md:text-lg leading-relaxed">
+            Family photographs will be gathered here as albums, portraits,
+            places, and moments. Each will sit in a collection alongside the
+            stories that belong with it.
+          </p>
+        </div>
+        <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl">
+          {['Album', 'Portrait', 'Moment'].map((label) => (
+            <div
+              key={label}
+              className="surface-inset aspect-[4/3] border border-[color:var(--color-border)] grid place-items-center"
+              aria-hidden="true"
+            >
+              <span className="font-serif italic text-quiet text-sm">{label}</span>
+            </div>
+          ))}
+        </div>
+      </section>
     )
   }
 

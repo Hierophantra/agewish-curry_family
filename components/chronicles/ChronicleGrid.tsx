@@ -9,14 +9,41 @@ export default function ChronicleGrid() {
   const chronicles = getChronicles()
 
   if (chronicles.length === 0) {
+    // v3.1 empty state - dignified placeholder rather than "nothing here".
+    // A single manuscript-style preview card hints at the editorial treatment
+    // chronicles will receive: serif body, gold-deep eyebrow for "turning
+    // point", a small italic dedication. Reads as a place with intent.
     return (
-      <div className="text-center py-16">
-        <p className="eyebrow text-quiet mb-3">FAMILY ARCHIVE</p>
-        <h2 className="font-serif text-navy text-2xl mb-2">No chronicles yet</h2>
-        <p className="text-muted text-sm max-w-sm mx-auto">
-          Written family stories will appear here as they are added to the archive.
-        </p>
-      </div>
+      <section className="py-12 md:py-16">
+        <div className="max-w-3xl">
+          <p className="eyebrow text-[color:var(--color-rose-memory)] mb-4">Chronicles</p>
+          <h2 className="font-serif text-navy text-3xl md:text-4xl leading-tight mb-4">
+            Stories not yet placed into words
+          </h2>
+          <p className="text-muted text-base md:text-lg leading-relaxed">
+            Written memories, family notes, dates, places, and reflections will
+            be preserved here as the archive grows. Each will live alongside
+            the photographs and recordings that belong to it.
+          </p>
+        </div>
+
+        {/* Manuscript-style preview card - hint at the future treatment. */}
+        <div className="mt-12 max-w-2xl">
+          <div className="surface-card-static p-8 md:p-10">
+            <p className="eyebrow text-[color:var(--color-rose-memory)] mb-4">
+              A turning point
+            </p>
+            <h3 className="font-serif text-navy text-2xl md:text-3xl leading-tight mb-4">
+              The first chronicle will appear here
+            </h3>
+            <p className="font-serif text-navy text-lg leading-8 italic">
+              A short passage of family writing, an oral history, a memory
+              gathered into words.
+            </p>
+            <p className="mt-5 text-sm text-quiet">Author, date placed</p>
+          </div>
+        </div>
+      </section>
     )
   }
 
