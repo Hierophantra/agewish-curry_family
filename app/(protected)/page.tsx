@@ -1,29 +1,29 @@
 // app/(protected)/page.tsx
 // Home page - Server Component. The HUB.
 //
-// Intentional design choice: the home page is NOT a preview surface for
-// the rest of the site. It is a calm landing that gives the family a clear
-// menu of where to go. Optimised for a "10-foot UI" feel so it reads well
-// on a TV or tablet as well as a laptop.
+// v3.1 visual upgrade (per design crit):
+//   - One surface primitive across all cards (was: gradient + custom shadow)
+//   - Gold reserved as a signal, not decoration:
+//       * one eyebrow on the section header
+//       * one arrow color
+//       * border lights up gold on hover (not all the time)
+//   - Numerals demoted from giant tabular display to a quiet supporting line
+//   - Italic descriptors replaced with plain Inter body (italic stays in hero
+//     and footer dedication only)
+//   - Card description is now genuine product copy, not flourish
+//   - Card title scaled down from 4xl/5xl to 2xl/3xl - the SECTION should
+//     read big, the cards should read consistent
 //
-// v3 visual upgrade:
-//   - Hub cards scaled up (min-h 360 / lg:420, text-4xl/5xl titles)
-//   - Each card has a thematic mono numeral (huge serif stat) plus the
-//     prose stat - the numeral becomes a visual anchor
-//   - Subtle ivory gradient background on the section + on each card
-//   - Gold rule separators inside the cards for editorial feel
-//   - Decorative gold rule + "Explore the archive" eyebrow centered above
-//     the grid
-//   - Footer flourish line at the bottom of the section
+// Intentional design choice: the home page is NOT a preview surface. It's a
+// calm landing that gives the family a clear menu of where to go. Optimized
+// for a "10-foot UI" feel so it reads well on TV / tablet / laptop.
 //
-// Composition: Hero (bg-white to ivory gradient) -> Hub grid (bg-ivory).
 // Star motif rule: TopNav = star 1, Hero = star 2, Footer = star 3.
 import Link from 'next/link'
 import Hero from '@/components/home/Hero'
 import { getPeople, getPhotos, getCollections, getVideos, getPlaylists, getChronicles } from '@/lib/content'
 
 export default function HomePage() {
-  // Pull just the counts we need for the hub-card stat tags.
   const people = getPeople()
   const photos = getPhotos()
   const collections = getCollections()
@@ -32,7 +32,6 @@ export default function HomePage() {
   const chronicles = getChronicles()
 
   // Generation depth = longest parent-to-child chain from the root patriarch.
-  // BFS from each parentless person, take the deepest result.
   function maxGenerationDepth(): number {
     const byId = new Map(people.map((p) => [p.id, p]))
     const roots = people.filter((p) => (p.parentIds ?? []).length === 0)
@@ -56,56 +55,48 @@ export default function HomePage() {
   const genCount = maxGenerationDepth()
   const genWord = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven'][genCount] ?? String(genCount)
 
-  // Each card has a "big numeral" (the count that matters most) and a one-line
-  // descriptor of what that numeral refers to.
+  // Hub card data. The numerals are no longer a centerpiece - they're a
+  // supporting line under the description, weighted equal to the descriptor.
   const cards: Array<{
     href: string
     eyebrow: string
     title: string
     description: string
-    numeral: string | null   // null = no count yet, shown as a gold dash
-    numeralLabel: string     // what the numeral counts
-    subStat?: string         // optional second stat line
+    stat: string
   }> = [
     {
       href: '/tree',
       eyebrow: 'Family tree',
       title: 'The family',
       description: 'See how everyone connects, from the patriarch down through every branch.',
-      numeral: String(people.length),
-      numeralLabel: people.length === 1 ? 'person' : 'people',
-      subStat: `Across ${genWord} generations`,
+      stat: `${people.length} people · ${genWord} generations`,
     },
     {
       href: '/photographs',
       eyebrow: 'Photographs',
       title: 'Photographs',
       description: 'Albums and collections, from the earliest pictures to the most recent.',
-      numeral: photos.length > 0 ? String(photos.length) : null,
-      numeralLabel: photos.length === 1 ? 'photograph' : 'photographs',
-      subStat: collections.length > 0
-        ? `In ${collections.length} collection${collections.length === 1 ? '' : 's'}`
-        : 'Add your first',
+      stat: photos.length > 0
+        ? `${photos.length} photograph${photos.length === 1 ? '' : 's'}${collections.length > 0 ? ` · ${collections.length} collection${collections.length === 1 ? '' : 's'}` : ''}`
+        : 'Waiting for the first',
     },
     {
       href: '/videos',
       eyebrow: 'Videos',
       title: 'Home movies',
       description: 'Recorded moments, gathered by occasion. Birthdays, trips, holidays, dinners.',
-      numeral: videos.length > 0 ? String(videos.length) : null,
-      numeralLabel: videos.length === 1 ? 'home movie' : 'home movies',
-      subStat: playlists.length > 0
-        ? `Across ${playlists.length} playlist${playlists.length === 1 ? '' : 's'}`
-        : 'Add your first',
+      stat: videos.length > 0
+        ? `${videos.length} film${videos.length === 1 ? '' : 's'} · ${playlists.length} collection${playlists.length === 1 ? '' : 's'}`
+        : 'Waiting for the first',
     },
     {
       href: '/chronicles',
       eyebrow: 'Chronicles',
       title: 'Stories told',
       description: 'Written accounts and oral histories of the people and the times they lived in.',
-      numeral: chronicles.length > 0 ? String(chronicles.length) : null,
-      numeralLabel: chronicles.length === 1 ? 'story' : 'stories',
-      subStat: chronicles.length > 0 ? 'Read and listen' : 'Add your first',
+      stat: chronicles.length > 0
+        ? `${chronicles.length} stor${chronicles.length === 1 ? 'y' : 'ies'}`
+        : 'Waiting for the first',
     },
   ]
 
@@ -113,16 +104,11 @@ export default function HomePage() {
     <>
       <Hero />
 
-      {/* Hub grid section. bg-ivory with a soft top gradient to deepen the
-          page's color palette without losing the calm. */}
-      <section
-        className="
-          relative bg-gradient-to-b from-ivory via-ivory to-ivory-deep
-          border-t border-stone py-20 md:py-28 px-7 md:px-11
-        "
-      >
+      {/* Hub grid section. bg-ivory with a soft top gradient. */}
+      <section className="relative bg-gradient-to-b from-ivory via-ivory to-ivory-deep border-t border-stone/60 py-20 md:py-28 px-7 md:px-11">
         <div className="max-w-7xl mx-auto">
-          {/* Section header - decorative gold rule + centered eyebrow */}
+          {/* Section header - one small eyebrow with a hairline rule.
+              Reduced from "two gold rules + dot" to a single understated line. */}
           <div className="flex flex-col items-center mb-14">
             <div className="flex items-center gap-3 mb-5" aria-hidden="true">
               <span className="block w-10 h-px bg-gold-deep" />
@@ -134,69 +120,53 @@ export default function HomePage() {
             </p>
           </div>
 
-          {/* Card grid: 1-col mobile, 2-col tablet, 4-col desktop.
-              Generous gap so each card has breathing room. */}
-          <div className="grid gap-7 sm:grid-cols-2 lg:grid-cols-4">
+          {/* Card grid. The surface-card utility is the one shared primitive.
+              No gradient backgrounds, no giant numerals - just typography and
+              spacing carrying the design. */}
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {cards.map((c) => (
               <Link
                 key={c.href}
                 href={c.href}
                 className="
                   group relative flex flex-col
-                  bg-gradient-to-br from-white to-ivory
-                  hairline border-stone rounded-xl
-                  p-8 md:p-10 min-h-[360px] lg:min-h-[420px]
-                  shadow-editorial transition-all duration-300
-                  hover:-translate-y-1 hover:shadow-editorial-hover hover:border-gold
+                  surface-card
+                  p-7 md:p-8 min-h-[280px] lg:min-h-[300px]
                   focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2
                 "
               >
-                {/* Top section: eyebrow + serif title + descriptor */}
+                {/* Top section: eyebrow (quiet now, not gold) + serif title + descriptor */}
                 <div className="flex-1">
-                  <p className="eyebrow text-gold-deep mb-4">{c.eyebrow}</p>
-                  <h2 className="font-serif text-navy text-4xl lg:text-5xl leading-[1.1] mb-4">
+                  <p className="eyebrow text-quiet mb-3">{c.eyebrow}</p>
+                  <h2 className="font-serif text-navy text-2xl md:text-3xl leading-tight mb-3">
                     {c.title}
                   </h2>
-                  <p className="font-serif italic text-muted text-base lg:text-lg leading-relaxed">
+                  <p className="font-sans text-muted text-base leading-7">
                     {c.description}
                   </p>
                 </div>
 
-                {/* Mid: gold hairline separator */}
-                <div className="my-6 flex items-center gap-2" aria-hidden="true">
-                  <span className="block h-px bg-gold-deep/40 flex-1" />
-                  <span className="block w-1 h-1 rounded-full bg-gold-deep/40" />
-                  <span className="block h-px bg-gold-deep/40 flex-1" />
-                </div>
-
-                {/* Bottom: big numeral + label + sub-stat + arrow */}
-                <div className="flex items-end justify-between gap-4">
-                  <div>
-                    <p className="font-serif text-navy text-5xl lg:text-6xl leading-none tabular-nums">
-                      {c.numeral ?? <span className="text-gold-deep">0</span>}
-                    </p>
-                    <p className="eyebrow text-quiet mt-2">{c.numeralLabel}</p>
-                    {c.subStat && (
-                      <p className="font-serif italic text-muted text-sm mt-2">{c.subStat}</p>
-                    )}
-                  </div>
-                  {/* Arrow indicator - slides on hover/focus */}
+                {/* Bottom row: stat + quiet "Open" link. Top border replaces
+                    the previous mid-card gold separator. */}
+                <div className="mt-6 pt-4 border-t border-[color:var(--color-border)] flex items-baseline justify-between gap-3">
+                  <p className="font-sans text-quiet text-sm">{c.stat}</p>
                   <span
                     className="
-                      text-gold-deep text-3xl leading-none
-                      transition-transform duration-300
-                      group-hover:translate-x-1 group-focus-visible:translate-x-1
+                      eyebrow text-gold-deep transition-transform duration-200
+                      group-hover:translate-x-0.5 group-focus-visible:translate-x-0.5
                     "
                     aria-hidden="true"
                   >
-                    {'→'}
+                    Open
                   </span>
                 </div>
               </Link>
             ))}
           </div>
 
-          {/* Footer flourish under the grid - same gold rule motif as the header */}
+          {/* Footer flourish - italic dedication stays. This is one of two
+              places where the italic Cormorant treatment is intentional
+              (the other is the hero subtitle). */}
           <div className="flex flex-col items-center mt-16" aria-hidden="true">
             <div className="flex items-center gap-3 mb-4">
               <span className="block w-8 h-px bg-gold-deep" />

@@ -1,5 +1,5 @@
 /* app/globals.css */
-/* Tailwind v4 CSS-first config — no tailwind.config.ts exists */
+/* Tailwind v4 CSS-first config - no tailwind.config.ts exists */
 /* @import replaces v3's three @tailwind directives (@tailwind base/components/utilities) */
 @import "tailwindcss";
 
@@ -9,6 +9,7 @@
   /* Note: --color-muted (NOT --color-text-muted) → generates text-muted (no double-prefix) */
   --color-navy:      #1F2D5C;
   --color-navy-soft: #2A3A6E;
+  --color-navy-ink:  #0F162C;   /* deepest navy - used only for lightbox overlays */
   --color-gold:      #E8A91F;
   --color-gold-deep: #B8851A;
   --color-gold-soft: #F4D89A;
@@ -19,14 +20,28 @@
   --color-muted:     #6B6960;
   --color-quiet:     #8B8778;
 
-  /* ── Typography — body (Inter via CSS variable from next/font) ── */
+  /* ── v3.1 Surface system ── */
+  /* Three reusable surface levels - use these instead of inventing card
+     treatments per section. Page bg uses ivory family; cards use surface
+     family; image/video wells use inset. */
+  --color-surface:        #FFFDF7;   /* primary card background */
+  --color-surface-subtle: #FAF6EA;   /* nav hover, active tab, secondary surfaces */
+  --color-inset:          #EFE8D6;   /* thumbnail / media-well background */
+
+  /* ── v3.1 Semantic colors ── */
+  /* Use sparingly, with meaning. NOT decorative. */
+  --color-rose-memory:      #B46A63;   /* turning points, marriage, family events */
+  --color-emerald-archive:  #496B58;   /* preserved / archived / verified state */
+  --color-blue-remembrance: #596F91;   /* spouses-by-marriage, secondary metadata */
+
+  /* ── Typography - body (Inter via CSS variable from next/font) ── */
   /* var(--font-inter) is injected on <html> by next/font/google in layout.tsx */
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 
-  /* ── Typography — serif headings (Cormorant Garamond via next/font; Georgia fallback) ── */
+  /* ── Typography - serif headings (Cormorant Garamond via next/font; Georgia fallback) ── */
   --font-serif: var(--font-cormorant), Georgia, 'Times New Roman', serif;
 
-  /* ── Font weights — two-weight rule: ONLY 400 and 500 ── */
+  /* ── Font weights - two-weight rule: ONLY 400 and 500 ── */
   /* By defining only these two, Tailwind only generates font-normal and font-medium. */
   /* font-semibold (600) and font-bold (700) are intentionally absent. */
   --font-weight-normal: 400;
@@ -67,6 +82,36 @@
   box-shadow:
     0 2px 4px rgba(31, 45, 92, 0.06),
     0 16px 40px -16px rgba(184, 133, 26, 0.18);
+}
+
+/* v3.1 surface primitive - one card pattern for the whole product so every
+   section feels authored by the same designer. Apply via:
+     <div className="surface-card"> ... </div>
+   Hover lift baked in: any element with .surface-card lifts and warms its
+   shadow on hover. Override per-instance when needed (e.g. spouses get a
+   navy tint variant) but keep the base look consistent. */
+@utility surface-card {
+  border-radius: 1rem;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow:
+    0 1px 2px rgba(31, 45, 92, 0.04),
+    0 18px 50px -24px rgba(31, 45, 92, 0.10);
+  transition: transform 220ms ease-out, box-shadow 220ms ease-out, border-color 220ms ease-out;
+}
+.surface-card:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in oklab, var(--color-gold-deep) 32%, var(--color-border));
+  box-shadow:
+    0 2px 4px rgba(31, 45, 92, 0.05),
+    0 22px 60px -22px rgba(31, 45, 92, 0.14);
+}
+
+/* Inset media well - thumbnails, photo carousels, video frames, tree viewport
+   backgrounds. Quiet color so the media inside is the focal point. */
+@utility surface-inset {
+  background-color: var(--color-inset);
+  border-radius: 0.75rem;
 }
 
 /* Paper-grain texture overlay - subtle SVG noise, base64'd inline so no extra

@@ -2,7 +2,11 @@
 // components/layout/NavTabs.tsx
 // Client island - uses usePathname() which is a client-only hook.
 // Parent TopNav stays a Server Component; this is the thin interactive slice.
-// Tab labels use sentence case per D-13.
+//
+// v3.1: active state now uses a surface-subtle pill background (per the
+// reduce-gold-by-40% pass). Hover uses the same surface-subtle treatment with
+// a subtle text-color shift to navy. Gold is reserved for the focus ring and
+// the brand star elsewhere, not for nav decoration.
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
@@ -19,7 +23,7 @@ export default function NavTabs() {
   const pathname = usePathname()
 
   return (
-    <div className="overflow-x-auto scrollbar-none flex items-center gap-6 -mx-2 px-2">
+    <div className="overflow-x-auto scrollbar-none flex items-center gap-1">
       {TABS.map((tab) => {
         // Home tab active only on exact match; others match prefix
         const isActive =
@@ -32,10 +36,11 @@ export default function NavTabs() {
             key={tab.href}
             href={tab.href}
             className={cn(
-              'text-base pb-1 transition-colors rounded-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2',
+              'text-sm rounded-full px-4 py-2 transition-colors',
+              'focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2',
               isActive
-                ? 'text-navy border-b-2 border-gold-deep'
-                : 'text-muted hover:text-navy hover:bg-gold/5 px-1 -mx-1'
+                ? 'bg-[color:var(--color-surface-subtle)] text-navy shadow-[inset_0_0_0_1px_var(--color-border)]'
+                : 'text-muted hover:text-navy hover:bg-[color:var(--color-surface-subtle)]',
             )}
           >
             {tab.label}

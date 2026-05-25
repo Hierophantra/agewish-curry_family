@@ -1,18 +1,32 @@
 // components/layout/TopNav.tsx
 // Server Component - renders brand mark and NavTabs client island.
-// Sign out removed in v2.1 - session JWT expires on its own; TV deployment has no sign-out.
-// D-06: Brand mark = PNG ring+star at 36px + 2-line text stack (eyebrow + serif name).
-// PNG already contains navy circle border + gold star - no wrapper ring div needed.
+//
+// v3.1 upgrade: sticky positioning with translucent backdrop-blur so the nav
+// stays present without competing with content. This is the kind of small
+// product polish that separates a hand-built site from real software.
+// Border-bottom uses border-stone at low opacity to keep the seam quiet.
+//
+// Sign out removed in v2.1 - session JWT expires on its own; TV deployment
+// has no sign-out.
 import Link from 'next/link'
 import StarMark from '@/components/ui/StarMark'
 import NavTabs from '@/components/layout/NavTabs'
 
 export default function TopNav() {
   return (
-    <header className="border-b hairline">
-      <nav className="px-7 md:px-11 py-6 flex items-center justify-between">
+    <header
+      className="
+        sticky top-0 z-40
+        bg-ivory/85 backdrop-blur-xl
+        border-b border-stone/60
+      "
+    >
+      <nav className="px-7 md:px-11 py-5 flex items-center justify-between max-w-7xl mx-auto">
         {/* Brand mark - left side: PNG mark + 2-line text stack */}
-        <Link href="/" className="flex items-center gap-3.5">
+        <Link
+          href="/"
+          className="flex items-center gap-3.5 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2"
+        >
           <StarMark size={36} />
           <div className="flex flex-col leading-tight">
             <span className="eyebrow text-quiet text-[9px]">AgeWish · Private archive</span>
