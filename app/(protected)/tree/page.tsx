@@ -43,8 +43,9 @@ export default function TreePage() {
           </p>
         </div>
       ) : (
-        // Tree canvas - framed plate with ivory backdrop and editorial shadow.
-        <section className="relative bg-gradient-to-br from-ivory to-ivory-deep border hairline border-stone rounded-xl overflow-hidden shadow-editorial">
+        // Tree canvas - framed plate (surface-card-static = no hover lift,
+        // since hover-lift is reserved for clickable cards).
+        <section className="surface-card-static relative overflow-hidden">
           <FamilyTreeCanvas
             nodes={nodes}
             connectors={connectors}

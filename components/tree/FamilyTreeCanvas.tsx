@@ -115,8 +115,7 @@ export default function FamilyTreeCanvas({
 
   // "Spouse-by-marriage": joined the family by marriage (no parents in the
   // archive, at least one spouse in the archive) and not a founder or
-  // alt-parent. The cool navy tint in PersonNode distinguishes these from
-  // blood descendants.
+  // alt-parent. PersonNode tints these with blue-remembrance.
   function isSpouseByMarriage(person: Person | undefined): boolean {
     if (!person) return false
     const noParents = (person.parentIds ?? []).length === 0
@@ -128,6 +127,49 @@ export default function FamilyTreeCanvas({
     return noParents && hasSpouse && !isFounder && !isAltParent
   }
   const rootId = nodes[0]?.id ?? ''
+
+  // Lineage detection - when a person is selected, compute the set of related
+  // people (ancestors + descendants + siblings + spouses + selected). PersonNode
+  // dims everyone NOT in this set so the user can scan the relevant branch
+  // without losing the rest of the tree's structure.
+  const lineageIds: Set<string> | null = (() => {
+    if (!selectedId) return null
+    const set = new Set<string>([selectedId])
+    const visit = (id: string, dir: 'up' | 'down', seen: Set<string>) => {
+      if (seen.has(id)) return
+      seen.add(id)
+      const p = peopleById.get(id)
+      if (!p) return
+      if (dir === 'up') {
+        for (const pid of p.parentIds ?? []) {
+          set.add(pid)
+          visit(pid, 'up', seen)
+        }
+      } else {
+        const kids = p.childrenIds?.length ? p.childrenIds : (p.childIds ?? [])
+        for (const cid of kids) {
+          set.add(cid)
+          visit(cid, 'down', seen)
+        }
+      }
+    }
+    visit(selectedId, 'up', new Set())
+    visit(selectedId, 'down', new Set())
+    const selected = peopleById.get(selectedId)
+    if (selected) {
+      // Spouses
+      for (const sid of selected.spouseIds ?? []) set.add(sid)
+      // Siblings (share at least one parent with selected) + their descendants
+      // are NOT included by default - that gets noisy fast on a wide family.
+      // Only direct siblings, no descent.
+      for (const parentId of selected.parentIds ?? []) {
+        const parent = peopleById.get(parentId)
+        const sibs = parent?.childrenIds?.length ? parent.childrenIds : (parent?.childIds ?? [])
+        for (const sib of sibs) set.add(sib)
+      }
+    }
+    return set
+  })()
 
   // handleSelect: push to history so the back button closes the panel naturally.
   function handleSelect(id: string) {
@@ -248,40 +290,53 @@ export default function FamilyTreeCanvas({
         style={{ background: 'linear-gradient(to right, transparent, white)' }}
         aria-hidden="true"
       />
-      {/* Zoom controls - floating cluster in the top-right of the tree area.
-          z-30 sits above the right-edge gradient (z-20) and tree nodes. */}
-      <div
-        className="absolute right-3 top-3 z-30 flex items-stretch bg-white hairline border-stone rounded shadow-sm"
-        role="group"
-        aria-label="Zoom controls"
-      >
-        <button
-          type="button"
-          onClick={zoomOut}
-          disabled={zoom <= ZOOM_MIN}
-          aria-label="Zoom out"
-          className="px-2.5 py-1 text-navy text-base leading-none hover:bg-ivory disabled:opacity-30 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+      {/* Toolbar - top bar inside the tree frame. Left: a quiet status line
+          showing which person is currently selected (or hint text otherwise).
+          Right: the zoom cluster. The toolbar reads as part of the framed
+          plate rather than a floating cluster, which is the product-shell feel. */}
+      <div className="relative z-30 flex items-center justify-between gap-4 px-4 py-3 border-b border-[color:var(--color-border)] bg-[color:var(--color-surface-subtle)]/60">
+        {/* Left side: subtle context line. When something is selected we show
+            the selected person's name; otherwise a hint. */}
+        <p className="font-sans text-xs text-quiet truncate min-w-0">
+          {selectedId
+            ? `Selected: ${peopleById.get(selectedId)?.name ?? selectedId}. Click anywhere to deselect.`
+            : 'Click a person to focus their lineage. Arrow keys to navigate.'}
+        </p>
+
+        {/* Zoom cluster */}
+        <div
+          className="flex items-stretch bg-[color:var(--color-surface)] border border-[color:var(--color-border)] rounded-md shadow-sm shrink-0"
+          role="group"
+          aria-label="Zoom controls"
         >
-          −
-        </button>
-        <button
-          type="button"
-          onClick={zoomReset}
-          aria-label={`Reset zoom (currently ${Math.round(zoom * 100)} percent)`}
-          className="px-2 py-1 text-quiet text-xs tabular-nums border-l border-r border-stone hover:bg-ivory focus:outline-none focus-visible:ring-2 focus-visible:ring-gold"
-          style={{ minWidth: 48 }}
-        >
-          {Math.round(zoom * 100)}%
-        </button>
-        <button
-          type="button"
-          onClick={zoomIn}
-          disabled={zoom >= ZOOM_MAX}
-          aria-label="Zoom in"
-          className="px-2.5 py-1 text-navy text-base leading-none hover:bg-ivory disabled:opacity-30 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-2 focus-visible:ring-gold"
-        >
-          +
-        </button>
+          <button
+            type="button"
+            onClick={zoomOut}
+            disabled={zoom <= ZOOM_MIN}
+            aria-label="Zoom out"
+            className="px-2.5 py-1 text-navy text-base leading-none hover:bg-[color:var(--color-surface-subtle)] disabled:opacity-30 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-l-md"
+          >
+            -
+          </button>
+          <button
+            type="button"
+            onClick={zoomReset}
+            aria-label={`Reset zoom (currently ${Math.round(zoom * 100)} percent)`}
+            className="px-2 py-1 text-quiet text-xs tabular-nums border-l border-r border-[color:var(--color-border)] hover:bg-[color:var(--color-surface-subtle)] focus:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+            style={{ minWidth: 48 }}
+          >
+            {Math.round(zoom * 100)}%
+          </button>
+          <button
+            type="button"
+            onClick={zoomIn}
+            disabled={zoom >= ZOOM_MAX}
+            aria-label="Zoom in"
+            className="px-2.5 py-1 text-navy text-base leading-none hover:bg-[color:var(--color-surface-subtle)] disabled:opacity-30 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-r-md"
+          >
+            +
+          </button>
+        </div>
       </div>
       {/* D-10: overflow-x-auto enables horizontal scroll on narrow viewports.
           Tree container stays at full width regardless of panel state - panel no longer
@@ -333,6 +388,7 @@ export default function FamilyTreeCanvas({
               relationLabel={label}
               deathYear={deathYear}
               isSpouseByMarriage={isSpouseByMarriage(person)}
+              isDimmed={lineageIds !== null && !lineageIds.has(node.id)}
               onClick={() => {
                 if (node.id === selectedId) {
                   handleClose()

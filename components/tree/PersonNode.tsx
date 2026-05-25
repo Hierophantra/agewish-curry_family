@@ -14,10 +14,16 @@ interface PersonNodeProps {
   /**
    * True when this person married into the family (no parents in the archive,
    * at least one spouse in the archive, not a founder or alt-parent).
-   * Computed in FamilyTreeCanvas from the person record. Renders the node
-   * with a cool navy tint to distinguish from blood descendants.
+   * Renders the node with a calm blue-remembrance tint to distinguish from
+   * blood descendants without crowding navy's active-state meaning.
    */
   isSpouseByMarriage?: boolean
+  /**
+   * Lineage dim mode. When a different person is selected and THIS node is
+   * not part of their lineage (ancestors + descendants + siblings + spouse),
+   * we dim it so the user can scan the lineage at a glance.
+   */
+  isDimmed?: boolean
   onClick: () => void
   onRef: (el: HTMLButtonElement | null) => void  // allows canvas to imperatively focus nodes
   style: CSSProperties
@@ -26,7 +32,7 @@ interface PersonNodeProps {
 // node is accepted as a prop (required by FamilyTreeCanvas) but not rendered directly
 // - we render `name` (resolved by canvas) instead of node.id
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export default function PersonNode({ node: _node, name, isActive, isFocused, relationLabel, deathYear, isSpouseByMarriage, onClick, onRef, style }: PersonNodeProps) {
+export default function PersonNode({ node: _node, name, isActive, isFocused, relationLabel, deathYear, isSpouseByMarriage, isDimmed, onClick, onRef, style }: PersonNodeProps) {
   // Founders get a warm gold treatment so the eye starts at the top of the tree.
   const isFounder = relationLabel === 'PATRIARCH' || relationLabel === 'MATRIARCH'
 
@@ -54,16 +60,17 @@ export default function PersonNode({ node: _node, name, isActive, isFocused, rel
         'transition-all duration-200',
         'focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2',
         isActive
-          ? 'bg-ivory border-[1.25px] border-navy shadow-md'
+          ? 'bg-[color:var(--color-surface)] border-[1.25px] border-navy shadow-md'
           : isFocused
-            ? 'bg-ivory ring-2 ring-gold ring-offset-1 border-[0.5px] border-stone'
+            ? 'bg-[color:var(--color-surface)] ring-2 ring-gold ring-offset-1 border-[0.5px] border-stone'
             : isFounder
-              ? 'bg-gradient-to-br from-ivory to-ivory-deep border-[1px] border-gold-deep/60 shadow-sm hover:shadow-md hover:border-gold hover:-translate-y-0.5'
+              ? 'bg-gradient-to-br from-[color:var(--color-surface)] to-[color:var(--color-ivory-deep)] border-[1px] border-gold-deep/60 shadow-sm hover:shadow-md hover:border-gold hover:-translate-y-0.5'
               : isAltParent
-                ? 'bg-ivory/70 border border-dashed border-stone shadow-none opacity-90 hover:opacity-100 hover:border-gold-deep/60 hover:-translate-y-0.5'
+                ? 'bg-[color:var(--color-surface-subtle)]/80 border border-dashed border-stone shadow-none hover:border-stone hover:-translate-y-0.5'
                 : isSpouseByMarriage
-                  ? 'bg-gradient-to-br from-white to-navy/[0.06] border-[0.5px] border-navy/30 shadow-sm hover:shadow-md hover:border-navy hover:-translate-y-0.5'
-                  : 'bg-gradient-to-br from-white to-ivory border-[0.5px] border-stone shadow-sm hover:shadow-md hover:border-gold hover:-translate-y-0.5',
+                  ? 'bg-[color:var(--color-surface)] border-[1px] border-[color:color-mix(in_oklab,var(--color-blue-remembrance)_40%,var(--color-border))] shadow-sm hover:shadow-md hover:border-[color:var(--color-blue-remembrance)] hover:-translate-y-0.5'
+                  : 'bg-[color:var(--color-surface)] border-[0.5px] border-stone shadow-sm hover:shadow-md hover:border-gold-deep hover:-translate-y-0.5',
+        isDimmed ? 'opacity-35 saturate-[0.85] hover:opacity-60' : '',
       ].join(' ')}
       style={style}
     >
@@ -75,38 +82,39 @@ export default function PersonNode({ node: _node, name, isActive, isFocused, rel
         />
       )}
 
-      {/* Tiny navy ring indicator in the corner for married-in spouses.
-          A small, quiet "this person is here by marriage" cue. */}
+      {/* Tiny indicator dot in the corner for married-in spouses.
+          Blue-remembrance to match the border treatment. */}
       {!isActive && isSpouseByMarriage && (
         <span
-          className="absolute top-2 right-2 w-1.5 h-1.5 rounded-full border border-navy/60"
+          className="absolute top-2 right-2 w-1.5 h-1.5 rounded-full bg-[color:var(--color-blue-remembrance)]"
           aria-hidden="true"
           title="Married into the family"
         />
       )}
 
-      {/* Name - font-serif. Alt-parent records render slightly smaller and in
-          italic to read as "noted but not fully archived". */}
+      {/* Name - font-serif. Alt-parent name no longer italic (italic on the
+          name itself can read as lesser legitimacy). Muted color + dashed
+          border + small label below carry the "noted only" meaning instead. */}
       <span
         className={[
           'font-serif leading-tight truncate w-full',
-          isAltParent ? 'text-muted text-sm italic' : 'text-navy text-base',
+          isAltParent ? 'text-muted text-sm' : 'text-navy text-base',
         ].join(' ')}
       >
         {name}
       </span>
 
       {/* Relation label - uppercase eyebrow.
-          Founders -> gold.  Spouses-by-marriage -> navy.  Alt-parents -> muted italic. */}
+          Founders -> gold.  Spouses -> blue-remembrance.  Alt-parents -> muted lowercase. */}
       <span
         className={[
           'eyebrow mt-1 truncate w-full',
           isFounder
             ? 'text-gold-deep'
             : isAltParent
-              ? 'text-quiet italic normal-case tracking-normal text-xs'
+              ? 'text-quiet normal-case tracking-normal text-xs'
               : isSpouseByMarriage
-                ? 'text-navy/70'
+                ? 'text-[color:var(--color-blue-remembrance)]'
                 : 'text-quiet',
         ].join(' ')}
       >
