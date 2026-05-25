@@ -73,25 +73,22 @@ export default function YouTubeFacade({ videoId, title, interactive = true }: Yo
         aria-hidden="true"
       />
 
-      {/* YouTube-style red play button. In interactive mode the parent button's
-          group-hover/group-focus drive the hover effect; in non-interactive
-          mode the play button is purely decorative (parent group handles it). */}
+      {/* Play button. Brand treatment - ivory pill with a navy triangle, not
+          the YouTube-red default. Reads as part of the archive's own visual
+          language rather than importing a video-platform color. */}
       <span
         className="
           absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
-          flex items-center justify-center
-          w-16 h-11 md:w-20 md:h-14
-          rounded-lg bg-[#212121]/85
+          grid place-items-center
+          w-14 h-14 md:w-16 md:h-16
+          rounded-full bg-[color:var(--color-ivory)]/92 backdrop-blur-sm
+          shadow-[0_8px_24px_rgba(31,45,92,0.22)]
           transition-all duration-200
-          group-hover:bg-[#ff0000] group-hover:scale-110
-          group-focus-visible:bg-[#ff0000] group-focus-visible:scale-110
+          group-hover:scale-110 group-focus-visible:scale-110
         "
         aria-hidden="true"
       >
-        <svg
-          viewBox="0 0 24 24"
-          className="w-7 h-7 md:w-9 md:h-9 fill-white"
-        >
+        <svg viewBox="0 0 24 24" className="w-5 h-5 md:w-6 md:h-6 fill-navy ml-0.5">
           <path d="M8 5v14l11-7z" />
         </svg>
       </span>

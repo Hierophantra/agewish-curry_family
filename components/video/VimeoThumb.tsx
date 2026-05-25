@@ -23,10 +23,18 @@ export default function VimeoThumb({ src, alt = '', className = '' }: VimeoThumb
   const [failed, setFailed] = useState(false)
 
   if (failed) {
-    // Cached thumbnail URL went stale. Show a quiet navy panel rather than
-    // a broken-image icon. The user can re-bake thumbnails via the ingest
-    // script when this happens at scale.
-    return <div className={`bg-navy ${className}`} />
+    // Cached thumbnail URL went stale. Show a branded archival fallback
+    // (small italic line on the inset color) rather than a broken image or
+    // a flat navy panel - a fallback should still feel authored.
+    return (
+      <div
+        className={`grid place-items-center bg-[linear-gradient(135deg,var(--color-ivory-deep),var(--color-inset))] ${className}`}
+      >
+        <span className="font-serif italic text-quiet text-xs">
+          Film preview unavailable
+        </span>
+      </div>
+    )
   }
 
   // eslint-disable-next-line @next/next/no-img-element
