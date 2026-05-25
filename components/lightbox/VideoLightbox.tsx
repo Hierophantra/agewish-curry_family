@@ -1,15 +1,27 @@
 // components/lightbox/VideoLightbox.tsx
 // 'use client' - owns keyboard listeners, body scroll lock, and open/close animation.
-// Receives a pre-filtered videos array (playlist's videos) and the current index.
-// D-09 (video variant): Triggered by PlaylistVideoGrid (Phase 9).
-// Mirrors Lightbox.tsx but embeds VideoPlayer instead of next/image.
-// D-10: Backdrop rgba(15, 24, 64, 0.95) - navy-derived dark overlay.
-// D-15: Keyboard nav: Escape → close, ArrowLeft → prev, ArrowRight → next.
-// D-16: Backdrop click closes; click on video container does NOT propagate.
-// D-17: AnimatePresence opacity fade-in/out 250ms; per-video cross-fade via key={video.id}.
-// D-18: Body scroll locked while open; restored on unmount.
-// D-19: Wraps around at boundaries (∞ navigation).
-// D-9.6: No autoplay on open - user must click play themselves.
+//
+// v3.1 viewing-room upgrade:
+//   - Backdrop now uses --color-navy-ink (#0F162C) at 90% - deeper and cooler
+//     than the previous rgba(15,24,64,.95), so the player visually pops without
+//     fighting the navy brand color.
+//   - Controls are glassy white/12 with white/10 borders + backdrop-blur,
+//     instead of bare gold links. Matches modern media-app conventions and
+//     stays visible against any video frame.
+//   - Player frame has subtle ring + heavy soft shadow to feel like a framed
+//     viewing window rather than a borderless iframe.
+//   - "3 of 9" film index moved up next to the title rather than buried below
+//     the metadata stack.
+//   - Subtle scale-fade entrance for the player container (per the design crit's
+//     modal motion pattern). Backdrop fade unchanged.
+//   - Visible focus rings on every control. Focus trap + focus return preserved.
+//   - All controls have proper aria-labels; arrow buttons disabled at boundaries
+//     handled by the existing wrap-around logic (always enabled), so visible
+//     state is fine.
+//
+// D-15 keyboard: Escape -> close, ArrowLeft -> prev, ArrowRight -> next.
+// D-16 backdrop click closes; click inside player container does not propagate.
+// D-18 body scroll locked while open.
 'use client'
 
 import { useEffect } from 'react'
@@ -26,17 +38,28 @@ interface VideoLightboxProps {
   onNext: () => void
 }
 
+// Shared button classes - glassy pill, white text, subtle border, blurs the
+// backdrop behind. Used for close, prev, next, and any future viewing-room
+// control.
+const GLASSY_BTN = [
+  'grid place-items-center',
+  'rounded-full',
+  'bg-white/8 hover:bg-white/14',
+  'border border-white/12',
+  'text-white backdrop-blur-md',
+  'transition-all duration-200 hover:scale-105',
+  'focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-navy-ink)]',
+].join(' ')
+
 export default function VideoLightbox({ videos, currentIndex, onClose, onPrev, onNext }: VideoLightboxProps) {
   const video = videos[currentIndex]
-
-  // prefers-reduced-motion: skip fade animations entirely when OS setting is enabled.
   const reduce = useReducedMotion()
 
-  // Focus trap - active whenever the VideoLightbox component is mounted (always open when rendered).
-  // Returns focus to the trigger element (e.g. video thumbnail) when lightbox unmounts.
+  // Focus trap active whenever VideoLightbox is mounted; returns focus to the
+  // trigger element (e.g. video thumbnail) when the lightbox unmounts.
   const trapRef = useFocusTrap<HTMLDivElement>(true)
 
-  // D-18: Lock body scroll while lightbox is open; restore on unmount.
+  // Lock body scroll while lightbox is open; restore on unmount.
   useEffect(() => {
     document.body.style.overflow = 'hidden'
     return () => {
@@ -44,7 +67,7 @@ export default function VideoLightbox({ videos, currentIndex, onClose, onPrev, o
     }
   }, [])
 
-  // D-15: Register keyboard handlers; clean up on unmount to prevent leaks.
+  // Keyboard handlers; clean up on unmount to prevent leaks.
   useEffect(() => {
     function handleKey(e: KeyboardEvent) {
       if (e.key === 'Escape') onClose()
@@ -57,9 +80,10 @@ export default function VideoLightbox({ videos, currentIndex, onClose, onPrev, o
 
   if (!video) return null
 
+  const hasMultiple = videos.length > 1
+
   return (
     <AnimatePresence>
-      {/* D-10: Backdrop - click to close (D-16) */}
       <motion.div
         ref={trapRef}
         key="video-lightbox-backdrop"
@@ -68,71 +92,116 @@ export default function VideoLightbox({ videos, currentIndex, onClose, onPrev, o
         exit={reduce ? { opacity: 1 } : { opacity: 0 }}
         transition={reduce ? { duration: 0 } : { duration: 0.25 }}
         className="fixed inset-0 z-[100] flex items-center justify-center"
-        style={{ background: 'rgba(15, 24, 64, 0.95)' }}
+        style={{ background: 'rgba(15, 22, 44, 0.88)', backdropFilter: 'blur(8px)' }}
         onClick={onClose}
         role="dialog"
         aria-modal="true"
         aria-labelledby="video-lightbox-title"
       >
-        {/* Close button - top-right */}
+        {/* Close button - top-right corner of the viewing room. */}
         <button
           onClick={(e) => { e.stopPropagation(); onClose() }}
-          className="absolute top-6 right-6 text-gold w-8 h-8 flex items-center justify-center text-3xl hover:scale-110 transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-navy"
+          className={`${GLASSY_BTN} absolute top-5 right-5 md:top-6 md:right-6 w-10 h-10 text-xl`}
           aria-label="Close lightbox"
         >
-          ×
+          {'×'}
         </button>
 
-        {/* Prev / Next buttons - only shown when there is more than one video */}
-        {videos.length > 1 && (
+        {/* Prev / Next - vertically centered on sides at desktop, hidden on
+            mobile (handled by below-player control row instead). */}
+        {hasMultiple && (
           <>
             <button
               onClick={(e) => { e.stopPropagation(); onPrev() }}
-              className="absolute left-6 top-1/2 -translate-y-1/2 text-gold w-11 h-11 flex items-center justify-center text-2xl hover:scale-110 transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-navy"
+              className={`${GLASSY_BTN} hidden md:grid absolute left-5 top-1/2 -translate-y-1/2 w-11 h-11`}
               aria-label="Previous video"
             >
-              ‹
+              {'‹'}
             </button>
             <button
               onClick={(e) => { e.stopPropagation(); onNext() }}
-              className="absolute right-6 top-1/2 -translate-y-1/2 text-gold w-11 h-11 flex items-center justify-center text-2xl hover:scale-110 transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-navy"
+              className={`${GLASSY_BTN} hidden md:grid absolute right-5 top-1/2 -translate-y-1/2 w-11 h-11`}
               aria-label="Next video"
             >
-              ›
+              {'›'}
             </button>
           </>
         )}
 
-        {/* D-17: Per-video cross-fade via key={video.id}; container stops propagation (D-16) */}
+        {/* Player + metadata container. Cross-fades per-video via key=video.id.
+            Subtle scale-fade entrance per the modal motion grammar. */}
         <motion.div
           key={video.id}
-          initial={reduce ? false : { opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={reduce ? { opacity: 1 } : { opacity: 0 }}
-          transition={reduce ? { duration: 0 } : { duration: 0.2 }}
-          className="flex flex-col items-center gap-4 max-w-[1024px] w-full px-6"
+          initial={reduce ? false : { opacity: 0, scale: 0.985 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={reduce ? { opacity: 1 } : { opacity: 0, scale: 0.985 }}
+          transition={reduce ? { duration: 0 } : { duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+          className="flex flex-col items-center gap-5 w-full max-w-[min(1100px,92vw)] px-4 md:px-0"
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Video player - constrained to 16:9 aspect ratio */}
-          <div className="aspect-video w-full">
+          {/* Player frame - a real viewing window. Subtle white ring +
+              heavy shadow, black bg so the iframe sits crisp. */}
+          <div
+            className="
+              aspect-video w-full
+              rounded-2xl overflow-hidden
+              bg-black border border-white/10
+              shadow-[0_30px_100px_rgba(0,0,0,0.50)]
+            "
+          >
             <VideoPlayer video={video} />
           </div>
 
-          {/* Video meta: title + dateLabel + duration
-              id="video-lightbox-title" is referenced by aria-labelledby on the dialog element */}
-          <div className="text-center px-4">
-            <p id="video-lightbox-title" className="text-white text-base font-serif">{video.title}</p>
-            {(video.dateLabel || video.duration) && (
-              <p className="text-stone uppercase tracking-[0.22em] text-xs mt-1.5">
-                {[video.dateLabel, video.duration].filter(Boolean).join(' · ')}
+          {/* Metadata row - title left, film index right.
+              id="video-lightbox-title" referenced by aria-labelledby above. */}
+          <div className="w-full flex items-start justify-between gap-4 text-white">
+            <div className="min-w-0 flex-1">
+              <p
+                id="video-lightbox-title"
+                className="font-serif text-xl md:text-2xl leading-tight truncate"
+              >
+                {video.title}
               </p>
-            )}
-            {videos.length > 1 && (
-              <p className="text-stone uppercase tracking-[0.22em] text-[10px] mt-2">
-                {currentIndex + 1} / {videos.length}
-              </p>
+              {(video.dateLabel || video.duration) && (
+                <p className="mt-1.5 text-sm text-white/65">
+                  {[video.dateLabel, video.duration].filter(Boolean).join(' · ')}
+                </p>
+              )}
+            </div>
+            {hasMultiple && (
+              <span
+                className="
+                  shrink-0
+                  rounded-full border border-white/12 bg-white/8 backdrop-blur-md
+                  px-3 py-1 text-xs text-white/75 tabular-nums
+                "
+                aria-label={`Film ${currentIndex + 1} of ${videos.length}`}
+              >
+                {currentIndex + 1} of {videos.length}
+              </span>
             )}
           </div>
+
+          {/* Mobile-only Prev/Next row - placed below player so thumb taps
+              don't conflict with the side arrows on small screens. */}
+          {hasMultiple && (
+            <div className="md:hidden flex items-center justify-center gap-3 pt-2">
+              <button
+                onClick={(e) => { e.stopPropagation(); onPrev() }}
+                className={`${GLASSY_BTN} w-11 h-11`}
+                aria-label="Previous video"
+              >
+                {'‹'}
+              </button>
+              <button
+                onClick={(e) => { e.stopPropagation(); onNext() }}
+                className={`${GLASSY_BTN} w-11 h-11`}
+                aria-label="Next video"
+              >
+                {'›'}
+              </button>
+            </div>
+          )}
         </motion.div>
       </motion.div>
     </AnimatePresence>
