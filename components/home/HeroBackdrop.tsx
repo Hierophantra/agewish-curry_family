@@ -71,15 +71,15 @@ export default function HeroBackdrop({ config }: HeroBackdropProps) {
         )
       })}
 
-      {/* Vertical ivory overlay - keeps the top and bottom of the hero clean
-          so the eyebrow, star, and attribution typography don't sit over a
-          high-contrast photo region. Middle band is more transparent so the
-          family photo can read through behind the title. */}
+      {/* Edge fades only. With the hero text removed (v3.3) the images are the
+          feature, so the middle is left clear - the photo shows at its set
+          opacity. The top fade blends from the translucent sticky nav; the
+          bottom fade eases into the ivory hub section below. */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            'linear-gradient(to bottom, var(--color-ivory) 0%, color-mix(in oklab, var(--color-ivory) 55%, transparent) 38%, color-mix(in oklab, var(--color-ivory) 55%, transparent) 62%, var(--color-ivory) 100%)',
+            'linear-gradient(to bottom, var(--color-ivory) 0%, transparent 18%, transparent 82%, var(--color-ivory) 100%)',
         }}
       />
     </div>
