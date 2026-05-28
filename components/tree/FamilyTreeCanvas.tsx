@@ -423,13 +423,14 @@ export default function FamilyTreeCanvas({
           if (!person) return null
           // v3.2: filter by Photo.peopleIds (canonical direction) instead of
           // Person.photoIds. Photos reference people via peopleIds[].
-          // v3.4: respect visibility - "hidden" photos never appear in the
-          // tree snippet; "profile" and "everywhere" both do.
-          const personPhotos = photos.filter(
-            (ph) =>
-              ph.visibility !== 'hidden' &&
-              (ph.peopleIds?.includes(person.id) || person.photoIds.includes(ph.id)),
-          )
+          // v3.4: respect visibility - the tree snippet shows "profile" and
+          // "everywhere" photos. "gallery" (Photos only) and "hidden" are
+          // excluded. Legacy person.photoIds entries are treated as visible.
+          const personPhotos = photos.filter((ph) => {
+            const vis = ph.visibility ?? 'everywhere'
+            const allowed = vis === 'profile' || vis === 'everywhere'
+            return allowed && (ph.peopleIds?.includes(person.id) || person.photoIds.includes(ph.id))
+          })
           return (
             <PersonPanel
               key={selectedId}          // CRITICAL: key forces remount on person change

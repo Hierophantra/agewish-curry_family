@@ -63,11 +63,15 @@ export const PersonSchema = z.object({
 // archivist decide per item, rather than the system auto-assuming a photo of
 // a person should show everywhere.
 //   "hidden"     - linked to the person for the record, shown nowhere
-//   "profile"    - shown on the person's profile page + family-tree snippet only
-//   "everywhere" - profile + tree AND the general gallery / collections
+//   "profile"    - person's profile page + family-tree snippet only
+//   "gallery"    - the main section only (Photographs gallery for photos,
+//                  Video playlists for videos); NOT the profile or tree
+//   "everywhere" - profile + tree AND the main section
+// "Remove" (un-linking from a person) is a separate action, not a visibility
+// state - it edits the item's peopleIds.
 // Defaults to "everywhere" so existing content (which predates this field)
 // keeps showing exactly as before.
-export const VisibilitySchema = z.enum(['hidden', 'profile', 'everywhere']).default('everywhere')
+export const VisibilitySchema = z.enum(['hidden', 'profile', 'gallery', 'everywhere']).default('everywhere')
 
 // ── Photo schema ──
 // Photo.filename refers to a file in /public/photos/{filename}, OR a full

@@ -4,20 +4,25 @@
 //
 // Lists every photo and video LINKED to this person (peopleIds includes them),
 // including hidden ones, and lets the archivist:
-//   - set each item's visibility: Hidden / Profile + tree / Everywhere
-//   - upload a new photo that is auto-linked to this person (defaults to
-//     "Profile + tree" visibility)
+//   - set each item's visibility (Hidden / Profile + tree / Photos|Videos only
+//     / Everywhere)
+//   - REMOVE the item from this person entirely (un-links; the item itself
+//     stays in the archive if it has other people / collections)
+//   - upload a new photo that is auto-linked to this person
 //
 // Visibility semantics (mirrors lib/content.ts filtering):
 //   hidden     -> linked for the record, shown nowhere
 //   profile    -> person page + family-tree snippet only
-//   everywhere -> profile + tree AND the general gallery / collections
+//   gallery    -> the main section only (Photographs gallery / Video playlists),
+//                 NOT profile or tree   (label: "Photos only" / "Videos only")
+//   everywhere -> profile + tree AND the main section
 //
-// Each visibility change is an immediate PATCH; uploads append a record.
-// All writes commit to GitHub and the live site updates on the next deploy.
+// IMPORTANT - optimistic UI: admin writes commit to GitHub, not the local
+// filesystem, so the server-rendered props lag by one deploy (~90s). We keep
+// local optimistic state so the selection updates the instant you click,
+// rather than appearing to do nothing until the next deploy.
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { getPhotoUrl } from '@/lib/utils'
 import type { Photo, Video, Visibility } from '@/lib/types'
 
@@ -28,12 +33,6 @@ interface Props {
   videos: Video[]   // ALL videos linked to this person (incl. hidden)
 }
 
-const VIS_OPTIONS: Array<{ value: Visibility; label: string; help: string }> = [
-  { value: 'hidden', label: 'Hidden', help: 'Linked for the record, shown nowhere' },
-  { value: 'profile', label: 'Profile + tree', help: 'On this person’s page and the family-tree snippet only' },
-  { value: 'everywhere', label: 'Everywhere', help: 'Profile, tree, and the general gallery' },
-]
-
 function videoThumb(v: Video): string | null {
   if (v.thumbnailUrl) return v.thumbnailUrl
   if (v.source === 'youtube') return `https://i.ytimg.com/vi/${v.sourceId}/hqdefault.jpg`
@@ -41,13 +40,22 @@ function videoThumb(v: Video): string | null {
 }
 
 export default function PersonMediaManager({ personId, personName, photos, videos }: Props) {
-  const router = useRouter()
+  // Optimistic overrides keyed by item id. Take precedence over the prop value.
+  const [visOverrides, setVisOverrides] = useState<Record<string, Visibility>>({})
+  const [removedIds, setRemovedIds] = useState<Set<string>>(new Set())
   const [busyId, setBusyId] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [savedHint, setSavedHint] = useState(false)
   const [uploading, setUploading] = useState(false)
   const [caption, setCaption] = useState('')
 
+  function effectiveVisibility(item: { id: string; visibility?: Visibility }): Visibility {
+    return visOverrides[item.id] ?? item.visibility ?? 'everywhere'
+  }
+
   async function setVisibility(kind: 'photos' | 'videos', id: string, visibility: Visibility) {
+    // Optimistic - reflect immediately.
+    setVisOverrides((prev) => ({ ...prev, [id]: visibility }))
     setBusyId(id)
     setError(null)
     try {
@@ -57,8 +65,43 @@ export default function PersonMediaManager({ personId, personName, photos, video
         body: JSON.stringify({ visibility }),
       })
       if (!res.ok) throw new Error((await res.text()) || `${res.status}`)
-      router.refresh()
+      setSavedHint(true)
     } catch (err) {
+      // Roll back the optimistic change on failure.
+      setVisOverrides((prev) => {
+        const next = { ...prev }
+        delete next[id]
+        return next
+      })
+      setError(err instanceof Error ? err.message : String(err))
+    } finally {
+      setBusyId(null)
+    }
+  }
+
+  async function removeFromPerson(kind: 'photos' | 'videos', item: Photo | Video) {
+    if (!confirm(`Remove this ${kind === 'photos' ? 'photo' : 'video'} from ${personName}? It stays in the archive if it's linked to other people or collections - this only un-links ${personName}.`)) {
+      return
+    }
+    const nextPeople = (item.peopleIds ?? []).filter((pid) => pid !== personId)
+    setRemovedIds((prev) => new Set(prev).add(item.id))  // optimistic hide
+    setBusyId(item.id)
+    setError(null)
+    try {
+      const res = await fetch(`/api/admin/${kind}/${item.id}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ peopleIds: nextPeople }),
+      })
+      if (!res.ok) throw new Error((await res.text()) || `${res.status}`)
+      setSavedHint(true)
+    } catch (err) {
+      // Roll back: re-show the item.
+      setRemovedIds((prev) => {
+        const next = new Set(prev)
+        next.delete(item.id)
+        return next
+      })
       setError(err instanceof Error ? err.message : String(err))
     } finally {
       setBusyId(null)
@@ -75,7 +118,9 @@ export default function PersonMediaManager({ personId, personName, photos, video
       const res = await fetch(`/api/admin/people/${personId}/photos`, { method: 'POST', body: fd })
       if (!res.ok) throw new Error((await res.text()) || `${res.status}`)
       setCaption('')
-      router.refresh()
+      setSavedHint(true)
+      // New uploads only appear after the next deploy (server props are stale).
+      // Surface that via the saved hint rather than a stale refresh.
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err))
     } finally {
@@ -83,12 +128,20 @@ export default function PersonMediaManager({ personId, personName, photos, video
     }
   }
 
-  // A single visibility selector (segmented control) shared by photos + videos.
-  function VisibilityControl({ kind, item }: { kind: 'photos' | 'videos'; item: { id: string; visibility?: Visibility } }) {
-    const current = item.visibility ?? 'everywhere'
+  // Visibility segmented control. The "Photos only" / "Videos only" label is
+  // kind-dependent so it reads correctly for both media types.
+  function VisibilityControl({ kind, item }: { kind: 'photos' | 'videos'; item: Photo | Video }) {
+    const current = effectiveVisibility(item)
+    const galleryLabel = kind === 'photos' ? 'Photos only' : 'Videos only'
+    const options: Array<{ value: Visibility; label: string; help: string }> = [
+      { value: 'hidden', label: 'Hidden', help: 'Linked for the record, shown nowhere' },
+      { value: 'profile', label: 'Profile + tree', help: 'This person’s page and the family-tree snippet only' },
+      { value: 'gallery', label: galleryLabel, help: `Shows only in the ${kind === 'photos' ? 'Photographs gallery' : 'Videos section'}, not the profile or tree` },
+      { value: 'everywhere', label: 'Everywhere', help: 'Profile, tree, and the main section' },
+    ]
     return (
       <div role="group" aria-label="Visibility" className="flex flex-wrap gap-1.5">
-        {VIS_OPTIONS.map((opt) => {
+        {options.map((opt) => {
           const active = current === opt.value
           return (
             <button
@@ -97,14 +150,13 @@ export default function PersonMediaManager({ personId, personName, photos, video
               onClick={() => !active && setVisibility(kind, item.id, opt.value)}
               disabled={busyId === item.id}
               title={opt.help}
+              aria-pressed={active}
               className={[
                 'px-2.5 py-1 rounded text-xs border transition-colors',
                 active
-                  ? opt.value === 'hidden'
-                    ? 'border-stone bg-[color:var(--color-surface-subtle)] text-quiet'
-                    : 'border-navy bg-[color:var(--color-surface-subtle)] text-navy'
-                  : 'border-[color:var(--color-border)] text-muted hover:text-navy',
-                busyId === item.id ? 'opacity-50 cursor-wait' : '',
+                  ? 'border-navy bg-navy text-white'      // clearly-active for ALL values, hidden included
+                  : 'border-[color:var(--color-border)] text-muted hover:text-navy hover:border-stone',
+                busyId === item.id ? 'opacity-60 cursor-wait' : '',
               ].join(' ')}
             >
               {opt.label}
@@ -115,19 +167,32 @@ export default function PersonMediaManager({ personId, personName, photos, video
     )
   }
 
-  const hasMedia = photos.length > 0 || videos.length > 0
+  const visiblePhotos = photos.filter((p) => !removedIds.has(p.id))
+  const visibleVideos = videos.filter((v) => !removedIds.has(v.id))
+  const hasMedia = visiblePhotos.length > 0 || visibleVideos.length > 0
 
   return (
     <section className="mt-12 pt-10 border-t border-[color:var(--color-border)]">
       <h2 className="font-serif text-navy text-2xl mb-1">Photos &amp; videos</h2>
-      <p className="text-muted text-sm mb-6 max-w-2xl">
-        Media linked to {personName}. Set where each item appears. New uploads
-        start as &ldquo;Profile + tree&rdquo; so nothing goes to the public
-        gallery until you choose it.
+      <p className="text-muted text-sm mb-2 max-w-2xl">
+        Media linked to {personName}. Set where each item appears, or remove
+        items that aren&apos;t actually them. New uploads start as
+        &ldquo;Profile + tree&rdquo; so nothing reaches the public gallery
+        until you choose it.
+      </p>
+      <p className="text-quiet text-xs mb-6 max-w-2xl">
+        Changes save to the archive and appear on the live site within about 90
+        seconds (next deploy). The buttons here update immediately so you can
+        see your choices.
       </p>
 
       {error && (
         <p className="font-serif italic text-red-600 text-sm mb-4">Error: {error}</p>
+      )}
+      {savedHint && !error && (
+        <p className="font-serif italic text-gold-deep text-sm mb-4">
+          Saved. The live site updates within about 90 seconds.
+        </p>
       )}
 
       {/* Upload zone */}
@@ -167,11 +232,11 @@ export default function PersonMediaManager({ personId, personName, photos, video
       )}
 
       {/* Photos */}
-      {photos.length > 0 && (
+      {visiblePhotos.length > 0 && (
         <div className="mb-8">
-          <p className="eyebrow text-quiet mb-3">{photos.length} photo{photos.length === 1 ? '' : 's'}</p>
+          <p className="eyebrow text-quiet mb-3">{visiblePhotos.length} photo{visiblePhotos.length === 1 ? '' : 's'}</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            {photos.map((p) => (
+            {visiblePhotos.map((p) => (
               <article key={p.id} className="surface-card-static p-4 flex gap-4">
                 <div className="surface-inset w-28 h-28 shrink-0 overflow-hidden border border-[color:var(--color-border)]">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -183,6 +248,14 @@ export default function PersonMediaManager({ personId, personName, photos, video
                   </p>
                   {p.dateLabel && <p className="text-quiet text-xs">{p.dateLabel}</p>}
                   <VisibilityControl kind="photos" item={p} />
+                  <button
+                    type="button"
+                    onClick={() => removeFromPerson('photos', p)}
+                    disabled={busyId === p.id}
+                    className="self-start text-xs text-red-600 hover:text-red-800 mt-1 disabled:opacity-50"
+                  >
+                    Remove from {personName}
+                  </button>
                 </div>
               </article>
             ))}
@@ -191,11 +264,11 @@ export default function PersonMediaManager({ personId, personName, photos, video
       )}
 
       {/* Videos */}
-      {videos.length > 0 && (
+      {visibleVideos.length > 0 && (
         <div>
-          <p className="eyebrow text-quiet mb-3">{videos.length} video{videos.length === 1 ? '' : 's'}</p>
+          <p className="eyebrow text-quiet mb-3">{visibleVideos.length} video{visibleVideos.length === 1 ? '' : 's'}</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            {videos.map((v) => {
+            {visibleVideos.map((v) => {
               const thumb = videoThumb(v)
               return (
                 <article key={v.id} className="surface-card-static p-4 flex gap-4">
@@ -211,6 +284,14 @@ export default function PersonMediaManager({ personId, personName, photos, video
                     <p className="font-serif text-navy text-sm leading-snug line-clamp-2">{v.title}</p>
                     {v.dateLabel && <p className="text-quiet text-xs">{v.dateLabel}</p>}
                     <VisibilityControl kind="videos" item={v} />
+                    <button
+                      type="button"
+                      onClick={() => removeFromPerson('videos', v)}
+                      disabled={busyId === v.id}
+                      className="self-start text-xs text-red-600 hover:text-red-800 mt-1 disabled:opacity-50"
+                    >
+                      Remove from {personName}
+                    </button>
                   </div>
                 </article>
               )

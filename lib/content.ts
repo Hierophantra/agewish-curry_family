@@ -68,12 +68,13 @@ export function getCollectionById(id: string): Collection | null {
   return getCollections().find((c) => c.id === id) ?? null
 }
 
-// Gallery / collection view: only photos marked "everywhere" appear in the
-// public collection grids. A photo set to "profile" or "hidden" stays out of
-// the general gallery even if it carries a collectionId.
+// Gallery / collection view: photos allowed in the main Photographs section.
+// "gallery" (Photos only) and "everywhere" both show here; "profile" and
+// "hidden" stay out even if the photo carries a collectionId.
 export function getPhotosInCollection(collectionId: string): Photo[] {
   return getPhotos().filter(
-    (p) => p.collectionIds?.includes(collectionId) && p.visibility === 'everywhere',
+    (p) => p.collectionIds?.includes(collectionId)
+      && (p.visibility === 'gallery' || p.visibility === 'everywhere'),
   )
 }
 
@@ -87,8 +88,15 @@ export function getPlaylistById(id: string): Playlist | null {
   return getPlaylists().find((p) => p.id === id) ?? null
 }
 
+// Video playlists: videos allowed in the main Videos section. "gallery"
+// (Videos only) and "everywhere" both show here; "profile" and "hidden" stay
+// out. Existing videos default to "everywhere" so all current playlists are
+// unaffected.
 export function getVideosInPlaylist(playlistId: string): Video[] {
-  return getVideos().filter((v) => v.playlistIds?.includes(playlistId))
+  return getVideos().filter(
+    (v) => v.playlistIds?.includes(playlistId)
+      && (v.visibility === 'gallery' || v.visibility === 'everywhere'),
+  )
 }
 
 // ── Filtered loaders (v2) ──
@@ -97,17 +105,20 @@ export function getFeaturedVideos(): Video[] {
   return getVideos().filter((v) => v.featured === true)
 }
 
-// Profile + family-tree view: photos linked to the person that are not hidden.
-// Both "profile" and "everywhere" show here; "hidden" is suppressed.
+// Profile + family-tree view: photos linked to the person and allowed on
+// their profile. "profile" and "everywhere" show here; "gallery" (Photos only)
+// and "hidden" do not.
 export function getPhotosByPersonId(personId: string): Photo[] {
   return getPhotos().filter(
-    (p) => p.peopleIds?.includes(personId) && p.visibility !== 'hidden',
+    (p) => p.peopleIds?.includes(personId)
+      && (p.visibility === 'profile' || p.visibility === 'everywhere'),
   )
 }
 
 export function getVideosByPersonId(personId: string): Video[] {
   return getVideos().filter(
-    (v) => v.peopleIds?.includes(personId) && v.visibility !== 'hidden',
+    (v) => v.peopleIds?.includes(personId)
+      && (v.visibility === 'profile' || v.visibility === 'everywhere'),
   )
 }
 
