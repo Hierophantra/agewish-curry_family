@@ -1,8 +1,8 @@
 {
   "colors": {},
   "light": {
-    "enabled": false,
-    "color": "#E8A91F",
+    "enabled": true,
+    "color": "#e8a91f",
     "x": 50,
     "y": 12,
     "size": 70,
