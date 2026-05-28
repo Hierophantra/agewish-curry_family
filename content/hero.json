@@ -19,7 +19,7 @@
     {
       "src": "/images/hero/IMG_2729.jpg.jpeg",
       "opacity": 0.7,
-      "objectPosition": "center",
+      "objectPosition": "50% 92%",
       "fit": "cover",
       "enabled": true
     },
