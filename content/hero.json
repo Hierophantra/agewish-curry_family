@@ -29,6 +29,13 @@
       "objectPosition": "center",
       "fit": "cover",
       "enabled": true
+    },
+    {
+      "src": "https://woc9rhg2rl4znztn.public.blob.vercel-storage.com/hero/1779945353592-ps_2021_11_23___19_54_56.jpg",
+      "opacity": 0.22,
+      "objectPosition": "50% 27%",
+      "fit": "cover",
+      "enabled": true
     }
   ]
 }
