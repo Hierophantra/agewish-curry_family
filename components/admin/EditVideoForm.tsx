@@ -14,6 +14,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import type { Person, Playlist, Visibility } from '@/lib/types'
 import VisibilityPicker from '@/components/admin/VisibilityPicker'
+import PeopleTagPicker from '@/components/admin/PeopleTagPicker'
 
 export interface VideoFormValues {
   id: string
@@ -381,28 +382,19 @@ export default function EditVideoForm({
         />
       </fieldset>
 
-      {/* People picker */}
+      {/* People tagger - searchable */}
       <fieldset>
         <legend className={`${labelTextClass} mb-3`}>People featured</legend>
-        <div className="flex flex-col gap-2 max-h-64 overflow-y-auto pr-2">
-          {allPeople.map((person) => (
-            <label key={person.id} className="flex items-center gap-3 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={values.peopleIds.includes(person.id)}
-                onChange={() => handleCheckboxToggle('peopleIds', person.id)}
-                disabled={isDisabled}
-                className="w-4 h-4 accent-navy"
-              />
-              <span className="font-sans text-sm text-navy">
-                {person.name}
-                {person.relationLabel && (
-                  <span className="text-quiet text-xs ml-2">{person.relationLabel}</span>
-                )}
-              </span>
-            </label>
-          ))}
-        </div>
+        <PeopleTagPicker
+          allPeople={allPeople}
+          selectedIds={values.peopleIds}
+          onChange={(next) => {
+            setValues((prev) => ({ ...prev, peopleIds: next }))
+            if (status === 'saved') setStatus('idle')
+          }}
+          disabled={isDisabled}
+          mediaNoun="video"
+        />
       </fieldset>
 
       {/* Playlists picker */}

@@ -19,6 +19,7 @@ import { useRouter } from 'next/navigation'
 import type { Person, Collection, Visibility } from '@/lib/types'
 import { getPhotoUrl } from '@/lib/utils'
 import VisibilityPicker from '@/components/admin/VisibilityPicker'
+import PeopleTagPicker from '@/components/admin/PeopleTagPicker'
 
 const MAX_FILE_SIZE_BYTES = 4 * 1024 * 1024 // 4MB
 
@@ -421,28 +422,19 @@ export default function EditPhotoForm({
         />
       </fieldset>
 
-      {/* People picker */}
+      {/* People tagger - searchable */}
       <fieldset>
         <legend className={`${labelTextClass} mb-3`}>People in this photo</legend>
-        <div className="flex flex-col gap-2 max-h-64 overflow-y-auto pr-2">
-          {allPeople.map((person) => (
-            <label key={person.id} className="flex items-center gap-3 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={values.peopleIds.includes(person.id)}
-                onChange={() => handleCheckboxToggle('peopleIds', person.id)}
-                disabled={isDisabled}
-                className="w-4 h-4 accent-navy"
-              />
-              <span className="font-sans text-sm text-navy">
-                {person.name}
-                {person.relationLabel && (
-                  <span className="text-quiet text-xs ml-2">{person.relationLabel}</span>
-                )}
-              </span>
-            </label>
-          ))}
-        </div>
+        <PeopleTagPicker
+          allPeople={allPeople}
+          selectedIds={values.peopleIds}
+          onChange={(next) => {
+            setValues((prev) => ({ ...prev, peopleIds: next }))
+            if (status === 'saved') setStatus('idle')
+          }}
+          disabled={isDisabled}
+          mediaNoun="photo"
+        />
       </fieldset>
 
       {/* Collections picker */}
