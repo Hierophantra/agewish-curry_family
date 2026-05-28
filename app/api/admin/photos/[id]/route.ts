@@ -17,7 +17,7 @@ import { getPeople, getCollections } from '@/lib/content'
 
 // Whitelist of editable metadata fields - filename/id/blurDataUrl are immutable after upload.
 const EDITABLE_FIELDS = new Set([
-  'caption', 'date', 'dateLabel', 'location', 'notes', 'peopleIds', 'collectionIds',
+  'caption', 'date', 'dateLabel', 'location', 'notes', 'peopleIds', 'collectionIds', 'visibility',
 ])
 
 export async function POST(request: Request, { params }: { params: { id: string } }) {

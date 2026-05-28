@@ -6,9 +6,10 @@
 // see app/admin/layout.tsx for the rationale).
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { getPersonById, getPeople } from '@/lib/content'
+import { getPersonById, getPeople, getAllPhotosByPersonId, getAllVideosByPersonId } from '@/lib/content'
 import { requireAdminOrRedirect } from '@/lib/admin'
 import EditPersonForm from './EditPersonForm'
+import PersonMediaManager from '@/components/admin/PersonMediaManager'
 import type { PersonFormValues } from './EditPersonForm'
 
 export function generateMetadata({ params }: { params: { id: string } }) {
@@ -23,6 +24,9 @@ export default async function AdminEditPersonPage({ params }: { params: { id: st
   if (!person) notFound()
 
   const allPeople = getPeople()
+  // ALL linked media (incl. hidden) so the admin can manage visibility.
+  const linkedPhotos = getAllPhotosByPersonId(person.id)
+  const linkedVideos = getAllVideosByPersonId(person.id)
 
   // Pre-populate the form with current values; empty string for absent optional fields.
   // birthplace falls back to the v1 birthPlace alias for old records that haven't migrated.
@@ -51,7 +55,7 @@ export default async function AdminEditPersonPage({ params }: { params: { id: st
         href="/admin/people"
         className="text-quiet text-xs uppercase tracking-[0.22em] hover:text-navy transition-colors mb-6 inline-block"
       >
-        ← Back to people
+        {'←'} Back to people
       </Link>
       <p className="eyebrow text-gold-deep mb-3">EDITING · {person.name.toUpperCase()}</p>
       <h1 className="font-serif text-navy text-4xl mb-1">{person.name}</h1>
@@ -64,6 +68,15 @@ export default async function AdminEditPersonPage({ params }: { params: { id: st
         personId={person.id}
         initial={initial}
         allPeople={allPeople}
+      />
+
+      {/* Per-person photo + video management: link new uploads to this person
+          and control where each item appears. */}
+      <PersonMediaManager
+        personId={person.id}
+        personName={person.name}
+        photos={linkedPhotos}
+        videos={linkedVideos}
       />
     </div>
   )

@@ -422,14 +422,13 @@ export default function FamilyTreeCanvas({
           const person = people.find((p) => p.id === selectedId)
           if (!person) return null
           // v3.2: filter by Photo.peopleIds (canonical direction) instead of
-          // Person.photoIds. Photos now reference people via their peopleIds[]
-          // array, which is the single source of truth - we don't need to keep
-          // a parallel list on each Person record. Falls back to person.photoIds
-          // for back-compat with any record that uses the legacy field.
+          // Person.photoIds. Photos reference people via peopleIds[].
+          // v3.4: respect visibility - "hidden" photos never appear in the
+          // tree snippet; "profile" and "everywhere" both do.
           const personPhotos = photos.filter(
             (ph) =>
-              ph.peopleIds?.includes(person.id) ||
-              person.photoIds.includes(ph.id),
+              ph.visibility !== 'hidden' &&
+              (ph.peopleIds?.includes(person.id) || person.photoIds.includes(ph.id)),
           )
           return (
             <PersonPanel

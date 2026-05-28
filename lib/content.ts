@@ -68,8 +68,13 @@ export function getCollectionById(id: string): Collection | null {
   return getCollections().find((c) => c.id === id) ?? null
 }
 
+// Gallery / collection view: only photos marked "everywhere" appear in the
+// public collection grids. A photo set to "profile" or "hidden" stays out of
+// the general gallery even if it carries a collectionId.
 export function getPhotosInCollection(collectionId: string): Photo[] {
-  return getPhotos().filter((p) => p.collectionIds?.includes(collectionId))
+  return getPhotos().filter(
+    (p) => p.collectionIds?.includes(collectionId) && p.visibility === 'everywhere',
+  )
 }
 
 // ── Playlist loaders (v2) ──
@@ -92,11 +97,27 @@ export function getFeaturedVideos(): Video[] {
   return getVideos().filter((v) => v.featured === true)
 }
 
+// Profile + family-tree view: photos linked to the person that are not hidden.
+// Both "profile" and "everywhere" show here; "hidden" is suppressed.
 export function getPhotosByPersonId(personId: string): Photo[] {
-  return getPhotos().filter((p) => p.peopleIds?.includes(personId))
+  return getPhotos().filter(
+    (p) => p.peopleIds?.includes(personId) && p.visibility !== 'hidden',
+  )
 }
 
 export function getVideosByPersonId(personId: string): Video[] {
+  return getVideos().filter(
+    (v) => v.peopleIds?.includes(personId) && v.visibility !== 'hidden',
+  )
+}
+
+// Admin-only: ALL media linked to a person regardless of visibility, so the
+// admin can see and re-show hidden items. Used by the person media manager.
+export function getAllPhotosByPersonId(personId: string): Photo[] {
+  return getPhotos().filter((p) => p.peopleIds?.includes(personId))
+}
+
+export function getAllVideosByPersonId(personId: string): Video[] {
   return getVideos().filter((v) => v.peopleIds?.includes(personId))
 }
 

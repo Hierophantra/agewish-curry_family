@@ -58,8 +58,20 @@ export const PersonSchema = z.object({
   notes: z.string().optional(),           // private archivist notes (not necessarily surfaced in UI)
 })
 
+// ── Visibility scope (v3.4) ──
+// Controls where a person-linked media item is allowed to appear. Lets the
+// archivist decide per item, rather than the system auto-assuming a photo of
+// a person should show everywhere.
+//   "hidden"     - linked to the person for the record, shown nowhere
+//   "profile"    - shown on the person's profile page + family-tree snippet only
+//   "everywhere" - profile + tree AND the general gallery / collections
+// Defaults to "everywhere" so existing content (which predates this field)
+// keeps showing exactly as before.
+export const VisibilitySchema = z.enum(['hidden', 'profile', 'everywhere']).default('everywhere')
+
 // ── Photo schema ──
-// Photo.filename refers to a file in /public/photos/{filename}.
+// Photo.filename refers to a file in /public/photos/{filename}, OR a full
+// https URL (Vercel Blob upload).
 // dateTaken is the v1 ISO 8601 date string (back-compat alias for `date`).
 export const PhotoSchema = z.object({
   id: z.string().min(1),
@@ -74,6 +86,9 @@ export const PhotoSchema = z.object({
   // Tags
   peopleIds: z.array(z.string()).default([]),
   collectionIds: z.array(z.string()).default([]),  // v2 - which collections this photo belongs to
+
+  // Where this photo is allowed to appear (see VisibilitySchema above)
+  visibility: VisibilitySchema,
 
   // Optional metadata
   location: z.string().optional(),
@@ -130,6 +145,11 @@ export const VideoSchema = z.object({
   peopleIds: z.array(z.string()).default([]),
   playlistIds: z.array(z.string()).default([]),  // v2 - which playlists this video belongs to
   featured: z.boolean().default(false),
+
+  // Where this video is allowed to appear when linked to a person (see
+  // VisibilitySchema). Defaults to "everywhere" so existing videos are
+  // unaffected. "profile" = person page + tree only; "hidden" = nowhere.
+  visibility: VisibilitySchema,
 })
 
 // ── Collection schema ──
@@ -246,3 +266,4 @@ export type Audio = z.infer<typeof AudioSchema>
 export type Chronicle = z.infer<typeof ChronicleSchema>
 export type Hero = z.infer<typeof HeroSchema>
 export type HeroImage = z.infer<typeof HeroImageSchema>
+export type Visibility = z.infer<typeof VisibilitySchema>
