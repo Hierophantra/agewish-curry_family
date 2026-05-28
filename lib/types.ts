@@ -220,9 +220,13 @@ export const ChronicleSchema = z.object({
 // "X% Y%" syntax) so the maintainer can dial how much of the photo shows and
 // which part is centered in the frame.
 export const HeroImageSchema = z.object({
-  src: z.string().min(1),                          // path under /public/, e.g. "/images/hero/foo.jpg"
+  src: z.string().min(1),                          // path under /public/ OR a full https URL (Blob)
   opacity: z.number().min(0).max(1).default(0.22), // 0 = invisible, 1 = full color
   objectPosition: z.string().default('center'),    // "center", "top", "50% 30%", etc.
+  // fit: how the image fills the 16:9 hero frame.
+  //   "cover"   = fill the frame, cropping as needed (focal point matters)
+  //   "contain" = show the whole image, letterboxed by the ivory background
+  fit: z.enum(['cover', 'contain']).default('cover'),
   enabled: z.boolean().default(true),              // toggle off without deleting the file
 })
 

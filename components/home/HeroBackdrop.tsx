@@ -60,9 +60,10 @@ export default function HeroBackdrop({ config }: HeroBackdropProps) {
             fill
             priority={i === 0}
             sizes="100vw"
-            className="object-cover transition-opacity ease-in-out"
+            className="transition-opacity ease-in-out"
             style={{
               opacity: isActive ? img.opacity : 0,
+              objectFit: img.fit,
               objectPosition: img.objectPosition,
               transitionDuration: `${config.transitionMs}ms`,
             }}

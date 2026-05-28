@@ -106,10 +106,54 @@ export default function EditHeroForm({ initial, newlyDiscovered }: Props) {
         src,
         opacity: 0.22,
         objectPosition: 'center',
+        fit: 'cover',
         enabled: true,
         focalX: 50,
         focalY: 50,
       },
+    ])
+    if (status === 'saved') setStatus('idle')
+  }
+
+  // Upload a file to Blob. Returns the resulting URL, or null on failure
+  // (with the error surfaced in the form status).
+  const [uploadingFor, setUploadingFor] = useState<number | 'new' | null>(null)
+  async function uploadFile(file: File): Promise<string | null> {
+    const fd = new FormData()
+    fd.append('file', file)
+    try {
+      const res = await fetch('/api/admin/hero/upload', { method: 'POST', body: fd })
+      if (!res.ok) {
+        const text = await res.text()
+        throw new Error(text || `${res.status} ${res.statusText}`)
+      }
+      const json = await res.json()
+      return json.url as string
+    } catch (err) {
+      setStatus('error')
+      setErrorMessage(err instanceof Error ? err.message : String(err))
+      return null
+    }
+  }
+
+  // Replace one image's source file (keeps opacity / position / fit).
+  async function handleReplace(idx: number, file: File) {
+    setUploadingFor(idx)
+    const url = await uploadFile(file)
+    setUploadingFor(null)
+    if (!url) return
+    updateImage(idx, { src: url })
+  }
+
+  // Add a brand-new uploaded image to the rotation.
+  async function handleUploadNew(file: File) {
+    setUploadingFor('new')
+    const url = await uploadFile(file)
+    setUploadingFor(null)
+    if (!url) return
+    setImages((prev) => [
+      ...prev,
+      { src: url, opacity: 0.22, objectPosition: 'center', fit: 'cover', enabled: true, focalX: 50, focalY: 50 },
     ])
     if (status === 'saved') setStatus('idle')
   }
@@ -204,9 +248,10 @@ export default function EditHeroForm({ initial, newlyDiscovered }: Props) {
 
         {images.map((img, idx) => (
           <article key={img.src + idx} className="surface-card-static p-6 grid grid-cols-1 md:grid-cols-[260px_1fr] gap-6">
-            {/* Live preview - actual rendered look at current settings */}
+            {/* Live preview - actual rendered look at current settings.
+                The ivory backdrop shows through in 'contain' mode. */}
             <div>
-              <div className="surface-inset border border-[color:var(--color-border)] aspect-video overflow-hidden">
+              <div className="surface-inset border border-[color:var(--color-border)] aspect-video overflow-hidden bg-[color:var(--color-ivory)]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={img.src}
@@ -214,13 +259,13 @@ export default function EditHeroForm({ initial, newlyDiscovered }: Props) {
                   className="w-full h-full"
                   style={{
                     opacity: img.opacity,
-                    objectFit: 'cover',
+                    objectFit: img.fit,
                     objectPosition: formatObjectPosition(img.focalX, img.focalY),
                   }}
                 />
               </div>
               <p className="text-quiet text-xs mt-2 font-mono truncate" title={img.src}>{img.src}</p>
-              <div className="flex items-center gap-3 mt-3">
+              <div className="flex items-center gap-3 mt-3 flex-wrap">
                 <button
                   type="button"
                   onClick={() => moveImage(idx, -1)}
@@ -239,6 +284,21 @@ export default function EditHeroForm({ initial, newlyDiscovered }: Props) {
                 >
                   {'↓ Down'}
                 </button>
+                {/* Replace source file via Blob upload */}
+                <label className="text-xs text-gold-deep hover:text-gold cursor-pointer">
+                  {uploadingFor === idx ? 'Uploading...' : 'Replace'}
+                  <input
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp,image/avif"
+                    className="sr-only"
+                    disabled={isDisabled || uploadingFor !== null}
+                    onChange={(e) => {
+                      const f = e.target.files?.[0]
+                      if (f) handleReplace(idx, f)
+                      e.target.value = ''
+                    }}
+                  />
+                </label>
                 <button
                   type="button"
                   onClick={() => removeImage(idx)}
@@ -264,6 +324,39 @@ export default function EditHeroForm({ initial, newlyDiscovered }: Props) {
                   {img.enabled ? 'Included in rotation' : 'Hidden from rotation'}
                 </span>
               </label>
+
+              {/* Fit mode - fill (crop) vs fit (letterbox). */}
+              <div className="flex flex-col gap-2">
+                <span className={labelClass}>Fit</span>
+                <div className="flex gap-2">
+                  {([
+                    { v: 'cover', label: 'Fill frame', help: 'Crops to fill - focal point matters' },
+                    { v: 'contain', label: 'Fit whole', help: 'Shows the whole image, letterboxed' },
+                  ] as const).map((opt) => (
+                    <button
+                      key={opt.v}
+                      type="button"
+                      onClick={() => updateImage(idx, { fit: opt.v })}
+                      disabled={isDisabled || !img.enabled}
+                      className={[
+                        'px-3 py-1.5 rounded text-sm border transition-colors',
+                        img.fit === opt.v
+                          ? 'border-navy bg-[color:var(--color-surface-subtle)] text-navy'
+                          : 'border-[color:var(--color-border)] text-muted hover:text-navy',
+                        (isDisabled || !img.enabled) ? 'opacity-40 cursor-not-allowed' : '',
+                      ].join(' ')}
+                      title={opt.help}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
+                <span className={helpClass}>
+                  {img.fit === 'cover'
+                    ? 'Image fills the hero, cropping edges. Use the focal point sliders to choose what stays in frame.'
+                    : 'Whole image visible, with ivory bars filling any gap. Focal point has no effect in this mode.'}
+                </span>
+              </div>
 
               <label className="flex flex-col gap-2">
                 <span className={labelClass}>Opacity ({Math.round(img.opacity * 100)}%)</span>
@@ -312,6 +405,33 @@ export default function EditHeroForm({ initial, newlyDiscovered }: Props) {
             </div>
           </article>
         ))}
+      </div>
+
+      {/* Upload a new image via Blob (works in production; needs a connected
+          Vercel Blob store). For local files you can also just drop them in
+          public/images/hero/ and use the discovery section below. */}
+      <div className="surface-card-static p-6 flex flex-col sm:flex-row sm:items-center gap-4 justify-between">
+        <div>
+          <h2 className="font-serif text-navy text-xl mb-1">Upload a new image</h2>
+          <p className="text-muted text-sm">
+            Adds an uploaded image to the rotation. Stored on Vercel Blob, so it
+            works on the live site without a redeploy of the repo.
+          </p>
+        </div>
+        <label className="shrink-0 inline-flex items-center justify-center bg-navy text-white px-5 py-2.5 rounded font-sans text-sm hover:opacity-90 transition-opacity cursor-pointer focus-within:ring-2 focus-within:ring-gold focus-within:ring-offset-2">
+          {uploadingFor === 'new' ? 'Uploading...' : 'Choose image'}
+          <input
+            type="file"
+            accept="image/jpeg,image/png,image/webp,image/avif"
+            className="sr-only"
+            disabled={isDisabled || uploadingFor !== null}
+            onChange={(e) => {
+              const f = e.target.files?.[0]
+              if (f) handleUploadNew(f)
+              e.target.value = ''
+            }}
+          />
+        </label>
       </div>
 
       {/* Newly-discovered files (not yet in config) */}
