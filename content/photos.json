@@ -29,7 +29,8 @@
       "galen-cheryl-wedding"
     ],
     "source": "Curry family archive",
-    "confidence": "high"
+    "confidence": "high",
+    "visibility": "hidden"
   },
   {
     "id": "galen-cheryl-wedding-03",
