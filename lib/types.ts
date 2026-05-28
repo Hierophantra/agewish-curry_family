@@ -260,6 +260,55 @@ export const HeroSchema = z.object({
   images: z.array(HeroImageSchema).default([]),
 })
 
+// ── Theme schema (v3.5) ──
+// Runtime theme overrides edited from the Shift+E visual editor and committed
+// to content/theme.json. Keys map to the Tailwind v4 @theme CSS variables in
+// globals.css - overriding them at runtime cascades to every utility that
+// references them (bg-navy, text-gold, border-stone, ...). A key left out
+// means "use the built-in default from globals.css".
+//
+// Hex strings only (#rrggbb or #rgb). All optional - an empty theme renders
+// the site exactly as the compiled defaults.
+const HexColor = z.string().regex(/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/, 'Must be a hex color like #1F2D5C').optional()
+
+export const ThemeColorsSchema = z.object({
+  navy: HexColor,
+  gold: HexColor,
+  goldDeep: HexColor,
+  ivory: HexColor,
+  ivoryDeep: HexColor,
+  surface: HexColor,
+  surfaceSubtle: HexColor,
+  border: HexColor,
+  stone: HexColor,
+  muted: HexColor,
+  quiet: HexColor,
+}).default({})
+
+// Ambient "light effect" - a soft radial glow placed on the page. Positionable
+// (x/y as % of viewport), sizeable (% of viewport), tunable color + opacity.
+export const ThemeLightSchema = z.object({
+  enabled: z.boolean().default(false),
+  color: z.string().regex(/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/).default('#E8A91F'),
+  x: z.number().min(-20).max(120).default(50),       // % across the viewport
+  y: z.number().min(-20).max(120).default(12),       // % down the viewport
+  size: z.number().min(10).max(160).default(70),     // diameter as % of viewport width
+  opacity: z.number().min(0).max(1).default(0.10),
+}).default({})
+
+// Per-page overrides are keyed by pathname (e.g. "/tree"). Sitewide values
+// live at the top level; page values layer on top for that route only.
+export const ThemePageSchema = z.object({
+  colors: ThemeColorsSchema,
+  light: ThemeLightSchema.optional(),
+}).default({})
+
+export const ThemeSchema = z.object({
+  colors: ThemeColorsSchema,
+  light: ThemeLightSchema,
+  pages: z.record(z.string(), ThemePageSchema).default({}),
+}).default({ colors: {}, light: { enabled: false, color: '#E8A91F', x: 50, y: 12, size: 70, opacity: 0.1 }, pages: {} })
+
 // ── TypeScript types (derived from schemas - do not manually duplicate) ──
 export type Person = z.infer<typeof PersonSchema>
 export type Photo = z.infer<typeof PhotoSchema>
@@ -271,3 +320,6 @@ export type Chronicle = z.infer<typeof ChronicleSchema>
 export type Hero = z.infer<typeof HeroSchema>
 export type HeroImage = z.infer<typeof HeroImageSchema>
 export type Visibility = z.infer<typeof VisibilitySchema>
+export type Theme = z.infer<typeof ThemeSchema>
+export type ThemeColors = z.infer<typeof ThemeColorsSchema>
+export type ThemeLight = z.infer<typeof ThemeLightSchema>

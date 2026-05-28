@@ -1,0 +1,12 @@
+{
+  "colors": {},
+  "light": {
+    "enabled": false,
+    "color": "#E8A91F",
+    "x": 50,
+    "y": 12,
+    "size": 70,
+    "opacity": 0.1
+  },
+  "pages": {}
+}

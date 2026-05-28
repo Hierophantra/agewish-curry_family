@@ -7,8 +7,8 @@ import 'server-only'
 import { readFileSync } from 'fs'
 import { join } from 'path'
 import { z } from 'zod'
-import { PersonSchema, PhotoSchema, VideoSchema, CollectionSchema, PlaylistSchema, AudioSchema, ChronicleSchema, HeroSchema } from './types'
-import type { Person, Photo, Video, Collection, Playlist, Audio, Chronicle, Hero } from './types'
+import { PersonSchema, PhotoSchema, VideoSchema, CollectionSchema, PlaylistSchema, AudioSchema, ChronicleSchema, HeroSchema, ThemeSchema } from './types'
+import type { Person, Photo, Video, Collection, Playlist, Audio, Chronicle, Hero, Theme } from './types'
 
 // ── Photo URL helper ──
 // Re-exported from lib/utils.ts so server-side imports can use a single source.
@@ -178,6 +178,18 @@ export function getHero(): Hero {
     return readJSON('hero.json', HeroSchema)
   } catch {
     return { rotationMs: 8000, transitionMs: 2200, images: [] }
+  }
+}
+
+// ── Theme loader (v3.5) ──
+// Runtime theme overrides (colors + ambient light + per-page) from the Shift+E
+// editor. Returns a safe empty default if the file is missing/invalid so the
+// site renders with the compiled globals.css defaults.
+export function getTheme(): Theme {
+  try {
+    return readJSON('theme.json', ThemeSchema)
+  } catch {
+    return ThemeSchema.parse({})
   }
 }
 

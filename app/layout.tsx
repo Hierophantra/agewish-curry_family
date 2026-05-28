@@ -2,6 +2,7 @@
 import type { Metadata } from 'next'
 import { Inter, Cormorant_Garamond } from 'next/font/google'
 import './globals.css'
+import ThemeStyle from '@/components/theme/ThemeStyle'
 
 // Load Inter with exactly weights 400 and 500 - no more
 // subsets: 'latin' covers English and Western European characters
@@ -44,7 +45,12 @@ export default function RootLayout({
     // This makes them available for @theme in globals.css
     // Use .variable (NOT .className) to expose the CSS variable
     <html lang="en" className={`${inter.variable} ${cormorant.variable}`}>
-      <body>{children}</body>
+      <body>
+        {/* Sitewide theme overrides (FOUC-free). Must render before children
+            so its :root rule applies on first paint. */}
+        <ThemeStyle />
+        {children}
+      </body>
     </html>
   )
 }
