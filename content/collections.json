@@ -1,1 +1,18 @@
-[]
+[
+  {
+    "id": "galen-cheryl-wedding",
+    "title": "Galen & Cheryl's wedding",
+    "subtitle": "November 23, 2021",
+    "coverPhotoId": "galen-cheryl-wedding-01",
+    "date": "2021-11-23",
+    "dateLabel": "November 23, 2021",
+    "description": "The wedding of Galen N Curry Sr and Cheryl Curry, recorded in a series of frames from the ceremony."
+  },
+  {
+    "id": "unsorted",
+    "title": "Unsorted",
+    "subtitle": "Awaiting placement",
+    "coverPhotoId": "unsorted-01",
+    "description": "Photographs not yet assigned to a specific collection. They will move as the archive is organized."
+  }
+]

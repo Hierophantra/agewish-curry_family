@@ -421,7 +421,16 @@ export default function FamilyTreeCanvas({
         {selectedId && (() => {
           const person = people.find((p) => p.id === selectedId)
           if (!person) return null
-          const personPhotos = photos.filter((ph) => person.photoIds.includes(ph.id))
+          // v3.2: filter by Photo.peopleIds (canonical direction) instead of
+          // Person.photoIds. Photos now reference people via their peopleIds[]
+          // array, which is the single source of truth - we don't need to keep
+          // a parallel list on each Person record. Falls back to person.photoIds
+          // for back-compat with any record that uses the legacy field.
+          const personPhotos = photos.filter(
+            (ph) =>
+              ph.peopleIds?.includes(person.id) ||
+              person.photoIds.includes(ph.id),
+          )
           return (
             <PersonPanel
               key={selectedId}          // CRITICAL: key forces remount on person change
