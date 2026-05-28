@@ -16,8 +16,9 @@
 import { useState, useRef } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import type { Person, Collection } from '@/lib/types'
+import type { Person, Collection, Visibility } from '@/lib/types'
 import { getPhotoUrl } from '@/lib/utils'
+import VisibilityPicker from '@/components/admin/VisibilityPicker'
 
 const MAX_FILE_SIZE_BYTES = 4 * 1024 * 1024 // 4MB
 
@@ -28,6 +29,7 @@ export interface PhotoFormValues {
   dateLabel: string
   location: string
   notes: string
+  visibility: Visibility
   peopleIds: string[]
   collectionIds: string[]
 }
@@ -169,6 +171,7 @@ export default function EditPhotoForm({
       if (values.dateLabel.trim()) metadata.dateLabel = values.dateLabel.trim()
       if (values.location.trim()) metadata.location = values.location.trim()
       if (values.notes.trim()) metadata.notes = values.notes.trim()
+      metadata.visibility = values.visibility
       if (values.peopleIds.length) metadata.peopleIds = values.peopleIds
       if (values.collectionIds.length) metadata.collectionIds = values.collectionIds
 
@@ -203,6 +206,9 @@ export default function EditPhotoForm({
       if (values[key] !== initial[key]) {
         body[key] = values[key] as string
       }
+    }
+    if (values.visibility !== initial.visibility) {
+      body.visibility = values.visibility
     }
     if (JSON.stringify(values.peopleIds) !== JSON.stringify(initial.peopleIds)) {
       body.peopleIds = values.peopleIds
@@ -400,6 +406,20 @@ export default function EditPhotoForm({
         />
         <span className={helpClass}>Internal notes only. Not displayed to family members.</span>
       </label>
+
+      {/* Visibility */}
+      <fieldset>
+        <legend className={`${labelTextClass} mb-3`}>Visibility</legend>
+        <VisibilityPicker
+          kind="photo"
+          value={values.visibility}
+          onChange={(next) => {
+            setValues((prev) => ({ ...prev, visibility: next }))
+            if (status === 'saved') setStatus('idle')
+          }}
+          disabled={isDisabled}
+        />
+      </fieldset>
 
       {/* People picker */}
       <fieldset>

@@ -21,6 +21,7 @@ const EMPTY_INITIAL: VideoFormValues = {
   dateLabel: '',
   duration: '',
   featured: false,
+  visibility: 'everywhere',
   peopleIds: [],
   playlistIds: [],
 }

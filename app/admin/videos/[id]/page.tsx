@@ -34,6 +34,7 @@ export default async function AdminEditVideoPage({ params }: { params: { id: str
     dateLabel: video.dateLabel ?? '',
     duration: video.duration ?? '',
     featured: video.featured,
+    visibility: video.visibility ?? 'everywhere',
     peopleIds: video.peopleIds,
     playlistIds: video.playlistIds,
   }

@@ -12,7 +12,8 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import type { Person, Playlist } from '@/lib/types'
+import type { Person, Playlist, Visibility } from '@/lib/types'
+import VisibilityPicker from '@/components/admin/VisibilityPicker'
 
 export interface VideoFormValues {
   id: string
@@ -24,6 +25,7 @@ export interface VideoFormValues {
   dateLabel: string
   duration: string
   featured: boolean
+  visibility: Visibility
   peopleIds: string[]
   playlistIds: string[]
 }
@@ -123,6 +125,7 @@ export default function EditVideoForm({
       if (values.date.trim()) body.date = values.date
       if (values.dateLabel.trim()) body.dateLabel = values.dateLabel
       if (values.duration.trim()) body.duration = values.duration
+      body.visibility = values.visibility
       if (values.peopleIds.length) body.peopleIds = values.peopleIds
       if (values.playlistIds.length) body.playlistIds = values.playlistIds
 
@@ -162,6 +165,11 @@ export default function EditVideoForm({
     // Boolean field
     if (values.featured !== initial.featured) {
       changed.featured = values.featured
+    }
+
+    // Visibility
+    if (values.visibility !== initial.visibility) {
+      changed.visibility = values.visibility
     }
 
     // Array fields - compare by serialised value
@@ -358,6 +366,20 @@ export default function EditVideoForm({
         </label>
         <p className={helpClass}>Featured videos appear on the home page and at the top of the /videos section.</p>
       </div>
+
+      {/* Visibility */}
+      <fieldset>
+        <legend className={`${labelTextClass} mb-3`}>Visibility</legend>
+        <VisibilityPicker
+          kind="video"
+          value={values.visibility}
+          onChange={(next) => {
+            setValues((prev) => ({ ...prev, visibility: next }))
+            if (status === 'saved') setStatus('idle')
+          }}
+          disabled={isDisabled}
+        />
+      </fieldset>
 
       {/* People picker */}
       <fieldset>
