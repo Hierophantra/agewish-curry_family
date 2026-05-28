@@ -214,6 +214,24 @@ export const ChronicleSchema = z.object({
   lastVerified: z.string().optional(),
 })
 
+// ── Hero schema ──
+// Configuration for the home page hero photo rotator. Editable from /admin/hero.
+// Each image has its own opacity (0-1) and objectPosition (CSS keyword or
+// "X% Y%" syntax) so the maintainer can dial how much of the photo shows and
+// which part is centered in the frame.
+export const HeroImageSchema = z.object({
+  src: z.string().min(1),                          // path under /public/, e.g. "/images/hero/foo.jpg"
+  opacity: z.number().min(0).max(1).default(0.22), // 0 = invisible, 1 = full color
+  objectPosition: z.string().default('center'),    // "center", "top", "50% 30%", etc.
+  enabled: z.boolean().default(true),              // toggle off without deleting the file
+})
+
+export const HeroSchema = z.object({
+  rotationMs: z.number().int().min(2000).max(60000).default(8000),    // ms between transitions
+  transitionMs: z.number().int().min(200).max(5000).default(2200),    // cross-fade duration
+  images: z.array(HeroImageSchema).default([]),
+})
+
 // ── TypeScript types (derived from schemas - do not manually duplicate) ──
 export type Person = z.infer<typeof PersonSchema>
 export type Photo = z.infer<typeof PhotoSchema>
@@ -222,3 +240,5 @@ export type Collection = z.infer<typeof CollectionSchema>
 export type Playlist = z.infer<typeof PlaylistSchema>
 export type Audio = z.infer<typeof AudioSchema>
 export type Chronicle = z.infer<typeof ChronicleSchema>
+export type Hero = z.infer<typeof HeroSchema>
+export type HeroImage = z.infer<typeof HeroImageSchema>

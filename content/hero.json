@@ -1,0 +1,30 @@
+{
+  "rotationMs": 8000,
+  "transitionMs": 2200,
+  "images": [
+    {
+      "src": "/images/hero/575A1328.jpg",
+      "opacity": 0.22,
+      "objectPosition": "center",
+      "enabled": true
+    },
+    {
+      "src": "/images/hero/DSC00004.JPG",
+      "opacity": 0.22,
+      "objectPosition": "center",
+      "enabled": true
+    },
+    {
+      "src": "/images/hero/IMG_2729.jpg.jpeg",
+      "opacity": 0.22,
+      "objectPosition": "center",
+      "enabled": true
+    },
+    {
+      "src": "/images/hero/ps_2021_11_23___19_49_00.jpg",
+      "opacity": 0.22,
+      "objectPosition": "center",
+      "enabled": true
+    }
+  ]
+}

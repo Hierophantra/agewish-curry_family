@@ -13,6 +13,7 @@
 import { motion, useReducedMotion } from 'motion/react'
 import StarMark from '@/components/ui/StarMark'
 import HeroBackdrop from '@/components/home/HeroBackdrop'
+import type { Hero as HeroConfig } from '@/lib/types'
 
 const containerVariants = {
   hidden: {},
@@ -29,7 +30,11 @@ const itemVariantsReduced = {
   visible: { opacity: 1, y: 0, transition: { duration: 0 } },
 }
 
-export default function Hero() {
+interface HeroProps {
+  heroConfig: HeroConfig
+}
+
+export default function Hero({ heroConfig }: HeroProps) {
   const reduce = useReducedMotion()
 
   return (
@@ -44,9 +49,9 @@ export default function Hero() {
       initial={reduce ? false : 'hidden'}
       animate="visible"
     >
-      {/* Slow-rotating family photo backdrop. Sits behind everything else
-          in the hero at ~22% opacity with an ivory overlay. */}
-      <HeroBackdrop />
+      {/* Slow-rotating family photo backdrop. Configured via /admin/hero -
+          each image has its own opacity + objectPosition. */}
+      <HeroBackdrop config={heroConfig} />
 
       {/* Gold rule above the star - a small editorial flourish.
           relative + z-10 lifts all content above the backdrop. */}

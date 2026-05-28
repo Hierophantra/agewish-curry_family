@@ -21,7 +21,7 @@
 // Star motif rule: TopNav = star 1, Hero = star 2, Footer = star 3.
 import Link from 'next/link'
 import Hero from '@/components/home/Hero'
-import { getPeople, getPhotos, getCollections, getVideos, getPlaylists, getChronicles } from '@/lib/content'
+import { getPeople, getPhotos, getCollections, getVideos, getPlaylists, getChronicles, getHero } from '@/lib/content'
 
 export default function HomePage() {
   const people = getPeople()
@@ -30,6 +30,7 @@ export default function HomePage() {
   const videos = getVideos()
   const playlists = getPlaylists()
   const chronicles = getChronicles()
+  const heroConfig = getHero()
 
   // Generation depth = longest parent-to-child chain from the root patriarch.
   function maxGenerationDepth(): number {
@@ -102,7 +103,7 @@ export default function HomePage() {
 
   return (
     <>
-      <Hero />
+      <Hero heroConfig={heroConfig} />
 
       {/* Hub grid section. bg-ivory with a soft top gradient. */}
       <section className="relative bg-gradient-to-b from-ivory via-ivory to-ivory-deep border-t border-stone/60 py-20 md:py-28 px-7 md:px-11">

@@ -7,8 +7,8 @@ import 'server-only'
 import { readFileSync } from 'fs'
 import { join } from 'path'
 import { z } from 'zod'
-import { PersonSchema, PhotoSchema, VideoSchema, CollectionSchema, PlaylistSchema, AudioSchema, ChronicleSchema } from './types'
-import type { Person, Photo, Video, Collection, Playlist, Audio, Chronicle } from './types'
+import { PersonSchema, PhotoSchema, VideoSchema, CollectionSchema, PlaylistSchema, AudioSchema, ChronicleSchema, HeroSchema } from './types'
+import type { Person, Photo, Video, Collection, Playlist, Audio, Chronicle, Hero } from './types'
 
 // ── Photo URL helper ──
 // Re-exported from lib/utils.ts so server-side imports can use a single source.
@@ -134,6 +134,19 @@ export function getChroniclesByPersonId(personId: string): Chronicle[] {
 
 export function getChroniclesInCollection(collectionId: string): Chronicle[] {
   return getChronicles().filter((c) => c.collectionIds.includes(collectionId))
+}
+
+// ── Hero config loader (v3.2) ──
+// Returns the home-page hero rotator settings - rotation interval, transition
+// duration, and per-image opacity + objectPosition. Edited via /admin/hero.
+// Returns a defaulted-empty config if the file is missing so the site doesn't
+// hard-fail; HeroBackdrop handles the empty-images case gracefully.
+export function getHero(): Hero {
+  try {
+    return readJSON('hero.json', HeroSchema)
+  } catch {
+    return { rotationMs: 8000, transitionMs: 2200, images: [] }
+  }
 }
 
 // ── Bidirectional reference validator ──

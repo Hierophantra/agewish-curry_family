@@ -1,54 +1,56 @@
 'use client'
 // components/home/HeroBackdrop.tsx
-// Client island - subtle slow-rotating background images for the hero section.
+// Client island - slow-rotating background images for the hero section.
 //
-// Reads from a hardcoded list of files in public/images/hero/. To swap or
-// extend, drop new files into that folder and update the IMAGES array below.
+// Config-driven: reads rotationMs, transitionMs, and per-image opacity +
+// objectPosition from props (originating in content/hero.json). The admin
+// page at /admin/hero edits that config; this component just renders it.
 //
 // UX:
-//   - Cross-fade between images every ~8 seconds (slow on purpose)
-//   - 2.2s ease-in-out transition - reverent, not snappy
-//   - Photos render at 22% opacity over the ivory page background - the
-//     family is visible behind the title without competing with it for
-//     focus
-//   - A vertical ivory gradient overlay keeps the top (eyebrow + star) and
-//     bottom (subtitle + attribution) clean for typography
-//   - Respects prefers-reduced-motion: shows only the first image, no
-//     rotation, no transitions
+//   - Cross-fade between enabled images on the configured interval
+//   - Each image has its own opacity (set per-image in admin)
+//   - Each image has its own objectPosition (CSS keyword or "X% Y%") so
+//     the maintainer can dial which part of the photo is in frame
+//   - An ivory gradient overlay keeps the top + bottom clean for typography
+//   - Respects prefers-reduced-motion: shows only the first enabled image
+//     with no rotation, no transitions
 //
-// Uses next/image with `fill` + `priority` on the first image for the
-// best initial paint. Subsequent images load naturally as the rotation
-// gets to them.
+// Uses next/image with `fill` + `priority` on the first enabled image for
+// the best initial paint; later images load naturally as rotation reaches
+// them.
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { useReducedMotion } from 'motion/react'
+import type { Hero } from '@/lib/types'
 
-const IMAGES: Array<{ src: string }> = [
-  { src: '/images/hero/575A1328.jpg' },
-  { src: '/images/hero/DSC00004.JPG' },
-  { src: '/images/hero/IMG_2729.jpg.jpeg' },
-  { src: '/images/hero/ps_2021_11_23___19_49_00.jpg' },
-]
+interface HeroBackdropProps {
+  config: Hero
+}
 
-const ROTATION_MS = 8000        // how long each image stays visible
-const TRANSITION_MS = 2200      // cross-fade duration
-const VISIBLE_OPACITY = 0.22    // peak opacity for the active image
-
-export default function HeroBackdrop() {
+export default function HeroBackdrop({ config }: HeroBackdropProps) {
   const reduce = useReducedMotion()
+  const visible = config.images.filter((img) => img.enabled)
   const [idx, setIdx] = useState(0)
 
   useEffect(() => {
-    if (reduce) return
+    if (reduce || visible.length <= 1) return
     const id = setInterval(() => {
-      setIdx((i) => (i + 1) % IMAGES.length)
-    }, ROTATION_MS)
+      setIdx((i) => (i + 1) % visible.length)
+    }, config.rotationMs)
     return () => clearInterval(id)
-  }, [reduce])
+  }, [reduce, visible.length, config.rotationMs])
+
+  // Nothing to show - render only the gradient overlay so the hero looks
+  // intentional rather than broken.
+  if (visible.length === 0) {
+    return (
+      <div className="absolute inset-0 overflow-hidden pointer-events-none bg-ivory" aria-hidden="true" />
+    )
+  }
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-      {IMAGES.map((img, i) => {
+      {visible.map((img, i) => {
         const isActive = i === idx
         return (
           <Image
@@ -60,8 +62,9 @@ export default function HeroBackdrop() {
             sizes="100vw"
             className="object-cover transition-opacity ease-in-out"
             style={{
-              opacity: isActive ? VISIBLE_OPACITY : 0,
-              transitionDuration: `${TRANSITION_MS}ms`,
+              opacity: isActive ? img.opacity : 0,
+              objectPosition: img.objectPosition,
+              transitionDuration: `${config.transitionMs}ms`,
             }}
           />
         )
