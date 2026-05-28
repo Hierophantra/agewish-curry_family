@@ -1,7 +1,10 @@
 {
-  "colors": {},
+  "colors": {
+    "ivory": "#fbf9f2",
+    "surfaceSubtle": "#faf6ea"
+  },
   "light": {
-    "enabled": true,
+    "enabled": false,
     "color": "#e8a91f",
     "x": 50,
     "y": 12,
