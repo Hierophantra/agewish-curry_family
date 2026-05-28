@@ -164,20 +164,6 @@ export default function HomePage() {
               </Link>
             ))}
           </div>
-
-          {/* Footer flourish - italic dedication stays. This is one of two
-              places where the italic Cormorant treatment is intentional
-              (the other is the hero subtitle). */}
-          <div className="flex flex-col items-center mt-16" aria-hidden="true">
-            <div className="flex items-center gap-3 mb-4">
-              <span className="block w-8 h-px bg-gold-deep" />
-              <span className="block w-1 h-1 rounded-full bg-gold-deep" />
-              <span className="block w-8 h-px bg-gold-deep" />
-            </div>
-            <p className="font-serif italic text-quiet text-sm">
-              Held in trust for those who come after.
-            </p>
-          </div>
         </div>
       </section>
     </>
