@@ -469,7 +469,8 @@
     "collectionIds": [
       "unsorted"
     ],
-    "confidence": "low"
+    "confidence": "low",
+    "visibility": "gallery"
   },
   {
     "id": "unsorted-02",
