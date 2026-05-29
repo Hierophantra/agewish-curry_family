@@ -462,7 +462,10 @@
     "filename": "unsorted/IMG_20240310_171525375.jpg",
     "date": "2024-03-10",
     "dateLabel": "March 10, 2024",
-    "peopleIds": [],
+    "peopleIds": [
+      "trace-curry",
+      "cheryl-curry"
+    ],
     "collectionIds": [
       "unsorted"
     ],
