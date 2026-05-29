@@ -19,6 +19,9 @@ interface HeroProps {
 export default function Hero({ heroConfig }: HeroProps) {
   return (
     <section
+      data-edit-id="hero"
+      data-edit-label="Hero section"
+      data-edit-kind="box"
       className="
         relative bg-ivory overflow-hidden
         h-[58vh] min-h-[420px] max-h-[720px]

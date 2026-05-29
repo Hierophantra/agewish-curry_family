@@ -2,7 +2,7 @@
 // Pure helpers shared by server (ThemeStyle) and client (ThemeEditor) to map a
 // Theme object into CSS custom-property declarations. No 'server-only' - safe
 // in client components too.
-import type { Theme, ThemeColors, ThemeLight } from '@/lib/types'
+import type { Theme, ThemeColors, ThemeLight, ElementStyle } from '@/lib/types'
 
 // Map ThemeColors keys -> the Tailwind @theme CSS variable names in globals.css.
 export const COLOR_VAR: Record<keyof ThemeColors, string> = {
@@ -96,4 +96,57 @@ export function varsToCss(vars: Record<string, string>): string {
     .map(([k, v]) => `${k}: ${v};`)
     .join(' ')
   return `:root { ${body} }`
+}
+
+// ── Per-element overrides ──
+// Elements are tagged in the DOM with data-edit-id. The editor stores overrides
+// keyed by that id, at sitewide (theme.elements) and per-page (theme.pages[p].
+// elements) scope. Resolution layers page on top of sitewide, field by field.
+
+// Merge sitewide + page element overrides for a given route into one map.
+export function resolveElements(theme: Theme, pathname?: string): Record<string, ElementStyle> {
+  const out: Record<string, ElementStyle> = {}
+  for (const [id, style] of Object.entries(theme.elements ?? {})) {
+    out[id] = { ...style }
+  }
+  const page = pathname ? theme.pages?.[pathname] : undefined
+  if (page?.elements) {
+    for (const [id, style] of Object.entries(page.elements)) {
+      out[id] = { ...out[id], ...style } // page wins field-by-field
+    }
+  }
+  return out
+}
+
+// CSS-applicable style props of one element override (everything except `text`,
+// which CSS can't set on real content). Returns an inline-style-ready object so
+// the same logic drives both the server <style> rules and the client applier.
+export function elementInlineStyle(style: ElementStyle): Record<string, string> {
+  const out: Record<string, string> = {}
+  if (style.color) out['color'] = style.color
+  if (style.background) out['background-color'] = style.background
+  if (typeof style.fontSize === 'number') out['font-size'] = `${style.fontSize}px`
+  const dx = style.dx ?? 0
+  const dy = style.dy ?? 0
+  if (dx !== 0 || dy !== 0) out['transform'] = `translate(${dx}px, ${dy}px)`
+  return out
+}
+
+// Build CSS rules ( [data-edit-id="X"] { ... } ) for a resolved element map.
+// Used by the server <style> for FOUC-free sitewide element styling. Text
+// overrides are applied client-side (CSS cannot replace element content).
+export function elementsToCss(elements: Record<string, ElementStyle>): string {
+  const rules: string[] = []
+  for (const [id, style] of Object.entries(elements)) {
+    const decls = elementInlineStyle(style)
+    const body = Object.entries(decls).map(([k, v]) => `${k}: ${v};`).join(' ')
+    if (body) rules.push(`[data-edit-id="${cssEscapeId(id)}"] { ${body} }`)
+  }
+  return rules.join('\n')
+}
+
+// data-edit-ids are author-controlled kebab-case strings, but escape quotes/
+// backslashes defensively so a stray character can't break out of the selector.
+function cssEscapeId(id: string): string {
+  return id.replace(/["\\]/g, '\\$&')
 }

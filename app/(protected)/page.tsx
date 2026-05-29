@@ -116,7 +116,12 @@ export default function HomePage() {
               <span className="block w-1.5 h-1.5 rounded-full bg-gold" />
               <span className="block w-10 h-px bg-gold-deep" />
             </div>
-            <p className="eyebrow text-gold-deep text-sm tracking-[0.28em]">
+            <p
+              data-edit-id="explore-eyebrow"
+              data-edit-label="Explore eyebrow"
+              data-edit-kind="text"
+              className="eyebrow text-gold-deep text-sm tracking-[0.28em]"
+            >
               Explore the archive
             </p>
           </div>

@@ -7,12 +7,15 @@
 // Rendered in the root layout, after the imported globals.css, so its :root
 // rule wins by source order over the @theme defaults.
 import { getTheme } from '@/lib/content'
-import { resolveVars, varsToCss } from '@/lib/theme-vars'
+import { resolveVars, varsToCss, resolveElements, elementsToCss } from '@/lib/theme-vars'
 
 export default function ThemeStyle() {
   const theme = getTheme()
   const vars = resolveVars(theme) // sitewide only (no pathname)
   // Always emit the light vars (they include --light-opacity: 0 when disabled).
-  const css = varsToCss(vars)
+  // Sitewide per-element overrides ship here too so colours / sizes / positions
+  // are correct on first paint; per-page overrides + live edits layer on via
+  // the client ThemeController.
+  const css = `${varsToCss(vars)}\n${elementsToCss(resolveElements(theme))}`
   return <style id="theme-overrides" dangerouslySetInnerHTML={{ __html: css }} />
 }

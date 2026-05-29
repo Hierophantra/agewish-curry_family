@@ -296,18 +296,33 @@ export const ThemeLightSchema = z.object({
   opacity: z.number().min(0).max(1).default(0.10),
 }).default({})
 
+// Per-element overrides. Keyed by an element's data-edit-id (e.g. "topbar",
+// "hero", "footer-name"). Edited by clicking the element in the visual editor.
+// Every field is optional - an absent field means "use the element's natural
+// style". dx/dy are a free-drag positional offset in pixels (desktop only).
+export const ElementStyleSchema = z.object({
+  color: HexColor,                                   // text / foreground color
+  background: HexColor,                              // background color
+  fontSize: z.number().min(8).max(160).optional(),  // px
+  text: z.string().max(2000).optional(),             // text-content override
+  dx: z.number().min(-4000).max(4000).optional(),    // free-drag X offset (px)
+  dy: z.number().min(-4000).max(4000).optional(),    // free-drag Y offset (px)
+}).default({})
+
 // Per-page overrides are keyed by pathname (e.g. "/tree"). Sitewide values
 // live at the top level; page values layer on top for that route only.
 export const ThemePageSchema = z.object({
   colors: ThemeColorsSchema,
   light: ThemeLightSchema.optional(),
+  elements: z.record(z.string(), ElementStyleSchema).default({}),
 }).default({})
 
 export const ThemeSchema = z.object({
   colors: ThemeColorsSchema,
   light: ThemeLightSchema,
+  elements: z.record(z.string(), ElementStyleSchema).default({}),
   pages: z.record(z.string(), ThemePageSchema).default({}),
-}).default({ colors: {}, light: { enabled: false, color: '#E8A91F', x: 50, y: 12, size: 70, opacity: 0.1 }, pages: {} })
+}).default({ colors: {}, light: { enabled: false, color: '#E8A91F', x: 50, y: 12, size: 70, opacity: 0.1 }, elements: {}, pages: {} })
 
 // ── TypeScript types (derived from schemas - do not manually duplicate) ──
 export type Person = z.infer<typeof PersonSchema>
@@ -323,3 +338,5 @@ export type Visibility = z.infer<typeof VisibilitySchema>
 export type Theme = z.infer<typeof ThemeSchema>
 export type ThemeColors = z.infer<typeof ThemeColorsSchema>
 export type ThemeLight = z.infer<typeof ThemeLightSchema>
+export type ThemePage = z.infer<typeof ThemePageSchema>
+export type ElementStyle = z.infer<typeof ElementStyleSchema>

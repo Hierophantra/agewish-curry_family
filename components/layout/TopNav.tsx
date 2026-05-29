@@ -15,6 +15,9 @@ import NavTabs from '@/components/layout/NavTabs'
 export default function TopNav() {
   return (
     <header
+      data-edit-id="topbar"
+      data-edit-label="Top bar"
+      data-edit-kind="box"
       className="
         sticky top-0 z-40
         bg-ivory/85 backdrop-blur-xl
@@ -29,8 +32,22 @@ export default function TopNav() {
         >
           <StarMark size={36} />
           <div className="flex flex-col leading-tight">
-            <span className="eyebrow text-quiet text-[9px]">AgeWish · Private archive</span>
-            <span className="font-serif text-navy text-xl tracking-[0.01em]">The Curry Family</span>
+            <span
+              data-edit-id="brand-eyebrow"
+              data-edit-label="Brand eyebrow"
+              data-edit-kind="text"
+              className="eyebrow text-quiet text-[9px]"
+            >
+              AgeWish · Private archive
+            </span>
+            <span
+              data-edit-id="brand-name"
+              data-edit-label="Brand name"
+              data-edit-kind="text"
+              className="font-serif text-navy text-xl tracking-[0.01em]"
+            >
+              The Curry Family
+            </span>
           </div>
         </Link>
 
