@@ -59,6 +59,7 @@ export default function HomePage() {
   // Hub card data. The numerals are no longer a centerpiece - they're a
   // supporting line under the description, weighted equal to the descriptor.
   const cards: Array<{
+    id: string
     href: string
     eyebrow: string
     title: string
@@ -66,6 +67,7 @@ export default function HomePage() {
     stat: string
   }> = [
     {
+      id: 'tree',
       href: '/tree',
       eyebrow: 'Family tree',
       title: 'The family',
@@ -73,6 +75,7 @@ export default function HomePage() {
       stat: `${people.length} people · ${genWord} generations`,
     },
     {
+      id: 'photographs',
       href: '/photographs',
       eyebrow: 'Photographs',
       title: 'Photographs',
@@ -82,6 +85,7 @@ export default function HomePage() {
         : 'Waiting for the first',
     },
     {
+      id: 'videos',
       href: '/videos',
       eyebrow: 'Videos',
       title: 'Home movies',
@@ -91,6 +95,7 @@ export default function HomePage() {
         : 'Waiting for the first',
     },
     {
+      id: 'chronicles',
       href: '/chronicles',
       eyebrow: 'Chronicles',
       title: 'Stories told',
@@ -111,7 +116,13 @@ export default function HomePage() {
           {/* Section header - one small eyebrow with a hairline rule.
               Reduced from "two gold rules + dot" to a single understated line. */}
           <div className="flex flex-col items-center mb-14">
-            <div className="flex items-center gap-3 mb-5" aria-hidden="true">
+            <div
+              data-edit-id="explore-rule"
+              data-edit-label="Explore divider"
+              data-edit-kind="box"
+              className="flex items-center gap-3 mb-5"
+              aria-hidden="true"
+            >
               <span className="block w-10 h-px bg-gold-deep" />
               <span className="block w-1.5 h-1.5 rounded-full bg-gold" />
               <span className="block w-10 h-px bg-gold-deep" />
@@ -134,6 +145,9 @@ export default function HomePage() {
               <Link
                 key={c.href}
                 href={c.href}
+                data-edit-id={`card-${c.id}`}
+                data-edit-label={`Card: ${c.title}`}
+                data-edit-kind="box"
                 className="
                   group relative flex flex-col
                   surface-card
@@ -143,11 +157,28 @@ export default function HomePage() {
               >
                 {/* Top section: eyebrow (quiet now, not gold) + serif title + descriptor */}
                 <div className="flex-1">
-                  <p className="eyebrow text-quiet mb-3">{c.eyebrow}</p>
-                  <h2 className="font-serif text-navy text-2xl md:text-3xl leading-tight mb-3">
+                  <p
+                    data-edit-id={`card-${c.id}-eyebrow`}
+                    data-edit-label={`${c.title} · eyebrow`}
+                    data-edit-kind="text"
+                    className="eyebrow text-quiet mb-3"
+                  >
+                    {c.eyebrow}
+                  </p>
+                  <h2
+                    data-edit-id={`card-${c.id}-title`}
+                    data-edit-label={`${c.title} · title`}
+                    data-edit-kind="text"
+                    className="font-serif text-navy text-2xl md:text-3xl leading-tight mb-3"
+                  >
                     {c.title}
                   </h2>
-                  <p className="font-sans text-muted text-base leading-7">
+                  <p
+                    data-edit-id={`card-${c.id}-desc`}
+                    data-edit-label={`${c.title} · text`}
+                    data-edit-kind="text"
+                    className="font-sans text-muted text-base leading-7"
+                  >
                     {c.description}
                   </p>
                 </div>
@@ -155,7 +186,14 @@ export default function HomePage() {
                 {/* Bottom row: stat + quiet "Open" link. Top border replaces
                     the previous mid-card gold separator. */}
                 <div className="mt-6 pt-4 border-t border-[color:var(--color-border)] flex items-baseline justify-between gap-3">
-                  <p className="font-sans text-quiet text-sm">{c.stat}</p>
+                  <p
+                    data-edit-id={`card-${c.id}-stat`}
+                    data-edit-label={`${c.title} · stat`}
+                    data-edit-kind="text"
+                    className="font-sans text-quiet text-sm"
+                  >
+                    {c.stat}
+                  </p>
                   <span
                     className="
                       eyebrow text-gold-deep transition-transform duration-200

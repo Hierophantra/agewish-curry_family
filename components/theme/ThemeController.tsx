@@ -24,7 +24,7 @@ import { usePathname } from 'next/navigation'
 import type { Theme, ThemeColors, ThemeLight, ElementStyle } from '@/lib/types'
 import {
   COLOR_KEYS, COLOR_LABEL, COLOR_DEFAULT, COLOR_VAR,
-  resolveVars, resolveElements,
+  resolveVars, resolveElements, transformValue,
 } from '@/lib/theme-vars'
 
 interface Props {
@@ -113,12 +113,12 @@ export default function ThemeController({ theme, isAdmin }: Props) {
       else node.style.removeProperty('background-color')
       if (typeof s?.fontSize === 'number') node.style.fontSize = `${s.fontSize}px`
       else node.style.removeProperty('font-size')
-      const dx = s?.dx ?? 0
-      const dy = s?.dy ?? 0
-      if (dx !== 0 || dy !== 0) node.style.transform = `translate(${dx}px, ${dy}px)`
+      const transform = s ? transformValue(s) : ''
+      if (transform) node.style.transform = transform
       else node.style.removeProperty('transform')
       if (isText) {
-        if (typeof s?.text === 'string' && s.text.length > 0) {
+        // An explicit string (including '') is an override; undefined = natural.
+        if (typeof s?.text === 'string') {
           if (node.textContent !== s.text) node.textContent = s.text
         } else {
           const orig = originalText.current.get(id)
@@ -171,9 +171,10 @@ export default function ThemeController({ theme, isAdmin }: Props) {
         bucket = next.elements
       }
       const merged: ElementStyle = { ...bucket[id], ...patch }
+      // Only `undefined` clears a field (that's how Reset works). An empty
+      // string survives because for `text` it means "render this blank".
       ;(Object.keys(merged) as Array<keyof ElementStyle>).forEach((k) => {
-        const v = merged[k]
-        if (v === undefined || v === '') delete merged[k]
+        if (merged[k] === undefined) delete merged[k]
       })
       if (Object.keys(merged).length === 0) delete bucket[id]
       else bucket[id] = merged
@@ -253,11 +254,18 @@ export default function ThemeController({ theme, isAdmin }: Props) {
     }
     function onClick(e: MouseEvent) {
       const el = closestEditable(e.target)
-      if (!el) return // panel + untagged content keep normal behavior
-      e.preventDefault()
-      e.stopPropagation()
-      const id = el.dataset.editId
-      if (id) setSelectedId(id)
+      if (el) {
+        e.preventDefault()
+        e.stopPropagation()
+        const id = el.dataset.editId
+        if (id) setSelectedId(id)
+        return
+      }
+      // No tagged element under the cursor: block stray link navigation so a
+      // click never carries you off the page mid-edit. The editor panel has no
+      // anchors, so its buttons/inputs keep working normally.
+      const anchor = (e.target as HTMLElement | null)?.closest?.('a[href]')
+      if (anchor) { e.preventDefault(); e.stopPropagation() }
     }
     function onOver(e: PointerEvent) {
       const el = closestEditable(e.target)
@@ -519,15 +527,28 @@ export default function ThemeController({ theme, isAdmin }: Props) {
                 {selected.kind === 'text' && (
                   <>
                     {/* Text content */}
-                    <label className="flex flex-col gap-1">
-                      <span className="text-quiet text-xs">Text</span>
+                    <div className="flex flex-col gap-1">
+                      <div className="flex items-center justify-between">
+                        <span className="text-quiet text-xs">Text</span>
+                        {typeof sel.text === 'string' && (
+                          <button
+                            type="button"
+                            onClick={() => setElementProp(selected.id, { text: undefined })}
+                            className="text-quiet hover:text-navy text-xs"
+                            title="Restore the original text"
+                          >
+                            Reset to original
+                          </button>
+                        )}
+                      </div>
                       <textarea
                         rows={2}
                         value={sel.text ?? naturalText(selected.id)}
                         onChange={(e) => setElementProp(selected.id, { text: e.target.value })}
                         className="w-full rounded border border-[color:var(--color-border)] bg-transparent px-2 py-1.5 text-sm text-navy focus:outline-none focus:border-stone resize-y"
                       />
-                    </label>
+                      <span className="text-quiet text-[11px]">Clear the box to hide the text. “Reset to original” brings it back.</span>
+                    </div>
                     {/* Text color */}
                     <div className="flex items-center gap-3">
                       <input
@@ -579,32 +600,50 @@ export default function ThemeController({ theme, isAdmin }: Props) {
                   </div>
                 )}
 
-                {/* Position (free-drag) */}
-                <div className="flex flex-col gap-2">
-                  <span className="text-quiet text-xs">Position offset (drag on the page, or nudge)</span>
-                  <div className="flex items-center gap-2">
-                    <label className="flex items-center gap-1.5 text-xs text-muted">
-                      X
-                      <input
-                        type="number"
-                        value={sel.dx ?? 0}
-                        onChange={(e) => setElementProp(selected.id, { dx: parseFloat(e.target.value) || 0 })}
-                        className="w-16 rounded border border-[color:var(--color-border)] bg-transparent px-1.5 py-1 text-sm text-navy focus:outline-none focus:border-stone"
-                      />
-                    </label>
-                    <label className="flex items-center gap-1.5 text-xs text-muted">
-                      Y
-                      <input
-                        type="number"
-                        value={sel.dy ?? 0}
-                        onChange={(e) => setElementProp(selected.id, { dy: parseFloat(e.target.value) || 0 })}
-                        className="w-16 rounded border border-[color:var(--color-border)] bg-transparent px-1.5 py-1 text-sm text-navy focus:outline-none focus:border-stone"
-                      />
-                    </label>
-                    {Boolean(sel.dx || sel.dy) && (
-                      <button type="button" onClick={() => setElementProp(selected.id, { dx: undefined, dy: undefined })} className="text-quiet hover:text-navy text-xs">Reset</button>
-                    )}
+                {/* Size & position (free-drag + scale) */}
+                <div className="flex flex-col gap-3">
+                  <div className="flex flex-col gap-2">
+                    <span className="text-quiet text-xs">Position offset (drag on the page, or nudge)</span>
+                    <div className="flex items-center gap-2">
+                      <label className="flex items-center gap-1.5 text-xs text-muted">
+                        X
+                        <input
+                          type="number"
+                          value={sel.dx ?? 0}
+                          onChange={(e) => setElementProp(selected.id, { dx: parseFloat(e.target.value) || 0 })}
+                          className="w-16 rounded border border-[color:var(--color-border)] bg-transparent px-1.5 py-1 text-sm text-navy focus:outline-none focus:border-stone"
+                        />
+                      </label>
+                      <label className="flex items-center gap-1.5 text-xs text-muted">
+                        Y
+                        <input
+                          type="number"
+                          value={sel.dy ?? 0}
+                          onChange={(e) => setElementProp(selected.id, { dy: parseFloat(e.target.value) || 0 })}
+                          className="w-16 rounded border border-[color:var(--color-border)] bg-transparent px-1.5 py-1 text-sm text-navy focus:outline-none focus:border-stone"
+                        />
+                      </label>
+                      {Boolean(sel.dx || sel.dy) && (
+                        <button type="button" onClick={() => setElementProp(selected.id, { dx: undefined, dy: undefined })} className="text-quiet hover:text-navy text-xs">Reset</button>
+                      )}
+                    </div>
                   </div>
+                  <label className="flex flex-col gap-1">
+                    <span className="text-quiet text-xs">
+                      Scale ({(sel.scale ?? 1).toFixed(2)}×)
+                    </span>
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="range" min={0.5} max={4} step={0.05}
+                        value={sel.scale ?? 1}
+                        onChange={(e) => setElementProp(selected.id, { scale: parseFloat(e.target.value) })}
+                        className="w-full accent-navy"
+                      />
+                      {typeof sel.scale === 'number' && sel.scale !== 1 && (
+                        <button type="button" onClick={() => setElementProp(selected.id, { scale: undefined })} className="text-quiet hover:text-navy text-xs shrink-0">Reset</button>
+                      )}
+                    </div>
+                  </label>
                 </div>
 
                 <button

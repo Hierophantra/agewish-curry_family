@@ -126,10 +126,20 @@ export function elementInlineStyle(style: ElementStyle): Record<string, string> 
   if (style.color) out['color'] = style.color
   if (style.background) out['background-color'] = style.background
   if (typeof style.fontSize === 'number') out['font-size'] = `${style.fontSize}px`
+  const transform = transformValue(style)
+  if (transform) out['transform'] = transform
+  return out
+}
+
+// Compose a CSS transform from the free-drag offset + scale multiplier. Returns
+// '' when neither is set so callers can skip emitting the property.
+export function transformValue(style: ElementStyle): string {
   const dx = style.dx ?? 0
   const dy = style.dy ?? 0
-  if (dx !== 0 || dy !== 0) out['transform'] = `translate(${dx}px, ${dy}px)`
-  return out
+  const parts: string[] = []
+  if (dx !== 0 || dy !== 0) parts.push(`translate(${dx}px, ${dy}px)`)
+  if (typeof style.scale === 'number' && style.scale !== 1) parts.push(`scale(${style.scale})`)
+  return parts.join(' ')
 }
 
 // Build CSS rules ( [data-edit-id="X"] { ... } ) for a resolved element map.

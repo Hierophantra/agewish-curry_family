@@ -304,9 +304,12 @@ export const ElementStyleSchema = z.object({
   color: HexColor,                                   // text / foreground color
   background: HexColor,                              // background color
   fontSize: z.number().min(8).max(160).optional(),  // px
+  // text: an empty string is a meaningful override (renders the element blank);
+  // omit the key entirely (Reset in the editor) to fall back to the natural text.
   text: z.string().max(2000).optional(),             // text-content override
   dx: z.number().min(-4000).max(4000).optional(),    // free-drag X offset (px)
   dy: z.number().min(-4000).max(4000).optional(),    // free-drag Y offset (px)
+  scale: z.number().min(0.1).max(6).optional(),      // size multiplier (transform: scale)
 }).default({})
 
 // Per-page overrides are keyed by pathname (e.g. "/tree"). Sitewide values
