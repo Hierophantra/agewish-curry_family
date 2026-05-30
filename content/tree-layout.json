@@ -1,3 +1,36 @@
 {
-  "nodes": {}
+  "nodes": {
+    "tony-manuel": {
+      "x": 25,
+      "y": 2
+    },
+    "andre-manuel": {
+      "x": 25.5,
+      "y": 3.5
+    },
+    "tony-manuel-jr": {
+      "x": 26,
+      "y": 5
+    },
+    "regina-graham": {
+      "x": 21,
+      "y": 2.5
+    },
+    "graham-curry": {
+      "x": 21,
+      "y": 3.5
+    },
+    "sherry-stolfo": {
+      "x": 19,
+      "y": 2.5
+    },
+    "jalen-curry": {
+      "x": 19,
+      "y": 3.5
+    },
+    "jasmine-manuel": {
+      "x": 26.5,
+      "y": 3.5
+    }
+  }
 }
