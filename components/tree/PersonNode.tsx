@@ -34,10 +34,10 @@ interface PersonNodeProps {
   style: CSSProperties
 }
 
-// node is accepted as a prop (required by FamilyTreeCanvas) but not rendered directly
-// - we render `name` (resolved by canvas) instead of node.id
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export default function PersonNode({ node: _node, name, isActive, isFocused, relationLabel, deathYear, isSpouseByMarriage, isDimmed, colorOverride, draggable, onClick, onPointerDown, onRef, style }: PersonNodeProps) {
+// We render `name` (resolved by canvas) for display, and use node.id to build
+// stable per-card data-edit-ids so the Shift+E visual editor can style/retext
+// each card's name + relation label individually (same system as the home page).
+export default function PersonNode({ node, name, isActive, isFocused, relationLabel, deathYear, isSpouseByMarriage, isDimmed, colorOverride, draggable, onClick, onPointerDown, onRef, style }: PersonNodeProps) {
   // Founders get a warm gold treatment so the eye starts at the top of the tree.
   const isFounder = relationLabel === 'PATRIARCH' || relationLabel === 'MATRIARCH'
 
@@ -104,6 +104,9 @@ export default function PersonNode({ node: _node, name, isActive, isFocused, rel
           name itself can read as lesser legitimacy). Muted color + dashed
           border + small label below carry the "noted only" meaning instead. */}
       <span
+        data-edit-id={`tree-name-${node.id}`}
+        data-edit-label={`${name} · name`}
+        data-edit-kind="text"
         className={[
           'font-serif leading-tight truncate w-full',
           isAltParent ? 'text-muted text-sm' : 'text-navy text-base',
@@ -115,6 +118,9 @@ export default function PersonNode({ node: _node, name, isActive, isFocused, rel
       {/* Relation label - uppercase eyebrow.
           Founders -> gold.  Spouses -> blue-remembrance.  Alt-parents -> muted lowercase. */}
       <span
+        data-edit-id={`tree-label-${node.id}`}
+        data-edit-label={`${name} · relation label`}
+        data-edit-kind="text"
         className={[
           'eyebrow mt-1 truncate w-full',
           isFounder
