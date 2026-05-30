@@ -7,14 +7,17 @@
 // gold rule above the eyebrow, ivory-tinted tree canvas frame with a
 // rounded corner and subtle shadow so the tree feels like a framed plate
 // rather than a flat box.
-import { getPhotos } from '@/lib/content'
+import { getPhotos, getTreeLayout } from '@/lib/content'
 import { getTreeData, findRootId } from '@/lib/tree'
+import { getAdminUser } from '@/lib/admin'
 import FamilyTreeCanvas from '@/components/tree/FamilyTreeCanvas'
 
-export default function TreePage() {
+export default async function TreePage() {
   const rootId = findRootId()
   const { nodes, connectors, canvas, people } = getTreeData(rootId)
   const photos = getPhotos()
+  const treeLayout = getTreeLayout()
+  const adminLogin = await getAdminUser()
 
   return (
     <main className="py-14 md:py-20 px-7 md:px-11 lg:px-15">
@@ -52,6 +55,8 @@ export default function TreePage() {
             canvas={canvas}
             people={people}
             photos={photos}
+            isAdmin={Boolean(adminLogin)}
+            treeLayout={treeLayout}
           />
         </section>
       )}

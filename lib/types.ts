@@ -327,6 +327,22 @@ export const ThemeSchema = z.object({
   pages: z.record(z.string(), ThemePageSchema).default({}),
 }).default({ colors: {}, light: { enabled: false, color: '#E8A91F', x: 50, y: 12, size: 70, opacity: 0.1 }, elements: {}, pages: {} })
 
+// ── Tree layout schema (admin manual arrangement) ──
+// Per-node overrides for the family tree, edited from the tree's Arrange mode
+// (admin only) and committed to content/tree-layout.json. x/y are positions in
+// the same GRID UNITS the tree uses (node.left / node.top); when present they
+// override the auto-computed relatives-tree position. color overrides the
+// node card's background. All optional - an empty file = pure auto-layout.
+export const TreeNodeLayoutSchema = z.object({
+  x: z.number().min(0).max(400).optional(),    // horizontal grid-unit position
+  y: z.number().min(0).max(400).optional(),    // vertical grid-unit position
+  color: HexColor,                              // node card background override
+}).default({})
+
+export const TreeLayoutSchema = z.object({
+  nodes: z.record(z.string(), TreeNodeLayoutSchema).default({}),
+}).default({ nodes: {} })
+
 // ── TypeScript types (derived from schemas - do not manually duplicate) ──
 export type Person = z.infer<typeof PersonSchema>
 export type Photo = z.infer<typeof PhotoSchema>
@@ -343,3 +359,5 @@ export type ThemeColors = z.infer<typeof ThemeColorsSchema>
 export type ThemeLight = z.infer<typeof ThemeLightSchema>
 export type ThemePage = z.infer<typeof ThemePageSchema>
 export type ElementStyle = z.infer<typeof ElementStyleSchema>
+export type TreeLayout = z.infer<typeof TreeLayoutSchema>
+export type TreeNodeLayout = z.infer<typeof TreeNodeLayoutSchema>

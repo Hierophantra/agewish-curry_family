@@ -7,8 +7,8 @@ import 'server-only'
 import { readFileSync } from 'fs'
 import { join } from 'path'
 import { z } from 'zod'
-import { PersonSchema, PhotoSchema, VideoSchema, CollectionSchema, PlaylistSchema, AudioSchema, ChronicleSchema, HeroSchema, ThemeSchema } from './types'
-import type { Person, Photo, Video, Collection, Playlist, Audio, Chronicle, Hero, Theme } from './types'
+import { PersonSchema, PhotoSchema, VideoSchema, CollectionSchema, PlaylistSchema, AudioSchema, ChronicleSchema, HeroSchema, ThemeSchema, TreeLayoutSchema } from './types'
+import type { Person, Photo, Video, Collection, Playlist, Audio, Chronicle, Hero, Theme, TreeLayout } from './types'
 
 // ── Photo URL helper ──
 // Re-exported from lib/utils.ts so server-side imports can use a single source.
@@ -190,6 +190,18 @@ export function getTheme(): Theme {
     return readJSON('theme.json', ThemeSchema)
   } catch {
     return ThemeSchema.parse({})
+  }
+}
+
+// ── Tree layout loader ──
+// Admin manual arrangement of the family tree (per-node position + color).
+// Returns an empty layout if the file is missing/invalid so the tree falls
+// back to the pure auto-computed relatives-tree layout.
+export function getTreeLayout(): TreeLayout {
+  try {
+    return readJSON('tree-layout.json', TreeLayoutSchema)
+  } catch {
+    return TreeLayoutSchema.parse({})
   }
 }
 

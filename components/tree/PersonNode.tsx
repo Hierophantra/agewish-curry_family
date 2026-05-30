@@ -2,7 +2,7 @@
 // 'use client' - needs onClick for selectedId state in parent canvas
 'use client'
 import type { ExtNode } from 'relatives-tree/lib/types'
-import type { CSSProperties } from 'react'
+import type { CSSProperties, PointerEvent as ReactPointerEvent } from 'react'
 
 interface PersonNodeProps {
   node: ExtNode
@@ -24,7 +24,12 @@ interface PersonNodeProps {
    * we dim it so the user can scan the lineage at a glance.
    */
   isDimmed?: boolean
+  /** Admin color override (hex) for the card background, from tree-layout.json. */
+  colorOverride?: string
+  /** True in admin Arrange mode - shows a move cursor and lets the canvas drag it. */
+  draggable?: boolean
   onClick: () => void
+  onPointerDown?: (e: ReactPointerEvent<HTMLButtonElement>) => void
   onRef: (el: HTMLButtonElement | null) => void  // allows canvas to imperatively focus nodes
   style: CSSProperties
 }
@@ -32,7 +37,7 @@ interface PersonNodeProps {
 // node is accepted as a prop (required by FamilyTreeCanvas) but not rendered directly
 // - we render `name` (resolved by canvas) instead of node.id
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export default function PersonNode({ node: _node, name, isActive, isFocused, relationLabel, deathYear, isSpouseByMarriage, isDimmed, onClick, onRef, style }: PersonNodeProps) {
+export default function PersonNode({ node: _node, name, isActive, isFocused, relationLabel, deathYear, isSpouseByMarriage, isDimmed, colorOverride, draggable, onClick, onPointerDown, onRef, style }: PersonNodeProps) {
   // Founders get a warm gold treatment so the eye starts at the top of the tree.
   const isFounder = relationLabel === 'PATRIARCH' || relationLabel === 'MATRIARCH'
 
@@ -54,9 +59,11 @@ export default function PersonNode({ node: _node, name, isActive, isFocused, rel
       ref={onRef}
       type="button"
       onClick={onClick}
+      onPointerDown={onPointerDown}
       className={[
         'relative flex flex-col items-start justify-center px-4 py-2.5',
-        'text-left cursor-pointer overflow-hidden rounded-md',
+        'text-left overflow-hidden rounded-md',
+        draggable ? 'cursor-grab active:cursor-grabbing' : 'cursor-pointer',
         'transition-all duration-200',
         'focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2',
         isActive
@@ -72,7 +79,8 @@ export default function PersonNode({ node: _node, name, isActive, isFocused, rel
                   : 'bg-[color:var(--color-surface)] border-[0.5px] border-stone shadow-sm hover:shadow-md hover:border-gold-deep hover:-translate-y-0.5',
         isDimmed ? 'opacity-35 saturate-[0.85] hover:opacity-60' : '',
       ].join(' ')}
-      style={style}
+      // colorOverride (admin) wins over the className background via inline style.
+      style={colorOverride ? { ...style, backgroundColor: colorOverride } : style}
     >
       {/* Active dot - gold, top-right */}
       {isActive && (
