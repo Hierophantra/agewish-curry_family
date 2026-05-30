@@ -1,7 +1,7 @@
 {
   "nodes": {
     "tony-manuel": {
-      "x": 25,
+      "x": 26,
       "y": 2
     },
     "andre-manuel": {
@@ -31,6 +31,42 @@
     "jasmine-manuel": {
       "x": 26.5,
       "y": 3.5
+    },
+    "galen-curry-jr": {
+      "x": 13.5,
+      "y": 3.5
+    },
+    "mariah-curry": {
+      "x": 14.5,
+      "y": 3.5
+    },
+    "naomi-curry": {
+      "x": 14.5,
+      "y": 5
+    },
+    "kai-curry": {
+      "x": 13.5,
+      "y": 5
+    },
+    "angel-curry": {
+      "x": 16,
+      "y": 3.5
+    },
+    "trace-curry": {
+      "x": 12,
+      "y": 3.5
+    },
+    "laurie-darrisaw": {
+      "x": 11.5,
+      "y": 2.5
+    },
+    "robert-mother": {
+      "x": 2,
+      "y": 0
+    },
+    "dawn-manuel": {
+      "x": 25,
+      "y": 2
     }
   }
 }
