@@ -6,7 +6,7 @@
 // labels) plus parent/child relationship pickers, saved to
 // /api/admin/people/[id]. A "Open full editor" link covers bio/notes/gender.
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
@@ -85,6 +85,18 @@ export default function PersonPanel({ person, photos, people, isAdmin = false, o
 
   const candidatePeople = people.filter((p) => p.id !== person.id)
 
+  // Escape closes the profile (or exits edit mode first if editing). The panel
+  // traps focus, so the tree canvas's own Escape handler doesn't fire here.
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (e.key !== 'Escape') return
+      if (editing) setEditing(false)
+      else onClose()
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [editing, onClose])
+
   function set<K extends keyof typeof f>(key: K, value: string) {
     setF((prev) => ({ ...prev, [key]: value }))
     if (status === 'saved') setStatus('idle')
@@ -136,22 +148,25 @@ export default function PersonPanel({ person, photos, people, isAdmin = false, o
       role="dialog"
       aria-modal="true"
       aria-labelledby={`person-panel-name-${person.id}`}
-      className="fixed bottom-0 inset-x-0 max-h-[80vh] rounded-t-xl md:top-0 md:right-0 md:bottom-auto md:inset-x-auto md:h-screen md:w-[400px] md:rounded-none bg-ivory border-t hairline md:border-t-0 md:border-l z-40 flex flex-col overflow-y-auto"
+      className="fixed bottom-0 inset-x-0 max-h-[80vh] rounded-t-xl md:top-0 md:right-0 md:bottom-auto md:inset-x-auto md:h-screen md:w-[400px] md:rounded-none bg-ivory border-t hairline md:border-t-0 md:border-l z-50 flex flex-col overflow-y-auto"
       style={{ boxShadow: '-8px 0 24px -12px rgba(0,0,0,0.15)' }}
       initial={reduce ? false : { x: '100%', opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       exit={reduce ? { opacity: 0 } : { x: '100%', opacity: 0 }}
       transition={reduce ? { duration: 0 } : { duration: 0.25, ease: 'easeInOut' }}
     >
-      <div className="flex items-center justify-between px-[22px] pt-[22px] pb-0 mb-0">
+      {/* Sticky top bar - the close control stays reachable no matter how far
+          the panel content (incl. the admin edit form) is scrolled. */}
+      <div className="sticky top-0 z-10 bg-ivory/95 backdrop-blur-sm flex items-center justify-between px-[22px] pt-[18px] pb-3">
         <span className="text-gold-deep uppercase tracking-[0.22em] leading-none" style={{ fontSize: '10px' }}>
           {person.eyebrow ?? person.relationLabel ?? ''}
         </span>
         <button
           type="button"
           onClick={onClose}
-          className="text-quiet hover:text-navy transition-colors flex items-center justify-center w-7 h-7 text-2xl leading-none focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-1"
-          aria-label="Close panel"
+          className="shrink-0 flex items-center justify-center w-9 h-9 rounded-full border border-[color:var(--color-border)] bg-[color:var(--color-surface)] text-navy text-xl leading-none hover:bg-[color:var(--color-surface-subtle)] hover:border-gold-deep transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-1"
+          aria-label="Close profile"
+          title="Close"
         >
           ×
         </button>
