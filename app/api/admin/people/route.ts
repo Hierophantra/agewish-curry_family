@@ -115,6 +115,8 @@ export async function POST(request: Request) {
     'gender', 'bio',
     // v3 additions - panel-card display fields
     'motherName', 'fatherName', 'notes',
+    // contact (admin Communications)
+    'email', 'phone',
   ]
   for (const key of optionalScalars) {
     if (typeof body[key] === 'string' && (body[key] as string).trim()) {

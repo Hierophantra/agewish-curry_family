@@ -26,6 +26,8 @@ const EMPTY_INITIAL: PersonFormValues = {
   fatherName: '',
   bio: '',
   notes: '',
+  email: '',
+  phone: '',
   parentIds: [],
   childrenIds: [],
 }

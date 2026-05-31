@@ -33,6 +33,10 @@ export const PersonSchema = z.object({
 
   bio: z.string().optional(),
 
+  // Contact (admin Communications; not shown publicly for now)
+  email: z.string().optional(),
+  phone: z.string().optional(),
+
   // Relations
   photoIds: z.array(z.string()).default([]),
   // Ordered photo ids (≤5) curating the family-tree summary carousel. When set,

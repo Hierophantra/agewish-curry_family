@@ -48,6 +48,8 @@ export interface PersonFormValues {
   fatherName: string
   bio: string
   notes: string
+  email: string
+  phone: string
   parentIds: string[]
   childrenIds: string[]
 }
@@ -140,6 +142,8 @@ export default function EditPersonForm({ mode, personId, initial, allPeople }: P
       if (values.fatherName.trim()) body.fatherName = values.fatherName.trim()
       if (values.bio.trim()) body.bio = values.bio.trim()
       if (values.notes.trim()) body.notes = values.notes.trim()
+      if (values.email.trim()) body.email = values.email.trim()
+      if (values.phone.trim()) body.phone = values.phone.trim()
       body.parentIds = values.parentIds
       body.childrenIds = values.childrenIds
 
@@ -168,7 +172,7 @@ export default function EditPersonForm({ mode, personId, initial, allPeople }: P
     // Scalar fields
     const scalarFields: Array<keyof PersonFormValues> = [
       'name', 'relationLabel', 'eyebrow', 'birthDate', 'deathDate', 'datesLabel', 'birthplace', 'spouseLabel',
-      'gender', 'motherName', 'fatherName', 'bio', 'notes',
+      'gender', 'motherName', 'fatherName', 'bio', 'notes', 'email', 'phone',
     ]
     for (const key of scalarFields) {
       if (values[key] !== initial[key]) {
@@ -461,6 +465,34 @@ export default function EditPersonForm({ mode, personId, initial, allPeople }: P
         />
         <span className={helpClass}>For the archivist&apos;s eyes. Useful for tracking what still needs confirming (e.g. &ldquo;Birth date pending&rdquo;).</span>
       </label>
+
+      {/* Contact - for the admin Communications menu (not shown publicly) */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <label className={labelClass}>
+          <span className={labelTextClass}>Email (private)</span>
+          <input
+            type="email"
+            value={values.email}
+            onChange={(e) => { setValues((prev) => ({ ...prev, email: e.target.value })); if (status === 'saved') setStatus('idle') }}
+            className={inputClass}
+            placeholder="name@example.com"
+            disabled={isDisabled}
+          />
+          <span className={helpClass}>Used only in the admin Communications menu. Not shown on the site.</span>
+        </label>
+        <label className={labelClass}>
+          <span className={labelTextClass}>Phone / mobile (private)</span>
+          <input
+            type="tel"
+            value={values.phone}
+            onChange={(e) => { setValues((prev) => ({ ...prev, phone: e.target.value })); if (status === 'saved') setStatus('idle') }}
+            className={inputClass}
+            placeholder="+1 555 555 5555"
+            disabled={isDisabled}
+          />
+          <span className={helpClass}>For text messages. Admin-only.</span>
+        </label>
+      </div>
 
       {/* Parent picker */}
       {allPeople.length > 0 && (

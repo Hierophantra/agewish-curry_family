@@ -38,6 +38,9 @@ const SCALAR_EDITABLE_FIELDS = [
   'notes',
   // Tree library uses gender for layout symmetry; admin can override
   'gender',
+  // Contact (admin Communications)
+  'email',
+  'phone',
 ] as const
 
 type ScalarField = (typeof SCALAR_EDITABLE_FIELDS)[number]
