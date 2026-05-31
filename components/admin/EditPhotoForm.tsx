@@ -16,10 +16,11 @@
 import { useState, useRef } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import type { Person, Collection, Visibility } from '@/lib/types'
+import type { Person, Collection, Visibility, PhotoRegion } from '@/lib/types'
 import { getPhotoUrl } from '@/lib/utils'
 import VisibilityPicker from '@/components/admin/VisibilityPicker'
 import PeopleTagPicker from '@/components/admin/PeopleTagPicker'
+import PhotoRegionTagger from '@/components/admin/PhotoRegionTagger'
 
 const MAX_FILE_SIZE_BYTES = 4 * 1024 * 1024 // 4MB
 
@@ -34,6 +35,7 @@ export interface PhotoFormValues {
   inHero: boolean
   peopleIds: string[]
   collectionIds: string[]
+  regions: PhotoRegion[]
 }
 
 interface Props {
@@ -177,6 +179,7 @@ export default function EditPhotoForm({
       if (values.inHero) metadata.inHero = true
       if (values.peopleIds.length) metadata.peopleIds = values.peopleIds
       if (values.collectionIds.length) metadata.collectionIds = values.collectionIds
+      if (values.regions.length) metadata.regions = values.regions
 
       const formData = new FormData()
       formData.append('file', selectedFile)
@@ -221,6 +224,9 @@ export default function EditPhotoForm({
     }
     if (JSON.stringify(values.collectionIds) !== JSON.stringify(initial.collectionIds)) {
       body.collectionIds = values.collectionIds
+    }
+    if (JSON.stringify(values.regions) !== JSON.stringify(initial.regions)) {
+      body.regions = values.regions
     }
 
     if (Object.keys(body).length === 0) {
@@ -325,6 +331,24 @@ export default function EditPhotoForm({
           </div>
           <p className={helpClass}>The image cannot be changed after upload. Delete and re-upload to replace.</p>
         </div>
+      )}
+
+      {/* Tag people in the photo (group photos) - draw a box, assign a person */}
+      {mode === 'update' && currentFilename && (
+        <fieldset>
+          <legend className={`${labelTextClass} mb-3`}>Tag people in the photo</legend>
+          <PhotoRegionTagger
+            src={getPhotoUrl({ filename: currentFilename })}
+            allPeople={allPeople}
+            regions={values.regions}
+            peopleIds={values.peopleIds}
+            onChange={({ regions, peopleIds }) => {
+              setValues((prev) => ({ ...prev, regions, peopleIds }))
+              if (status === 'saved') setStatus('idle')
+            }}
+            disabled={isDisabled}
+          />
+        </fieldset>
       )}
 
       {/* ID */}

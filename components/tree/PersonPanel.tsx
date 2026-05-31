@@ -203,19 +203,29 @@ export default function PersonPanel({ person, photos, people, isAdmin = false, o
             </div>
           )}
 
-          <div className="px-[22px] pb-[22px] mt-auto pt-4 flex items-center justify-between gap-3">
-            <Link href={`/person/${person.id}`} className="eyebrow text-quiet hover:text-gold transition-colors">
-              View full page →
-            </Link>
-            {isAdmin && (
-              <button
-                type="button"
-                onClick={() => setEditing(true)}
-                className="text-xs px-3 py-1.5 rounded-md border border-[color:var(--color-border)] text-navy hover:border-gold-deep bg-[color:var(--color-surface)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-gold"
-              >
-                Edit details
-              </button>
-            )}
+          <div className="px-[22px] pb-[22px] mt-auto pt-4 flex flex-col gap-3">
+            <div className="flex items-center justify-between gap-3">
+              <Link href={`/person/${person.id}`} className="eyebrow text-quiet hover:text-gold transition-colors">
+                View full page →
+              </Link>
+              {isAdmin && (
+                <button
+                  type="button"
+                  onClick={() => setEditing(true)}
+                  className="text-xs px-3 py-1.5 rounded-md border border-[color:var(--color-border)] text-navy hover:border-gold-deep bg-[color:var(--color-surface)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+                >
+                  Edit details
+                </button>
+              )}
+            </div>
+            {/* Prominent, labeled close (in addition to the top ×) — closing was hard to find. */}
+            <button
+              type="button"
+              onClick={onClose}
+              className="w-full px-4 py-2.5 rounded-md border border-[color:var(--color-border)] text-navy hover:bg-[color:var(--color-surface-subtle)] hover:border-stone transition-colors text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+            >
+              Close
+            </button>
           </div>
         </>
       ) : (

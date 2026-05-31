@@ -22,6 +22,7 @@ const EMPTY_INITIAL: PhotoFormValues = {
   inHero: false,
   peopleIds: [],
   collectionIds: [],
+  regions: [],
 }
 
 export default async function AdminNewPhotoPage() {

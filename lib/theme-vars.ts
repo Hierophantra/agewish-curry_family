@@ -126,6 +126,7 @@ export function elementInlineStyle(style: ElementStyle): Record<string, string> 
   if (style.color) out['color'] = style.color
   if (style.background) out['background-color'] = style.background
   if (typeof style.fontSize === 'number') out['font-size'] = `${style.fontSize}px`
+  if (typeof style.opacity === 'number') out['opacity'] = String(style.opacity)
   const transform = transformValue(style)
   if (transform) out['transform'] = transform
   return out

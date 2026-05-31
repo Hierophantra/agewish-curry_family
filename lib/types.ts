@@ -75,6 +75,19 @@ export const VisibilitySchema = z.preprocess(
   z.enum(['hidden', 'profile-tree', 'gallery', 'gallery-profile', 'everywhere']),
 ).default('everywhere')
 
+// ── Photo region (face/person box) ──
+// A normalized (0..1) rectangle marking where a person appears in the photo,
+// drawn in the admin editor. Tagging a region also adds the person to the
+// photo's peopleIds (so the photo surfaces on their profile per visibility).
+// Lets the archivist pick individuals out of a group photo.
+export const PhotoRegionSchema = z.object({
+  personId: z.string().min(1),
+  x: z.number().min(0).max(1),   // left, fraction of width
+  y: z.number().min(0).max(1),   // top, fraction of height
+  w: z.number().min(0).max(1),   // width fraction
+  h: z.number().min(0).max(1),   // height fraction
+})
+
 // ── Photo schema ──
 // Photo.filename refers to a file in /public/photos/{filename}, OR a full
 // https URL (Vercel Blob upload).
@@ -92,6 +105,9 @@ export const PhotoSchema = z.object({
   // Tags
   peopleIds: z.array(z.string()).default([]),
   collectionIds: z.array(z.string()).default([]),  // v2 - which collections this photo belongs to
+  // Person regions (group-photo face boxes). Each region's personId is also
+  // present in peopleIds. Optional; absent = no regions drawn.
+  regions: z.array(PhotoRegionSchema).default([]),
 
   // Where this photo is allowed to appear (see VisibilitySchema above)
   visibility: VisibilitySchema,
@@ -316,6 +332,7 @@ export const ElementStyleSchema = z.object({
   dx: z.number().min(-4000).max(4000).optional(),    // free-drag X offset (px)
   dy: z.number().min(-4000).max(4000).optional(),    // free-drag Y offset (px)
   scale: z.number().min(0.1).max(6).optional(),      // size multiplier (transform: scale)
+  opacity: z.number().min(0).max(1).optional(),      // element opacity (e.g. hero glow/fade strength)
 }).default({})
 
 // Per-page overrides are keyed by pathname (e.g. "/tree"). Sitewide values
@@ -386,6 +403,7 @@ export const ScreensSchema = z.object({
 // ── TypeScript types (derived from schemas - do not manually duplicate) ──
 export type Person = z.infer<typeof PersonSchema>
 export type Photo = z.infer<typeof PhotoSchema>
+export type PhotoRegion = z.infer<typeof PhotoRegionSchema>
 export type Video = z.infer<typeof VideoSchema>
 export type Collection = z.infer<typeof CollectionSchema>
 export type Playlist = z.infer<typeof PlaylistSchema>

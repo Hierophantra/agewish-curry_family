@@ -136,6 +136,8 @@ export default function ThemeController({ theme, isAdmin }: Props) {
       else node.style.removeProperty('background-color')
       if (typeof s?.fontSize === 'number') node.style.fontSize = `${s.fontSize}px`
       else node.style.removeProperty('font-size')
+      if (typeof s?.opacity === 'number') node.style.opacity = String(s.opacity)
+      else node.style.removeProperty('opacity')
       const transform = s ? transformValue(s) : ''
       if (transform) node.style.transform = transform
       else node.style.removeProperty('transform')
@@ -789,6 +791,23 @@ export default function ThemeController({ theme, isAdmin }: Props) {
                       />
                       {typeof sel.scale === 'number' && sel.scale !== 1 && (
                         <button type="button" onClick={() => setElementProp(selected.id, { scale: undefined })} className="text-quiet hover:text-navy text-xs shrink-0">Reset</button>
+                      )}
+                    </div>
+                  </label>
+                  <label className="flex flex-col gap-1">
+                    <span className="text-quiet text-xs">
+                      Opacity ({Math.round((sel.opacity ?? 1) * 100)}%)
+                    </span>
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="range" min={0} max={1} step={0.01}
+                        value={sel.opacity ?? 1}
+                        onChange={(e) => setElementProp(selected.id, { opacity: parseFloat(e.target.value) })}
+                        className="w-full accent-navy"
+                        aria-label="Opacity"
+                      />
+                      {typeof sel.opacity === 'number' && (
+                        <button type="button" onClick={() => setElementProp(selected.id, { opacity: undefined })} className="text-quiet hover:text-navy text-xs shrink-0">Reset</button>
                       )}
                     </div>
                   </label>

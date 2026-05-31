@@ -71,16 +71,20 @@ export default function HeroBackdrop({ config }: HeroBackdropProps) {
         )
       })}
 
-      {/* Edge fades only. With the hero text removed (v3.3) the images are the
-          feature, so the middle is left clear - the photo shows at its set
-          opacity. The top fade blends from the translucent sticky nav; the
-          bottom fade eases into the ivory hub section below. */}
+      {/* Edge fades. Split into top + bottom layers so the bottom glow's
+          strength is independently editable via Shift+E (data-edit-id +
+          element opacity). The top fade blends from the translucent sticky nav;
+          the bottom fade eases into the ivory hub section below. */}
       <div
-        className="absolute inset-0"
-        style={{
-          background:
-            'linear-gradient(to bottom, var(--color-ivory) 0%, transparent 18%, transparent 82%, var(--color-ivory) 100%)',
-        }}
+        className="absolute inset-x-0 top-0 h-[22%]"
+        style={{ background: 'linear-gradient(to bottom, var(--color-ivory) 0%, transparent 100%)' }}
+      />
+      <div
+        data-edit-id="hero-bottom-glow"
+        data-edit-label="Hero bottom glow"
+        data-edit-kind="box"
+        className="absolute inset-x-0 bottom-0 h-[22%]"
+        style={{ background: 'linear-gradient(to top, var(--color-ivory) 0%, transparent 100%)' }}
       />
     </div>
   )
