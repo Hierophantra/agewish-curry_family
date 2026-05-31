@@ -29,6 +29,9 @@
     },
     "tree-label-robert-wife": {
       "text": "Spouse"
+    },
+    "hero-bottom-glow": {
+      "opacity": 0.58
     }
   },
   "pages": {}
