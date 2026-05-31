@@ -23,6 +23,20 @@ The Curry Family Hub is evolving from a single private family archive into a
 - **Proactive ideas welcome.** Offer 10/10 A+ suggestions (visual, UX, navigation,
   architecture, features) — Trace explicitly invited them.
 
+## Approved next direction (2026-05-31) — research-first, then build
+A GPT research prompt was produced to de-risk the architecture before building these.
+- **Per-user accounts + personalized post-login dashboard** (replaces the home screen
+  for logged-in members): since-last-login summary, favorites, weather, widgets, nav.
+- **Activity "board"**: feed of what was added + who; entries auto-expire after 15–30 days.
+- **"New" badges** on items a user hasn't viewed (per-user "seen" tracking).
+- **Timeline view** (births/marriages/events). Build it.
+- **Relationship path** ("how am I related to X?"): build it, ship feature-flagged OFF.
+- **Per-user favorites**; **weather widget**.
+- **Crux/blocker:** the app today has NO per-user identity (single shared family
+  password) and NO database (content is JSON-in-git committed via the GitHub API).
+  Per-user features need real per-member auth + a datastore — architecture decided
+  from the research, keeping the archival content model and the multi-tenant goal in mind.
+
 ## Roadmap candidates (beyond current asks)
 - True multi-tenant data model (family id namespacing across content + auth).
 - Per-family admin onboarding + theming presets ("brand kit" per family).
