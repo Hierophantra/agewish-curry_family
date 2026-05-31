@@ -9,6 +9,7 @@
   /* Note: --color-muted (NOT --color-text-muted) → generates text-muted (no double-prefix) */
   --color-navy:      #1F2D5C;
   --color-navy-soft: #2A3A6E;
+  --color-navy-light:#2A3A6E;   /* hover token: ~18 admin buttons use hover:bg-navy-light (was undefined = dead) */
   --color-navy-ink:  #0F162C;   /* deepest navy - used only for lightbox overlays */
   --color-gold:      #E8A91F;
   --color-gold-deep: #B8851A;
@@ -46,6 +47,33 @@
   /* font-semibold (600) and font-bold (700) are intentionally absent. */
   --font-weight-normal: 400;
   --font-weight-medium: 500;
+
+  /* ── v3.6 additive token presets ──
+     SEMANTIC names chosen so they do NOT collide with Tailwind's numeric
+     scales (rounded-sm/md/lg, text-sm, ease-out, …). Existing utilities are
+     untouched; these are the canonical names for new/cleanup work.
+     See .planning/CONTROL_SYSTEM_AUDIT.md §2a. */
+  --radius-control: 8px;          /* inputs, buttons, small controls → rounded-control */
+  --radius-well:    12px;         /* media wells (matches surface-inset) → rounded-well */
+  --radius-card:    16px;         /* cards (matches surface-card) → rounded-card */
+  --text-eyebrow:    0.625rem;    /* 10px - the size most eyebrows actually use → text-eyebrow */
+  --text-eyebrow-sm: 0.5625rem;   /* 9px - TopNav / admin dense labels → text-eyebrow-sm */
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);  /* → ease-out-soft */
+}
+
+/* Documented layering ladder + motion durations, referenced via var() in new
+   code (existing z-NN / duration-NNN utilities are unchanged). The debug
+   overlay reserves the top tier so it always sits above the editor + lightbox. */
+:root {
+  --z-ambient: 30;
+  --z-nav: 40;
+  --z-panel: 50;
+  --z-editor: 95;
+  --z-lightbox: 100;
+  --z-debug: 120;
+  --dur-fast: 200ms;
+  --dur-card: 220ms;
+  --dur-slow: 500ms;
 }
 
 /* ── Custom utilities (Tailwind v4 @utility directive) ── */
@@ -124,6 +152,29 @@
   box-shadow:
     0 1px 2px rgba(31, 45, 92, 0.04),
     0 18px 50px -24px rgba(31, 45, 92, 0.10);
+}
+
+/* Focus-ring convergence target (matches the repeated ring-2 ring-gold
+   ring-offset-2 recipe used ~47x). New code can use .focus-ring; existing
+   inline strings keep working. */
+@utility focus-ring {
+  outline: none;
+}
+.focus-ring:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-gold);
+}
+
+/* Hover-lift convergence target (the card micro-interaction, on the canonical
+   220ms/ease-out-soft motion). Convergence for the 5 hand-rolled media cards. */
+@utility hover-lift {
+  transition: transform var(--dur-card) var(--ease-out-soft), box-shadow var(--dur-card) var(--ease-out-soft);
+}
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 2px 4px rgba(31, 45, 92, 0.06),
+    0 16px 40px -16px rgba(184, 133, 26, 0.18);
 }
 
 /* Paper-grain texture overlay - subtle SVG noise, base64'd inline so no extra

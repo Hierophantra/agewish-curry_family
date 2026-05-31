@@ -11,6 +11,7 @@ import TopNav from '@/components/layout/TopNav'
 import Footer from '@/components/layout/Footer'
 import AmbientLight from '@/components/theme/AmbientLight'
 import ThemeController from '@/components/theme/ThemeController'
+import DebugOverlay from '@/components/debug/DebugOverlay'
 import { getAdminUser } from '@/lib/admin'
 import { getTheme } from '@/lib/content'
 
@@ -38,6 +39,8 @@ export default async function ProtectedLayout({
       <Footer />
       {/* Theme applier + Shift+E editor (editor UI is admin-only). */}
       <ThemeController theme={theme} isAdmin={Boolean(adminLogin)} />
+      {/* Read-only debug overlay (Shift+D) — admin-only, never writes. */}
+      <DebugOverlay theme={theme} isAdmin={Boolean(adminLogin)} />
     </div>
   )
 }

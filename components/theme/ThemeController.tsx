@@ -24,7 +24,7 @@ import { usePathname } from 'next/navigation'
 import type { Theme, ThemeColors, ThemeLight, ElementStyle } from '@/lib/types'
 import {
   COLOR_KEYS, COLOR_LABEL, COLOR_DEFAULT, COLOR_VAR,
-  resolveVars, resolveElements, transformValue,
+  resolveVars, resolveElements, transformValue, contrastVerdict,
 } from '@/lib/theme-vars'
 
 interface Props {
@@ -400,6 +400,25 @@ export default function ThemeController({ theme, isAdmin }: Props) {
     setStatus('idle')
   }
 
+  // ── Bulk reset (operate on the DRAFT, so Cancel still restores the last save) ──
+  function resetThisPage() {
+    if (!window.confirm(`Reset all overrides for ${pathname}? (You can still Cancel before saving.)`)) return
+    setDraft((prev) => {
+      const next = cloneTheme(prev)
+      if (next.pages) delete next.pages[pathname]
+      return next
+    })
+    setSelectedId(null)
+    if (status === 'saved') setStatus('idle')
+  }
+
+  function resetEverything() {
+    if (!window.confirm('Reset ALL appearance overrides (sitewide colors, light, elements, and every page)? (You can still Cancel before saving.)')) return
+    setDraft({ colors: {}, light: { enabled: false, color: '#E8A91F', x: 50, y: 12, size: 70, opacity: 0.1 }, elements: {}, pages: {} } as Theme)
+    setSelectedId(null)
+    if (status === 'saved') setStatus('idle')
+  }
+
   // Non-admins render no UI, but the applier effect above still runs for them.
   if (!isAdmin) return null
 
@@ -407,6 +426,14 @@ export default function ThemeController({ theme, isAdmin }: Props) {
     ? elementsOnPage.find((e) => e.id === selectedId) ?? { id: selectedId, label: selectedId, kind: 'box' }
     : null
   const sel: ElementStyle = selectedId ? elementEffective(selectedId) : {}
+
+  // Advisory contrast check for the selected element's editable color, measured
+  // against a sensible reference (text color vs the page background; a box
+  // background vs navy text). Non-blocking — guards legibility per a11y audit.
+  const pageBg = draft.colors?.ivory ?? COLOR_DEFAULT.ivory
+  const navyText = draft.colors?.navy ?? COLOR_DEFAULT.navy
+  const textContrast = selected?.kind === 'text' && sel.color ? contrastVerdict(sel.color, pageBg) : null
+  const bgContrast = selected?.kind === 'box' && sel.background ? contrastVerdict(navyText, sel.background) : null
 
   return (
     <>
@@ -476,6 +503,15 @@ export default function ThemeController({ theme, isAdmin }: Props) {
                 ? 'Changes apply to every page.'
                 : `Changes apply only to ${pathname}.`}
             </p>
+            {/* Bulk reset — operates on the draft, so Cancel still restores the last save. */}
+            <div className="flex items-center gap-3 mt-2.5">
+              <button type="button" onClick={resetThisPage} className="text-quiet hover:text-navy text-xs underline underline-offset-2">
+                Reset this page
+              </button>
+              <button type="button" onClick={resetEverything} className="text-quiet hover:text-red-600 text-xs underline underline-offset-2">
+                Reset everything
+              </button>
+            </div>
           </div>
 
           {/* Scrollable controls */}
@@ -563,6 +599,11 @@ export default function ThemeController({ theme, isAdmin }: Props) {
                         <button type="button" onClick={() => setElementProp(selected.id, { color: undefined })} className="text-quiet hover:text-navy text-xs">Reset</button>
                       )}
                     </div>
+                    {textContrast && !textContrast.pass && (
+                      <p className="text-[11px] text-red-600 -mt-1">
+                        Low contrast ({textContrast.ratio}:1) against the page background — aim for {textContrast.threshold}:1.
+                      </p>
+                    )}
                     {/* Font size */}
                     <label className="flex flex-col gap-1">
                       <span className="text-quiet text-xs">
@@ -599,6 +640,11 @@ export default function ThemeController({ theme, isAdmin }: Props) {
                     )}
                   </div>
                 )}
+                {bgContrast && !bgContrast.pass && (
+                  <p className="text-[11px] text-red-600 -mt-2">
+                    Low contrast ({bgContrast.ratio}:1) between navy text and this background — aim for {bgContrast.threshold}:1.
+                  </p>
+                )}
 
                 {/* Size & position (free-drag + scale) */}
                 <div className="flex flex-col gap-3">
@@ -608,18 +654,18 @@ export default function ThemeController({ theme, isAdmin }: Props) {
                       <label className="flex items-center gap-1.5 text-xs text-muted">
                         X
                         <input
-                          type="number"
+                          type="number" min={-4000} max={4000} step={1}
                           value={sel.dx ?? 0}
-                          onChange={(e) => setElementProp(selected.id, { dx: parseFloat(e.target.value) || 0 })}
+                          onChange={(e) => setElementProp(selected.id, { dx: Math.max(-4000, Math.min(4000, parseFloat(e.target.value) || 0)) })}
                           className="w-16 rounded border border-[color:var(--color-border)] bg-transparent px-1.5 py-1 text-sm text-navy focus:outline-none focus:border-stone"
                         />
                       </label>
                       <label className="flex items-center gap-1.5 text-xs text-muted">
                         Y
                         <input
-                          type="number"
+                          type="number" min={-4000} max={4000} step={1}
                           value={sel.dy ?? 0}
-                          onChange={(e) => setElementProp(selected.id, { dy: parseFloat(e.target.value) || 0 })}
+                          onChange={(e) => setElementProp(selected.id, { dy: Math.max(-4000, Math.min(4000, parseFloat(e.target.value) || 0)) })}
                           className="w-16 rounded border border-[color:var(--color-border)] bg-transparent px-1.5 py-1 text-sm text-navy focus:outline-none focus:border-stone"
                         />
                       </label>
