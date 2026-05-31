@@ -12,9 +12,14 @@ import Link from 'next/link'
 import StarMark from '@/components/ui/StarMark'
 import NavTabs from '@/components/layout/NavTabs'
 import { getSite } from '@/lib/content'
+import { getAdminUser } from '@/lib/admin'
 
-export default function TopNav() {
+export default async function TopNav() {
   const site = getSite()
+  // Admin-only: a way back to the admin menu from anywhere on the main site.
+  // Server-computed; regular viewers never receive this and can't reach /admin
+  // without the GitHub-OAuth admin gate regardless.
+  const isAdmin = Boolean(await getAdminUser())
   return (
     <header
       data-edit-id="topbar"
@@ -53,8 +58,19 @@ export default function TopNav() {
           </div>
         </Link>
 
-        {/* Nav tabs - center/right (Client island for active state) */}
-        <NavTabs labelOverrides={site.nav.labels} hidden={site.nav.hidden} />
+        {/* Nav tabs + (admin-only) a link back to the admin menu */}
+        <div className="flex items-center gap-2">
+          <NavTabs labelOverrides={site.nav.labels} hidden={site.nav.hidden} />
+          {isAdmin && (
+            <Link
+              href="/admin"
+              className="shrink-0 text-sm rounded-full px-4 py-2 bg-navy text-white hover:bg-navy-light transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2"
+              title="Back to the admin menu"
+            >
+              Admin
+            </Link>
+          )}
+        </div>
       </nav>
     </header>
   )

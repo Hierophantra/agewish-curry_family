@@ -7,7 +7,6 @@ import { getPhotos } from '@/lib/content'
 import { getPhotoUrl } from '@/lib/utils'
 import { requireAdminOrRedirect } from '@/lib/admin'
 import type { Photo } from '@/lib/types'
-import ImportHeroButton from '@/components/admin/ImportHeroButton'
 
 export const metadata = {
   title: 'Photographs · Admin · The Curry Family',
@@ -62,10 +61,8 @@ export default async function AdminPhotosListPage() {
     if (!db) return -1
     return db.localeCompare(da)
   })
-  // Hero images are admin-only (visibility hidden) — show them as a separate
-  // "Hero images" folder so they can be cropped/tagged, kept out of the main
-  // gallery list. The public never sees them (hidden + no collection).
-  const heroPhotos = sorted.filter((p) => p.inHero)
+  // Hero images (inHero) are managed in the Hero admin menu, not here. Keep the
+  // Photographs list to non-hero photos so they don't clutter it.
   const regularPhotos = sorted.filter((p) => !p.inHero)
 
   return (
@@ -89,23 +86,6 @@ export default async function AdminPhotosListPage() {
       <p className="font-serif italic text-muted text-base mb-9">
         {regularPhotos.length} {regularPhotos.length === 1 ? 'photograph' : 'photographs'} in the archive.
       </p>
-
-      {/* Hero images folder - admin-only; croppable/taggable like any photo but
-          never shown in the public gallery (visibility hidden, no collection). */}
-      <section className="mb-12 surface-card-static p-6">
-        <div className="flex items-end justify-between gap-4 mb-1">
-          <h2 className="font-serif text-navy text-2xl">Hero images</h2>
-          <ImportHeroButton />
-        </div>
-        <p className="text-quiet text-xs mb-5 max-w-2xl">
-          The home-page rotation images. Admin-only — these never appear in the public Photographs gallery. Open one to crop a person out of it and tag them; set that person&rsquo;s visibility to show the cropped image on their profile or tree. Click &ldquo;Import hero images&rdquo; once to bring your current rotation in.
-        </p>
-        {heroPhotos.length === 0 ? (
-          <p className="text-muted text-sm font-serif italic">No hero images imported yet. Click &ldquo;Import hero images&rdquo; to pull in your current rotation.</p>
-        ) : (
-          <PhotoGridSection photos={heroPhotos} />
-        )}
-      </section>
 
       {regularPhotos.length === 0 ? (
         <p className="text-muted text-sm font-serif italic">No photographs yet. Upload the first one.</p>

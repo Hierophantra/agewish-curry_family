@@ -104,6 +104,10 @@ This project uses GSD (Get Stuff Done) for phase-driven execution.
 12. **Home curated previews** — featured video, recent photos on home page
 13. **Real content** — replace stubs with actual family media
 
+## Platform direction (see .planning/PLATFORM_VISION.md)
+
+This is evolving into a **multi-family product** to sell: each family is a tenant with its own admin + menus, managed by that family's admin or by Trace. Build everything to **generalize** (no hardcoded family names/emails/strings — drive from `content/*.json` + tokens), keep extending disciplined admin control, and make branding/recipients configurable (notify email trace@agewish, configurable per family). Proactive A+ suggestions are welcome.
+
 ## Configurability contract (v3.6 — see .planning/CONTROL_SYSTEM_AUDIT.md)
 
 "Everything important can be changed within a disciplined design system" — controlled flexibility, not per-pixel chaos. Three mechanisms, with clear ownership. **Do not hardcode user-facing strings in components.**

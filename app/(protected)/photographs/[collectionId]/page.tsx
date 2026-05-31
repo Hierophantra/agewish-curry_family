@@ -44,7 +44,7 @@ export default function CollectionDetailPage({ params }: Props) {
             {collection.subtitle}
           </p>
         )}
-        {collection.dateLabel && (
+        {collection.dateLabel && collection.dateLabel !== collection.subtitle && (
           <p className="eyebrow text-quiet mb-2">{collection.dateLabel}</p>
         )}
         {collection.description && (

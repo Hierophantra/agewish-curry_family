@@ -43,7 +43,7 @@ export default function CollectionCard({ collection, photoCount }: CollectionCar
 
       {/* Card metadata: dateLabel eyebrow + title + subtitle + photo count */}
       <div className="absolute bottom-0 left-0 right-0 p-5">
-        {collection.dateLabel && (
+        {collection.dateLabel && collection.dateLabel !== collection.subtitle && (
           <p className="eyebrow text-white/80 mb-1.5 text-[10px]">{collection.dateLabel}</p>
         )}
         <h3 className="font-serif text-white text-xl leading-tight mb-1">{collection.title}</h3>
