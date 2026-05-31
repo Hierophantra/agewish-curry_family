@@ -286,7 +286,11 @@
         "w": 0.1,
         "h": 0.067
       }
-    ]
+    ],
+    "peopleVisibility": {
+      "mark-curry": "profile-tree",
+      "elston-curry": "profile-tree"
+    }
   },
   {
     "id": "galen-cheryl-wedding-17",
