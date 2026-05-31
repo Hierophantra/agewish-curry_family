@@ -313,14 +313,27 @@
     "dateLabel": "November 23, 2021",
     "peopleIds": [
       "galen-curry-sr",
-      "cheryl-curry"
+      "cheryl-curry",
+      "dawn-manuel"
     ],
     "collectionIds": [
       "galen-cheryl-wedding"
     ],
     "source": "Curry family archive",
     "confidence": "high",
-    "visibility": "gallery"
+    "visibility": "gallery",
+    "regions": [
+      {
+        "personId": "dawn-manuel",
+        "x": 0.338,
+        "y": 0.412,
+        "w": 0.102,
+        "h": 0.079
+      }
+    ],
+    "peopleVisibility": {
+      "dawn-manuel": "profile-tree"
+    }
   },
   {
     "id": "galen-cheryl-wedding-18",
