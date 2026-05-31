@@ -93,16 +93,29 @@ export default function PhotoRegionTagger({ src, allPeople, regions, peopleIds, 
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={src} alt="" className="block w-full h-auto" draggable={false} />
 
-        {/* Saved regions */}
+        {/* Saved regions. The label sits INSIDE the box (top-0) so the frame's
+            overflow-hidden never clips it. stopPropagation on pointerdown keeps
+            the frame's draw handler from swallowing the remove click. */}
         {regions.map((r, i) => (
           <div
             key={`${r.personId}-${i}`}
             className="absolute border-2 border-gold bg-gold/10"
             style={{ left: pct(r.x), top: pct(r.y), width: pct(r.w), height: pct(r.h) }}
           >
-            <span className="absolute -top-5 left-0 whitespace-nowrap bg-navy text-white text-[10px] px-1.5 py-0.5 rounded-sm flex items-center gap-1">
+            <span
+              onPointerDown={(e) => e.stopPropagation()}
+              className="absolute top-0 left-0 whitespace-nowrap bg-navy text-white text-[10px] pl-1.5 pr-0.5 py-0.5 rounded-br-sm flex items-center gap-1.5"
+            >
               {byId.get(r.personId)?.name ?? r.personId}
-              <button type="button" onClick={() => removeRegion(i)} aria-label="Remove region" className="hover:text-gold-soft">×</button>
+              <button
+                type="button"
+                onPointerDown={(e) => e.stopPropagation()}
+                onClick={(e) => { e.stopPropagation(); removeRegion(i) }}
+                aria-label={`Remove ${byId.get(r.personId)?.name ?? r.personId} tag`}
+                className="w-4 h-4 grid place-items-center rounded-full hover:bg-white/25 text-white text-sm leading-none"
+              >
+                ×
+              </button>
             </span>
           </div>
         ))}
