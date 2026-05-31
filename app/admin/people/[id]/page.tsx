@@ -77,6 +77,7 @@ export default async function AdminEditPersonPage({ params }: { params: { id: st
         personName={person.name}
         photos={linkedPhotos}
         videos={linkedVideos}
+        treeCarouselPhotoIds={person.treeCarouselPhotoIds ?? []}
       />
     </div>
   )

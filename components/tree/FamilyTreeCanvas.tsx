@@ -608,10 +608,19 @@ export default function FamilyTreeCanvas({
         {!arrange && selectedId && (() => {
           const person = people.find((p) => p.id === selectedId)
           if (!person) return null
-          const personPhotos = photos.filter((ph) => {
-            const tagged = ph.peopleIds?.includes(person.id) || person.photoIds.includes(ph.id)
-            return tagged && showsInPersonTree(ph.visibility, ph.peopleVisibility?.[person.id])
-          })
+          // Photos linked to this person (regardless of visibility), for the
+          // curated-order lookup below.
+          const linked = photos.filter((ph) => ph.peopleIds?.includes(person.id) || person.photoIds.includes(ph.id))
+          const order = person.treeCarouselPhotoIds ?? []
+          let personPhotos: typeof photos
+          if (order.length > 0) {
+            // Curated selection wins over the visibility filter and sets the order.
+            const byId = new Map(linked.map((p) => [p.id, p]))
+            personPhotos = order.map((id) => byId.get(id)).filter((p): p is Photo => Boolean(p)).slice(0, 5)
+          } else {
+            // Default: all photos this person is allowed to show in the tree panel.
+            personPhotos = linked.filter((ph) => showsInPersonTree(ph.visibility, ph.peopleVisibility?.[person.id]))
+          }
           return (
             <PersonPanel
               key={selectedId}

@@ -31,6 +31,7 @@ interface Props {
   personName: string
   photos: Photo[]   // ALL photos linked to this person (incl. hidden)
   videos: Video[]   // ALL videos linked to this person (incl. hidden)
+  treeCarouselPhotoIds: string[]  // ordered ids curating the family-tree carousel
 }
 
 function videoThumb(v: Video): string | null {
@@ -39,9 +40,37 @@ function videoThumb(v: Video): string | null {
   return null
 }
 
-export default function PersonMediaManager({ personId, personName, photos, videos }: Props) {
+export default function PersonMediaManager({ personId, personName, photos, videos, treeCarouselPhotoIds }: Props) {
   // Optimistic overrides keyed by item id. Take precedence over the prop value.
   const [visOverrides, setVisOverrides] = useState<Record<string, Visibility>>({})
+  const [carousel, setCarousel] = useState<string[]>(treeCarouselPhotoIds ?? [])
+  const [carouselStatus, setCarouselStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle')
+  const photoById = new Map(photos.map((p) => [p.id, p]))
+
+  async function saveCarousel(next: string[]) {
+    setCarousel(next)
+    setCarouselStatus('saving')
+    try {
+      const res = await fetch(`/api/admin/people/${personId}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ treeCarouselPhotoIds: next }),
+      })
+      if (!res.ok) throw new Error((await res.text()) || `${res.status}`)
+      setCarouselStatus('saved')
+    } catch {
+      setCarouselStatus('error')
+    }
+  }
+  const addToCarousel = (id: string) => { if (carousel.length < 5 && !carousel.includes(id)) saveCarousel([...carousel, id]) }
+  const removeFromCarousel = (id: string) => saveCarousel(carousel.filter((x) => x !== id))
+  const moveInCarousel = (i: number, dir: -1 | 1) => {
+    const j = i + dir
+    if (j < 0 || j >= carousel.length) return
+    const next = [...carousel]
+    ;[next[i], next[j]] = [next[j], next[i]]
+    saveCarousel(next)
+  }
   const [removedIds, setRemovedIds] = useState<Set<string>>(new Set())
   const [busyId, setBusyId] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -226,6 +255,66 @@ export default function PersonMediaManager({ personId, personName, photos, video
           />
         </label>
       </div>
+
+      {/* Family-tree carousel order - curate up to 5 photos + order for the
+          tree summary card. The full profile page still shows all photos. */}
+      {visiblePhotos.length > 0 && (
+        <div className="surface-card-static p-6 mb-8">
+          <h3 className="font-serif text-navy text-lg mb-1">Family-tree carousel</h3>
+          <p className="text-quiet text-xs mb-4 max-w-2xl">
+            Pick up to 5 photos and their order for {personName}&rsquo;s family-tree summary card. The full profile page still shows every photo. Leave empty to show all tree-visible photos automatically.
+            {carouselStatus === 'saving' && <span className="text-navy"> · Saving…</span>}
+            {carouselStatus === 'saved' && <span className="text-gold-deep"> · Saved, live in ~90s</span>}
+            {carouselStatus === 'error' && <span className="text-red-600"> · Save failed</span>}
+          </p>
+
+          {carousel.length > 0 ? (
+            <ol className="flex flex-col gap-2 mb-4">
+              {carousel.map((id, i) => {
+                const p = photoById.get(id)
+                return (
+                  <li key={id} className="flex items-center gap-3">
+                    <span className="text-quiet text-xs w-5 text-right tabular-nums">{i + 1}.</span>
+                    <div className="surface-inset w-14 h-14 shrink-0 overflow-hidden border border-[color:var(--color-border)] rounded">
+                      {p
+                        // eslint-disable-next-line @next/next/no-img-element
+                        ? <img src={getPhotoUrl(p)} alt={p.caption ?? ''} className="w-full h-full object-cover" />
+                        : <div className="w-full h-full grid place-items-center text-quiet text-[10px]">missing</div>}
+                    </div>
+                    <span className="text-navy text-sm truncate flex-1">{p?.caption || <span className="text-quiet italic">No caption</span>}</span>
+                    <button type="button" onClick={() => moveInCarousel(i, -1)} disabled={i === 0} className="text-quiet hover:text-navy disabled:opacity-30 px-1" aria-label="Move up">↑</button>
+                    <button type="button" onClick={() => moveInCarousel(i, 1)} disabled={i === carousel.length - 1} className="text-quiet hover:text-navy disabled:opacity-30 px-1" aria-label="Move down">↓</button>
+                    <button type="button" onClick={() => removeFromCarousel(id)} className="text-quiet hover:text-red-600 px-1" aria-label="Remove from carousel">×</button>
+                  </li>
+                )
+              })}
+            </ol>
+          ) : (
+            <p className="font-serif italic text-quiet text-sm mb-4">No photos chosen — the tree shows all tree-visible photos automatically.</p>
+          )}
+
+          {carousel.length < 5 && photos.some((p) => !carousel.includes(p.id)) && (
+            <div>
+              <p className="eyebrow text-quiet mb-2 text-[10px]">Add a photo ({carousel.length}/5)</p>
+              <div className="flex flex-wrap gap-2">
+                {photos.filter((p) => !carousel.includes(p.id)).map((p) => (
+                  <button
+                    key={p.id}
+                    type="button"
+                    onClick={() => addToCarousel(p.id)}
+                    title={p.caption ?? 'Add to carousel'}
+                    aria-label={`Add ${p.caption ?? 'photo'} to the tree carousel`}
+                    className="w-16 h-16 surface-inset overflow-hidden border border-[color:var(--color-border)] rounded hover:ring-2 hover:ring-gold transition-shadow"
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={getPhotoUrl(p)} alt={p.caption ?? ''} className="w-full h-full object-cover" />
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
 
       {!hasMedia && (
         <p className="font-serif italic text-muted text-base">

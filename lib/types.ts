@@ -35,6 +35,11 @@ export const PersonSchema = z.object({
 
   // Relations
   photoIds: z.array(z.string()).default([]),
+  // Ordered photo ids (≤5) curating the family-tree summary carousel. When set,
+  // these exact photos show in the tree panel in this order (overriding the
+  // visibility filter for the selection). Empty = fall back to all tree-visible
+  // photos. The full profile page is unaffected.
+  treeCarouselPhotoIds: z.array(z.string()).default([]),
   parentIds: z.array(z.string()).default([]),
   childrenIds: z.array(z.string()).default([]),  // v2 canonical name
   childIds: z.array(z.string()).default([]),      // v1 back-compat alias

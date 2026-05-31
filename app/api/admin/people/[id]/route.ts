@@ -97,7 +97,18 @@ export async function POST(request: Request, { params }: { params: { id: string 
     }
   }
 
-  const hasChanges = Object.keys(scalarChanges).length > 0 || Object.keys(arrayChanges).length > 0
+  // treeCarouselPhotoIds: a plain ordered string array (no bidirectional sync),
+  // capped at 5. Curates the family-tree summary carousel.
+  let treeCarouselChange: string[] | undefined
+  if ('treeCarouselPhotoIds' in body) {
+    const value = body.treeCarouselPhotoIds
+    if (!Array.isArray(value) || !(value as unknown[]).every((v) => typeof v === 'string')) {
+      return new NextResponse(`Field 'treeCarouselPhotoIds' must be an array of strings`, { status: 400 })
+    }
+    treeCarouselChange = (value as string[]).slice(0, 5)
+  }
+
+  const hasChanges = Object.keys(scalarChanges).length > 0 || Object.keys(arrayChanges).length > 0 || treeCarouselChange !== undefined
   if (!hasChanges) {
     return new NextResponse('No editable fields in body', { status: 400 })
   }
@@ -219,12 +230,19 @@ export async function POST(request: Request, { params }: { params: { id: string 
     person.childIds = newChildrenIds
   }
 
+  // Apply tree-carousel ordering (plain array; empty clears it).
+  if (treeCarouselChange !== undefined) {
+    if (treeCarouselChange.length === 0) delete person.treeCarouselPhotoIds
+    else person.treeCarouselPhotoIds = treeCarouselChange
+  }
+
   const newContent = JSON.stringify(people, null, 2) + '\n'
 
   try {
     const changedFieldList = [
       ...Object.keys(scalarChanges),
       ...Object.keys(arrayChanges),
+      ...(treeCarouselChange !== undefined ? ['treeCarouselPhotoIds'] : []),
     ].join(', ')
     await commitFile({
       accessToken,
