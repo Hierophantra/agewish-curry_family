@@ -363,6 +363,20 @@ export const SiteSchema = z.object({
   }).default({ downloadEnabled: true, downloadLabel: 'Download the archive →', downloadHref: '/api/archive' }),
 }).default({})
 
+// ── Screen section config (show/hide whole sections) ──
+// Boolean section toggles per screen. Mirrors the per-item `visibility` idea at
+// section scope. All default to "today's behavior", so an absent/empty
+// content/screens.json renders the site unchanged. (Header copy is edited in
+// place via Shift+E — appearance lives in theme.json, not here.)
+export const ScreensSchema = z.object({
+  home: z.object({
+    showFeaturedVideo: z.boolean().default(false),  // OFF by default: no new section unless enabled
+  }).default({ showFeaturedVideo: false }),
+  photographs: z.object({
+    showSlideshowLink: z.boolean().default(true),
+  }).default({ showSlideshowLink: true }),
+}).default({})
+
 // ── TypeScript types (derived from schemas - do not manually duplicate) ──
 export type Person = z.infer<typeof PersonSchema>
 export type Photo = z.infer<typeof PhotoSchema>
@@ -382,3 +396,4 @@ export type ElementStyle = z.infer<typeof ElementStyleSchema>
 export type TreeLayout = z.infer<typeof TreeLayoutSchema>
 export type TreeNodeLayout = z.infer<typeof TreeNodeLayoutSchema>
 export type Site = z.infer<typeof SiteSchema>
+export type Screens = z.infer<typeof ScreensSchema>

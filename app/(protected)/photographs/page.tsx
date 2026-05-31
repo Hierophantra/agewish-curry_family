@@ -8,8 +8,10 @@
 // cross-page rhythm is consistent.
 import Link from 'next/link'
 import CollectionGrid from '@/components/gallery/CollectionGrid'
+import { getScreens } from '@/lib/content'
 
 export default function PhotographsPage() {
+  const screens = getScreens()
   return (
     <main className="py-14 md:py-20 px-7 md:px-11 lg:px-15">
       {/* Page header - editorial scale matching the tree page */}
@@ -25,12 +27,14 @@ export default function PhotographsPage() {
         <p data-edit-id="photographs-page-subtitle" data-edit-label="Photographs · page subtitle" data-edit-kind="text" className="font-serif italic text-muted text-lg md:text-xl leading-relaxed">
           Collected memories, organized by theme.
         </p>
-        <Link
-          href="/slideshow"
-          className="eyebrow text-gold-deep hover:text-gold transition-colors mt-6 inline-block"
-        >
-          Play ambient slideshow {'→'}
-        </Link>
+        {screens.photographs.showSlideshowLink && (
+          <Link
+            href="/slideshow"
+            className="eyebrow text-gold-deep hover:text-gold transition-colors mt-6 inline-block"
+          >
+            Play ambient slideshow {'→'}
+          </Link>
+        )}
       </header>
 
       {/* Collection grid - replaces flat photo grid (Phase 8) */}

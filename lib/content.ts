@@ -7,8 +7,8 @@ import 'server-only'
 import { readFileSync } from 'fs'
 import { join } from 'path'
 import { z } from 'zod'
-import { PersonSchema, PhotoSchema, VideoSchema, CollectionSchema, PlaylistSchema, AudioSchema, ChronicleSchema, HeroSchema, ThemeSchema, TreeLayoutSchema, SiteSchema } from './types'
-import type { Person, Photo, Video, Collection, Playlist, Audio, Chronicle, Hero, Theme, TreeLayout, Site } from './types'
+import { PersonSchema, PhotoSchema, VideoSchema, CollectionSchema, PlaylistSchema, AudioSchema, ChronicleSchema, HeroSchema, ThemeSchema, TreeLayoutSchema, SiteSchema, ScreensSchema } from './types'
+import type { Person, Photo, Video, Collection, Playlist, Audio, Chronicle, Hero, Theme, TreeLayout, Site, Screens } from './types'
 
 // ── Photo URL helper ──
 // Re-exported from lib/utils.ts so server-side imports can use a single source.
@@ -236,6 +236,17 @@ export function getSite(): Site {
     return readJSON('site.json', SiteSchema)
   } catch {
     return SiteSchema.parse({})
+  }
+}
+
+// ── Screen section config loader ──
+// Per-screen section show/hide toggles. Missing/invalid file returns defaults
+// (= today's section layout), so it is safe to ship before content/screens.json.
+export function getScreens(): Screens {
+  try {
+    return readJSON('screens.json', ScreensSchema)
+  } catch {
+    return ScreensSchema.parse({})
   }
 }
 
