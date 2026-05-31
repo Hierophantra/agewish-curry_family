@@ -75,6 +75,16 @@ export const VisibilitySchema = z.preprocess(
   z.enum(['hidden', 'profile-tree', 'gallery', 'gallery-profile', 'everywhere']),
 ).default('everywhere')
 
+// ── Per-person photo visibility override ──
+// For a group photo, controls where THIS photo appears relative to ONE tagged
+// person — their profile page and/or family-tree summary. Absent for a person =
+// inherit the photo's base `visibility`. The gallery surface is always governed
+// by the photo-level `visibility` (it is not person-specific).
+//   "hidden"        - not on this person's profile or tree
+//   "profile"       - this person's profile page only
+//   "profile-tree"  - this person's profile page + tree summary
+export const PhotoPersonVisibilitySchema = z.enum(['hidden', 'profile', 'profile-tree'])
+
 // ── Photo region (face/person box) ──
 // A normalized (0..1) rectangle marking where a person appears in the photo,
 // drawn in the admin editor. Tagging a region also adds the person to the
@@ -108,6 +118,10 @@ export const PhotoSchema = z.object({
   // Person regions (group-photo face boxes). Each region's personId is also
   // present in peopleIds. Optional; absent = no regions drawn.
   regions: z.array(PhotoRegionSchema).default([]),
+  // Per-person visibility overrides keyed by personId (a subset of peopleIds).
+  // Absent person = inherit `visibility`. Lets a group photo show differently
+  // on each tagged person's profile/tree. Gallery surface still uses `visibility`.
+  peopleVisibility: z.record(z.string(), PhotoPersonVisibilitySchema).default({}),
 
   // Where this photo is allowed to appear (see VisibilitySchema above)
   visibility: VisibilitySchema,
@@ -404,6 +418,7 @@ export const ScreensSchema = z.object({
 export type Person = z.infer<typeof PersonSchema>
 export type Photo = z.infer<typeof PhotoSchema>
 export type PhotoRegion = z.infer<typeof PhotoRegionSchema>
+export type PhotoPersonVisibility = z.infer<typeof PhotoPersonVisibilitySchema>
 export type Video = z.infer<typeof VideoSchema>
 export type Collection = z.infer<typeof CollectionSchema>
 export type Playlist = z.infer<typeof PlaylistSchema>

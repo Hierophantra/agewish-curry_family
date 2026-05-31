@@ -16,7 +16,7 @@
 import { useState, useRef } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import type { Person, Collection, Visibility, PhotoRegion } from '@/lib/types'
+import type { Person, Collection, Visibility, PhotoRegion, PhotoPersonVisibility } from '@/lib/types'
 import { getPhotoUrl } from '@/lib/utils'
 import VisibilityPicker from '@/components/admin/VisibilityPicker'
 import PeopleTagPicker from '@/components/admin/PeopleTagPicker'
@@ -36,6 +36,7 @@ export interface PhotoFormValues {
   peopleIds: string[]
   collectionIds: string[]
   regions: PhotoRegion[]
+  peopleVisibility: Record<string, PhotoPersonVisibility>
 }
 
 interface Props {
@@ -180,6 +181,12 @@ export default function EditPhotoForm({
       if (values.peopleIds.length) metadata.peopleIds = values.peopleIds
       if (values.collectionIds.length) metadata.collectionIds = values.collectionIds
       if (values.regions.length) metadata.regions = values.regions
+      const createPV: Record<string, PhotoPersonVisibility> = {}
+      for (const pid of values.peopleIds) {
+        const v = values.peopleVisibility[pid]
+        if (v) createPV[pid] = v
+      }
+      if (Object.keys(createPV).length) metadata.peopleVisibility = createPV
 
       const formData = new FormData()
       formData.append('file', selectedFile)
@@ -227,6 +234,15 @@ export default function EditPhotoForm({
     }
     if (JSON.stringify(values.regions) !== JSON.stringify(initial.regions)) {
       body.regions = values.regions
+    }
+    // Per-person visibility, pruned to currently-tagged people.
+    const prunedPV: Record<string, PhotoPersonVisibility> = {}
+    for (const pid of values.peopleIds) {
+      const v = values.peopleVisibility[pid]
+      if (v) prunedPV[pid] = v
+    }
+    if (JSON.stringify(prunedPV) !== JSON.stringify(initial.peopleVisibility)) {
+      body.peopleVisibility = prunedPV
     }
 
     if (Object.keys(body).length === 0) {
@@ -474,6 +490,61 @@ export default function EditPhotoForm({
           mediaNoun="photo"
         />
       </fieldset>
+
+      {/* Per-person visibility (group photos) - override profile/tree per tagged person */}
+      {values.peopleIds.length > 0 && (
+        <fieldset>
+          <legend className={`${labelTextClass} mb-3`}>Per-person visibility</legend>
+          <p className={`${helpClass} mb-3`}>
+            Where this photo appears for each tagged person. “Default” follows the photo visibility above. The Photographs gallery is always controlled by the photo visibility, not per person.
+          </p>
+          <div className="flex flex-col gap-2.5">
+            {values.peopleIds.map((pid) => {
+              const name = allPeople.find((p) => p.id === pid)?.name ?? pid
+              const cur = values.peopleVisibility[pid]
+              const opts: Array<{ v: PhotoPersonVisibility | undefined; label: string }> = [
+                { v: undefined, label: 'Default' },
+                { v: 'hidden', label: 'Hidden' },
+                { v: 'profile', label: 'Profile only' },
+                { v: 'profile-tree', label: 'Profile + tree' },
+              ]
+              return (
+                <div key={pid} className="flex items-center justify-between gap-3 flex-wrap">
+                  <span className="text-navy text-sm">{name}</span>
+                  <div className="flex flex-wrap gap-1" role="group" aria-label={`Visibility for ${name}`}>
+                    {opts.map((o) => {
+                      const active = (cur ?? undefined) === o.v
+                      return (
+                        <button
+                          key={o.label}
+                          type="button"
+                          disabled={isDisabled}
+                          aria-pressed={active}
+                          onClick={() => {
+                            setValues((prev) => {
+                              const map = { ...prev.peopleVisibility }
+                              if (o.v) map[pid] = o.v
+                              else delete map[pid]
+                              return { ...prev, peopleVisibility: map }
+                            })
+                            if (status === 'saved') setStatus('idle')
+                          }}
+                          className={[
+                            'px-2.5 py-1 rounded text-xs border transition-colors',
+                            active ? 'border-navy bg-navy text-white' : 'border-[color:var(--color-border)] text-muted hover:text-navy',
+                          ].join(' ')}
+                        >
+                          {o.label}
+                        </button>
+                      )
+                    })}
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </fieldset>
+      )}
 
       {/* Collections picker */}
       <fieldset>

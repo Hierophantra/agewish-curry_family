@@ -10,7 +10,7 @@ import { z } from 'zod'
 import { PersonSchema, PhotoSchema, VideoSchema, CollectionSchema, PlaylistSchema, AudioSchema, ChronicleSchema, HeroSchema, ThemeSchema, TreeLayoutSchema, SiteSchema, ScreensSchema } from './types'
 import type { Person, Photo, Video, Collection, Playlist, Audio, Chronicle, Hero, Theme, TreeLayout, Site, Screens } from './types'
 import { HeroImageSchema } from './types'
-import { showsInGallery, showsOnProfilePage } from './visibility'
+import { showsInGallery, showsOnProfilePage, showsOnPersonProfile } from './visibility'
 import { getPhotoUrl as photoUrl } from './utils'
 
 // ── Photo URL helper ──
@@ -133,7 +133,8 @@ export function getFeaturedVideos(): Video[] {
 // and "hidden" do not.
 export function getPhotosByPersonId(personId: string): Photo[] {
   return getPhotos().filter(
-    (p) => p.peopleIds?.includes(personId) && showsOnProfilePage(p.visibility),
+    (p) => p.peopleIds?.includes(personId)
+      && showsOnPersonProfile(p.visibility, p.peopleVisibility?.[personId]),
   )
 }
 

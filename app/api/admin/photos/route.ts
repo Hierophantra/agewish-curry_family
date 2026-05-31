@@ -61,6 +61,7 @@ export async function POST(request: Request) {
     notes?: unknown
     visibility?: unknown
     inHero?: unknown
+    peopleVisibility?: unknown
     peopleIds?: unknown
     collectionIds?: unknown
   }
@@ -198,6 +199,16 @@ export async function POST(request: Request) {
   // Hero add-on (independent of base visibility)
   if (metadata.inHero === true) {
     newPhoto.inHero = true
+  }
+  // Per-person visibility overrides (keys must be tagged people; valid values).
+  if (metadata.peopleVisibility && typeof metadata.peopleVisibility === 'object' && !Array.isArray(metadata.peopleVisibility)) {
+    const allowed = new Set(['hidden', 'profile', 'profile-tree'])
+    const tagged = new Set(newPhoto.peopleIds as string[])
+    const pv: Record<string, string> = {}
+    for (const [pid, val] of Object.entries(metadata.peopleVisibility as Record<string, unknown>)) {
+      if (tagged.has(pid) && typeof val === 'string' && allowed.has(val)) pv[pid] = val
+    }
+    if (Object.keys(pv).length) newPhoto.peopleVisibility = pv
   }
   if (blurDataUrl) {
     newPhoto.blurDataUrl = blurDataUrl

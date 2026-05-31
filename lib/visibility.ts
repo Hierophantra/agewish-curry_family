@@ -4,7 +4,7 @@
 // components (FamilyTreeCanvas) share one source of truth. Legacy 'profile' is
 // normalized to 'profile-tree' at parse time (see VisibilitySchema), so these
 // only ever see the current enum values.
-import type { Visibility } from '@/lib/types'
+import type { Visibility, PhotoPersonVisibility } from '@/lib/types'
 
 // Appears in the main gallery section (Photographs / Videos).
 export function showsInGallery(v: Visibility | undefined): boolean {
@@ -19,4 +19,22 @@ export function showsOnProfilePage(v: Visibility | undefined): boolean {
 // Appears in the family-tree summary panel (PersonPanel carousel).
 export function showsInTreePanel(v: Visibility | undefined): boolean {
   return v === 'profile-tree' || v === 'everywhere'
+}
+
+// ── Per-person effective visibility (group photos) ──
+// `override` is the photo's peopleVisibility[personId] (undefined = inherit the
+// photo's base visibility). Controls THIS person's profile page + tree panel.
+
+// Does the photo show on this person's full profile page?
+export function showsOnPersonProfile(base: Visibility | undefined, override: PhotoPersonVisibility | undefined): boolean {
+  if (override === 'hidden') return false
+  if (override === 'profile' || override === 'profile-tree') return true
+  return showsOnProfilePage(base) // inherit
+}
+
+// Does the photo show in this person's family-tree summary panel?
+export function showsInPersonTree(base: Visibility | undefined, override: PhotoPersonVisibility | undefined): boolean {
+  if (override === 'hidden' || override === 'profile') return false
+  if (override === 'profile-tree') return true
+  return showsInTreePanel(base) // inherit
 }
