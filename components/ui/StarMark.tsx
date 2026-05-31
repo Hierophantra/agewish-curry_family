@@ -8,12 +8,14 @@ import Image from 'next/image'
 interface StarMarkProps {
   size?: number
   className?: string
+  /** Brand mark source. Defaults to the bundled PNG; overridable via content/site.json. */
+  src?: string
 }
 
-export default function StarMark({ size = 20, className = '' }: StarMarkProps) {
+export default function StarMark({ size = 20, className = '', src = '/images/aw-symbol-2x.png' }: StarMarkProps) {
   return (
     <Image
-      src="/images/aw-symbol-2x.png"
+      src={src}
       alt=""
       width={size}
       height={size}

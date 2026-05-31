@@ -11,7 +11,9 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 
-const TABS = [
+// Canonical nav routes (route STRUCTURE stays in code). Exported so the
+// /admin/site editor can present per-route label overrides without duplicating.
+export const TABS = [
   { href: '/', label: 'Home' },
   { href: '/tree', label: 'Family tree' },
   { href: '/photographs', label: 'Photographs' },
@@ -19,12 +21,20 @@ const TABS = [
   { href: '/chronicles', label: 'Chronicles' },
 ] as const
 
-export default function NavTabs() {
+interface NavTabsProps {
+  /** href -> override label, from content/site.json (nav.labels). */
+  labelOverrides?: Record<string, string>
+  /** hrefs to hide from the nav, from content/site.json (nav.hidden). */
+  hidden?: string[]
+}
+
+export default function NavTabs({ labelOverrides = {}, hidden = [] }: NavTabsProps) {
   const pathname = usePathname()
 
   return (
     <div className="overflow-x-auto scrollbar-none flex items-center gap-1">
-      {TABS.map((tab) => {
+      {TABS.filter((tab) => !hidden.includes(tab.href)).map((tab) => {
+        const label = labelOverrides[tab.href] ?? tab.label
         // Home tab active only on exact match; others match prefix
         const isActive =
           tab.href === '/'
@@ -43,7 +53,7 @@ export default function NavTabs() {
                 : 'text-muted hover:text-navy hover:bg-[color:var(--color-surface-subtle)]',
             )}
           >
-            {tab.label}
+            {label}
           </Link>
         )
       })}

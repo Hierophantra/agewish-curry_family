@@ -17,11 +17,11 @@ export default function VideosPage() {
           <span className="block w-10 h-px bg-gold-deep" />
           <span className="block w-1.5 h-1.5 rounded-full bg-gold" />
         </div>
-        <p className="eyebrow text-gold-deep mb-4">Family archive</p>
-        <h1 className="font-serif text-navy text-5xl md:text-6xl mb-4 leading-tight">
+        <p data-edit-id="videos-page-eyebrow" data-edit-label="Videos · page eyebrow" data-edit-kind="text" className="eyebrow text-gold-deep mb-4">Family archive</p>
+        <h1 data-edit-id="videos-page-title" data-edit-label="Videos · page title" data-edit-kind="text" className="font-serif text-navy text-5xl md:text-6xl mb-4 leading-tight">
           Home movies
         </h1>
-        <p className="font-serif italic text-muted text-lg md:text-xl leading-relaxed">
+        <p data-edit-id="videos-page-subtitle" data-edit-label="Videos · page subtitle" data-edit-kind="text" className="font-serif italic text-muted text-lg md:text-xl leading-relaxed">
           Recorded moments, gathered by occasion. Birthdays, trips, holidays, dinners.
         </p>
       </header>

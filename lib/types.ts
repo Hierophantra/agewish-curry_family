@@ -343,6 +343,26 @@ export const TreeLayoutSchema = z.object({
   nodes: z.record(z.string(), TreeNodeLayoutSchema).default({}),
 }).default({ nodes: {} })
 
+// ── Site chrome config (content separated from code) ──
+// Editable site-wide chrome: brand mark, nav tab labels/visibility, footer CTA.
+// All optional/defaulted so a missing or empty content/site.json renders exactly
+// today's hardcoded values. Route STRUCTURE stays in code (NavTabs owns the
+// canonical tab list); site.json only overrides labels and can hide a tab.
+export const SiteSchema = z.object({
+  brand: z.object({
+    markSrc: z.string().min(1).default('/images/aw-symbol-2x.png'),
+  }).default({ markSrc: '/images/aw-symbol-2x.png' }),
+  nav: z.object({
+    labels: z.record(z.string(), z.string()).default({}),  // href -> override label
+    hidden: z.array(z.string()).default([]),               // hrefs to hide from the nav
+  }).default({ labels: {}, hidden: [] }),
+  footer: z.object({
+    downloadEnabled: z.boolean().default(true),
+    downloadLabel: z.string().default('Download the archive →'),
+    downloadHref: z.string().default('/api/archive'),
+  }).default({ downloadEnabled: true, downloadLabel: 'Download the archive →', downloadHref: '/api/archive' }),
+}).default({})
+
 // ── TypeScript types (derived from schemas - do not manually duplicate) ──
 export type Person = z.infer<typeof PersonSchema>
 export type Photo = z.infer<typeof PhotoSchema>
@@ -361,3 +381,4 @@ export type ThemePage = z.infer<typeof ThemePageSchema>
 export type ElementStyle = z.infer<typeof ElementStyleSchema>
 export type TreeLayout = z.infer<typeof TreeLayoutSchema>
 export type TreeNodeLayout = z.infer<typeof TreeNodeLayoutSchema>
+export type Site = z.infer<typeof SiteSchema>

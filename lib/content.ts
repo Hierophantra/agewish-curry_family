@@ -7,8 +7,8 @@ import 'server-only'
 import { readFileSync } from 'fs'
 import { join } from 'path'
 import { z } from 'zod'
-import { PersonSchema, PhotoSchema, VideoSchema, CollectionSchema, PlaylistSchema, AudioSchema, ChronicleSchema, HeroSchema, ThemeSchema, TreeLayoutSchema } from './types'
-import type { Person, Photo, Video, Collection, Playlist, Audio, Chronicle, Hero, Theme, TreeLayout } from './types'
+import { PersonSchema, PhotoSchema, VideoSchema, CollectionSchema, PlaylistSchema, AudioSchema, ChronicleSchema, HeroSchema, ThemeSchema, TreeLayoutSchema, SiteSchema } from './types'
+import type { Person, Photo, Video, Collection, Playlist, Audio, Chronicle, Hero, Theme, TreeLayout, Site } from './types'
 
 // ── Photo URL helper ──
 // Re-exported from lib/utils.ts so server-side imports can use a single source.
@@ -35,7 +35,29 @@ function readJSON<Output, Def extends z.ZodTypeDef, Input>(
 // ── Public loaders ──
 
 export function getPeople(): Person[] {
-  return readJSON('family.json', z.array(PersonSchema))
+  return readJSON('family.json', z.array(PersonSchema)).map(normalizePerson)
+}
+
+// Non-destructive v1/v2 alias normalization (audit Phase 2). The schema keeps
+// both names (childIds/childrenIds, spouseId/spouseIds, birthPlace/birthplace)
+// and real data stores both, but readers diverged: lib/tree.ts reads childIds +
+// spouseIds while PersonPanel reads childrenIds. A person saved with only the v2
+// name would silently drop from the tree. Mirroring both here (preferring the v2
+// name when present) makes every consumer see consistent data without a risky
+// schema/data migration. The on-disk JSON is untouched.
+function normalizePerson(p: Person): Person {
+  const kids = p.childrenIds.length > 0 ? p.childrenIds : p.childIds
+  const spouses = p.spouseIds.length > 0 ? p.spouseIds : (p.spouseId ? [p.spouseId] : [])
+  const birthplace = p.birthplace ?? p.birthPlace
+  return {
+    ...p,
+    childrenIds: kids,
+    childIds: kids,
+    spouseIds: spouses,
+    spouseId: p.spouseId ?? spouses[0],
+    birthplace,
+    birthPlace: birthplace,
+  }
 }
 
 export function getPhotos(): Photo[] {
@@ -202,6 +224,18 @@ export function getTreeLayout(): TreeLayout {
     return readJSON('tree-layout.json', TreeLayoutSchema)
   } catch {
     return TreeLayoutSchema.parse({})
+  }
+}
+
+// ── Site chrome loader ──
+// Editable brand mark + nav labels/visibility + footer CTA. Missing/invalid
+// file returns schema defaults (= today's hardcoded chrome), so it is safe to
+// ship before content/site.json exists.
+export function getSite(): Site {
+  try {
+    return readJSON('site.json', SiteSchema)
+  } catch {
+    return SiteSchema.parse({})
   }
 }
 

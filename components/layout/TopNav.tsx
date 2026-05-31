@@ -11,8 +11,10 @@
 import Link from 'next/link'
 import StarMark from '@/components/ui/StarMark'
 import NavTabs from '@/components/layout/NavTabs'
+import { getSite } from '@/lib/content'
 
 export default function TopNav() {
+  const site = getSite()
   return (
     <header
       data-edit-id="topbar"
@@ -30,7 +32,7 @@ export default function TopNav() {
           href="/"
           className="flex items-center gap-3.5 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2"
         >
-          <StarMark size={36} />
+          <StarMark size={36} src={site.brand.markSrc} />
           <div className="flex flex-col leading-tight">
             <span
               data-edit-id="brand-eyebrow"
@@ -52,7 +54,7 @@ export default function TopNav() {
         </Link>
 
         {/* Nav tabs - center/right (Client island for active state) */}
-        <NavTabs />
+        <NavTabs labelOverrides={site.nav.labels} hidden={site.nav.hidden} />
       </nav>
     </header>
   )

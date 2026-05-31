@@ -18,11 +18,11 @@ export default function PhotographsPage() {
           <span className="block w-10 h-px bg-gold-deep" />
           <span className="block w-1.5 h-1.5 rounded-full bg-gold" />
         </div>
-        <p className="eyebrow text-gold-deep mb-4">Family archive</p>
-        <h1 className="font-serif text-navy text-5xl md:text-6xl mb-4 leading-tight">
+        <p data-edit-id="photographs-page-eyebrow" data-edit-label="Photographs · page eyebrow" data-edit-kind="text" className="eyebrow text-gold-deep mb-4">Family archive</p>
+        <h1 data-edit-id="photographs-page-title" data-edit-label="Photographs · page title" data-edit-kind="text" className="font-serif text-navy text-5xl md:text-6xl mb-4 leading-tight">
           Photographs
         </h1>
-        <p className="font-serif italic text-muted text-lg md:text-xl leading-relaxed">
+        <p data-edit-id="photographs-page-subtitle" data-edit-label="Photographs · page subtitle" data-edit-kind="text" className="font-serif italic text-muted text-lg md:text-xl leading-relaxed">
           Collected memories, organized by theme.
         </p>
         <Link

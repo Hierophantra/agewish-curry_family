@@ -1,0 +1,14 @@
+{
+  "brand": {
+    "markSrc": "/images/aw-symbol-2x.png"
+  },
+  "nav": {
+    "labels": {},
+    "hidden": []
+  },
+  "footer": {
+    "downloadEnabled": true,
+    "downloadLabel": "Download the archive →",
+    "downloadHref": "/api/archive"
+  }
+}

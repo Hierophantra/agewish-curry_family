@@ -3,8 +3,10 @@
 // The tagline was removed per the maintainer; the family name sits under the
 // logo instead.
 import StarMark from '@/components/ui/StarMark'
+import { getSite } from '@/lib/content'
 
 export default function Footer() {
+  const site = getSite()
   return (
     <footer
       data-edit-id="footer"
@@ -13,7 +15,7 @@ export default function Footer() {
       className="border-t hairline py-11 px-7"
     >
       <div className="flex flex-col items-center gap-3 text-center">
-        <StarMark size={32} />
+        <StarMark size={32} src={site.brand.markSrc} />
         <p
           data-edit-id="footer-name"
           data-edit-label="Footer name"
@@ -30,13 +32,15 @@ export default function Footer() {
         >
           A private archive · AgeWish
         </p>
-        <a
-          href="/api/archive"
-          className="eyebrow text-quiet hover:text-gold-deep transition-colors text-[10px] mt-1 inline-block"
-          download
-        >
-          Download the archive →
-        </a>
+        {site.footer.downloadEnabled && (
+          <a
+            href={site.footer.downloadHref}
+            className="eyebrow text-quiet hover:text-gold-deep transition-colors text-[10px] mt-1 inline-block"
+            download
+          >
+            {site.footer.downloadLabel}
+          </a>
+        )}
       </div>
     </footer>
   )
