@@ -11,9 +11,24 @@
     "datesLabel": "1930 - present",
     "photoIds": [],
     "parentIds": [],
-    "childrenIds": ["elston-curry", "galen-curry-sr", "mark-curry", "dawn-manuel", "robert-curry"],
-    "childIds": ["elston-curry", "galen-curry-sr", "mark-curry", "dawn-manuel", "robert-curry"],
-    "spouseIds": ["nina-curry", "robert-mother"],
+    "childrenIds": [
+      "elston-curry",
+      "galen-curry-sr",
+      "mark-curry",
+      "dawn-manuel",
+      "robert-curry"
+    ],
+    "childIds": [
+      "elston-curry",
+      "galen-curry-sr",
+      "mark-curry",
+      "dawn-manuel",
+      "robert-curry"
+    ],
+    "spouseIds": [
+      "nina-curry",
+      "robert-mother"
+    ],
     "confidence": "high"
   },
   {
@@ -30,9 +45,21 @@
     "datesLabel": "1937 - 2020",
     "photoIds": [],
     "parentIds": [],
-    "childrenIds": ["elston-curry", "galen-curry-sr", "mark-curry", "dawn-manuel"],
-    "childIds": ["elston-curry", "galen-curry-sr", "mark-curry", "dawn-manuel"],
-    "spouseIds": ["ernest-curry-sr"],
+    "childrenIds": [
+      "elston-curry",
+      "galen-curry-sr",
+      "mark-curry",
+      "dawn-manuel"
+    ],
+    "childIds": [
+      "elston-curry",
+      "galen-curry-sr",
+      "mark-curry",
+      "dawn-manuel"
+    ],
+    "spouseIds": [
+      "ernest-curry-sr"
+    ],
     "confidence": "high"
   },
   {
@@ -46,10 +73,19 @@
     "birthDate": "1958-08-04",
     "datesLabel": "1958 - present",
     "photoIds": [],
-    "parentIds": ["ernest-curry-sr", "nina-curry"],
-    "childrenIds": ["elston-daughter"],
-    "childIds": ["elston-daughter"],
-    "spouseIds": ["roxxane-curry"],
+    "parentIds": [
+      "ernest-curry-sr",
+      "nina-curry"
+    ],
+    "childrenIds": [
+      "elston-daughter"
+    ],
+    "childIds": [
+      "elston-daughter"
+    ],
+    "spouseIds": [
+      "roxxane-curry"
+    ],
     "confidence": "high"
   },
   {
@@ -66,7 +102,9 @@
     "parentIds": [],
     "childrenIds": [],
     "childIds": [],
-    "spouseIds": ["elston-curry"],
+    "spouseIds": [
+      "elston-curry"
+    ],
     "confidence": "high"
   },
   {
@@ -76,7 +114,9 @@
     "relationLabel": "THIRD GENERATION",
     "eyebrow": "Daughter of Elston",
     "photoIds": [],
-    "parentIds": ["elston-curry"],
+    "parentIds": [
+      "elston-curry"
+    ],
     "childrenIds": [],
     "childIds": [],
     "spouseIds": [],
@@ -94,10 +134,24 @@
     "birthDate": "1959-12-30",
     "datesLabel": "1959 - present",
     "photoIds": [],
-    "parentIds": ["ernest-curry-sr", "nina-curry"],
-    "childrenIds": ["trace-curry", "galen-curry-jr", "angel-curry"],
-    "childIds": ["trace-curry", "galen-curry-jr", "angel-curry"],
-    "spouseIds": ["cheryl-curry", "laurie-darrisaw"],
+    "parentIds": [
+      "ernest-curry-sr",
+      "nina-curry"
+    ],
+    "childrenIds": [
+      "trace-curry",
+      "galen-curry-jr",
+      "angel-curry"
+    ],
+    "childIds": [
+      "trace-curry",
+      "galen-curry-jr",
+      "angel-curry"
+    ],
+    "spouseIds": [
+      "cheryl-curry",
+      "laurie-darrisaw"
+    ],
     "confidence": "high"
   },
   {
@@ -112,9 +166,17 @@
     "datesLabel": "1964 - present",
     "photoIds": [],
     "parentIds": [],
-    "childrenIds": ["galen-curry-jr", "angel-curry"],
-    "childIds": ["galen-curry-jr", "angel-curry"],
-    "spouseIds": ["galen-curry-sr"],
+    "childrenIds": [
+      "galen-curry-jr",
+      "angel-curry"
+    ],
+    "childIds": [
+      "galen-curry-jr",
+      "angel-curry"
+    ],
+    "spouseIds": [
+      "galen-curry-sr"
+    ],
     "confidence": "high"
   },
   {
@@ -128,7 +190,10 @@
     "birthDate": "1988-11-27",
     "datesLabel": "1988 - present",
     "photoIds": [],
-    "parentIds": ["galen-curry-sr", "laurie-darrisaw"],
+    "parentIds": [
+      "galen-curry-sr",
+      "laurie-darrisaw"
+    ],
     "childrenIds": [],
     "childIds": [],
     "spouseIds": [],
@@ -146,10 +211,21 @@
     "birthDate": "1992-01-17",
     "datesLabel": "1992 - present",
     "photoIds": [],
-    "parentIds": ["galen-curry-sr", "cheryl-curry"],
-    "childrenIds": ["kai-curry", "naomi-curry"],
-    "childIds": ["kai-curry", "naomi-curry"],
-    "spouseIds": ["mariah-curry"],
+    "parentIds": [
+      "galen-curry-sr",
+      "cheryl-curry"
+    ],
+    "childrenIds": [
+      "kai-curry",
+      "naomi-curry"
+    ],
+    "childIds": [
+      "kai-curry",
+      "naomi-curry"
+    ],
+    "spouseIds": [
+      "mariah-curry"
+    ],
     "confidence": "high"
   },
   {
@@ -161,9 +237,17 @@
     "spouseLabel": "Galen N Curry Jr",
     "photoIds": [],
     "parentIds": [],
-    "childrenIds": ["kai-curry", "naomi-curry"],
-    "childIds": ["kai-curry", "naomi-curry"],
-    "spouseIds": ["galen-curry-jr"],
+    "childrenIds": [
+      "kai-curry",
+      "naomi-curry"
+    ],
+    "childIds": [
+      "kai-curry",
+      "naomi-curry"
+    ],
+    "spouseIds": [
+      "galen-curry-jr"
+    ],
     "confidence": "low",
     "notes": "Birth date pending."
   },
@@ -174,7 +258,10 @@
     "relationLabel": "FOURTH GENERATION",
     "eyebrow": "Son of Galen Jr & Mariah",
     "photoIds": [],
-    "parentIds": ["galen-curry-jr", "mariah-curry"],
+    "parentIds": [
+      "galen-curry-jr",
+      "mariah-curry"
+    ],
     "childrenIds": [],
     "childIds": [],
     "spouseIds": [],
@@ -188,7 +275,10 @@
     "relationLabel": "FOURTH GENERATION",
     "eyebrow": "Daughter of Galen Jr & Mariah",
     "photoIds": [],
-    "parentIds": ["galen-curry-jr", "mariah-curry"],
+    "parentIds": [
+      "galen-curry-jr",
+      "mariah-curry"
+    ],
     "childrenIds": [],
     "childIds": [],
     "spouseIds": [],
@@ -205,7 +295,10 @@
     "birthDate": "1995-11-21",
     "datesLabel": "1995 - present",
     "photoIds": [],
-    "parentIds": ["galen-curry-sr", "cheryl-curry"],
+    "parentIds": [
+      "galen-curry-sr",
+      "cheryl-curry"
+    ],
     "childrenIds": [],
     "childIds": [],
     "spouseIds": [],
@@ -220,10 +313,23 @@
     "spouseLabel": "Wife of Robert",
     "motherName": "Mother (name pending) - not Nina",
     "photoIds": [],
-    "parentIds": ["ernest-curry-sr", "robert-mother"],
-    "childrenIds": ["robert-daughter", "robert-son-1", "robert-son-2"],
-    "childIds": ["robert-daughter", "robert-son-1", "robert-son-2"],
-    "spouseIds": ["robert-wife"],
+    "parentIds": [
+      "ernest-curry-sr",
+      "robert-mother"
+    ],
+    "childrenIds": [
+      "robert-daughter",
+      "robert-son-1",
+      "robert-son-2"
+    ],
+    "childIds": [
+      "robert-daughter",
+      "robert-son-1",
+      "robert-son-2"
+    ],
+    "spouseIds": [
+      "robert-wife"
+    ],
     "confidence": "low",
     "notes": "Mother is not Nina - name pending. Birth date pending."
   },
@@ -236,9 +342,19 @@
     "spouseLabel": "Robert Curry",
     "photoIds": [],
     "parentIds": [],
-    "childrenIds": ["robert-daughter", "robert-son-1", "robert-son-2"],
-    "childIds": ["robert-daughter", "robert-son-1", "robert-son-2"],
-    "spouseIds": ["robert-curry"],
+    "childrenIds": [
+      "robert-daughter",
+      "robert-son-1",
+      "robert-son-2"
+    ],
+    "childIds": [
+      "robert-daughter",
+      "robert-son-1",
+      "robert-son-2"
+    ],
+    "spouseIds": [
+      "robert-curry"
+    ],
     "confidence": "low",
     "notes": "Name and birth date pending."
   },
@@ -249,7 +365,10 @@
     "relationLabel": "THIRD GENERATION",
     "eyebrow": "Daughter of Robert",
     "photoIds": [],
-    "parentIds": ["robert-curry", "robert-wife"],
+    "parentIds": [
+      "robert-curry",
+      "robert-wife"
+    ],
     "childrenIds": [],
     "childIds": [],
     "spouseIds": [],
@@ -263,7 +382,10 @@
     "relationLabel": "THIRD GENERATION",
     "eyebrow": "Son of Robert",
     "photoIds": [],
-    "parentIds": ["robert-curry", "robert-wife"],
+    "parentIds": [
+      "robert-curry",
+      "robert-wife"
+    ],
     "childrenIds": [],
     "childIds": [],
     "spouseIds": [],
@@ -277,7 +399,10 @@
     "relationLabel": "THIRD GENERATION",
     "eyebrow": "Son of Robert",
     "photoIds": [],
-    "parentIds": ["robert-curry", "robert-wife"],
+    "parentIds": [
+      "robert-curry",
+      "robert-wife"
+    ],
     "childrenIds": [],
     "childIds": [],
     "spouseIds": [],
@@ -295,10 +420,22 @@
     "birthDate": "1961-02-14",
     "datesLabel": "1961 - present",
     "photoIds": [],
-    "parentIds": ["ernest-curry-sr", "nina-curry"],
-    "childrenIds": ["graham-curry", "jalen-curry"],
-    "childIds": ["graham-curry", "jalen-curry"],
-    "spouseIds": ["regina-graham", "sherry-stolfo"],
+    "parentIds": [
+      "ernest-curry-sr",
+      "nina-curry"
+    ],
+    "childrenIds": [
+      "graham-curry",
+      "jalen-curry"
+    ],
+    "childIds": [
+      "graham-curry",
+      "jalen-curry"
+    ],
+    "spouseIds": [
+      "regina-graham",
+      "sherry-stolfo"
+    ],
     "confidence": "high",
     "notes": "Divorced from Regina Graham (mother of Graham). Jalen's mother is Sherry Stolfo, not Regina."
   },
@@ -312,7 +449,10 @@
     "birthDate": "1998-03-18",
     "datesLabel": "1998 - present",
     "photoIds": [],
-    "parentIds": ["mark-curry", "regina-graham"],
+    "parentIds": [
+      "mark-curry",
+      "regina-graham"
+    ],
     "childrenIds": [],
     "childIds": [],
     "spouseIds": [],
@@ -320,14 +460,17 @@
   },
   {
     "id": "jalen-curry",
-    "name": "Jalen S Curry",
+    "name": "Jalen S Stolfo",
     "gender": "male",
     "relationLabel": "THIRD GENERATION",
     "eyebrow": "Son of Mark & Sherry",
     "birthYear": 2000,
     "datesLabel": "Born June 2000",
     "photoIds": [],
-    "parentIds": ["mark-curry", "sherry-stolfo"],
+    "parentIds": [
+      "mark-curry",
+      "sherry-stolfo"
+    ],
     "childrenIds": [],
     "childIds": [],
     "spouseIds": [],
@@ -345,10 +488,19 @@
     "birthDate": "1965-04-11",
     "datesLabel": "1965 - present",
     "photoIds": [],
-    "parentIds": ["ernest-curry-sr", "nina-curry"],
-    "childrenIds": ["andre-manuel"],
-    "childIds": ["andre-manuel"],
-    "spouseIds": ["tony-manuel"],
+    "parentIds": [
+      "ernest-curry-sr",
+      "nina-curry"
+    ],
+    "childrenIds": [
+      "andre-manuel"
+    ],
+    "childIds": [
+      "andre-manuel"
+    ],
+    "spouseIds": [
+      "tony-manuel"
+    ],
     "confidence": "high"
   },
   {
@@ -363,9 +515,15 @@
     "datesLabel": "1953 - present",
     "photoIds": [],
     "parentIds": [],
-    "childrenIds": ["andre-manuel"],
-    "childIds": ["andre-manuel"],
-    "spouseIds": ["dawn-manuel"],
+    "childrenIds": [
+      "andre-manuel"
+    ],
+    "childIds": [
+      "andre-manuel"
+    ],
+    "spouseIds": [
+      "dawn-manuel"
+    ],
     "confidence": "high"
   },
   {
@@ -379,10 +537,19 @@
     "birthDate": "1991-09-30",
     "datesLabel": "1991 - present",
     "photoIds": [],
-    "parentIds": ["dawn-manuel", "tony-manuel"],
-    "childrenIds": ["tony-manuel-jr"],
-    "childIds": ["tony-manuel-jr"],
-    "spouseIds": ["jasmine-manuel"],
+    "parentIds": [
+      "dawn-manuel",
+      "tony-manuel"
+    ],
+    "childrenIds": [
+      "tony-manuel-jr"
+    ],
+    "childIds": [
+      "tony-manuel-jr"
+    ],
+    "spouseIds": [
+      "jasmine-manuel"
+    ],
     "confidence": "high"
   },
   {
@@ -394,9 +561,15 @@
     "spouseLabel": "Andre J Manuel",
     "photoIds": [],
     "parentIds": [],
-    "childrenIds": ["tony-manuel-jr"],
-    "childIds": ["tony-manuel-jr"],
-    "spouseIds": ["andre-manuel"],
+    "childrenIds": [
+      "tony-manuel-jr"
+    ],
+    "childIds": [
+      "tony-manuel-jr"
+    ],
+    "spouseIds": [
+      "andre-manuel"
+    ],
     "confidence": "low",
     "notes": "Birth date pending."
   },
@@ -409,7 +582,10 @@
     "birthYear": 2025,
     "datesLabel": "Born December 2025",
     "photoIds": [],
-    "parentIds": ["andre-manuel", "jasmine-manuel"],
+    "parentIds": [
+      "andre-manuel",
+      "jasmine-manuel"
+    ],
     "childrenIds": [],
     "childIds": [],
     "spouseIds": [],
@@ -426,9 +602,15 @@
     "birthDate": "1960-04-15",
     "photoIds": [],
     "parentIds": [],
-    "childrenIds": ["trace-curry"],
-    "childIds": ["trace-curry"],
-    "spouseIds": ["galen-curry-sr"],
+    "childrenIds": [
+      "trace-curry"
+    ],
+    "childIds": [
+      "trace-curry"
+    ],
+    "spouseIds": [
+      "galen-curry-sr"
+    ],
     "confidence": "high",
     "notes": "Trace's mother. Not married to Galen - included for tree linkage only; surfaced via Trace's motherName field."
   },
@@ -440,9 +622,15 @@
     "eyebrow": "Mother of Robert",
     "photoIds": [],
     "parentIds": [],
-    "childrenIds": ["robert-curry"],
-    "childIds": ["robert-curry"],
-    "spouseIds": ["ernest-curry-sr"],
+    "childrenIds": [
+      "robert-curry"
+    ],
+    "childIds": [
+      "robert-curry"
+    ],
+    "spouseIds": [
+      "ernest-curry-sr"
+    ],
     "confidence": "low",
     "notes": "Robert's biological mother (not Nina). Name and dates pending."
   },
@@ -456,9 +644,15 @@
     "birthDate": "1963-01-03",
     "photoIds": [],
     "parentIds": [],
-    "childrenIds": ["graham-curry"],
-    "childIds": ["graham-curry"],
-    "spouseIds": ["mark-curry"],
+    "childrenIds": [
+      "graham-curry"
+    ],
+    "childIds": [
+      "graham-curry"
+    ],
+    "spouseIds": [
+      "mark-curry"
+    ],
     "confidence": "high",
     "notes": "Mark's ex-wife (divorced). Graham's mother."
   },
@@ -470,9 +664,15 @@
     "eyebrow": "Mother of Jalen",
     "photoIds": [],
     "parentIds": [],
-    "childrenIds": ["jalen-curry"],
-    "childIds": ["jalen-curry"],
-    "spouseIds": ["mark-curry"],
+    "childrenIds": [
+      "jalen-curry"
+    ],
+    "childIds": [
+      "jalen-curry"
+    ],
+    "spouseIds": [
+      "mark-curry"
+    ],
     "confidence": "medium",
     "notes": "Jalen's mother. Not married to Mark. Birth date pending."
   }
