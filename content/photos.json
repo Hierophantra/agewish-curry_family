@@ -424,14 +424,27 @@
     "dateLabel": "November 23, 2021",
     "peopleIds": [
       "galen-curry-sr",
-      "cheryl-curry"
+      "cheryl-curry",
+      "nina-curry"
     ],
     "collectionIds": [
       "galen-cheryl-wedding"
     ],
     "source": "Curry family archive",
     "confidence": "high",
-    "visibility": "gallery"
+    "visibility": "gallery",
+    "regions": [
+      {
+        "personId": "nina-curry",
+        "x": 0.726,
+        "y": 0.434,
+        "w": 0.086,
+        "h": 0.07
+      }
+    ],
+    "peopleVisibility": {
+      "nina-curry": "profile-tree"
+    }
   },
   {
     "id": "galen-cheryl-wedding-24",
