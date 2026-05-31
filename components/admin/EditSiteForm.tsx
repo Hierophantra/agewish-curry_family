@@ -131,7 +131,7 @@ export default function EditSiteForm({ initial }: Props) {
           type="button"
           onClick={save}
           disabled={status === 'saving'}
-          className="bg-navy text-white px-6 py-2.5 rounded text-sm hover:bg-navy-light transition-colors disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+          className="btn-primary"
         >
           {status === 'saving' ? 'Publishing…' : 'Save & publish'}
         </button>

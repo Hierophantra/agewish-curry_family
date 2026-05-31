@@ -177,6 +177,28 @@
     0 16px 40px -16px rgba(184, 133, 26, 0.18);
 }
 
+/* Primary action button — the canonical navy button recipe (consolidates ~18
+   hand-rolled copies with padding drift + the now-fixed navy-light hover).
+   New admin code uses .btn-primary (+ .btn-sm for list/header actions). */
+@utility btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-navy);
+  color: #fff;
+  border-radius: var(--radius-control);
+  padding: 0.625rem 1.5rem;
+  font-size: 0.875rem;
+  transition: background-color var(--dur-fast) ease, opacity var(--dur-fast) ease;
+}
+.btn-primary:hover { background-color: var(--color-navy-light); }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-primary:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-gold); }
+@utility btn-sm {
+  padding: 0.375rem 0.875rem;
+  font-size: 0.8125rem;
+}
+
 /* Paper-grain texture overlay - subtle SVG noise, base64'd inline so no extra
    network round-trip. Applied as a background-image on top of a base color via
    the after-pseudo pattern. Opacity controlled by the utility's color stop. */

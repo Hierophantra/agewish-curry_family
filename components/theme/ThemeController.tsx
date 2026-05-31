@@ -70,6 +70,26 @@ function cloneTheme(t: Theme): Theme {
   return JSON.parse(JSON.stringify(t))
 }
 
+// Type-scale presets for the font-size control (px). Presets keep edits on a
+// disciplined scale; the slider stays available for custom sizes.
+const TYPE_SCALE: Array<{ label: string; px: number }> = [
+  { label: 'XS', px: 12 }, { label: 'S', px: 14 }, { label: 'Body', px: 16 },
+  { label: 'M', px: 20 }, { label: 'L', px: 24 }, { label: 'XL', px: 30 },
+  { label: '2XL', px: 40 }, { label: '3XL', px: 56 },
+]
+
+// Palette swatch keys (resolved from the live theme + COLOR_DEFAULT at render
+// time — no duplicated hex literals). Nudges color edits toward the brand
+// palette while a free hex picker stays available.
+const SWATCH_KEYS: Array<keyof ThemeColors> = ['navy', 'gold', 'goldDeep', 'ivory', 'surface', 'muted', 'quiet', 'stone']
+
+// Element ids whose text is navigation / brand / heading critical: blanking
+// them harms screen readers + wayfinding, so the editor warns (non-blocking).
+function isCriticalText(id: string): boolean {
+  return id === 'brand-name' || id === 'footer-name'
+    || /-page-title$/.test(id) || /^card-[a-z]+-title$/.test(id) || /^tree-name-/.test(id)
+}
+
 export default function ThemeController({ theme, isAdmin }: Props) {
   const pathname = usePathname()
   const [editing, setEditing] = useState(false)
@@ -434,6 +454,8 @@ export default function ThemeController({ theme, isAdmin }: Props) {
   const navyText = draft.colors?.navy ?? COLOR_DEFAULT.navy
   const textContrast = selected?.kind === 'text' && sel.color ? contrastVerdict(sel.color, pageBg) : null
   const bgContrast = selected?.kind === 'box' && sel.background ? contrastVerdict(navyText, sel.background) : null
+  // Palette swatches resolved from the live theme (no duplicated hex literals).
+  const swatches = SWATCH_KEYS.map((k) => ({ name: COLOR_LABEL[k], hex: draft.colors?.[k] ?? COLOR_DEFAULT[k] }))
 
   return (
     <>
@@ -584,6 +606,11 @@ export default function ThemeController({ theme, isAdmin }: Props) {
                         className="w-full rounded border border-[color:var(--color-border)] bg-transparent px-2 py-1.5 text-sm text-navy focus:outline-none focus:border-stone resize-y"
                       />
                       <span className="text-quiet text-[11px]">Clear the box to hide the text. “Reset to original” brings it back.</span>
+                      {sel.text === '' && isCriticalText(selected.id) && (
+                        <p className="text-[11px] text-red-600">
+                          This text is used for navigation or headings — hiding it can confuse screen readers and wayfinding.
+                        </p>
+                      )}
                     </div>
                     {/* Text color */}
                     <div className="flex items-center gap-3">
@@ -599,45 +626,93 @@ export default function ThemeController({ theme, isAdmin }: Props) {
                         <button type="button" onClick={() => setElementProp(selected.id, { color: undefined })} className="text-quiet hover:text-navy text-xs">Reset</button>
                       )}
                     </div>
+                    {/* Palette swatches (recommended) */}
+                    <div className="flex flex-wrap gap-1.5 -mt-1">
+                      {swatches.map((s) => (
+                        <button
+                          key={s.name}
+                          type="button"
+                          onClick={() => setElementProp(selected.id, { color: s.hex })}
+                          title={s.name}
+                          aria-label={`Set text color to ${s.name}`}
+                          className="w-6 h-6 rounded-full border border-[color:var(--color-border)] hover:scale-110 transition-transform"
+                          style={{ backgroundColor: s.hex }}
+                        />
+                      ))}
+                    </div>
                     {textContrast && !textContrast.pass && (
                       <p className="text-[11px] text-red-600 -mt-1">
                         Low contrast ({textContrast.ratio}:1) against the page background — aim for {textContrast.threshold}:1.
                       </p>
                     )}
-                    {/* Font size */}
-                    <label className="flex flex-col gap-1">
+                    {/* Font size — presets (recommended) + custom slider */}
+                    <div className="flex flex-col gap-1.5">
                       <span className="text-quiet text-xs">
                         Font size {typeof sel.fontSize === 'number' ? `(${sel.fontSize}px)` : '(default)'}
                       </span>
+                      <div className="flex flex-wrap gap-1">
+                        {TYPE_SCALE.map((t) => (
+                          <button
+                            key={t.px}
+                            type="button"
+                            onClick={() => setElementProp(selected.id, { fontSize: t.px })}
+                            className={[
+                              'px-2 py-1 rounded text-xs border transition-colors',
+                              sel.fontSize === t.px
+                                ? 'border-navy bg-navy text-white'
+                                : 'border-[color:var(--color-border)] text-muted hover:text-navy',
+                            ].join(' ')}
+                            title={`${t.px}px`}
+                          >
+                            {t.label}
+                          </button>
+                        ))}
+                      </div>
                       <div className="flex items-center gap-2">
                         <input
                           type="range" min={10} max={120} step={1}
                           value={sel.fontSize ?? 16}
                           onChange={(e) => setElementProp(selected.id, { fontSize: parseFloat(e.target.value) })}
                           className="w-full accent-navy"
+                          aria-label="Custom font size"
                         />
                         {typeof sel.fontSize === 'number' && (
                           <button type="button" onClick={() => setElementProp(selected.id, { fontSize: undefined })} className="text-quiet hover:text-navy text-xs shrink-0">Reset</button>
                         )}
                       </div>
-                    </label>
+                    </div>
                   </>
                 )}
 
                 {selected.kind === 'box' && (
                   /* Background color */
-                  <div className="flex items-center gap-3">
-                    <input
-                      type="color"
-                      value={sel.background ?? '#FBF9F2'}
-                      onChange={(e) => setElementProp(selected.id, { background: e.target.value })}
-                      className="w-9 h-9 rounded border border-[color:var(--color-border)] cursor-pointer shrink-0"
-                      aria-label="Background color"
-                    />
-                    <span className="text-navy text-sm flex-1">Background</span>
-                    {sel.background && (
-                      <button type="button" onClick={() => setElementProp(selected.id, { background: undefined })} className="text-quiet hover:text-navy text-xs">Reset</button>
-                    )}
+                  <div className="flex flex-col gap-2">
+                    <div className="flex items-center gap-3">
+                      <input
+                        type="color"
+                        value={sel.background ?? '#FBF9F2'}
+                        onChange={(e) => setElementProp(selected.id, { background: e.target.value })}
+                        className="w-9 h-9 rounded border border-[color:var(--color-border)] cursor-pointer shrink-0"
+                        aria-label="Background color"
+                      />
+                      <span className="text-navy text-sm flex-1">Background</span>
+                      {sel.background && (
+                        <button type="button" onClick={() => setElementProp(selected.id, { background: undefined })} className="text-quiet hover:text-navy text-xs">Reset</button>
+                      )}
+                    </div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {swatches.map((s) => (
+                        <button
+                          key={s.name}
+                          type="button"
+                          onClick={() => setElementProp(selected.id, { background: s.hex })}
+                          title={s.name}
+                          aria-label={`Set background to ${s.name}`}
+                          className="w-6 h-6 rounded-full border border-[color:var(--color-border)] hover:scale-110 transition-transform"
+                          style={{ backgroundColor: s.hex }}
+                        />
+                      ))}
+                    </div>
                   </div>
                 )}
                 {bgContrast && !bgContrast.pass && (

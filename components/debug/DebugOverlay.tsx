@@ -58,6 +58,7 @@ export default function DebugOverlay({ theme, isAdmin }: Props) {
   const [ids, setIds] = useState<EditableId[]>([])
   const [health, setHealth] = useState<HealthReport | null>(null)
   const [healthStatus, setHealthStatus] = useState<'idle' | 'loading' | 'error'>('idle')
+  const [zLayers, setZLayers] = useState<Array<{ z: number; pos: string; label: string }> | null>(null)
 
   // Track viewport for the breakpoint readout.
   useEffect(() => {
@@ -113,6 +114,22 @@ export default function DebugOverlay({ theme, isAdmin }: Props) {
     const lightOn = (page?.light?.enabled ?? theme.light?.enabled) ? 'on' : 'off'
     return { sitewideColors, sitewideElements, pageColors, pageElements, lightOn, hasPage: Boolean(page) }
   }, [theme, pathname])
+
+  // Scan positioned elements' computed z-index to surface the stacking ladder
+  // and flag duplicate z values among overlay layers (read-only; on demand).
+  const scanStacking = useCallback(() => {
+    const out: Array<{ z: number; pos: string; label: string }> = []
+    document.querySelectorAll<HTMLElement>('body *').forEach((el) => {
+      const cs = getComputedStyle(el)
+      if (cs.position === 'static') return
+      const z = parseInt(cs.zIndex, 10)
+      if (Number.isNaN(z)) return
+      const label = el.dataset.editId || el.getAttribute('aria-label') || el.getAttribute('role') || (el.className && typeof el.className === 'string' ? el.className.split(' ')[0] : '') || el.tagName.toLowerCase()
+      out.push({ z, pos: cs.position, label: String(label).slice(0, 28) })
+    })
+    out.sort((a, b) => b.z - a.z)
+    setZLayers(out.slice(0, 12))
+  }, [])
 
   const runHealth = useCallback(async () => {
     setHealthStatus('loading')
@@ -262,6 +279,28 @@ export default function DebugOverlay({ theme, isAdmin }: Props) {
                   <p className="text-white/35 text-[11px] font-mono">
                     {Object.entries(health.counts).map(([k, v]) => `${k} ${v}`).join(' · ')}
                   </p>
+                </div>
+              )}
+            </section>
+
+            {/* Stacking (z-index) ladder + duplicate detection */}
+            <section className="flex flex-col gap-2 border-t border-white/10 pt-3">
+              <div className="flex items-center justify-between">
+                <span className="text-white/60 uppercase tracking-wider text-[11px]">Stacking (z-index)</span>
+                <button type="button" onClick={scanStacking} className="text-[11px] px-2 py-1 rounded bg-white/10 hover:bg-white/20 transition-colors">Scan</button>
+              </div>
+              {zLayers && (
+                <div className="flex flex-col gap-1">
+                  {zLayers.map((l, i) => {
+                    const dup = zLayers.filter((x) => x.z === l.z).length > 1
+                    return (
+                      <div key={i} className="font-mono text-[11px] flex items-center justify-between gap-2">
+                        <span className={dup ? 'text-amber-300' : 'text-white/35'}>z{l.z}{dup ? ' ⚠' : ''}</span>
+                        <span className="text-white/70 truncate">{l.label}</span>
+                      </div>
+                    )
+                  })}
+                  <p className="text-white/30 text-[11px]">⚠ = shares a z-index with another positioned layer.</p>
                 </div>
               )}
             </section>
