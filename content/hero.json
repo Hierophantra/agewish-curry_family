@@ -3,24 +3,24 @@
   "transitionMs": 2200,
   "images": [
     {
-      "src": "/images/hero/575A1328.jpg",
+      "src": "/images/hero/IMG_2729.jpg.jpeg",
       "opacity": 0.7,
-      "objectPosition": "50% 0%",
-      "fit": "contain",
+      "objectPosition": "49% 60%",
+      "fit": "cover",
       "enabled": true
     },
     {
       "src": "/images/hero/DSC00004.JPG",
       "opacity": 0.7,
       "objectPosition": "center",
-      "fit": "contain",
+      "fit": "cover",
       "enabled": true
     },
     {
-      "src": "/images/hero/IMG_2729.jpg.jpeg",
+      "src": "/images/hero/575A1328.jpg",
       "opacity": 0.7,
-      "objectPosition": "center",
-      "fit": "contain",
+      "objectPosition": "50% 0%",
+      "fit": "cover",
       "enabled": true
     },
     {
