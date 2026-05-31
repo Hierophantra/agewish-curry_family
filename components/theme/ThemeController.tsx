@@ -93,6 +93,7 @@ function isCriticalText(id: string): boolean {
 export default function ThemeController({ theme, isAdmin }: Props) {
   const pathname = usePathname()
   const [editing, setEditing] = useState(false)
+  const [peeking, setPeeking] = useState(false) // press-and-hold "View published"
   const [draft, setDraft] = useState<Theme>(() => cloneTheme(theme))
   const [scope, setScope] = useState<'site' | 'page'>('site')
   const [status, setStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle')
@@ -114,7 +115,9 @@ export default function ThemeController({ theme, isAdmin }: Props) {
   // Runs for everyone (the hooks run before the admin early-return below), so
   // the published site reflects saved page + text overrides too.
   useEffect(() => {
-    const active = editing ? draft : savedTheme.current
+    // While "peeking" the admin is previewing the PUBLISHED state, so apply the
+    // last-saved theme even though an unsaved draft exists.
+    const active = (editing && !peeking) ? draft : savedTheme.current
     applyVars(resolveVars(active, pathname))
 
     const resolved = resolveElements(active, pathname)
@@ -146,7 +149,7 @@ export default function ThemeController({ theme, isAdmin }: Props) {
         }
       }
     })
-  }, [editing, draft, pathname])
+  }, [editing, draft, pathname, peeking])
 
   // Shift+E toggles edit mode (admin only). Ignore when typing in a field.
   useEffect(() => {
@@ -446,6 +449,8 @@ export default function ThemeController({ theme, isAdmin }: Props) {
     ? elementsOnPage.find((e) => e.id === selectedId) ?? { id: selectedId, label: selectedId, kind: 'box' }
     : null
   const sel: ElementStyle = selectedId ? elementEffective(selectedId) : {}
+  // Unsaved-changes flag drives the preview-vs-published badge.
+  const isDirty = JSON.stringify(draft) !== JSON.stringify(savedTheme.current)
 
   // Advisory contrast check for the selected element's editable color, measured
   // against a sensible reference (text color vs the page background; a box
@@ -525,6 +530,28 @@ export default function ThemeController({ theme, isAdmin }: Props) {
                 ? 'Changes apply to every page.'
                 : `Changes apply only to ${pathname}.`}
             </p>
+            {/* Preview-vs-published status + peek at the live (saved) version. */}
+            <div className="flex items-center justify-between gap-2 mt-2.5">
+              <span className="text-[11px] font-serif italic">
+                {peeking
+                  ? <span className="text-navy">Showing the published version</span>
+                  : isDirty
+                    ? <span className="text-gold-deep">Previewing unsaved changes</span>
+                    : <span className="text-quiet">Matches the published site</span>}
+              </span>
+              {isDirty && (
+                <button
+                  type="button"
+                  onPointerDown={() => setPeeking(true)}
+                  onPointerUp={() => setPeeking(false)}
+                  onPointerLeave={() => setPeeking(false)}
+                  className="text-quiet hover:text-navy text-xs border border-[color:var(--color-border)] rounded px-2 py-1 select-none"
+                  title="Hold to see the currently published version"
+                >
+                  Hold to view published
+                </button>
+              )}
+            </div>
             {/* Bulk reset — operates on the draft, so Cancel still restores the last save. */}
             <div className="flex items-center gap-3 mt-2.5">
               <button type="button" onClick={resetThisPage} className="text-quiet hover:text-navy text-xs underline underline-offset-2">

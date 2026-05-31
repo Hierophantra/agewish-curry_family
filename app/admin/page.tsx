@@ -17,6 +17,7 @@ const sections = [
   { href: '/admin/audio', label: 'Audio', desc: 'Upload voice recordings, edit metadata', status: 'live' },
   { href: '/admin/collections', label: 'Collections', desc: 'Create and manage photo collections', status: 'live' },
   { href: '/admin/playlists', label: 'Playlists', desc: 'Create and manage video playlists', status: 'live' },
+  { href: '/admin/history', label: 'History & restore', desc: 'Roll back appearance, tree layout, site chrome, or hero to an earlier version', status: 'live' },
 ] as const
 
 export default async function AdminIndex() {
