@@ -262,7 +262,8 @@
     "peopleIds": [
       "galen-curry-sr",
       "cheryl-curry",
-      "mark-curry"
+      "mark-curry",
+      "elston-curry"
     ],
     "collectionIds": [
       "galen-cheryl-wedding"
@@ -277,6 +278,13 @@
         "y": 0.374,
         "w": 0.097,
         "h": 0.087
+      },
+      {
+        "personId": "elston-curry",
+        "x": 0.395,
+        "y": 0.394,
+        "w": 0.1,
+        "h": 0.067
       }
     ]
   },
