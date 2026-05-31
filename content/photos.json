@@ -227,14 +227,24 @@
     "dateLabel": "November 23, 2021",
     "peopleIds": [
       "galen-curry-sr",
-      "cheryl-curry"
+      "cheryl-curry",
+      "ernest-curry-sr"
     ],
     "collectionIds": [
       "galen-cheryl-wedding"
     ],
     "source": "Curry family archive",
     "confidence": "high",
-    "visibility": "gallery"
+    "visibility": "gallery",
+    "regions": [
+      {
+        "personId": "ernest-curry-sr",
+        "x": 0.375,
+        "y": 0.405,
+        "w": 0.103,
+        "h": 0.07
+      }
+    ]
   },
   {
     "id": "galen-cheryl-wedding-15",
