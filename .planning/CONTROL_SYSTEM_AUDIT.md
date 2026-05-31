@@ -6,6 +6,25 @@
 
 ---
 
+## Implementation status (updated)
+
+**Shipped (Phases 1–4):**
+- **Tokens** — fixed the dead `navy-light` hover; additive semantic presets (radius/motion/eyebrow/z-ladder) + `focus-ring`/`hover-lift`/`btn-primary`/`btn-sm` utilities + `BackLink` (existing utilities untouched).
+- **Editor discipline** — type-scale font presets + brand palette swatches; non-blocking WCAG contrast warnings; required-text-blank warning; bounded dx/dy; bulk reset (this page / everything); preview-vs-published badge + hold-to-view-published peek.
+- **Debug** — admin-only `DebugOverlay` (Shift+D): breakpoint, theme/config source, editable-ID list, boundaries/grid/focus toggles, content-health (`/api/admin/validate` wires the previously-dead `validateBidirectionalRefs`), z-index stacking detector, contrast+overflow audit.
+- **Content-as-config** — section-page headers tagged for Shift+E; `content/site.json` (brand/nav/footer) + `/admin/site`; `content/screens.json` (section show/hide) + `/admin/screens` + optional featured-film band (default OFF); v1/v2 alias normalization in `getPeople()`.
+- **Save/publish** — friendly stale-SHA conflict message; in-app **revert** via GitHub history (`/admin/history`, allowlisted config files, re-validated before commit).
+
+**Deferred — need in-browser verification (login-gated for the implementer):**
+- Bulk conversion of the remaining ~22 admin back-links/buttons to `BackLink`/`btn-primary` (primitives exist; mechanical, low-value).
+- Converging the 5 hand-rolled media cards onto one card system (visual change to primary cards).
+- Live z-index migration to the named ladder (detector added; migration can reorder layers).
+- Narrowing `ElementStyleSchema.fontSize` to an enum (would reject existing free values; presets added additively instead).
+
+**Open decision:** content-branch + Vercel-preview draft/publish (high-risk, touches deploy/env). Likely unnecessary now that preview + in-app revert exist — pending maintainer call.
+
+---
+
 ## 1. Wiring audit
 
 ### (a) Wired well — keep and build on
