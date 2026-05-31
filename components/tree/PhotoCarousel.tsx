@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 import { useReducedMotion } from 'motion/react'
 import type { Photo } from '@/lib/types'
 import Lightbox from '@/components/lightbox/Lightbox'
+import CroppedImage from '@/components/photo/CroppedImage'
 import { cn, getPhotoUrl } from '@/lib/utils'
 
 // Prototype .panel-img { transition: opacity 1.2s ease-in-out } → 1200ms crossfade
@@ -14,9 +15,11 @@ const CROSSFADE_MS = 1200
 
 interface PhotoCarouselProps {
   photos: Photo[]
+  /** When set, photos with a tagged region for this person render cropped to it. */
+  focusPersonId?: string
 }
 
-export default function PhotoCarousel({ photos }: PhotoCarouselProps) {
+export default function PhotoCarousel({ photos, focusPersonId }: PhotoCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0)
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
   // prefers-reduced-motion: skip 1.2s CSS crossfade when OS setting is enabled.
@@ -80,12 +83,20 @@ export default function PhotoCarousel({ photos }: PhotoCarouselProps) {
               zIndex: i === activeIndex ? 1 : 0,
             }}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={getPhotoUrl(photo)}
-              alt={photo.caption ?? 'Family photograph'}
-              className="w-full h-full object-cover"
-            />
+            {(() => {
+              const region = focusPersonId ? photo.regions?.find((r) => r.personId === focusPersonId) : undefined
+              if (region) {
+                return <CroppedImage src={getPhotoUrl(photo)} region={region} alt={photo.caption ?? 'Family photograph'} className="w-full h-full" />
+              }
+              return (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img
+                  src={getPhotoUrl(photo)}
+                  alt={photo.caption ?? 'Family photograph'}
+                  className="w-full h-full object-cover"
+                />
+              )
+            })()}
           </button>
         ))}
       </div>

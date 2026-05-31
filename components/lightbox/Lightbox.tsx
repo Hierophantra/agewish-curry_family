@@ -11,6 +11,7 @@
 'use client'
 
 import { useEffect, useRef, useState, useCallback } from 'react'
+import { createPortal } from 'react-dom'
 import Image from 'next/image'
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react'
 import type { Photo } from '@/lib/types'
@@ -39,6 +40,12 @@ export default function Lightbox({ photos, currentIndex, onClose, onPrev, onNext
   // Focus trap - active whenever the Lightbox component is mounted (it is always open when rendered).
   // Returns focus to the trigger element (e.g. photo thumbnail) when lightbox unmounts.
   const trapRef = useFocusTrap<HTMLDivElement>(true)
+
+  // Portal to document.body so the overlay escapes the protected layout's
+  // <main class="relative z-10"> stacking context — otherwise the sticky
+  // TopNav (z-40) paints OVER this lightbox. Mounted guard keeps SSR happy.
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
 
   // D-18: Lock body scroll while lightbox is open; restore on unmount.
   useEffect(() => {
@@ -165,7 +172,7 @@ export default function Lightbox({ photos, currentIndex, onClose, onPrev, onNext
   // Resolve display label - prefer dateLabel (v2 canonical), fall back to date string.
   const displayDate = photo.dateLabel ?? photo.dateTaken ?? null
 
-  return (
+  const overlay = (
     <AnimatePresence>
       {/* D-10: Backdrop - click to close (D-16) */}
       <motion.div
@@ -176,34 +183,35 @@ export default function Lightbox({ photos, currentIndex, onClose, onPrev, onNext
         exit={reduce ? { opacity: 1 } : { opacity: 0 }}
         transition={reduce ? { duration: 0 } : { duration: 0.25 }}
         className="fixed inset-0 z-[100] flex items-center justify-center"
-        style={{ background: 'rgba(15, 24, 64, 0.95)' }}
+        style={{ background: 'rgba(12, 19, 50, 0.985)' }}
         onClick={onClose}
         role="dialog"
         aria-modal="true"
         aria-labelledby="lightbox-caption"
       >
-        {/* Close button - top-right, D-14 */}
+        {/* Close button - obvious circular control, top-right */}
         <button
           onClick={(e) => { e.stopPropagation(); onClose() }}
-          className="absolute top-6 right-6 text-gold w-8 h-8 flex items-center justify-center text-3xl hover:scale-110 transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-navy"
-          aria-label="Close lightbox"
+          className="absolute top-5 right-5 z-10 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/25 text-white flex items-center justify-center text-3xl leading-none transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-navy"
+          aria-label="Close photo"
+          title="Close (Esc)"
         >
           ×
         </button>
 
-        {/* Prev button - D-13 */}
+        {/* Prev button - larger hit target + glyph */}
         <button
           onClick={(e) => { e.stopPropagation(); onPrev() }}
-          className="absolute left-6 top-1/2 -translate-y-1/2 text-gold w-11 h-11 flex items-center justify-center text-2xl hover:scale-110 transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-navy"
+          className="absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 z-10 w-14 h-14 rounded-full bg-white/8 hover:bg-white/20 border border-white/15 text-white flex items-center justify-center text-4xl leading-none pb-1 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-navy"
           aria-label="Previous photo"
         >
           ‹
         </button>
 
-        {/* Next button - D-13 */}
+        {/* Next button - larger hit target + glyph */}
         <button
           onClick={(e) => { e.stopPropagation(); onNext() }}
-          className="absolute right-6 top-1/2 -translate-y-1/2 text-gold w-11 h-11 flex items-center justify-center text-2xl hover:scale-110 transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-navy"
+          className="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 z-10 w-14 h-14 rounded-full bg-white/8 hover:bg-white/20 border border-white/15 text-white flex items-center justify-center text-4xl leading-none pb-1 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-navy"
           aria-label="Next photo"
         >
           ›
@@ -216,7 +224,7 @@ export default function Lightbox({ photos, currentIndex, onClose, onPrev, onNext
           animate={{ opacity: 1 }}
           exit={reduce ? { opacity: 1 } : { opacity: 0 }}
           transition={reduce ? { duration: 0 } : { duration: 0.2 }}
-          className="flex flex-col items-center gap-4 max-w-[90vw] max-h-[90vh]"
+          className="flex flex-col items-center gap-4 max-w-[94vw] max-h-[92vh]"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Image - object-contain, constrained to viewport.
@@ -225,7 +233,7 @@ export default function Lightbox({ photos, currentIndex, onClose, onPrev, onNext
               to its box so panning stays within the frame. */}
           <div
             ref={zoomWrapRef}
-            className="relative max-w-[90vw] max-h-[80vh] flex items-center justify-center overflow-hidden touch-none select-none"
+            className="relative max-w-[92vw] max-h-[88vh] flex items-center justify-center overflow-hidden touch-none select-none"
             style={{ cursor: isZoomed ? (isDragging ? 'grabbing' : 'grab') : 'zoom-in' }}
             onPointerDown={onPointerDown}
             onPointerMove={onPointerMove}
@@ -281,4 +289,6 @@ export default function Lightbox({ photos, currentIndex, onClose, onPrev, onNext
       </motion.div>
     </AnimatePresence>
   )
+
+  return mounted ? createPortal(overlay, document.body) : null
 }

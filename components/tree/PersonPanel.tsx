@@ -187,7 +187,7 @@ export default function PersonPanel({ person, photos, people, isAdmin = false, o
       )}
 
       <div className="px-[22px] mt-3">
-        <PhotoCarousel photos={photos} />
+        <PhotoCarousel photos={photos} focusPersonId={person.id} />
       </div>
 
       {!editing ? (

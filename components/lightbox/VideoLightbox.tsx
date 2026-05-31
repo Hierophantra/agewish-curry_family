@@ -24,7 +24,8 @@
 // D-18 body scroll locked while open.
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react'
 import VideoPlayer from '@/components/video/VideoPlayer'
 import type { Video } from '@/lib/types'
@@ -59,6 +60,12 @@ export default function VideoLightbox({ videos, currentIndex, onClose, onPrev, o
   // trigger element (e.g. video thumbnail) when the lightbox unmounts.
   const trapRef = useFocusTrap<HTMLDivElement>(true)
 
+  // Portal to document.body so the overlay escapes the protected layout's
+  // <main class="relative z-10"> stacking context (otherwise the sticky TopNav
+  // paints over it). Mounted guard keeps SSR happy.
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
+
   // Lock body scroll while lightbox is open; restore on unmount.
   useEffect(() => {
     document.body.style.overflow = 'hidden'
@@ -82,7 +89,7 @@ export default function VideoLightbox({ videos, currentIndex, onClose, onPrev, o
 
   const hasMultiple = videos.length > 1
 
-  return (
+  const overlay = (
     <AnimatePresence>
       <motion.div
         ref={trapRef}
@@ -101,8 +108,9 @@ export default function VideoLightbox({ videos, currentIndex, onClose, onPrev, o
         {/* Close button - top-right corner of the viewing room. */}
         <button
           onClick={(e) => { e.stopPropagation(); onClose() }}
-          className={`${GLASSY_BTN} absolute top-5 right-5 md:top-6 md:right-6 w-10 h-10 text-xl`}
-          aria-label="Close lightbox"
+          className={`${GLASSY_BTN} absolute top-5 right-5 md:top-6 md:right-6 z-10 w-12 h-12 text-3xl border-white/25`}
+          aria-label="Close video"
+          title="Close (Esc)"
         >
           {'×'}
         </button>
@@ -113,14 +121,14 @@ export default function VideoLightbox({ videos, currentIndex, onClose, onPrev, o
           <>
             <button
               onClick={(e) => { e.stopPropagation(); onPrev() }}
-              className={`${GLASSY_BTN} hidden md:grid absolute left-5 top-1/2 -translate-y-1/2 w-11 h-11`}
+              className={`${GLASSY_BTN} hidden md:grid absolute left-4 lg:left-6 top-1/2 -translate-y-1/2 z-10 w-14 h-14 text-3xl pb-1`}
               aria-label="Previous video"
             >
               {'‹'}
             </button>
             <button
               onClick={(e) => { e.stopPropagation(); onNext() }}
-              className={`${GLASSY_BTN} hidden md:grid absolute right-5 top-1/2 -translate-y-1/2 w-11 h-11`}
+              className={`${GLASSY_BTN} hidden md:grid absolute right-4 lg:right-6 top-1/2 -translate-y-1/2 z-10 w-14 h-14 text-3xl pb-1`}
               aria-label="Next video"
             >
               {'›'}
@@ -206,4 +214,6 @@ export default function VideoLightbox({ videos, currentIndex, onClose, onPrev, o
       </motion.div>
     </AnimatePresence>
   )
+
+  return mounted ? createPortal(overlay, document.body) : null
 }
