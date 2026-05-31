@@ -19,6 +19,7 @@ const EMPTY_INITIAL: PhotoFormValues = {
   location: '',
   notes: '',
   visibility: 'everywhere',
+  inHero: false,
   peopleIds: [],
   collectionIds: [],
 }

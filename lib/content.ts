@@ -9,6 +9,9 @@ import { join } from 'path'
 import { z } from 'zod'
 import { PersonSchema, PhotoSchema, VideoSchema, CollectionSchema, PlaylistSchema, AudioSchema, ChronicleSchema, HeroSchema, ThemeSchema, TreeLayoutSchema, SiteSchema, ScreensSchema } from './types'
 import type { Person, Photo, Video, Collection, Playlist, Audio, Chronicle, Hero, Theme, TreeLayout, Site, Screens } from './types'
+import { HeroImageSchema } from './types'
+import { showsInGallery, showsOnProfilePage } from './visibility'
+import { getPhotoUrl as photoUrl } from './utils'
 
 // ── Photo URL helper ──
 // Re-exported from lib/utils.ts so server-side imports can use a single source.
@@ -95,8 +98,7 @@ export function getCollectionById(id: string): Collection | null {
 // "hidden" stay out even if the photo carries a collectionId.
 export function getPhotosInCollection(collectionId: string): Photo[] {
   return getPhotos().filter(
-    (p) => p.collectionIds?.includes(collectionId)
-      && (p.visibility === 'gallery' || p.visibility === 'everywhere'),
+    (p) => p.collectionIds?.includes(collectionId) && showsInGallery(p.visibility),
   )
 }
 
@@ -116,8 +118,7 @@ export function getPlaylistById(id: string): Playlist | null {
 // unaffected.
 export function getVideosInPlaylist(playlistId: string): Video[] {
   return getVideos().filter(
-    (v) => v.playlistIds?.includes(playlistId)
-      && (v.visibility === 'gallery' || v.visibility === 'everywhere'),
+    (v) => v.playlistIds?.includes(playlistId) && showsInGallery(v.visibility),
   )
 }
 
@@ -132,15 +133,13 @@ export function getFeaturedVideos(): Video[] {
 // and "hidden" do not.
 export function getPhotosByPersonId(personId: string): Photo[] {
   return getPhotos().filter(
-    (p) => p.peopleIds?.includes(personId)
-      && (p.visibility === 'profile' || p.visibility === 'everywhere'),
+    (p) => p.peopleIds?.includes(personId) && showsOnProfilePage(p.visibility),
   )
 }
 
 export function getVideosByPersonId(personId: string): Video[] {
   return getVideos().filter(
-    (v) => v.peopleIds?.includes(personId)
-      && (v.visibility === 'profile' || v.visibility === 'everywhere'),
+    (v) => v.peopleIds?.includes(personId) && showsOnProfilePage(v.visibility),
   )
 }
 
@@ -201,6 +200,19 @@ export function getHero(): Hero {
   } catch {
     return { rotationMs: 8000, transitionMs: 2200, images: [] }
   }
+}
+
+// Hero rotation resolved for RENDERING: hero.json images PLUS any photos flagged
+// `inHero` (the visibility add-on). The /admin/hero editor still edits only
+// hero.json; photo-sourced hero images are managed per-photo via "Also in hero
+// rotation". The home page renders getResolvedHero(); the admin editor uses
+// getHero().
+export function getResolvedHero(): Hero {
+  const hero = getHero()
+  const photoImages = getPhotos()
+    .filter((p) => p.inHero)
+    .map((p) => HeroImageSchema.parse({ src: photoUrl(p), enabled: true }))
+  return { ...hero, images: [...hero.images, ...photoImages] }
 }
 
 // ── Theme loader (v3.5) ──

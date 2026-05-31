@@ -60,6 +60,7 @@ export async function POST(request: Request) {
     location?: unknown
     notes?: unknown
     visibility?: unknown
+    inHero?: unknown
     peopleIds?: unknown
     collectionIds?: unknown
   }
@@ -186,13 +187,17 @@ export async function POST(request: Request) {
   }
   newPhoto.peopleIds = Array.isArray(metadata.peopleIds) ? metadata.peopleIds : []
   newPhoto.collectionIds = Array.isArray(metadata.collectionIds) ? metadata.collectionIds : []
-  // Visibility (v3.4): accept hidden | profile | gallery | everywhere; default
-  // to everywhere if absent or invalid so the photo behaves like legacy data.
-  if (
-    typeof metadata.visibility === 'string' &&
-    ['hidden', 'profile', 'gallery', 'everywhere'].includes(metadata.visibility)
-  ) {
-    newPhoto.visibility = metadata.visibility
+  // Visibility (v3.6): accept the base enum; map legacy 'profile' → 'profile-tree';
+  // default to everywhere if absent/invalid so the photo behaves like legacy data.
+  if (typeof metadata.visibility === 'string') {
+    const v = metadata.visibility === 'profile' ? 'profile-tree' : metadata.visibility
+    if (['hidden', 'profile-tree', 'gallery', 'gallery-profile', 'everywhere'].includes(v)) {
+      newPhoto.visibility = v
+    }
+  }
+  // Hero add-on (independent of base visibility)
+  if (metadata.inHero === true) {
+    newPhoto.inHero = true
   }
   if (blurDataUrl) {
     newPhoto.blurDataUrl = blurDataUrl

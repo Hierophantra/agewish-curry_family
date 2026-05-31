@@ -14,6 +14,7 @@ import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import { AnimatePresence } from 'motion/react'
 import type { ExtNode, Connector } from 'relatives-tree/lib/types'
 import type { Person, Photo, TreeLayout, TreeNodeLayout } from '@/lib/types'
+import { showsInTreePanel } from '@/lib/visibility'
 import PersonNode from './PersonNode'
 import PersonPanel from './PersonPanel'
 import { computeTreeConnectors, type NodeBox } from './connectors'
@@ -608,8 +609,7 @@ export default function FamilyTreeCanvas({
           const person = people.find((p) => p.id === selectedId)
           if (!person) return null
           const personPhotos = photos.filter((ph) => {
-            const vis = ph.visibility ?? 'everywhere'
-            const allowed = vis === 'profile' || vis === 'everywhere'
+            const allowed = showsInTreePanel(ph.visibility)
             return allowed && (ph.peopleIds?.includes(person.id) || person.photoIds.includes(ph.id))
           })
           return (

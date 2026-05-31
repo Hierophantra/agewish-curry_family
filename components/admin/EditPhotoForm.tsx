@@ -31,6 +31,7 @@ export interface PhotoFormValues {
   location: string
   notes: string
   visibility: Visibility
+  inHero: boolean
   peopleIds: string[]
   collectionIds: string[]
 }
@@ -173,6 +174,7 @@ export default function EditPhotoForm({
       if (values.location.trim()) metadata.location = values.location.trim()
       if (values.notes.trim()) metadata.notes = values.notes.trim()
       metadata.visibility = values.visibility
+      if (values.inHero) metadata.inHero = true
       if (values.peopleIds.length) metadata.peopleIds = values.peopleIds
       if (values.collectionIds.length) metadata.collectionIds = values.collectionIds
 
@@ -211,6 +213,9 @@ export default function EditPhotoForm({
     if (values.visibility !== initial.visibility) {
       body.visibility = values.visibility
     }
+    if (values.inHero !== initial.inHero) {
+      body.inHero = values.inHero
+    }
     if (JSON.stringify(values.peopleIds) !== JSON.stringify(initial.peopleIds)) {
       body.peopleIds = values.peopleIds
     }
@@ -234,7 +239,10 @@ export default function EditPhotoForm({
         throw new Error(text || `${res.status} ${res.statusText}`)
       }
       setStatus('saved')
-      router.refresh()
+      // Intentionally NOT router.refresh() here: the change is committed to
+      // GitHub and goes live after the ~90s rebuild. Refreshing re-reads the
+      // pre-rebuild content, which makes the just-saved value look like it
+      // reverted. Keep the saved values on screen instead.
     } catch (err) {
       setStatus('error')
       setErrorMessage(err instanceof Error ? err.message : String(err))
@@ -418,6 +426,12 @@ export default function EditPhotoForm({
             setValues((prev) => ({ ...prev, visibility: next }))
             if (status === 'saved') setStatus('idle')
           }}
+          showHero
+          inHero={values.inHero}
+          onHeroChange={(next) => {
+            setValues((prev) => ({ ...prev, inHero: next }))
+            if (status === 'saved') setStatus('idle')
+          }}
           disabled={isDisabled}
         />
       </fieldset>
@@ -472,7 +486,7 @@ export default function EditPhotoForm({
 
         {status === 'saved' && (
           <p className="font-serif italic text-gold-deep text-sm">
-            Saved. The live site will update in about 90 seconds.
+            Saved. The live site updates in about 90 seconds — this admin view may keep showing the old value until the rebuild finishes.
           </p>
         )}
         {status === 'error' && (

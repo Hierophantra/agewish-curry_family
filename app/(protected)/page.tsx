@@ -22,7 +22,7 @@
 import Link from 'next/link'
 import Hero from '@/components/home/Hero'
 import FeaturedVideoSection from '@/components/home/FeaturedVideoSection'
-import { getPeople, getPhotos, getCollections, getVideos, getPlaylists, getChronicles, getHero, getFeaturedVideos, getScreens } from '@/lib/content'
+import { getPeople, getPhotos, getCollections, getVideos, getPlaylists, getChronicles, getResolvedHero, getFeaturedVideos, getScreens } from '@/lib/content'
 
 export default function HomePage() {
   const people = getPeople()
@@ -31,7 +31,7 @@ export default function HomePage() {
   const videos = getVideos()
   const playlists = getPlaylists()
   const chronicles = getChronicles()
-  const heroConfig = getHero()
+  const heroConfig = getResolvedHero()
   const screens = getScreens()
   const featuredVideo = getFeaturedVideos()[0]
 

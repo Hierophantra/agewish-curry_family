@@ -32,6 +32,7 @@ export default async function AdminEditPhotoPage({ params }: { params: { id: str
     location: photo.location ?? '',
     notes: photo.notes ?? '',
     visibility: photo.visibility ?? 'everywhere',
+    inHero: photo.inHero ?? false,
     peopleIds: photo.peopleIds,
     collectionIds: photo.collectionIds,
   }

@@ -58,20 +58,22 @@ export const PersonSchema = z.object({
   notes: z.string().optional(),           // private archivist notes (not necessarily surfaced in UI)
 })
 
-// ── Visibility scope (v3.4) ──
-// Controls where a person-linked media item is allowed to appear. Lets the
-// archivist decide per item, rather than the system auto-assuming a photo of
-// a person should show everywhere.
-//   "hidden"     - linked to the person for the record, shown nowhere
-//   "profile"    - person's profile page + family-tree snippet only
-//   "gallery"    - the main section only (Photographs gallery for photos,
-//                  Video playlists for videos); NOT the profile or tree
-//   "everywhere" - profile + tree AND the main section
-// "Remove" (un-linking from a person) is a separate action, not a visibility
-// state - it edits the item's peopleIds.
-// Defaults to "everywhere" so existing content (which predates this field)
-// keeps showing exactly as before.
-export const VisibilitySchema = z.enum(['hidden', 'profile', 'gallery', 'everywhere']).default('everywhere')
+// ── Visibility scope (v3.6) ──
+// A media item's BASE visibility — which surfaces it may appear on. The four
+// surfaces are: the main GALLERY section (Photographs / Videos), the person's
+// full PROFILE page (/person/[id]), and the family-tree summary PANEL.
+//   "hidden"          - shown nowhere on the site
+//   "profile-tree"    - full profile page + tree summary panel (NOT the gallery)
+//   "gallery"         - the main gallery section only (NOT profile/tree)
+//   "gallery-profile" - gallery + full profile page (NOT the tree summary)
+//   "everywhere"      - gallery + full profile + tree summary panel
+// Hero rotation is a SEPARATE add-on (Photo.inHero), combinable with any base.
+// Legacy value "profile" (v3.4) is mapped to "profile-tree" on read so existing
+// content keeps working without a data migration. Defaults to "everywhere".
+export const VisibilitySchema = z.preprocess(
+  (v) => (v === 'profile' ? 'profile-tree' : v),
+  z.enum(['hidden', 'profile-tree', 'gallery', 'gallery-profile', 'everywhere']),
+).default('everywhere')
 
 // ── Photo schema ──
 // Photo.filename refers to a file in /public/photos/{filename}, OR a full
@@ -93,6 +95,10 @@ export const PhotoSchema = z.object({
 
   // Where this photo is allowed to appear (see VisibilitySchema above)
   visibility: VisibilitySchema,
+  // Hero add-on (independent of `visibility`): when true, this photo joins the
+  // home-page hero rotation. Combinable with ANY base visibility (even hidden,
+  // which would show the photo only in the hero).
+  inHero: z.boolean().default(false),
 
   // Optional metadata
   location: z.string().optional(),

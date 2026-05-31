@@ -128,7 +128,7 @@ export async function POST(request: Request, { params }: { params: { id: string 
     ...(date ? { date } : {}),
     peopleIds: [params.id],
     collectionIds: [],
-    visibility: 'profile', // default: show on profile + tree, not the gallery
+    visibility: 'profile-tree', // default: show on profile + tree, not the gallery
     ...(blurDataUrl ? { blurDataUrl } : {}),
   }
   photos.push(record)

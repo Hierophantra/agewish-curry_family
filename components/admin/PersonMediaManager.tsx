@@ -133,11 +133,14 @@ export default function PersonMediaManager({ personId, personName, photos, video
   function VisibilityControl({ kind, item }: { kind: 'photos' | 'videos'; item: Photo | Video }) {
     const current = effectiveVisibility(item)
     const galleryLabel = kind === 'photos' ? 'Photos only' : 'Videos only'
+    const sectionName = kind === 'photos' ? 'Photographs gallery' : 'Videos section'
+    const galleryProfileLabel = kind === 'photos' ? 'Photos + profile' : 'Videos + profile'
     const options: Array<{ value: Visibility; label: string; help: string }> = [
-      { value: 'hidden', label: 'Hidden', help: 'Linked for the record, shown nowhere' },
-      { value: 'profile', label: 'Profile + tree', help: 'This person’s page and the family-tree snippet only' },
-      { value: 'gallery', label: galleryLabel, help: `Shows only in the ${kind === 'photos' ? 'Photographs gallery' : 'Videos section'}, not the profile or tree` },
-      { value: 'everywhere', label: 'Everywhere', help: 'Profile, tree, and the main section' },
+      { value: 'hidden', label: 'Hidden', help: 'Shown nowhere on the site' },
+      { value: 'profile-tree', label: 'Profile + tree', help: 'The full profile page and the family-tree summary — not the gallery' },
+      { value: 'gallery', label: galleryLabel, help: `Only in the ${sectionName}, not profiles or the tree` },
+      { value: 'gallery-profile', label: galleryProfileLabel, help: `The ${sectionName} and the full profile page, but not the family-tree summary` },
+      { value: 'everywhere', label: 'Everywhere', help: 'Gallery, full profile, and the family-tree summary' },
     ]
     return (
       <div role="group" aria-label="Visibility" className="flex flex-wrap gap-1.5">

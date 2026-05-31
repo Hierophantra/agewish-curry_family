@@ -8,7 +8,6 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
-import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import type { Person, Photo } from '@/lib/types'
 import PhotoCarousel from './PhotoCarousel'
@@ -31,7 +30,6 @@ function sameSet(a: string[], b: string[]): boolean {
 
 export default function PersonPanel({ person, photos, people, isAdmin = false, onClose }: PersonPanelProps) {
   const peopleById = new Map(people.map((p) => [p.id, p]))
-  const router = useRouter()
   const reduce = useReducedMotion()
   const trapRef = useFocusTrap<HTMLElement>(true)
 
@@ -131,7 +129,9 @@ export default function PersonPanel({ person, photos, people, isAdmin = false, o
       })
       if (!res.ok) throw new Error((await res.text()) || `${res.status}`)
       setStatus('saved')
-      router.refresh()
+      // No router.refresh(): the edit is committed to GitHub and goes live on
+      // the next ~90s rebuild; refreshing would re-read pre-rebuild data and
+      // look like the change reverted.
     } catch (err) {
       setStatus('error')
       setErrorMsg(err instanceof Error ? err.message : String(err))
