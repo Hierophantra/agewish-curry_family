@@ -430,7 +430,6 @@
     "date": "2021-11-23",
     "dateLabel": "November 23, 2021",
     "peopleIds": [
-      "galen-curry-sr",
       "cheryl-curry"
     ],
     "collectionIds": [
@@ -438,7 +437,7 @@
     ],
     "source": "Curry family archive",
     "confidence": "high",
-    "visibility": "profile"
+    "visibility": "everywhere"
   },
   {
     "id": "galen-cheryl-wedding-27",
