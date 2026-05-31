@@ -244,7 +244,10 @@
         "w": 0.103,
         "h": 0.07
       }
-    ]
+    ],
+    "peopleVisibility": {
+      "ernest-curry-sr": "profile-tree"
+    }
   },
   {
     "id": "galen-cheryl-wedding-15",
