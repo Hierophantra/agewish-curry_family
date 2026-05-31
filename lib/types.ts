@@ -185,6 +185,10 @@ export const VideoSchema = z.object({
   peopleIds: z.array(z.string()).default([]),
   playlistIds: z.array(z.string()).default([]),  // v2 - which playlists this video belongs to
   featured: z.boolean().default(false),
+  // Per-person visibility overrides keyed by personId (subset of peopleIds).
+  // Absent = inherit `visibility`. Videos appear on a person's profile page
+  // (not the tree summary, which is photos-only), so only hidden/profile apply.
+  peopleVisibility: z.record(z.string(), PhotoPersonVisibilitySchema).default({}),
 
   // Where this video is allowed to appear when linked to a person (see
   // VisibilitySchema). Defaults to "everywhere" so existing videos are

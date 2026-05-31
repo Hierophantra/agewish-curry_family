@@ -12,7 +12,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import type { Person, Playlist, Visibility } from '@/lib/types'
+import type { Person, Playlist, Visibility, PhotoPersonVisibility } from '@/lib/types'
 import VisibilityPicker from '@/components/admin/VisibilityPicker'
 import PeopleTagPicker from '@/components/admin/PeopleTagPicker'
 
@@ -29,6 +29,7 @@ export interface VideoFormValues {
   visibility: Visibility
   peopleIds: string[]
   playlistIds: string[]
+  peopleVisibility: Record<string, PhotoPersonVisibility>
 }
 
 interface Props {
@@ -129,6 +130,11 @@ export default function EditVideoForm({
       body.visibility = values.visibility
       if (values.peopleIds.length) body.peopleIds = values.peopleIds
       if (values.playlistIds.length) body.playlistIds = values.playlistIds
+      {
+        const pv: Record<string, PhotoPersonVisibility> = {}
+        for (const pid of values.peopleIds) { const v = values.peopleVisibility[pid]; if (v) pv[pid] = v }
+        if (Object.keys(pv).length) body.peopleVisibility = pv
+      }
 
       try {
         const res = await fetch('/api/admin/videos', {
@@ -180,6 +186,12 @@ export default function EditVideoForm({
     if (JSON.stringify(values.playlistIds) !== JSON.stringify(initial.playlistIds)) {
       changed.playlistIds = values.playlistIds
     }
+    // Per-person visibility, pruned to currently-tagged people.
+    const prunedPV: Record<string, PhotoPersonVisibility> = {}
+    for (const pid of values.peopleIds) { const v = values.peopleVisibility[pid]; if (v) prunedPV[pid] = v }
+    if (JSON.stringify(prunedPV) !== JSON.stringify(initial.peopleVisibility)) {
+      changed.peopleVisibility = prunedPV
+    }
 
     if (Object.keys(changed).length === 0) {
       setStatus('saved')
@@ -197,7 +209,9 @@ export default function EditVideoForm({
         throw new Error(text || `${res.status} ${res.statusText}`)
       }
       setStatus('saved')
-      router.refresh()
+      // No router.refresh(): the change is committed to GitHub and goes live on
+      // the ~90s rebuild; refreshing re-reads pre-rebuild content and looks like
+      // the change reverted. Keep the saved values on screen.
     } catch (err) {
       setStatus('error')
       setErrorMessage(err instanceof Error ? err.message : String(err))
@@ -397,6 +411,62 @@ export default function EditVideoForm({
         />
       </fieldset>
 
+      {/* Per-person visibility - override the profile surface per tagged person.
+          Videos aren't shown in the tree summary (photos only), so the choices
+          are Default / Hidden / Show on profile. */}
+      {values.peopleIds.length > 0 && (
+        <fieldset>
+          <legend className={`${labelTextClass} mb-3`}>Per-person visibility</legend>
+          <p className={`${helpClass} mb-3`}>
+            Where this video appears on each tagged person&rsquo;s profile. &ldquo;Default&rdquo; follows the visibility above. The Videos section is controlled by the visibility above, not per person.
+          </p>
+          <div className="flex flex-col gap-2.5">
+            {values.peopleIds.map((pid) => {
+              const name = allPeople.find((p) => p.id === pid)?.name ?? pid
+              const cur = values.peopleVisibility[pid]
+              const opts: Array<{ v: PhotoPersonVisibility | undefined; label: string }> = [
+                { v: undefined, label: 'Default' },
+                { v: 'hidden', label: 'Hidden' },
+                { v: 'profile', label: 'Show on profile' },
+              ]
+              return (
+                <div key={pid} className="flex items-center justify-between gap-3 flex-wrap">
+                  <span className="text-navy text-sm">{name}</span>
+                  <div className="flex flex-wrap gap-1" role="group" aria-label={`Visibility for ${name}`}>
+                    {opts.map((o) => {
+                      const active = (cur ?? undefined) === o.v
+                      return (
+                        <button
+                          key={o.label}
+                          type="button"
+                          disabled={isDisabled}
+                          aria-pressed={active}
+                          onClick={() => {
+                            setValues((prev) => {
+                              const map = { ...prev.peopleVisibility }
+                              if (o.v) map[pid] = o.v
+                              else delete map[pid]
+                              return { ...prev, peopleVisibility: map }
+                            })
+                            if (status === 'saved') setStatus('idle')
+                          }}
+                          className={[
+                            'px-2.5 py-1 rounded text-xs border transition-colors',
+                            active ? 'border-navy bg-navy text-white' : 'border-[color:var(--color-border)] text-muted hover:text-navy',
+                          ].join(' ')}
+                        >
+                          {o.label}
+                        </button>
+                      )
+                    })}
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </fieldset>
+      )}
+
       {/* Playlists picker */}
       <fieldset>
         <legend className={`${labelTextClass} mb-3`}>Playlists</legend>
@@ -432,7 +502,7 @@ export default function EditVideoForm({
 
         {status === 'saved' && (
           <p className="font-serif italic text-gold-deep text-sm">
-            Saved. The live site will update in about 90 seconds.
+            Saved. The live site updates in about 90 seconds — this admin view may keep showing the old value until the rebuild finishes.
           </p>
         )}
         {status === 'error' && (

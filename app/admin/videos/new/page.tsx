@@ -24,6 +24,7 @@ const EMPTY_INITIAL: VideoFormValues = {
   visibility: 'everywhere',
   peopleIds: [],
   playlistIds: [],
+  peopleVisibility: {},
 }
 
 export default async function AdminNewVideoPage() {

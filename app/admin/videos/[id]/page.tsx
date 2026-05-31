@@ -37,6 +37,7 @@ export default async function AdminEditVideoPage({ params }: { params: { id: str
     visibility: video.visibility ?? 'everywhere',
     peopleIds: video.peopleIds,
     playlistIds: video.playlistIds,
+    peopleVisibility: video.peopleVisibility ?? {},
   }
 
   return (
