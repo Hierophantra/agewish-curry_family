@@ -18,7 +18,10 @@ export function cn(...inputs: ClassValue[]) {
 // so newly-uploaded Blob photos render correctly alongside legacy stub photos.
 // Safe to import in both Server Components and 'use client' components.
 export function getPhotoUrl(photo: { filename: string }): string {
-  return photo.filename.startsWith('http') ? photo.filename : `/photos/${photo.filename}`
+  // Full URL (Blob) or already-rooted public path (e.g. imported hero images at
+  // /images/hero/...) → use as-is. Bare names → /public/photos/.
+  if (photo.filename.startsWith('http') || photo.filename.startsWith('/')) return photo.filename
+  return `/photos/${photo.filename}`
 }
 
 // ── Audio URL helper ──

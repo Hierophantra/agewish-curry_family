@@ -211,10 +211,21 @@ export function getHero(): Hero {
 // getHero().
 export function getResolvedHero(): Hero {
   const hero = getHero()
-  const photoImages = getPhotos()
-    .filter((p) => p.inHero)
-    .map((p) => HeroImageSchema.parse({ src: photoUrl(p), enabled: true }))
-  return { ...hero, images: [...hero.images, ...photoImages] }
+  const inHeroPhotos = getPhotos().filter((p) => p.inHero)
+  const photoImages = inHeroPhotos.map((p) =>
+    HeroImageSchema.parse({
+      src: photoUrl(p),
+      ...(typeof p.heroOpacity === 'number' ? { opacity: p.heroOpacity } : {}),
+      ...(p.heroObjectPosition ? { objectPosition: p.heroObjectPosition } : {}),
+      ...(p.heroFit ? { fit: p.heroFit } : {}),
+      enabled: true,
+    }),
+  )
+  // Dedupe by src so an imported hero photo supersedes its hero.json twin
+  // (no double in the rotation). If nothing is imported, hero.json is unchanged.
+  const photoSrcs = new Set(photoImages.map((i) => i.src))
+  const jsonImages = hero.images.filter((i) => !photoSrcs.has(i.src))
+  return { ...hero, images: [...photoImages, ...jsonImages] }
 }
 
 // ── Theme loader (v3.5) ──

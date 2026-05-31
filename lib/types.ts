@@ -134,6 +134,11 @@ export const PhotoSchema = z.object({
   // home-page hero rotation. Combinable with ANY base visibility (even hidden,
   // which would show the photo only in the hero).
   inHero: z.boolean().default(false),
+  // Hero display tuning, used only when inHero. Mirrors HeroImage so imported
+  // hero photos keep their look. Absent → sensible defaults in getResolvedHero.
+  heroOpacity: z.number().min(0).max(1).optional(),
+  heroObjectPosition: z.string().optional(),
+  heroFit: z.enum(['cover', 'contain']).optional(),
 
   // Optional metadata
   location: z.string().optional(),
