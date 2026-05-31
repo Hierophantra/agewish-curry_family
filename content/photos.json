@@ -329,14 +329,24 @@
     "dateLabel": "November 23, 2021",
     "peopleIds": [
       "galen-curry-sr",
-      "cheryl-curry"
+      "cheryl-curry",
+      "elston-curry"
     ],
     "collectionIds": [
       "galen-cheryl-wedding"
     ],
     "source": "Curry family archive",
     "confidence": "high",
-    "visibility": "gallery"
+    "visibility": "gallery-profile",
+    "regions": [
+      {
+        "personId": "elston-curry",
+        "x": 0.265,
+        "y": 0.303,
+        "w": 0.144,
+        "h": 0.103
+      }
+    ]
   },
   {
     "id": "galen-cheryl-wedding-21",
