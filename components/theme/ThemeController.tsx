@@ -479,7 +479,7 @@ export default function ThemeController({ theme, isAdmin }: Props) {
         <button
           type="button"
           onClick={() => { setDraft(cloneTheme(savedTheme.current)); setEditing(true) }}
-          className="fixed bottom-5 right-5 z-[90] rounded-full bg-navy text-white shadow-lg w-12 h-12 grid place-items-center hover:opacity-90 transition-opacity focus:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+          className="fixed bottom-5 right-20 z-[90] rounded-full bg-navy text-white shadow-lg w-12 h-12 grid place-items-center hover:opacity-90 transition-opacity focus:outline-none focus-visible:ring-2 focus-visible:ring-gold"
           title="Edit appearance (Shift+E)"
           aria-label="Edit appearance"
         >

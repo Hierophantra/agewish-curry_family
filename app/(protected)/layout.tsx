@@ -12,8 +12,9 @@ import Footer from '@/components/layout/Footer'
 import AmbientLight from '@/components/theme/AmbientLight'
 import ThemeController from '@/components/theme/ThemeController'
 import DebugOverlay from '@/components/debug/DebugOverlay'
+import RequestWidget from '@/components/help/RequestWidget'
 import { getAdminUser } from '@/lib/admin'
-import { getTheme } from '@/lib/content'
+import { getTheme, getSite } from '@/lib/content'
 
 export default async function ProtectedLayout({
   children,
@@ -28,6 +29,7 @@ export default async function ProtectedLayout({
 
   const adminLogin = await getAdminUser()
   const theme = getTheme()
+  const site = getSite()
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
@@ -41,6 +43,8 @@ export default async function ProtectedLayout({
       <ThemeController theme={theme} isAdmin={Boolean(adminLogin)} />
       {/* Read-only debug overlay (Shift+D) — admin-only, never writes. */}
       <DebugOverlay theme={theme} isAdmin={Boolean(adminLogin)} />
+      {/* Public help + request widget (bottom-right). */}
+      {site.contact.helpEnabled && <RequestWidget requestEmail={site.contact.requestEmail} />}
     </div>
   )
 }

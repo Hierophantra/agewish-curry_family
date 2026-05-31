@@ -412,6 +412,12 @@ export const SiteSchema = z.object({
     downloadLabel: z.string().default('Download the archive →'),
     downloadHref: z.string().default('/api/archive'),
   }).default({ downloadEnabled: true, downloadLabel: 'Download the archive →', downloadHref: '/api/archive' }),
+  // Contact / help: where the public request widget sends to, and whether it
+  // shows. Per-family configurable (multi-tenant). Default = the AgeWish admin.
+  contact: z.object({
+    requestEmail: z.string().default('trace@agewish.com'),
+    helpEnabled: z.boolean().default(true),
+  }).default({ requestEmail: 'trace@agewish.com', helpEnabled: true }),
 }).default({})
 
 // ── Screen section config (show/hide whole sections) ──
