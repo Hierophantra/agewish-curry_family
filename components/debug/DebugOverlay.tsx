@@ -15,6 +15,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import type { Theme } from '@/lib/types'
+import { contrastRatio } from '@/lib/theme-vars'
 
 interface Props {
   theme: Theme
@@ -59,6 +60,7 @@ export default function DebugOverlay({ theme, isAdmin }: Props) {
   const [health, setHealth] = useState<HealthReport | null>(null)
   const [healthStatus, setHealthStatus] = useState<'idle' | 'loading' | 'error'>('idle')
   const [zLayers, setZLayers] = useState<Array<{ z: number; pos: string; label: string }> | null>(null)
+  const [audit, setAudit] = useState<{ contrast: string[]; overflow: string[] } | null>(null)
 
   // Track viewport for the breakpoint readout.
   useEffect(() => {
@@ -129,6 +131,45 @@ export default function DebugOverlay({ theme, isAdmin }: Props) {
     })
     out.sort((a, b) => b.z - a.z)
     setZLayers(out.slice(0, 12))
+  }, [])
+
+  // Read-only a11y/layout audit: WCAG contrast on tagged text vs its resolved
+  // background, plus elements overflowing the viewport horizontally.
+  const runAudit = useCallback(() => {
+    const rgbToHex = (s: string): string | null => {
+      const m = s.match(/[\d.]+/g)
+      if (!m || m.length < 3) return null
+      if (m.length >= 4 && parseFloat(m[3]) === 0) return null
+      return '#' + m.slice(0, 3).map((n) => Math.round(parseFloat(n)).toString(16).padStart(2, '0')).join('')
+    }
+    const bgHexOf = (el: HTMLElement): string => {
+      let n: HTMLElement | null = el
+      while (n) {
+        const hex = rgbToHex(getComputedStyle(n).backgroundColor)
+        if (hex) return hex
+        n = n.parentElement
+      }
+      return '#FBF9F2'
+    }
+    const contrast: string[] = []
+    document.querySelectorAll<HTMLElement>('[data-edit-id][data-edit-kind="text"]').forEach((el) => {
+      if (!el.textContent?.trim()) return
+      const fg = rgbToHex(getComputedStyle(el).color)
+      if (!fg) return
+      const ratio = contrastRatio(fg, bgHexOf(el))
+      if (ratio !== null && ratio < 4.5) contrast.push(`${el.dataset.editId}: ${ratio}:1`)
+    })
+    const overflow: string[] = []
+    const vw = window.innerWidth
+    const seen = new Set<string>()
+    document.querySelectorAll<HTMLElement>('main *, header *, footer *').forEach((el) => {
+      const r = el.getBoundingClientRect()
+      if (r.width > 0 && r.right > vw + 1) {
+        const label = el.dataset.editId || (typeof el.className === 'string' ? el.className.split(' ')[0] : '') || el.tagName.toLowerCase()
+        if (!seen.has(label)) { seen.add(label); overflow.push(label.slice(0, 30)) }
+      }
+    })
+    setAudit({ contrast, overflow: overflow.slice(0, 8) })
   }, [])
 
   const runHealth = useCallback(async () => {
@@ -301,6 +342,26 @@ export default function DebugOverlay({ theme, isAdmin }: Props) {
                     )
                   })}
                   <p className="text-white/30 text-[11px]">⚠ = shares a z-index with another positioned layer.</p>
+                </div>
+              )}
+            </section>
+
+            {/* A11y / layout audit: contrast + horizontal overflow */}
+            <section className="flex flex-col gap-2 border-t border-white/10 pt-3">
+              <div className="flex items-center justify-between">
+                <span className="text-white/60 uppercase tracking-wider text-[11px]">Contrast &amp; overflow</span>
+                <button type="button" onClick={runAudit} className="text-[11px] px-2 py-1 rounded bg-white/10 hover:bg-white/20 transition-colors">Audit</button>
+              </div>
+              {audit && (
+                <div className="flex flex-col gap-1.5">
+                  <span className={audit.contrast.length === 0 ? 'text-emerald-300 text-[11px]' : 'text-rose-300 text-[11px]'}>
+                    {audit.contrast.length === 0 ? '✓ Tagged text passes AA (4.5:1)' : `✗ ${audit.contrast.length} low-contrast`}
+                  </span>
+                  {audit.contrast.map((m, i) => <p key={`c${i}`} className="text-rose-200 text-[11px] font-mono">{m}</p>)}
+                  <span className={audit.overflow.length === 0 ? 'text-emerald-300 text-[11px]' : 'text-amber-300 text-[11px]'}>
+                    {audit.overflow.length === 0 ? '✓ No horizontal overflow' : `⚠ ${audit.overflow.length} overflowing`}
+                  </span>
+                  {audit.overflow.map((m, i) => <p key={`o${i}`} className="text-amber-200/80 text-[11px] font-mono">{m}</p>)}
                 </div>
               )}
             </section>

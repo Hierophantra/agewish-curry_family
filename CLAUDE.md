@@ -104,6 +104,16 @@ This project uses GSD (Get Stuff Done) for phase-driven execution.
 12. **Home curated previews** — featured video, recent photos on home page
 13. **Real content** — replace stubs with actual family media
 
+## Configurability contract (v3.6 — see .planning/CONTROL_SYSTEM_AUDIT.md)
+
+"Everything important can be changed within a disciplined design system" — controlled flexibility, not per-pixel chaos. Three mechanisms, with clear ownership. **Do not hardcode user-facing strings in components.**
+
+1. **`data-edit-id` element overrides → `theme.json`** (Shift+E editor): one-off visual/text nudges on tagged elements — color, background, font size (presets + slider), text content, free-drag position, scale. Sitewide or per-route. *Appearance.*
+2. **`content/*.json` (Zod-validated, via `lib/content.ts`)**: archival data + reusable chrome copy. `site.json` = brand mark / nav labels / footer CTA; `screens.json` = section show/hide. *Structure & content.*
+3. **`hero.json` / `tree-layout.json`**: media rotation + tree spatial arrangement. *Layout.*
+
+Guardrails: reuse design tokens (don't duplicate); constrain new editable inputs to presets/swatches where consistency or a11y is at stake; admin tooling (DebugOverlay Shift+D, validation, history/restore) is admin-only and never leaks to family viewers. Token presets live in `globals.css @theme` (semantic names — never override Tailwind's numeric scales). The DebugOverlay (Shift+D) + `/admin/history` (restore) + `/api/admin/validate` are the test/safety surfaces.
+
 ## Working principles
 
 - Commit often, atomically. Each meaningful unit.
