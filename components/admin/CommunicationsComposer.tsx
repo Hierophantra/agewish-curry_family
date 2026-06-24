@@ -24,7 +24,12 @@ export default function CommunicationsComposer({ people }: { people: ContactPers
   const [preview, setPreview] = useState<{ email: ContactPerson[]; text: ContactPerson[] } | null>(null)
 
   const toggle = (id: string) => {
-    setSelected((prev) => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n })
+    setSelected((prev) => {
+      const n = new Set(prev)
+      if (n.has(id)) n.delete(id)
+      else n.add(id)
+      return n
+    })
     setPreview(null)
   }
   const allSelected = people.length > 0 && people.every((p) => selected.has(p.id))
