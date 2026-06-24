@@ -19,6 +19,8 @@ export const TABS = [
   { href: '/photographs', label: 'Photographs' },
   { href: '/videos', label: 'Videos' },
   { href: '/chronicles', label: 'Chronicles' },
+  { href: '/gallery', label: 'Gallery' },
+  { href: '/upload', label: 'Add a photo' },
 ] as const
 
 interface NavTabsProps {
