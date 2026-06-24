@@ -24,6 +24,24 @@ export function getPhotoUrl(photo: { filename: string }): string {
   return `/photos/${photo.filename}`
 }
 
+// ── Filename → title prettifier ──
+// Adapts the admin slugifyFilename logic (strip extension, normalise separators)
+// but produces a HUMAN TITLE instead of a kebab-case slug: underscores/dashes →
+// spaces, collapsed whitespace, Title Case. Used to default the title field of a
+// family upload from the chosen filename (user-editable afterward).
+// e.g. "william_and_eleanor-wedding-1953.JPG" → "William And Eleanor Wedding 1953"
+// Safe to import in both Server Components and 'use client' components.
+export function prettifyFilename(name: string): string {
+  return name
+    .replace(/\.[^.]+$/, '') // strip extension
+    .replace(/[_-]+/g, ' ') // underscores/dashes → spaces
+    .replace(/\s+/g, ' ') // collapse whitespace
+    .trim()
+    .split(' ')
+    .map((word) => (word ? word.charAt(0).toUpperCase() + word.slice(1) : word))
+    .join(' ')
+}
+
 // ── Audio URL helper ──
 // Returns the URL to load an audio recording's file.
 // - If filename is a full URL (https://...), returns as-is (Vercel Blob upload)

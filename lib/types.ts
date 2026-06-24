@@ -292,6 +292,63 @@ export const ChronicleSchema = z.object({
   lastVerified: z.string().optional(),
 })
 
+// ── Family upload schema (Permanent-shaped) ──
+// A family-uploaded image plus its metadata, captured by ANY logged-in family
+// member (not just admins) at /upload. Stored as a metadata sidecar JSON in
+// Vercel Blob under uploads/meta/<id>.json; the original bytes live alongside
+// it at uploads/files/<id>.<ext>. The gallery lists the uploads/meta/ prefix.
+//
+// The shape is deliberately Permanent.org-shaped so a later export to Permanent
+// is a thin, lossless transform (see lib/permanent.ts → uploadToPermanentRecord):
+//   title       → Permanent "Name"
+//   description → Permanent "Description"
+//   people[]    → each name exports as BOTH a Keyword AND a "Person:<name>" pair
+//   date        → Permanent "Date" + a "DatePrecision:<precision>" custom pair
+// The ORIGINAL file is never mutated — fileUrl points at the untouched bytes.
+
+// Date precision marker: how much of `date` is actually known. "unknown" means
+// no date at all; the other three say how many components of the ISO date to
+// trust. Exported to Permanent as a "DatePrecision:<value>" custom metadata pair.
+export const DatePrecisionSchema = z.enum(['year', 'month', 'date', 'unknown'])
+
+export const FamilyUploadSchema = z.object({
+  // Stable opaque id (also the Blob basename for both file + sidecar).
+  id: z.string().min(1),
+
+  // Title — defaults to the prettified filename on the client, user-editable.
+  // Maps to Permanent "Name".
+  title: z.string().min(1, 'Title cannot be empty'),
+
+  // Optional free-text description. Maps to Permanent "Description".
+  description: z.string().optional(),
+
+  // People "who is in it" — FREE TEXT names (not person IDs). The picker
+  // autocompletes from previously-entered upload names + family-tree names, but
+  // any string is allowed. Each name exports as a Keyword AND a Person:<name> pair.
+  people: z.array(z.string()).default([]),
+
+  // Optional date-if-known + precision marker. `date` is an ISO-ish string whose
+  // trustworthy portion is described by `datePrecision` (a "1979" year-only date
+  // is stored as "1979-01-01" with precision "year").
+  date: z.string().optional(),
+  datePrecision: DatePrecisionSchema.default('unknown'),
+
+  // The untouched original image, in Blob at uploads/files/<id>.<ext>.
+  fileUrl: z.string().min(1),
+  // Original filename as chosen by the uploader (provenance / export hint).
+  originalFilename: z.string().min(1),
+  // MIME type of the stored original (e.g. "image/jpeg").
+  mimeType: z.string().min(1),
+
+  // Who uploaded it + when (ISO timestamp). Family sessions share one identity,
+  // so this is best-effort provenance, not per-user attribution.
+  uploadedBy: z.string().optional(),
+  uploadedAt: z.string().min(1),
+
+  // BlurHash placeholder (base64 data URL) for smooth load, generated at upload.
+  blurDataUrl: z.string().optional(),
+})
+
 // ── Hero schema ──
 // Configuration for the home page hero photo rotator. Editable from /admin/hero.
 // Each image has its own opacity (0-1) and objectPosition (CSS keyword or
@@ -450,6 +507,8 @@ export type Audio = z.infer<typeof AudioSchema>
 export type Chronicle = z.infer<typeof ChronicleSchema>
 export type Hero = z.infer<typeof HeroSchema>
 export type HeroImage = z.infer<typeof HeroImageSchema>
+export type FamilyUpload = z.infer<typeof FamilyUploadSchema>
+export type DatePrecision = z.infer<typeof DatePrecisionSchema>
 export type Visibility = z.infer<typeof VisibilitySchema>
 export type Theme = z.infer<typeof ThemeSchema>
 export type ThemeColors = z.infer<typeof ThemeColorsSchema>
