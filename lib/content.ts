@@ -490,5 +490,15 @@ export function validateBidirectionalRefs(): void {
         )
       }
     }
+
+    // Check chronicle → video references (empty array is valid)
+    for (const vid of chronicle.videoIds) {
+      if (!videoIds.has(vid)) {
+        throw new Error(
+          `Content error: Chronicle "${chronicle.id}" references unknown video ID "${vid}". ` +
+          `Check content/chronicles.json - "${vid}" must be an id in content/videos.json.`
+        )
+      }
+    }
   }
 }

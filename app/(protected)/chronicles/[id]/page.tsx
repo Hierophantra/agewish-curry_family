@@ -5,10 +5,11 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
-import { getChronicles, getChronicleById, getPersonById, getPhotos } from '@/lib/content'
+import { getChronicles, getChronicleById, getPersonById, getPhotos, getVideoById } from '@/lib/content'
 import { getPhotoUrl } from '@/lib/utils'
 import ChronicleBody from '@/components/chronicles/ChronicleBody'
 import AudioPlayer from '@/components/audio/AudioPlayer'
+import PlaylistVideoGrid from '@/components/video/PlaylistVideoGrid'
 import type { Audio as AudioRecord } from '@/lib/types'
 
 // Pre-render all chronicle detail pages at build time.
@@ -49,6 +50,11 @@ export default async function ChronicleDetailPage({ params }: Props) {
   const people = chronicle.peopleIds
     .map((pid) => getPersonById(pid))
     .filter((p): p is NonNullable<typeof p> => p !== null)
+
+  // Resolve recordings from videoIds, preserving the authored order.
+  const videos = chronicle.videoIds
+    .map((vid) => getVideoById(vid))
+    .filter((v): v is NonNullable<typeof v> => v !== null)
 
   return (
     <main className="py-11 px-7 md:px-11 lg:px-15 max-w-4xl mx-auto">
@@ -113,6 +119,18 @@ export default async function ChronicleDetailPage({ params }: Props) {
       <div className="mb-12">
         <ChronicleBody body={chronicle.body} />
       </div>
+
+      {/* Recordings - videos gathered on this chronicle, in authored order.
+          Reuses PlaylistVideoGrid so the lightbox + deep-link behaviour matches
+          the playlist pages exactly. */}
+      {videos.length > 0 && (
+        <section className="border-t hairline pt-8 mb-12">
+          <h2 className="eyebrow text-quiet text-xs mb-5">
+            {videos.length === 1 ? 'RECORDING' : 'RECORDINGS'}
+          </h2>
+          <PlaylistVideoGrid videos={videos} />
+        </section>
+      )}
 
       {/* D-08 step 9: People chips - "About the people in this story" */}
       {people.length > 0 && (

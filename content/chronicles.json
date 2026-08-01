@@ -1,1 +1,20 @@
-[]
+[
+  {
+    "id": "ernest-curry",
+    "title": "Ernest Curry",
+    "subtitle": "Recorded conversations, kept in full",
+    "body": "Four recorded conversations with Ernest E Curry, born 1930, the eldest of the family and the root of the tree.\n\nThey are kept here in full. A little over two and a half hours in all.\n\n*Notes for each conversation will be added as the archive is catalogued.*",
+    "peopleIds": [
+      "ernest-curry-sr"
+    ],
+    "videoIds": [
+      "ernest-curry-part-1",
+      "ernest-curry-part-2",
+      "ernest-curry-part-3",
+      "ernest-curry-part-4"
+    ],
+    "collectionIds": [],
+    "source": "Curry family archive",
+    "confidence": "high"
+  }
+]

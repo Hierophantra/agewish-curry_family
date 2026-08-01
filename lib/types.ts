@@ -283,6 +283,10 @@ export const ChronicleSchema = z.object({
   peopleIds: z.array(z.string()).default([]),   // people featured in this story
   coverPhotoId: z.string().optional(),          // displayed at top of detail page
   collectionIds: z.array(z.string()).default([]), // future cross-tagging
+  // Recorded footage belonging to this chronicle, in display order. Each ID must
+  // exist in videos.json. A chronicle can therefore be a written story, a set of
+  // recordings, or both - the detail page renders whichever parts are present.
+  videoIds: z.array(z.string()).default([]),
 
   // Provenance (Phase 15 pattern)
   source: z.string().optional(),

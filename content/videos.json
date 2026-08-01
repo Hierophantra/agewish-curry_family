@@ -883,5 +883,61 @@
     ],
     "featured": false,
     "thumbnailUrl": "https://i.vimeocdn.com/video/2160710126-d3939f64880b668be4f2d858eccb793f2dc61778915d9ca5c26262fb7b08f8ac-d_1280?region=us"
+  },
+  {
+    "id": "ernest-curry-part-1",
+    "title": "Ernest Curry - Part 1",
+    "source": "vimeo",
+    "sourceId": "1213882767",
+    "duration": "31:42",
+    "peopleIds": [
+      "ernest-curry-sr"
+    ],
+    "playlistIds": [],
+    "featured": false,
+    "thumbnailUrl": "https://i.vimeocdn.com/video/2184803198-3797b74289efe06c09cba78b4bde44f52f50e734a5b95fd9d166ad6d4d8998a3-d_1280?region=us",
+    "source_provenance": "Original camera file C0435"
+  },
+  {
+    "id": "ernest-curry-part-2",
+    "title": "Ernest Curry - Part 2",
+    "source": "vimeo",
+    "sourceId": "1213882769",
+    "duration": "20:58",
+    "peopleIds": [
+      "ernest-curry-sr"
+    ],
+    "playlistIds": [],
+    "featured": false,
+    "thumbnailUrl": "https://i.vimeocdn.com/video/2184770285-718dad804e0a6f1748d11e551b52b0de6630e8d59484d3e2c8ad14c344df4596-d_1280?region=us",
+    "source_provenance": "Original camera file C0436"
+  },
+  {
+    "id": "ernest-curry-part-3",
+    "title": "Ernest Curry - Part 3",
+    "source": "vimeo",
+    "sourceId": "1213882768",
+    "duration": "48:50",
+    "peopleIds": [
+      "ernest-curry-sr"
+    ],
+    "playlistIds": [],
+    "featured": false,
+    "thumbnailUrl": "https://i.vimeocdn.com/video/2184830537-a65097638304f530e381b54bf655a071776e572c897cc400c80f1da650832c57-d_1280?region=us",
+    "source_provenance": "Original camera file C0555"
+  },
+  {
+    "id": "ernest-curry-part-4",
+    "title": "Ernest Curry - Part 4",
+    "source": "vimeo",
+    "sourceId": "1213882770",
+    "duration": "44:18",
+    "peopleIds": [
+      "ernest-curry-sr"
+    ],
+    "playlistIds": [],
+    "featured": false,
+    "thumbnailUrl": "https://i.vimeocdn.com/video/2184870178-4dd1d139d3ffeb8b7f21a7450512da8fd0c4d87ea2de55c37346ec87822a0e35-d_1280?region=us",
+    "source_provenance": "Original camera file C0557"
   }
 ]
